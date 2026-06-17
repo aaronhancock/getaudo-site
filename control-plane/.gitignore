@@ -1,0 +1,5 @@
+node_modules/
+dist/
+published-sites/
+.env
+.DS_Store

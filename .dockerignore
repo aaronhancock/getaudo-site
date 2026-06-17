@@ -1,3 +1,7 @@
 .git
 .DS_Store
 README.md
+control-plane/node_modules
+control-plane/dist
+control-plane/published-sites
+control-plane/.env

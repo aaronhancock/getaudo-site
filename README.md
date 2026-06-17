@@ -1,6 +1,6 @@
 # Audo Site
 
-Static SaaS console MVP for `getaudo.com`.
+Static SaaS console MVP for `getaudo.com` plus a separate trusted control-plane API.
 
 The app currently includes:
 
@@ -28,8 +28,22 @@ The Firebase web config is public client configuration. Do not put Cloudflare, C
 
 If `firebase-config.json` is absent, the app runs with local preview auth so the console can be developed without blocking on Firebase setup.
 
+## Control Plane API
+
+The console can call a deployed backend when `app-config.json` exists next to `app.html`.
+
+Use `app-config.example.json` as the shape:
+
+```json
+{
+  "apiBaseUrl": "https://api.getaudo.com"
+}
+```
+
+Without `app-config.json`, the console stays in local/demo mode.
+
 ## Backend
 
-The frontend can collect setup intent, builder content, domains, and GitHub settings. Real provisioning needs a trusted backend API because DNS, Coolify, GitHub, Stripe, and backups require secrets.
+The trusted API lives in `control-plane/`. It handles authenticated site records, Cloudflare DNS provisioning, publishing, backups, GitHub/Coolify handoff, and Stripe checkout.
 
-See `PLATFORM_ARCHITECTURE.md` for the proposed control-plane shape.
+See `control-plane/README.md` for runtime configuration and API routes. See `PLATFORM_ARCHITECTURE.md` for the broader platform plan.

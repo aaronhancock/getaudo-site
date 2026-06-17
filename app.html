@@ -1234,7 +1234,9 @@
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
   <script type="module">
+    const APP_CONFIG = await loadAppConfig();
     const FIREBASE_CONFIG = await loadFirebaseConfig();
+    const API_BASE_URL = String(APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
     const STORAGE_KEY = "audo-console-state-v1";
     const FREE_DOMAIN = "getaudo.com";
 
@@ -1327,7 +1329,25 @@
       toast: document.getElementById("toast")
     };
 
+    async function loadAppConfig() {
+      if (window.AUDO_APP_CONFIG) {
+        return window.AUDO_APP_CONFIG;
+      }
+      try {
+        const response = await fetch("/app-config.json", { cache: "no-store" });
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch {
+        return {};
+      }
+      return {};
+    }
+
     async function loadFirebaseConfig() {
+      if (APP_CONFIG.firebase && APP_CONFIG.firebase.apiKey) {
+        return APP_CONFIG.firebase;
+      }
       if (window.AUDO_FIREBASE_CONFIG && window.AUDO_FIREBASE_CONFIG.apiKey) {
         return window.AUDO_FIREBASE_CONFIG;
       }
@@ -1406,6 +1426,125 @@
       normalized.components = Array.isArray(site.components) && site.components.length ? site.components : createTemplateComponents(normalized.template);
       normalized.github = { repo: "", branch: "main", build: "", output: "dist", connected: false, ...(site.github || {}) };
       normalized.backups = Array.isArray(site.backups) ? site.backups : [];
+      return normalized;
+    }
+
+    async function apiFetch(path, init = {}) {
+      if (!API_BASE_URL) {
+        return null;
+      }
+      const headers = {
+        "content-type": "application/json",
+        ...(await authHeaders()),
+        ...(init.headers || {})
+      };
+      const response = await fetch(`${API_BASE_URL}${path}`, {
+        ...init,
+        headers
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const message = body.error?.message || `API request failed: ${response.status}`;
+        throw new Error(message);
+      }
+      return body;
+    }
+
+    async function authHeaders() {
+      if (state.authMode === "firebase" && firebaseAuth?.currentUser) {
+        return { authorization: `Bearer ${await firebaseAuth.currentUser.getIdToken()}` };
+      }
+      if (state.user?.uid) {
+        return { "x-audo-preview-user": state.user.uid };
+      }
+      return {};
+    }
+
+    async function syncSitesFromApi() {
+      if (!API_BASE_URL || !state.user) {
+        return;
+      }
+      const data = await apiFetch("/api/sites");
+      if (!data || !Array.isArray(data.sites)) {
+        return;
+      }
+      const selectedId = state.selectedSiteId;
+      state.sites = data.sites.map(frontendSiteFromApi);
+      state.selectedSiteId = state.sites.some((site) => site.id === selectedId) ? selectedId : state.sites[0]?.id || null;
+      state.selectedComponentId = selectedSite()?.components[0]?.id || null;
+      saveState();
+    }
+
+    function frontendSiteFromApi(apiSite) {
+      const existing = state.sites.find((site) => site.id === apiSite.id);
+      const freeDomain = (apiSite.domains || []).find((domain) => domain.kind === "free-subdomain");
+      const customDomain = (apiSite.domains || []).find((domain) => domain.kind === "custom");
+      const components = Array.isArray(apiSite.builder?.components) && apiSite.builder.components.length
+        ? apiSite.builder.components.map(normalizeComponentFromApi)
+        : existing?.components || createTemplateComponents(apiSite.template || "service");
+      return normalizeSite({
+        ...(existing || {}),
+        id: apiSite.id,
+        name: apiSite.name,
+        slug: apiSite.slug,
+        plan: apiSite.plan,
+        status: apiSite.status,
+        customDomain: customDomain?.host || "",
+        createdAt: apiSite.createdAt,
+        publishedAt: apiSite.publishedAt || "",
+        visits: existing?.visits || 0,
+        leads: existing?.leads || 0,
+        components,
+        github: {
+          repo: apiSite.github?.owner && apiSite.github?.repo ? `${apiSite.github.owner}/${apiSite.github.repo}` : apiSite.github?.repo || "",
+          branch: apiSite.github?.branch || "main",
+          build: apiSite.github?.buildCommand || "",
+          output: apiSite.github?.outputDirectory || "dist",
+          connected: Boolean(apiSite.github?.connected)
+        },
+        backups: (apiSite.backups || []).map((backup) => ({
+          at: backup.createdAt ? new Date(backup.createdAt).toLocaleString() : "Queued",
+          size: backup.size || "—",
+          status: String(backup.status || "queued").replace(/^\w/, (letter) => letter.toUpperCase())
+        })),
+        domainStatus: freeDomain?.status || "pending-dns"
+      });
+    }
+
+    function normalizeComponentFromApi(item) {
+      const base = component(item.type || "text");
+      return {
+        ...base,
+        ...item,
+        id: item.id || base.id,
+        label: item.label || base.label
+      };
+    }
+
+    function builderDocumentFromSite(site) {
+      return {
+        version: 1,
+        components: site.components.map((item) => ({
+          id: item.id,
+          type: item.type,
+          label: item.label,
+          headline: item.headline,
+          body: item.body,
+          button: item.button,
+          brand: item.brand,
+          links: item.links,
+          items: item.items
+        }))
+      };
+    }
+
+    function replaceSite(nextSite) {
+      const normalized = frontendSiteFromApi(nextSite);
+      state.sites = state.sites.map((site) => site.id === normalized.id ? normalized : site);
+      if (!state.sites.some((site) => site.id === normalized.id)) {
+        state.sites.unshift(normalized);
+      }
+      state.selectedSiteId = normalized.id;
       return normalized;
     }
 
@@ -1533,7 +1672,7 @@
           firebaseModules = { ...appModule, ...authModule };
           const app = firebaseModules.initializeApp(FIREBASE_CONFIG);
           firebaseAuth = firebaseModules.getAuth(app);
-          firebaseModules.onAuthStateChanged(firebaseAuth, (user) => {
+          firebaseModules.onAuthStateChanged(firebaseAuth, async (user) => {
             state.authReady = true;
             state.authMode = "firebase";
             state.user = user ? {
@@ -1542,6 +1681,13 @@
               name: user.displayName || user.email || "Audo user"
             } : null;
             saveState();
+            if (state.user) {
+              try {
+                await syncSitesFromApi();
+              } catch (error) {
+                showToast(error.message || "Could not load sites from the control plane.");
+              }
+            }
             render();
           });
           return;
@@ -1588,7 +1734,7 @@
         button.disabled = !signedIn;
       });
       els.sidebarUser.textContent = state.user ? (state.user.name || state.user.email) : "Signed out";
-      els.sidebarAuthMode.textContent = state.authMode === "firebase" ? "Firebase Auth" : "Local preview auth";
+      els.sidebarAuthMode.textContent = `${state.authMode === "firebase" ? "Firebase Auth" : "Local preview auth"}${API_BASE_URL ? " + API" : ""}`;
       els.authModePill.className = `pill ${state.authMode === "firebase" ? "green" : "amber"}`;
       els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
       document.querySelector("#googleSignIn span").textContent = state.authMode === "firebase" ? "Google" : "Demo login";
@@ -1857,11 +2003,12 @@
       els.domainPlanPill.className = `pill ${site.plan === "paid" ? "blue" : "green"}`;
       els.domainPlanPill.textContent = site.plan === "paid" ? "Paid" : "Free";
       els.subdomainInput.value = site.slug;
+      els.subdomainInput.disabled = Boolean(API_BASE_URL);
       els.customDomainInput.value = site.customDomain || "";
       els.customDomainInput.disabled = site.plan !== "paid";
       els.domainTable.innerHTML = `
         <div class="table-row"><span>URL</span><span>Status</span><span>Plan</span><span>Routing</span></div>
-        <div class="table-row"><span>${escapeHtml(site.slug)}.${FREE_DOMAIN}</span><span><span class="pill green">Ready</span></span><span>Free</span><span>Wildcard DNS</span></div>
+        <div class="table-row"><span>${escapeHtml(site.slug)}.${FREE_DOMAIN}</span><span><span class="pill ${site.domainStatus === "ready" ? "green" : "amber"}">${site.domainStatus === "ready" ? "Ready" : "Pending"}</span></span><span>Free</span><span>Cloudflare DNS</span></div>
         <div class="table-row"><span>${escapeHtml(site.customDomain || "Add custom domain")}</span><span><span class="pill ${site.plan === "paid" && site.customDomain ? "amber" : "rose"}">${site.plan === "paid" ? "DNS pending" : "Locked"}</span></span><span>Paid</span><span>CNAME / A record</span></div>
       `;
       els.domainUpgradePanel.innerHTML = site.plan === "paid"
@@ -1903,9 +2050,22 @@
       return backups.map((backup) => `<div class="table-row"><span>${escapeHtml(backup.at)}</span><span>${escapeHtml(backup.size)}</span><span><span class="pill green">${escapeHtml(backup.status)}</span></span><span></span></div>`).join("");
     }
 
-    function upgradeSite(siteId) {
+    async function upgradeSite(siteId) {
       const site = state.sites.find((item) => item.id === siteId);
       if (!site) {
+        return;
+      }
+      if (API_BASE_URL) {
+        try {
+          const checkout = await apiFetch(`/api/sites/${site.id}/checkout`, { method: "POST", body: "{}" });
+          if (checkout?.mode === "stripe" && checkout.url) {
+            window.location.href = checkout.url;
+            return;
+          }
+          showToast("Upgrade checkout is ready in preview mode.");
+        } catch (error) {
+          showToast(error.message || "Upgrade checkout failed.");
+        }
         return;
       }
       site.plan = "paid";
@@ -1916,9 +2076,21 @@
       render();
     }
 
-    function runBackup() {
+    async function runBackup() {
       const site = selectedSite();
       if (!site || site.plan !== "paid") {
+        return;
+      }
+      if (API_BASE_URL) {
+        try {
+          const result = await apiFetch(`/api/sites/${site.id}/backups`, { method: "POST", body: "{}" });
+          replaceSite(result.site);
+          saveState();
+          showToast("Backup snapshot queued.");
+          render();
+        } catch (error) {
+          showToast(error.message || "Backup request failed.");
+        }
         return;
       }
       site.backups.unshift({
@@ -1931,9 +2103,25 @@
       render();
     }
 
-    function publishSite() {
+    async function publishSite() {
       const site = selectedSite();
       if (!site) {
+        return;
+      }
+      if (API_BASE_URL) {
+        try {
+          await apiFetch(`/api/sites/${site.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
+          });
+          const result = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
+          replaceSite(result.site);
+          saveState();
+          showToast(`${result.site.name} published to ${result.site.primaryDomain}.`);
+          render();
+        } catch (error) {
+          showToast(error.message || "Publish failed.");
+        }
         return;
       }
       site.status = "published";
@@ -1957,13 +2145,37 @@
       els.siteModal.classList.remove("active");
     }
 
-    function createSite() {
+    async function createSite() {
       const name = els.siteNameInput.value.trim() || "Untitled site";
-      const site = createSiteRecord({
+      const payload = {
         name,
         slug: slugify(els.siteSlugInput.value || name),
         plan: els.sitePlanInput.value,
-        template: els.siteTemplateInput.value,
+        template: els.siteTemplateInput.value
+      };
+      if (API_BASE_URL) {
+        try {
+          const result = await apiFetch("/api/sites", {
+            method: "POST",
+            body: JSON.stringify(payload)
+          });
+          const site = replaceSite(result.site);
+          state.selectedComponentId = site.components[0]?.id || null;
+          state.view = "builder";
+          saveState();
+          closeSiteModal();
+          showToast(`${site.name} created.`);
+          render();
+        } catch (error) {
+          showToast(error.message || "Site creation failed.");
+        }
+        return;
+      }
+      const site = createSiteRecord({
+        name,
+        slug: payload.slug,
+        plan: payload.plan,
+        template: payload.template,
         status: "draft"
       });
       state.sites.unshift(site);
@@ -1998,6 +2210,11 @@
       state.user = { uid: "preview", email, name: email.split("@")[0] };
       state.view = "sites";
       saveState();
+      try {
+        await syncSitesFromApi();
+      } catch (error) {
+        showToast(error.message || "Could not load sites from the control plane.");
+      }
       render();
     }
 
@@ -2014,6 +2231,11 @@
       state.user = { uid: "preview-google", email: "preview@getaudo.com", name: "Preview user" };
       state.view = "sites";
       saveState();
+      try {
+        await syncSitesFromApi();
+      } catch (error) {
+        showToast(error.message || "Could not load sites from the control plane.");
+      }
       render();
     }
 
@@ -2093,6 +2315,25 @@
       saveState();
       render();
     });
+    els.customDomainInput.addEventListener("change", async () => {
+      const site = selectedSite();
+      const host = els.customDomainInput.value.trim().toLowerCase();
+      if (!API_BASE_URL || !site || site.plan !== "paid" || !host) {
+        return;
+      }
+      try {
+        const result = await apiFetch(`/api/sites/${site.id}/domains`, {
+          method: "POST",
+          body: JSON.stringify({ host })
+        });
+        replaceSite(result.site);
+        saveState();
+        showToast("Custom domain saved. DNS verification is pending.");
+        render();
+      } catch (error) {
+        showToast(error.message || "Custom domain save failed.");
+      }
+    });
     document.getElementById("saveIntegration").addEventListener("click", () => {
       const site = selectedSite();
       if (!site || site.plan !== "paid") {
@@ -2106,9 +2347,35 @@
       showToast("GitHub settings saved.");
       render();
     });
-    document.getElementById("connectGithub").addEventListener("click", () => {
+    document.getElementById("connectGithub").addEventListener("click", async () => {
       const site = selectedSite();
       if (!site || site.plan !== "paid") {
+        return;
+      }
+      if (API_BASE_URL) {
+        const [owner, repo] = els.repoInput.value.trim().split("/");
+        if (!owner || !repo) {
+          showToast("Enter a repository as owner/repo.");
+          return;
+        }
+        try {
+          const result = await apiFetch(`/api/sites/${site.id}/github`, {
+            method: "POST",
+            body: JSON.stringify({
+              owner,
+              repo,
+              branch: els.branchInput.value.trim() || "main",
+              buildCommand: els.buildInput.value.trim(),
+              outputDirectory: els.outputInput.value.trim() || "dist"
+            })
+          });
+          replaceSite(result.site);
+          saveState();
+          showToast("GitHub connection queued.");
+          render();
+        } catch (error) {
+          showToast(error.message || "GitHub connection failed.");
+        }
         return;
       }
       site.github.connected = true;

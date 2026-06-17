@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audo Managed Web Hosting</title>
+  <meta name="description" content="Managed web hosting for brochure sites, dashboards, and business apps.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08120f;
+      --ink: #f4fbf6;
+      --muted: #aebfb5;
+      --line: rgba(237, 255, 244, 0.14);
+      --panel: rgba(10, 26, 21, 0.86);
+      --green: #52f0a3;
+      --cyan: #5bd8ee;
+      --amber: #f5bd55;
+      --rose: #ff778c;
+      --deep: #07100d;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(6, 21, 18, 0.86), rgba(9, 16, 24, 0.94)),
+        url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80") center / cover fixed;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    a { color: inherit; }
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    header {
+      min-height: 86vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 36px;
+      padding: 24px 0 30px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand {
+      font-size: 22px;
+      font-weight: 820;
+      letter-spacing: 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .nav-links a { text-decoration: none; }
+    .hero {
+      align-self: center;
+      max-width: 760px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 9vw, 96px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: #dcebe4;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 18px;
+      text-decoration: none;
+      font-weight: 760;
+      background: rgba(244, 251, 246, 0.08);
+    }
+    .button.primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--deep);
+    }
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(5, 16, 13, 0.68);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 94px;
+    }
+    .stat b {
+      display: block;
+      font-size: 28px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    section {
+      padding: 58px 0;
+      background: var(--bg);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+      gap: 42px;
+      align-items: center;
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+    .copy {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .map {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      border: 1px solid rgba(237, 255, 244, 0.1);
+      background: #07100d;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .service {
+      min-height: 184px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+    .service h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .service p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .accent {
+      width: 38px;
+      height: 4px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+      background: var(--green);
+    }
+    .service:nth-child(2) .accent { background: var(--cyan); }
+    .service:nth-child(3) .accent { background: var(--amber); }
+    footer {
+      background: #050a08;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 26px 0;
+    }
+    footer .shell {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      header { min-height: 88vh; }
+      .proof, .split, .services { grid-template-columns: 1fr; }
+      .stat { min-height: 82px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav>
+      <div class="brand">Audo</div>
+      <div class="nav-links">
+        <a href="#platform">Platform</a>
+        <a href="#services">Services</a>
+        <a href="mailto:hello@getaudo.com">Contact</a>
+      </div>
+    </nav>
+    <div class="hero">
+      <h1>Audo managed web hosting</h1>
+      <p class="lead">Simple brochure sites, business dashboards, and custom web apps hosted with pragmatic monitoring, clean deployments, and a human who knows where the wires go.</p>
+      <div class="actions">
+        <a class="button primary" href="mailto:hello@getaudo.com">Start a launch check</a>
+        <a class="button" href="#services">See hosting fit</a>
+      </div>
+    </div>
+    <div class="proof">
+      <div class="stat"><b>24/7</b><span>availability checks and service recovery paths.</span></div>
+      <div class="stat"><b>1 page</b><span>clear public presence without platform clutter.</span></div>
+      <div class="stat"><b>80/443</b><span>locked public surface with app isolation behind it.</span></div>
+    </div>
+  </header>
+
+  <section id="platform">
+    <div class="shell split">
+      <div>
+        <h2>Hosting that stays understandable after launch.</h2>
+        <p class="copy">Audo is for small teams that need a website or app online without turning the hosting layer into another product to manage. Sites run behind a managed reverse proxy, with health checks, backups, logs, and a dashboard built for quick operational decisions.</p>
+        <p class="copy">The goal is boring reliability: fewer mystery outages, fewer abandoned DNS records, and a clear path from domain to container to live site.</p>
+      </div>
+      <div class="panel">
+        <img class="map" src="/assets/hosting-map.png" alt="Audo hosting traffic map">
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="shell">
+      <h2>Built for practical web work.</h2>
+      <div class="services">
+        <article class="service">
+          <div class="accent"></div>
+          <h3>Brochure sites</h3>
+          <p>Fast single-page or multi-page websites for services, local businesses, and product introductions.</p>
+        </article>
+        <article class="service">
+          <div class="accent"></div>
+          <h3>App hosting</h3>
+          <p>Coolify-based deployments for containers, databases, workers, and secure public routing.</p>
+        </article>
+        <article class="service">
+          <div class="accent"></div>
+          <h3>Operational care</h3>
+          <p>Backups, domain checks, logs, and lightweight dashboards so the live surface is visible.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="shell">
+      <span>Audo managed web hosting</span>
+      <span>getaudo.com</span>
+    </div>
+  </footer>
+</body>
+</html>

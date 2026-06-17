@@ -8,6 +8,7 @@ export interface AppConfig {
   port: number;
   corsOrigin: string;
   authMode: AuthMode;
+  previewApiSecret?: string;
   storeMode: StoreMode;
   freeDomain: string;
   publicBaseUrl: string;
@@ -55,6 +56,7 @@ export function loadConfig(): AppConfig {
     port: Number(env("PORT", "8080")),
     corsOrigin: env("CORS_ORIGIN", "https://getaudo.com,http://localhost:8081,http://127.0.0.1:8081"),
     authMode: (env("AUTH_MODE", nodeEnv === "production" ? "firebase" : "preview") as AuthMode),
+    previewApiSecret: env("AUDO_PREVIEW_API_SECRET") || undefined,
     storeMode: (env("STORE_MODE", nodeEnv === "production" ? "firestore" : "memory") as StoreMode),
     freeDomain: env("AUDO_FREE_DOMAIN", "getaudo.com"),
     publicBaseUrl: env("PUBLIC_BASE_URL", "https://getaudo.com"),

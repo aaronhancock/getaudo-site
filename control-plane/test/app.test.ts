@@ -156,4 +156,29 @@ describe("Audo control plane", () => {
     assert.equal(status.response.status, 200);
     assert.equal(status.body.cloudflare.zoneName, "getaudo.com");
   });
+
+  it("can require a preview API secret", async () => {
+    const lockedConfig = { ...config, previewApiSecret: "preview-secret" };
+    const lockedServer = createServer(createApp(lockedConfig, createServices()));
+    await new Promise<void>((resolve) => lockedServer.listen(0, resolve));
+    const address = lockedServer.address() as AddressInfo;
+    const lockedBaseUrl = `http://127.0.0.1:${address.port}`;
+
+    try {
+      const rejected = await fetch(`${lockedBaseUrl}/api/sites`, {
+        headers: { "x-audo-preview-user": "test-owner" }
+      });
+      assert.equal(rejected.status, 401);
+
+      const accepted = await fetch(`${lockedBaseUrl}/api/sites`, {
+        headers: {
+          "x-audo-preview-user": "test-owner",
+          "x-audo-preview-secret": "preview-secret"
+        }
+      });
+      assert.equal(accepted.status, 200);
+    } finally {
+      await new Promise<void>((resolve, reject) => lockedServer.close((error) => (error ? reject(error) : resolve())));
+    }
+  });
 });

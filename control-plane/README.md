@@ -33,6 +33,7 @@ npm run build
 ```bash
 NODE_ENV=production
 AUTH_MODE=firebase
+AUDO_PREVIEW_API_SECRET=<set-this-if-auth-mode-is-preview>
 STORE_MODE=firestore
 FIREBASE_SERVICE_ACCOUNT_JSON=<service-account-json>
 AUDO_FREE_DOMAIN=getaudo.com
@@ -43,6 +44,8 @@ CLOUDFLARE_FREE_SITE_TARGET=getaudo.com
 ```
 
 `CLOUDFLARE_ZONE_ID` is optional. If it is not set, the control plane looks up the zone by `CLOUDFLARE_ZONE_NAME` and `CLOUDFLARE_ACCOUNT_ID`.
+
+If `AUTH_MODE=preview` is used on a public host, set `AUDO_PREVIEW_API_SECRET`. Requests must include `x-audo-preview-secret` or they will be rejected. Do not expose Cloudflare-write endpoints publicly with unrestricted preview auth.
 
 ## API Summary
 

@@ -44,6 +44,9 @@ export function authMiddleware(config: AppConfig) {
   return async (request: Request, _response: Response, next: NextFunction) => {
     try {
       if (config.authMode === "preview") {
+        if (config.previewApiSecret && request.header("x-audo-preview-secret") !== config.previewApiSecret) {
+          throw unauthorized();
+        }
         request.user = previewUser(request);
         return next();
       }

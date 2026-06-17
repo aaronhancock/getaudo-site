@@ -3,2128 +3,287 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audo Web Hosting Console</title>
-  <meta name="description" content="Self-service website hosting, one-page site builder, domains, backups, and GitHub deployments.">
+  <title>Audo Managed Web Hosting</title>
+  <meta name="description" content="Managed web hosting for brochure sites, dashboards, and business apps.">
   <link rel="icon" href="/assets/audo-logo.svg" type="image/svg+xml">
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f4f7f4;
-      --surface: #ffffff;
-      --surface-2: #eef3ef;
-      --surface-3: #e7edf2;
-      --ink: #17211d;
-      --muted: #63706a;
-      --line: #d7e0db;
-      --line-strong: #bbc9c2;
-      --green: #129766;
-      --green-2: #e5f6ee;
-      --blue: #2563eb;
-      --blue-2: #e9efff;
-      --amber: #b7791f;
-      --amber-2: #fff4dc;
-      --rose: #c2415b;
-      --rose-2: #ffe9ee;
-      --purple: #7c3aed;
-      --shadow: 0 18px 45px rgba(32, 49, 42, 0.12);
-      --radius: 8px;
-      --sidebar: 280px;
+      color-scheme: dark;
+      --bg: #08120f;
+      --ink: #f4fbf6;
+      --muted: #aebfb5;
+      --line: rgba(237, 255, 244, 0.14);
+      --panel: rgba(10, 26, 21, 0.86);
+      --green: #52f0a3;
+      --cyan: #5bd8ee;
+      --amber: #f5bd55;
+      --rose: #ff778c;
+      --deep: #07100d;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-    }
-
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      background:
+        linear-gradient(135deg, rgba(6, 21, 18, 0.86), rgba(9, 16, 24, 0.94)),
+        url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80") center / cover fixed;
       color: var(--ink);
       letter-spacing: 0;
     }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
+    a { color: inherit; }
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    header {
+      min-height: 86vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 36px;
+      padding: 24px 0 30px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 820;
       letter-spacing: 0;
     }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled,
-    input:disabled,
-    select:disabled,
-    textarea:disabled {
-      cursor: not-allowed;
-      opacity: 0.58;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: var(--sidebar) minmax(0, 1fr);
-    }
-
-    .sidebar {
-      min-height: 100vh;
-      background: #101815;
-      color: #eff8f2;
-      padding: 22px 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-height: 42px;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: #ecfff4;
-      color: #0b6848;
-      font-weight: 900;
-      overflow: hidden;
-    }
-
-    .brand-mark img {
-      width: 38px;
-      height: 38px;
+    .brand img {
+      width: 34px;
+      height: 34px;
       display: block;
     }
-
-    .brand strong {
-      display: block;
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .brand span {
-      display: block;
-      margin-top: 4px;
-      color: #aebdb5;
-      font-size: 12px;
-    }
-
-    .nav {
-      display: grid;
-      gap: 8px;
-    }
-
-    .nav button,
-    .sidebar-action {
-      width: 100%;
-      min-height: 42px;
+    .nav-links {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid transparent;
-      border-radius: var(--radius);
-      padding: 0 12px;
-      background: transparent;
-      color: #dfeae4;
-      text-align: left;
-      font-weight: 720;
-    }
-
-    .nav button:hover,
-    .nav button.active,
-    .sidebar-action:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-    }
-
-    .icon {
-      width: 18px;
-      height: 18px;
-      flex: 0 0 auto;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      display: grid;
-      gap: 10px;
-    }
-
-    .auth-card {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 14px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .auth-card strong {
+      gap: 18px;
+      color: var(--muted);
       font-size: 14px;
     }
-
-    .auth-card span {
-      color: #aebdb5;
-      font-size: 12px;
+    .nav-links a { text-decoration: none; }
+    .hero {
+      align-self: center;
+      max-width: 760px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 9vw, 96px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: #dcebe4;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 18px;
+      text-decoration: none;
+      font-weight: 760;
+      background: rgba(244, 251, 246, 0.08);
+    }
+    .button.primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--deep);
+    }
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(5, 16, 13, 0.68);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 94px;
+    }
+    .stat b {
+      display: block;
+      font-size: 28px;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
       line-height: 1.35;
     }
-
-    .main {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+    section {
+      padding: 58px 0;
+      background: var(--bg);
     }
-
-    .topbar {
-      min-height: 74px;
-      padding: 14px 28px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      position: sticky;
-      top: 0;
-      z-index: 8;
-    }
-
-    .page-title {
+    .split {
       display: grid;
-      gap: 4px;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+      gap: 42px;
+      align-items: center;
     }
-
-    .page-title h1 {
+    h2 {
       margin: 0;
-      font-size: 24px;
-      line-height: 1.15;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.04;
+      letter-spacing: 0;
     }
-
-    .page-title p {
-      margin: 0;
+    .copy {
+      margin: 18px 0 0;
       color: var(--muted);
-      font-size: 13px;
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .content {
-      padding: 24px 28px 36px;
-      display: grid;
-      gap: 18px;
-      min-width: 0;
-    }
-
-    .view {
-      display: none;
-      gap: 18px;
-    }
-
-    .view.active {
-      display: grid;
-    }
-
-    .button,
-    .icon-button,
-    .segmented button,
-    .tool-button {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--ink);
-      border-radius: var(--radius);
-      min-height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 13px;
-      font-weight: 740;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .button.primary {
-      border-color: #0e8158;
-      background: var(--green);
-      color: #ffffff;
-    }
-
-    .button.blue {
-      border-color: #1d4ed8;
-      background: var(--blue);
-      color: #ffffff;
-    }
-
-    .button.danger {
-      border-color: #e7a7b3;
-      color: #a42b44;
-      background: #fff4f6;
-    }
-
-    .icon-button {
-      width: 40px;
-      padding: 0;
-    }
-
-    .segmented {
-      display: inline-grid;
-      grid-auto-flow: column;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface-2);
-      overflow: hidden;
-    }
-
-    .segmented button {
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      min-height: 38px;
-    }
-
-    .segmented button.active {
-      background: var(--surface);
-      box-shadow: inset 0 -2px 0 var(--green);
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .metric {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 14px;
-      min-height: 108px;
-      display: grid;
-      align-content: space-between;
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    }
-
-    .metric span {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 780;
-      text-transform: uppercase;
-    }
-
-    .metric strong {
-      display: block;
-      margin-top: 12px;
-      font-size: 30px;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .metric em {
-      margin-top: 8px;
-      color: var(--muted);
-      font-style: normal;
-      font-size: 12px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .site-card,
-    .panel,
-    .builder-pane,
-    .modal-panel {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    }
-
-    .site-card {
-      min-height: 220px;
-      padding: 16px;
-      display: grid;
-      gap: 14px;
-      cursor: pointer;
-      text-align: left;
-      color: inherit;
-      outline: none;
-    }
-
-    .site-card:hover,
-    .site-card:focus-visible,
-    .site-card.selected {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(18, 151, 102, 0.14);
-    }
-
-    .site-card-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .site-card h2,
-    .panel h2,
-    .builder-pane h2,
-    .modal-panel h2 {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.2;
-    }
-
-    .site-url {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .status-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .pill {
-      min-height: 26px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 0 9px;
-      font-size: 12px;
-      font-weight: 760;
-      background: var(--surface-2);
-      color: var(--muted);
-      border: 1px solid var(--line);
-      white-space: nowrap;
-    }
-
-    .pill.green {
-      background: var(--green-2);
-      color: #08704c;
-      border-color: #bde9d2;
-    }
-
-    .pill.blue {
-      background: var(--blue-2);
-      color: #1e40af;
-      border-color: #c8d7ff;
-    }
-
-    .pill.amber {
-      background: var(--amber-2);
-      color: #92400e;
-      border-color: #f5d28a;
-    }
-
-    .pill.rose {
-      background: var(--rose-2);
-      color: #a42b44;
-      border-color: #f6b7c3;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: currentColor;
-    }
-
-    .site-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .site-stat {
-      min-height: 68px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 10px;
-      background: var(--surface-2);
-      display: grid;
-      align-content: center;
-      gap: 5px;
-    }
-
-    .site-stat span {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 780;
-      text-transform: uppercase;
-    }
-
-    .site-stat strong {
-      font-size: 18px;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .detail-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
-      gap: 14px;
-      align-items: start;
-    }
-
-    .panel {
-      padding: 16px;
-      min-width: 0;
-      display: grid;
-      gap: 14px;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .panel-kicker {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 820;
-    }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .field {
-      display: grid;
-      gap: 7px;
-    }
-
-    .field label {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 780;
-      text-transform: uppercase;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      min-height: 40px;
-      border: 1px solid var(--line-strong);
-      border-radius: var(--radius);
-      background: #ffffff;
-      color: var(--ink);
-      padding: 9px 10px;
-    }
-
-    .field textarea {
-      min-height: 96px;
-      resize: vertical;
-      line-height: 1.45;
-    }
-
-    .lock-panel {
-      display: grid;
-      gap: 12px;
-      border: 1px solid #f2d08c;
-      background: #fff8e8;
-      border-radius: var(--radius);
-      padding: 14px;
-    }
-
-    .lock-panel strong {
-      color: #7c4b00;
-    }
-
-    .lock-panel span {
-      color: #765c2a;
-      line-height: 1.45;
-    }
-
-    .table {
-      display: grid;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .table-row {
-      min-height: 46px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr 0.8fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 0 12px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-    }
-
-    .table-row:first-child {
-      border-top: 0;
-      background: var(--surface-2);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 820;
-      text-transform: uppercase;
-    }
-
-    .builder-layout {
-      display: grid;
-      grid-template-columns: 270px minmax(0, 1fr) 310px;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .builder-pane {
-      padding: 14px;
-      display: grid;
-      gap: 12px;
-      min-height: 280px;
-    }
-
-    .tool-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .tool-button {
-      width: 100%;
-      justify-content: flex-start;
-      min-height: 42px;
-      background: #ffffff;
-    }
-
-    .tool-button.locked {
-      color: var(--muted);
-      background: var(--surface-2);
-    }
-
-    .component-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .component-row {
-      min-height: 42px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      background: #fff;
-    }
-
-    .component-row.active {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(18, 151, 102, 0.12);
-    }
-
-    .component-row button {
-      flex: 0 0 auto;
-    }
-
-    .preview-frame {
-      background: #fdfdfb;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      min-height: 720px;
-    }
-
-    .preview-ad {
-      min-height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #101815;
-      color: #ecfff4;
-      font-size: 13px;
-      font-weight: 720;
-    }
-
-    .site-preview {
-      min-height: 680px;
-      color: #171f1b;
-      background: #ffffff;
-    }
-
-    .site-preview section,
-    .site-preview footer,
-    .site-preview header {
-      padding: 34px min(48px, 7vw);
-      border-bottom: 1px solid #edf1ef;
-    }
-
-    .site-preview h1,
-    .site-preview h2,
-    .site-preview h3,
-    .site-preview p {
-      margin-top: 0;
-    }
-
-    .preview-nav {
-      display: flex;
-      min-height: 64px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 0 min(48px, 7vw);
-      border-bottom: 1px solid #edf1ef;
-    }
-
-    .preview-nav strong {
-      font-size: 20px;
-    }
-
-    .preview-nav span {
-      color: #65716a;
-      font-size: 14px;
-    }
-
-    .preview-hero {
-      min-height: 360px;
-      display: grid;
-      align-content: center;
-      background:
-        linear-gradient(120deg, rgba(250, 255, 252, 0.88), rgba(239, 246, 255, 0.88)),
-        url("https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1600&q=80") center / cover;
-    }
-
-    .preview-hero h1 {
-      max-width: 720px;
-      font-size: clamp(42px, 7vw, 78px);
-      line-height: 0.98;
-      margin-bottom: 18px;
-    }
-
-    .preview-hero p {
-      max-width: 620px;
-      color: #425048;
-      font-size: 19px;
-      line-height: 1.55;
-    }
-
-    .preview-cta {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      padding: 0 16px;
-      border-radius: var(--radius);
-      color: #ffffff;
-      background: #129766;
-      text-decoration: none;
-      font-weight: 760;
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .preview-card {
-      border: 1px solid #e0e7e3;
-      border-radius: var(--radius);
-      padding: 18px;
-      background: #ffffff;
-      min-height: 150px;
-    }
-
-    .preview-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .preview-gallery div,
-    .preview-map,
-    .preview-embed {
-      min-height: 160px;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, #e6f3ec, #e7edf9);
-      border: 1px solid #dce6df;
-    }
-
-    .preview-form {
-      display: grid;
-      gap: 10px;
-      max-width: 540px;
-    }
-
-    .preview-form input,
-    .preview-form textarea {
-      width: 100%;
-      border: 1px solid #ccd8d0;
-      border-radius: var(--radius);
-      padding: 10px;
-      min-height: 42px;
-    }
-
-    .preview-form textarea {
-      min-height: 92px;
-    }
-
-    .empty-state {
-      border: 1px dashed var(--line-strong);
-      border-radius: var(--radius);
-      min-height: 180px;
-      display: grid;
-      place-items: center;
-      color: var(--muted);
-      text-align: center;
-      padding: 24px;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(16, 24, 21, 0.42);
-      display: none;
-      place-items: center;
-      padding: 20px;
-      z-index: 30;
-    }
-
-    .modal.active {
-      display: grid;
-    }
-
-    .modal-panel {
-      width: min(760px, 100%);
-      max-height: min(760px, calc(100vh - 40px));
-      overflow: auto;
-      padding: 18px;
-      display: grid;
-      gap: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .toast {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      min-width: 260px;
-      max-width: min(460px, calc(100vw - 40px));
-      display: none;
-      padding: 13px 14px;
-      background: #101815;
-      color: #f4fff8;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      z-index: 40;
-    }
-
-    .toast.active {
-      display: block;
-    }
-
-    .auth-view {
-      min-height: calc(100vh - 74px);
-      display: grid;
-      grid-template-columns: minmax(320px, 460px) minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-    }
-
-    .auth-panel {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .auth-panel h2 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .auth-side {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .plan-card {
-      min-height: 240px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: grid;
-      gap: 12px;
-      align-content: start;
-    }
-
-    .plan-card.highlight {
-      border-color: #90cdb3;
-      box-shadow: 0 0 0 3px rgba(18, 151, 102, 0.12);
-    }
-
-    .plan-card h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .plan-card strong {
-      font-size: 28px;
-    }
-
-    .plan-card ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
+      font-size: 17px;
       line-height: 1.65;
     }
-
-    @media (max-width: 1180px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        min-height: auto;
-        position: sticky;
-        top: 0;
-        z-index: 12;
-      }
-
-      .nav {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .sidebar-footer {
-        display: none;
-      }
-
-      .builder-layout,
-      .detail-layout,
-      .auth-view {
-        grid-template-columns: 1fr;
-      }
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 18px;
     }
-
-    @media (max-width: 820px) {
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .content {
-        padding: 18px 14px 28px;
-      }
-
-      .metrics,
-      .grid,
-      .field-grid,
-      .auth-side,
-      .preview-grid,
-      .preview-gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .table-row {
-        grid-template-columns: 1fr;
-        padding: 12px;
-      }
+    .map {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      border: 1px solid rgba(237, 255, 244, 0.1);
+      background: #07100d;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .service {
+      min-height: 184px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+    .service h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .service p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .accent {
+      width: 38px;
+      height: 4px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+      background: var(--green);
+    }
+    .service:nth-child(2) .accent { background: var(--cyan); }
+    .service:nth-child(3) .accent { background: var(--amber); }
+    footer {
+      background: #050a08;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 26px 0;
+    }
+    footer .shell {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      header { min-height: 88vh; }
+      .proof, .split, .services { grid-template-columns: 1fr; }
+      .stat { min-height: 82px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark"><img src="/assets/audo-logo.svg" alt="Audo"></div>
-        <div>
-          <strong>Audo</strong>
-          <span>Hosting console</span>
-        </div>
+  <header class="shell">
+    <nav>
+      <div class="brand"><img src="/assets/audo-logo.svg" alt="">Audo</div>
+      <div class="nav-links">
+        <a href="#platform">Platform</a>
+        <a href="#services">Services</a>
+        <a href="/app">Login</a>
+        <a href="mailto:hello@getaudo.com">Contact</a>
       </div>
-      <nav class="nav" aria-label="Primary">
-        <button class="active" data-view-button="sites" type="button"><i data-lucide="panel-top" class="icon"></i><span>Sites</span></button>
-        <button data-view-button="builder" type="button"><i data-lucide="layout-template" class="icon"></i><span>Builder</span></button>
-        <button data-view-button="domains" type="button"><i data-lucide="globe-2" class="icon"></i><span>Domains</span></button>
-        <button data-view-button="integrations" type="button"><i data-lucide="git-branch" class="icon"></i><span>Integrations</span></button>
-      </nav>
-      <button class="sidebar-action" id="newSiteSidebar" type="button"><i data-lucide="plus" class="icon"></i><span>New site</span></button>
-      <div class="sidebar-footer">
-        <div class="auth-card">
-          <strong id="sidebarUser">Signed out</strong>
-          <span id="sidebarAuthMode">Firebase Auth pending</span>
-        </div>
-        <button class="sidebar-action" id="sidebarSignOut" type="button"><i data-lucide="log-out" class="icon"></i><span>Sign out</span></button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div class="page-title">
-          <h1 id="pageHeading">Sites</h1>
-          <p id="pageSubheading">Self-service websites on Audo.</p>
-        </div>
-        <div class="toolbar">
-          <span class="pill" id="authModePill"><span class="dot"></span> Auth loading</span>
-          <button class="button" id="publishButton" type="button"><i data-lucide="rocket" class="icon"></i><span>Publish</span></button>
-          <button class="button primary" id="newSiteButton" type="button"><i data-lucide="plus" class="icon"></i><span>New site</span></button>
-        </div>
-      </header>
-
-      <div class="content">
-        <section class="view active" id="authView">
-          <div class="auth-view">
-            <div class="auth-panel">
-              <h2>Sign in</h2>
-              <div class="field">
-                <label for="emailInput">Email</label>
-                <input id="emailInput" autocomplete="email" inputmode="email" placeholder="you@example.com">
-              </div>
-              <div class="field">
-                <label for="passwordInput">Password</label>
-                <input id="passwordInput" type="password" autocomplete="current-password" placeholder="••••••••">
-              </div>
-              <div class="toolbar">
-                <button class="button primary" id="emailSignIn" type="button"><i data-lucide="log-in" class="icon"></i><span>Sign in</span></button>
-                <button class="button" id="emailCreate" type="button"><i data-lucide="user-plus" class="icon"></i><span>Create</span></button>
-                <button class="button" id="googleSignIn" type="button"><i data-lucide="badge-check" class="icon"></i><span>Google</span></button>
-              </div>
-            </div>
-            <div class="auth-side">
-              <article class="plan-card highlight">
-                <span class="pill green">Free</span>
-                <h3>One-page website</h3>
-                <strong>$0</strong>
-                <ul>
-                  <li>Builder-hosted page</li>
-                  <li>Subdomain on getaudo.com</li>
-                  <li>Audo ad placement</li>
-                  <li>Basic publish controls</li>
-                </ul>
-              </article>
-              <article class="plan-card">
-                <span class="pill blue">Paid</span>
-                <h3>Full website hosting</h3>
-                <strong>$19+</strong>
-                <ul>
-                  <li>Custom domain</li>
-                  <li>Backups and restore points</li>
-                  <li>GitHub deploys</li>
-                  <li>Apps, databases, and workers</li>
-                </ul>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="view" id="sitesView">
-          <div class="metrics" id="metrics"></div>
-          <div class="grid" id="siteGrid"></div>
-        </section>
-
-        <section class="view" id="builderView">
-          <div class="builder-layout">
-            <aside class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Components</span>
-                  <h2>Library</h2>
-                </div>
-              </div>
-              <div class="tool-list" id="componentCatalog"></div>
-            </aside>
-
-            <section class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker" id="builderSiteUrl">No site selected</span>
-                  <h2 id="builderSiteName">Builder</h2>
-                </div>
-                <div class="segmented" id="previewPlanSwitch">
-                  <button type="button" data-plan="free">Free</button>
-                  <button type="button" data-plan="paid">Paid</button>
-                </div>
-              </div>
-              <div class="preview-frame" id="sitePreview"></div>
-            </section>
-
-            <aside class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Page</span>
-                  <h2>Structure</h2>
-                </div>
-              </div>
-              <div class="component-list" id="componentList"></div>
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Selected</span>
-                  <h2>Content</h2>
-                </div>
-              </div>
-              <div class="field-grid" id="editorFields"></div>
-            </aside>
-          </div>
-        </section>
-
-        <section class="view" id="domainsView">
-          <div class="detail-layout">
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Domains</span>
-                  <h2 id="domainSiteName">Website URLs</h2>
-                </div>
-                <span class="pill" id="domainPlanPill">Free</span>
-              </div>
-              <div class="field-grid">
-                <div class="field">
-                  <label for="subdomainInput">Free subdomain</label>
-                  <input id="subdomainInput">
-                </div>
-                <div class="field">
-                  <label for="customDomainInput">Custom domain</label>
-                  <input id="customDomainInput" placeholder="www.example.com">
-                </div>
-              </div>
-              <div class="table" id="domainTable"></div>
-            </div>
-
-            <aside class="panel" id="domainUpgradePanel"></aside>
-          </div>
-        </section>
-
-        <section class="view" id="integrationsView">
-          <div class="detail-layout">
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">GitHub</span>
-                  <h2>Deploy source</h2>
-                </div>
-                <span class="pill" id="githubPlanPill">Paid</span>
-              </div>
-              <div class="field-grid">
-                <div class="field">
-                  <label for="repoInput">Repository</label>
-                  <input id="repoInput" placeholder="owner/repo">
-                </div>
-                <div class="field">
-                  <label for="branchInput">Branch</label>
-                  <input id="branchInput" placeholder="main">
-                </div>
-                <div class="field">
-                  <label for="buildInput">Build command</label>
-                  <input id="buildInput" placeholder="npm run build">
-                </div>
-                <div class="field">
-                  <label for="outputInput">Output directory</label>
-                  <input id="outputInput" placeholder="dist">
-                </div>
-              </div>
-              <div class="toolbar">
-                <button class="button blue" id="connectGithub" type="button"><i data-lucide="plug" class="icon"></i><span>Connect GitHub</span></button>
-                <button class="button" id="saveIntegration" type="button"><i data-lucide="save" class="icon"></i><span>Save</span></button>
-              </div>
-            </div>
-
-            <aside class="panel">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Backups</span>
-                  <h2>Restore points</h2>
-                </div>
-                <span class="pill" id="backupPlanPill">Paid</span>
-              </div>
-              <div id="backupPanel"></div>
-            </aside>
-          </div>
-        </section>
-      </div>
-    </main>
-  </div>
-
-  <div class="modal" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="siteModalTitle">
-    <div class="modal-panel">
-      <div class="panel-header">
-        <div>
-          <span class="panel-kicker">Create</span>
-          <h2 id="siteModalTitle">New website</h2>
-        </div>
-        <button class="icon-button" id="closeSiteModal" type="button" aria-label="Close"><i data-lucide="x" class="icon"></i></button>
-      </div>
-      <div class="field-grid">
-        <div class="field">
-          <label for="siteNameInput">Site name</label>
-          <input id="siteNameInput" placeholder="Acme Studio">
-        </div>
-        <div class="field">
-          <label for="siteSlugInput">Subdomain</label>
-          <input id="siteSlugInput" placeholder="acme-studio">
-        </div>
-        <div class="field">
-          <label for="siteTemplateInput">Template</label>
-          <select id="siteTemplateInput">
-            <option value="service">Local service</option>
-            <option value="portfolio">Portfolio</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="saas">SaaS product</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="sitePlanInput">Plan</label>
-          <select id="sitePlanInput">
-            <option value="free">Free one-page</option>
-            <option value="paid">Paid hosting</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="button" id="cancelSiteModal" type="button">Cancel</button>
-        <button class="button primary" id="createSite" type="button"><i data-lucide="plus" class="icon"></i><span>Create site</span></button>
+    </nav>
+    <div class="hero">
+      <h1>Audo managed web hosting</h1>
+      <p class="lead">Simple brochure sites, business dashboards, and custom web apps hosted with pragmatic monitoring, clean deployments, and a human who knows where the wires go.</p>
+      <div class="actions">
+        <a class="button primary" href="/app">Start building</a>
+        <a class="button" href="#services">See hosting fit</a>
       </div>
     </div>
-  </div>
+    <div class="proof">
+      <div class="stat"><b>24/7</b><span>availability checks and service recovery paths.</span></div>
+      <div class="stat"><b>1 page</b><span>clear public presence without platform clutter.</span></div>
+      <div class="stat"><b>80/443</b><span>locked public surface with app isolation behind it.</span></div>
+    </div>
+  </header>
 
-  <div class="toast" id="toast" role="status"></div>
+  <section id="platform">
+    <div class="shell split">
+      <div>
+        <h2>Hosting that stays understandable after launch.</h2>
+        <p class="copy">Audo is for small teams that need a website or app online without turning the hosting layer into another product to manage. Sites run behind a managed reverse proxy, with health checks, backups, logs, and a dashboard built for quick operational decisions.</p>
+        <p class="copy">The goal is boring reliability: fewer mystery outages, fewer abandoned DNS records, and a clear path from domain to container to live site.</p>
+      </div>
+      <div class="panel">
+        <img class="map" src="/assets/hosting-map.png" alt="Audo hosting traffic map">
+      </div>
+    </div>
+  </section>
 
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
-  <script type="module">
-    const FIREBASE_CONFIG = await loadFirebaseConfig();
-    const STORAGE_KEY = "audo-console-state-v1";
-    const FREE_DOMAIN = "getaudo.com";
-
-    const componentCatalog = [
-      { type: "nav", label: "Navigation", icon: "menu", fields: ["brand", "links"] },
-      { type: "hero", label: "Hero", icon: "sparkles", fields: ["headline", "body", "button"] },
-      { type: "text", label: "Text", icon: "text", fields: ["headline", "body"] },
-      { type: "features", label: "Feature grid", icon: "columns-3", fields: ["headline", "items"] },
-      { type: "services", label: "Services", icon: "briefcase-business", fields: ["headline", "items"] },
-      { type: "gallery", label: "Gallery", icon: "images", fields: ["headline"] },
-      { type: "testimonials", label: "Testimonials", icon: "message-square-quote", fields: ["headline", "items"] },
-      { type: "contact", label: "Contact form", icon: "mail", fields: ["headline", "body"] },
-      { type: "booking", label: "Booking", icon: "calendar-check", fields: ["headline", "body"], paid: true },
-      { type: "map", label: "Map embed", icon: "map-pinned", fields: ["headline", "body"] },
-      { type: "faq", label: "FAQ", icon: "circle-help", fields: ["headline", "items"] },
-      { type: "pricing", label: "Pricing", icon: "badge-dollar-sign", fields: ["headline", "items"] },
-      { type: "social", label: "Social links", icon: "share-2", fields: ["headline", "links"] },
-      { type: "custom", label: "Custom HTML", icon: "code-2", fields: ["headline", "body"], paid: true },
-      { type: "footer", label: "Footer", icon: "panel-bottom", fields: ["brand", "body"] }
-    ];
-
-    const templates = {
-      service: {
-        hero: ["Launch a polished service website", "A clean one-page site with booking, proof, services, and contact paths ready for customers.", "Request a quote"],
-        features: ["What customers need", "Fast setup|Mobile-ready pages|Clear contact paths"],
-        services: ["Services", "Consulting|Implementation|Support"]
-      },
-      portfolio: {
-        hero: ["Show the work without the clutter", "A refined portfolio for projects, proof, testimonials, and direct inquiries.", "View work"],
-        features: ["Capabilities", "Direction|Design|Delivery"],
-        services: ["Selected work", "Brand systems|Websites|Campaigns"]
-      },
-      restaurant: {
-        hero: ["A better front door for your restaurant", "Menu highlights, hours, reservations, location, and contact in one simple page.", "Reserve a table"],
-        features: ["Guest essentials", "Hours|Menu|Reservations"],
-        services: ["Menu highlights", "Dinner|Drinks|Private events"]
-      },
-      saas: {
-        hero: ["Turn product interest into demos", "A sharp product page with feature sections, pricing, proof, FAQ, and conversion paths.", "Book a demo"],
-        features: ["Platform", "Dashboard|Automation|Reporting"],
-        services: ["Use cases", "Operations|Sales|Leadership"]
-      }
-    };
-
-    const state = loadState();
-    let firebaseAuth = null;
-    let firebaseModules = null;
-    let toastTimer = null;
-
-    const els = {
-      views: {
-        auth: document.getElementById("authView"),
-        sites: document.getElementById("sitesView"),
-        builder: document.getElementById("builderView"),
-        domains: document.getElementById("domainsView"),
-        integrations: document.getElementById("integrationsView")
-      },
-      pageHeading: document.getElementById("pageHeading"),
-      pageSubheading: document.getElementById("pageSubheading"),
-      authModePill: document.getElementById("authModePill"),
-      sidebarUser: document.getElementById("sidebarUser"),
-      sidebarAuthMode: document.getElementById("sidebarAuthMode"),
-      siteGrid: document.getElementById("siteGrid"),
-      metrics: document.getElementById("metrics"),
-      componentCatalog: document.getElementById("componentCatalog"),
-      componentList: document.getElementById("componentList"),
-      editorFields: document.getElementById("editorFields"),
-      sitePreview: document.getElementById("sitePreview"),
-      builderSiteName: document.getElementById("builderSiteName"),
-      builderSiteUrl: document.getElementById("builderSiteUrl"),
-      previewPlanSwitch: document.getElementById("previewPlanSwitch"),
-      domainSiteName: document.getElementById("domainSiteName"),
-      domainPlanPill: document.getElementById("domainPlanPill"),
-      domainTable: document.getElementById("domainTable"),
-      domainUpgradePanel: document.getElementById("domainUpgradePanel"),
-      subdomainInput: document.getElementById("subdomainInput"),
-      customDomainInput: document.getElementById("customDomainInput"),
-      githubPlanPill: document.getElementById("githubPlanPill"),
-      repoInput: document.getElementById("repoInput"),
-      branchInput: document.getElementById("branchInput"),
-      buildInput: document.getElementById("buildInput"),
-      outputInput: document.getElementById("outputInput"),
-      backupPanel: document.getElementById("backupPanel"),
-      backupPlanPill: document.getElementById("backupPlanPill"),
-      siteModal: document.getElementById("siteModal"),
-      siteNameInput: document.getElementById("siteNameInput"),
-      siteSlugInput: document.getElementById("siteSlugInput"),
-      siteTemplateInput: document.getElementById("siteTemplateInput"),
-      sitePlanInput: document.getElementById("sitePlanInput"),
-      toast: document.getElementById("toast")
-    };
-
-    async function loadFirebaseConfig() {
-      if (window.AUDO_FIREBASE_CONFIG && window.AUDO_FIREBASE_CONFIG.apiKey) {
-        return window.AUDO_FIREBASE_CONFIG;
-      }
-      try {
-        const response = await fetch("/firebase-config.json", { cache: "no-store" });
-        if (response.ok) {
-          const config = await response.json();
-          return config && config.apiKey ? config : null;
-        }
-      } catch {
-        return null;
-      }
-      return null;
-    }
-
-    function loadState() {
-      const fallback = {
-        authReady: false,
-        authMode: "loading",
-        user: null,
-        view: "sites",
-        selectedSiteId: "demo-service",
-        selectedComponentId: null,
-        sites: [
-          createSiteRecord({
-            id: "demo-service",
-            name: "Demo service site",
-            slug: "demo-service",
-            plan: "free",
-            template: "service",
-            status: "draft"
-          })
-        ]
-      };
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-        if (!saved || !Array.isArray(saved.sites)) {
-          return fallback;
-        }
-        return {
-          ...fallback,
-          ...saved,
-          authReady: false,
-          authMode: "loading",
-          sites: saved.sites.map(normalizeSite)
-        };
-      } catch {
-        return fallback;
-      }
-    }
-
-    function saveState() {
-      const saved = {
-        user: state.user && state.authMode === "preview" ? state.user : null,
-        view: state.view,
-        selectedSiteId: state.selectedSiteId,
-        selectedComponentId: state.selectedComponentId,
-        sites: state.sites
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-    }
-
-    function normalizeSite(site) {
-      const normalized = {
-        ...createSiteRecord({
-          id: site.id,
-          name: site.name || "Untitled site",
-          slug: site.slug || slugify(site.name || "site"),
-          plan: site.plan || "free",
-          template: site.template || "service",
-          status: site.status || "draft"
-        }),
-        ...site
-      };
-      normalized.components = Array.isArray(site.components) && site.components.length ? site.components : createTemplateComponents(normalized.template);
-      normalized.github = { repo: "", branch: "main", build: "", output: "dist", connected: false, ...(site.github || {}) };
-      normalized.backups = Array.isArray(site.backups) ? site.backups : [];
-      return normalized;
-    }
-
-    function createSiteRecord({ id, name, slug, plan, template, status }) {
-      const safeSlug = slugify(slug || name || "site");
-      return {
-        id: id || crypto.randomUUID(),
-        name: name || "Untitled site",
-        slug: safeSlug,
-        plan: plan || "free",
-        template: template || "service",
-        status: status || "draft",
-        customDomain: "",
-        createdAt: new Date().toISOString(),
-        publishedAt: "",
-        visits: Math.floor(120 + Math.random() * 860),
-        leads: Math.floor(3 + Math.random() * 28),
-        components: createTemplateComponents(template || "service"),
-        github: { repo: "", branch: "main", build: "", output: "dist", connected: false },
-        backups: []
-      };
-    }
-
-    function createTemplateComponents(templateName) {
-      const template = templates[templateName] || templates.service;
-      const [heroHeadline, heroBody, heroButton] = template.hero;
-      const [featuresHeadline, featuresItems] = template.features;
-      const [servicesHeadline, servicesItems] = template.services;
-      return [
-        component("nav", { brand: "Audo site", links: "Services|Proof|Contact" }),
-        component("hero", { headline: heroHeadline, body: heroBody, button: heroButton }),
-        component("features", { headline: featuresHeadline, items: featuresItems }),
-        component("services", { headline: servicesHeadline, items: servicesItems }),
-        component("testimonials", { headline: "Customer notes", items: "Everything was easy to understand.|The site felt ready on day one.|The launch process was calm." }),
-        component("contact", { headline: "Start the conversation", body: "Tell us what you need and we will respond soon." }),
-        component("footer", { brand: "Audo site", body: "Built and hosted on Audo." })
-      ];
-    }
-
-    function component(type, data = {}) {
-      const catalogItem = componentCatalog.find((item) => item.type === type);
-      return {
-        id: crypto.randomUUID(),
-        type,
-        label: catalogItem ? catalogItem.label : "Section",
-        ...defaultComponentData(type),
-        ...data
-      };
-    }
-
-    function defaultComponentData(type) {
-      const defaults = {
-        nav: { brand: "Brand", links: "Home|Services|Contact" },
-        hero: { headline: "A focused headline", body: "A concise section body for the page.", button: "Get started" },
-        text: { headline: "Section headline", body: "Add a clear explanation, story, or page detail here." },
-        features: { headline: "Features", items: "Fast setup|Clean design|Managed hosting" },
-        services: { headline: "Services", items: "Service one|Service two|Service three" },
-        gallery: { headline: "Gallery" },
-        testimonials: { headline: "Testimonials", items: "A useful customer quote.|A second proof point.|A third endorsement." },
-        contact: { headline: "Contact", body: "Send a note and we will respond soon." },
-        booking: { headline: "Book a time", body: "Connect a calendar link for direct scheduling." },
-        map: { headline: "Location", body: "Add your service area or physical address." },
-        faq: { headline: "Questions", items: "How long does setup take?|Can I use my domain?|Can I change later?" },
-        pricing: { headline: "Pricing", items: "Starter - $0|Business - $19|Custom - Contact" },
-        social: { headline: "Follow", links: "Instagram|LinkedIn|Facebook" },
-        custom: { headline: "Custom block", body: "<div>Custom HTML</div>" },
-        footer: { brand: "Brand", body: "All rights reserved." }
-      };
-      return defaults[type] || defaults.text;
-    }
-
-    function selectedSite() {
-      return state.sites.find((site) => site.id === state.selectedSiteId) || state.sites[0] || null;
-    }
-
-    function selectedComponent(site = selectedSite()) {
-      if (!site) {
-        return null;
-      }
-      return site.components.find((item) => item.id === state.selectedComponentId) || site.components[0] || null;
-    }
-
-    function siteUrl(site) {
-      if (!site) {
-        return "";
-      }
-      if (site.plan === "paid" && site.customDomain) {
-        return site.customDomain;
-      }
-      return `${site.slug}.${FREE_DOMAIN}`;
-    }
-
-    function slugify(value) {
-      return String(value || "")
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .slice(0, 48) || "site";
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function splitItems(value) {
-      return String(value || "")
-        .split("|")
-        .map((item) => item.trim())
-        .filter(Boolean);
-    }
-
-    async function initAuth() {
-      if (FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.authDomain) {
-        try {
-          const [appModule, authModule] = await Promise.all([
-            import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
-            import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js")
-          ]);
-          firebaseModules = { ...appModule, ...authModule };
-          const app = firebaseModules.initializeApp(FIREBASE_CONFIG);
-          firebaseAuth = firebaseModules.getAuth(app);
-          firebaseModules.onAuthStateChanged(firebaseAuth, (user) => {
-            state.authReady = true;
-            state.authMode = "firebase";
-            state.user = user ? {
-              uid: user.uid,
-              email: user.email || "",
-              name: user.displayName || user.email || "Audo user"
-            } : null;
-            saveState();
-            render();
-          });
-          return;
-        } catch (error) {
-          console.error(error);
-          showToast("Firebase Auth could not initialize. Local preview auth is active.");
-        }
-      }
-      state.authReady = true;
-      state.authMode = "preview";
-      if (!state.user) {
-        state.user = {
-          uid: "preview",
-          email: "preview@getaudo.com",
-          name: "Preview user"
-        };
-      }
-      saveState();
-      render();
-    }
-
-    function render() {
-      const signedIn = Boolean(state.user);
-      if (!signedIn) {
-        setView("auth", false);
-      } else if (state.view === "auth") {
-        setView("sites", false);
-      }
-      renderChrome();
-      renderSites();
-      renderBuilder();
-      renderDomains();
-      renderIntegrations();
-      refreshIcons();
-    }
-
-    function renderChrome() {
-      const signedIn = Boolean(state.user);
-      const viewLabels = {
-        auth: ["Sign in", "Access your Audo hosting account."],
-        sites: ["Sites", "Self-service websites on Audo."],
-        builder: ["Builder", selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
-        domains: ["Domains", "Subdomains, custom URLs, and DNS status."],
-        integrations: ["Integrations", "GitHub deployments and restore points."]
-      };
-      const [heading, subheading] = viewLabels[state.view] || viewLabels.sites;
-      els.pageHeading.textContent = heading;
-      els.pageSubheading.textContent = subheading;
-      document.querySelectorAll("[data-view-button]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.viewButton === state.view);
-        button.disabled = !signedIn;
-      });
-      els.sidebarUser.textContent = state.user ? (state.user.name || state.user.email) : "Signed out";
-      els.sidebarAuthMode.textContent = state.authMode === "firebase" ? "Firebase Auth" : "Local preview auth";
-      els.authModePill.className = `pill ${state.authMode === "firebase" ? "green" : "amber"}`;
-      els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
-      document.getElementById("publishButton").disabled = !signedIn || !selectedSite();
-      document.getElementById("newSiteButton").disabled = !signedIn;
-      document.getElementById("newSiteSidebar").disabled = !signedIn;
-      document.getElementById("sidebarSignOut").disabled = !signedIn;
-      Object.entries(els.views).forEach(([name, view]) => {
-        view.classList.toggle("active", name === state.view);
-      });
-    }
-
-    function setView(view, persist = true) {
-      state.view = view;
-      if (persist) {
-        saveState();
-      }
-      renderChrome();
-    }
-
-    function renderSites() {
-      const totalVisits = state.sites.reduce((sum, site) => sum + Number(site.visits || 0), 0);
-      const paidSites = state.sites.filter((site) => site.plan === "paid").length;
-      const publishedSites = state.sites.filter((site) => site.status === "published").length;
-      const backupSites = state.sites.filter((site) => site.plan === "paid" && site.backups.length).length;
-      els.metrics.innerHTML = [
-        metric("Websites", state.sites.length, `${publishedSites} published`),
-        metric("Traffic", totalVisits.toLocaleString(), "sample visits"),
-        metric("Paid plans", paidSites, "custom hosting"),
-        metric("Backed up", backupSites, "sites with snapshots")
-      ].join("");
-
-      els.siteGrid.innerHTML = state.sites.map((site) => `
-        <article class="site-card ${site.id === state.selectedSiteId ? "selected" : ""}" tabindex="0" data-site-card="${site.id}">
-          <div class="site-card-header">
-            <div>
-              <h2>${escapeHtml(site.name)}</h2>
-              <span class="site-url">${escapeHtml(siteUrl(site))}</span>
-            </div>
-            <span class="pill ${site.plan === "paid" ? "blue" : "green"}">${site.plan === "paid" ? "Paid" : "Free"}</span>
-          </div>
-          <div class="status-row">
-            <span class="pill ${site.status === "published" ? "green" : "amber"}"><span class="dot"></span>${site.status}</span>
-            <span class="pill">${site.components.length} sections</span>
-            ${site.plan === "free" ? `<span class="pill rose">Ads on</span>` : `<span class="pill green">No ads</span>`}
-          </div>
-          <div class="site-stats">
-            <div class="site-stat"><span>Visits</span><strong>${Number(site.visits || 0).toLocaleString()}</strong></div>
-            <div class="site-stat"><span>Leads</span><strong>${Number(site.leads || 0)}</strong></div>
-            <div class="site-stat"><span>Backups</span><strong>${site.plan === "paid" ? site.backups.length : "—"}</strong></div>
-          </div>
+  <section id="services">
+    <div class="shell">
+      <h2>Built for practical web work.</h2>
+      <div class="services">
+        <article class="service">
+          <div class="accent"></div>
+          <h3>Brochure sites</h3>
+          <p>Fast single-page or multi-page websites for services, local businesses, and product introductions.</p>
         </article>
-      `).join("");
+        <article class="service">
+          <div class="accent"></div>
+          <h3>App hosting</h3>
+          <p>Coolify-based deployments for containers, databases, workers, and secure public routing.</p>
+        </article>
+        <article class="service">
+          <div class="accent"></div>
+          <h3>Operational care</h3>
+          <p>Backups, domain checks, logs, and lightweight dashboards so the live surface is visible.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      document.querySelectorAll("[data-site-card]").forEach((card) => {
-        card.addEventListener("click", () => selectSite(card.dataset.siteCard));
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            selectSite(card.dataset.siteCard);
-          }
-        });
-      });
-    }
-
-    function metric(label, value, detail) {
-      return `
-        <div class="metric">
-          <span>${escapeHtml(label)}</span>
-          <strong>${escapeHtml(value)}</strong>
-          <em>${escapeHtml(detail)}</em>
-        </div>
-      `;
-    }
-
-    function selectSite(siteId) {
-      const site = state.sites.find((item) => item.id === siteId);
-      if (!site) {
-        return;
-      }
-      state.selectedSiteId = siteId;
-      state.selectedComponentId = site.components[0]?.id || null;
-      state.view = "builder";
-      saveState();
-      render();
-    }
-
-    function renderBuilder() {
-      const site = selectedSite();
-      const activeComponent = selectedComponent(site);
-      if (!site) {
-        els.builderSiteName.textContent = "Builder";
-        els.builderSiteUrl.textContent = "No site selected";
-        els.componentCatalog.innerHTML = "";
-        els.componentList.innerHTML = "";
-        els.editorFields.innerHTML = "";
-        els.sitePreview.innerHTML = `<div class="empty-state">Create a website to start.</div>`;
-        return;
-      }
-
-      els.builderSiteName.textContent = site.name;
-      els.builderSiteUrl.textContent = siteUrl(site);
-      els.componentCatalog.innerHTML = componentCatalog.map((item) => {
-        const locked = item.paid && site.plan !== "paid";
-        return `
-          <button class="tool-button ${locked ? "locked" : ""}" type="button" data-add-component="${item.type}" ${locked ? "disabled" : ""} title="${locked ? "Paid plan" : item.label}">
-            <i data-lucide="${item.icon}" class="icon"></i>
-            <span>${escapeHtml(item.label)}</span>
-            ${locked ? `<span class="pill amber">Paid</span>` : ""}
-          </button>
-        `;
-      }).join("");
-
-      els.componentList.innerHTML = site.components.map((item, index) => `
-        <div class="component-row ${item.id === activeComponent?.id ? "active" : ""}" data-component-row="${item.id}">
-          <button class="button" type="button" data-select-component="${item.id}">${escapeHtml(index + 1)}. ${escapeHtml(item.label)}</button>
-          <div class="toolbar">
-            <button class="icon-button" type="button" data-move-component="${item.id}" data-direction="-1" aria-label="Move up"><i data-lucide="arrow-up" class="icon"></i></button>
-            <button class="icon-button" type="button" data-move-component="${item.id}" data-direction="1" aria-label="Move down"><i data-lucide="arrow-down" class="icon"></i></button>
-            <button class="icon-button" type="button" data-delete-component="${item.id}" aria-label="Delete"><i data-lucide="trash-2" class="icon"></i></button>
-          </div>
-        </div>
-      `).join("");
-
-      els.editorFields.innerHTML = activeComponent ? editorFields(activeComponent) : `<div class="empty-state">Select a section.</div>`;
-      els.sitePreview.innerHTML = renderPreview(site);
-      els.previewPlanSwitch.querySelectorAll("button").forEach((button) => {
-        button.classList.toggle("active", button.dataset.plan === site.plan);
-      });
-
-      document.querySelectorAll("[data-add-component]").forEach((button) => {
-        button.addEventListener("click", () => addComponent(button.dataset.addComponent));
-      });
-      document.querySelectorAll("[data-select-component]").forEach((button) => {
-        button.addEventListener("click", () => {
-          state.selectedComponentId = button.dataset.selectComponent;
-          saveState();
-          renderBuilder();
-          refreshIcons();
-        });
-      });
-      document.querySelectorAll("[data-move-component]").forEach((button) => {
-        button.addEventListener("click", () => moveComponent(button.dataset.moveComponent, Number(button.dataset.direction)));
-      });
-      document.querySelectorAll("[data-delete-component]").forEach((button) => {
-        button.addEventListener("click", () => deleteComponent(button.dataset.deleteComponent));
-      });
-      document.querySelectorAll("[data-editor-field]").forEach((field) => {
-        field.addEventListener("input", () => updateComponentField(field.dataset.editorField, field.value));
-      });
-    }
-
-    function editorFields(activeComponent) {
-      const fields = componentCatalog.find((item) => item.type === activeComponent.type)?.fields || ["headline", "body"];
-      return fields.map((field) => {
-        const value = activeComponent[field] || "";
-        const textArea = field === "body" || field === "items" || field === "links";
-        return `
-          <div class="field" style="grid-column: 1 / -1;">
-            <label for="field-${field}">${escapeHtml(field)}</label>
-            ${textArea
-              ? `<textarea id="field-${field}" data-editor-field="${field}">${escapeHtml(value)}</textarea>`
-              : `<input id="field-${field}" data-editor-field="${field}" value="${escapeHtml(value)}">`}
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderPreview(site) {
-      const ad = site.plan === "free" ? `<div class="preview-ad">Created with Audo free hosting</div>` : "";
-      return `${ad}<div class="site-preview">${site.components.map((item) => renderPreviewComponent(item)).join("")}</div>`;
-    }
-
-    function renderPreviewComponent(item) {
-      const headline = escapeHtml(item.headline || item.brand || item.label);
-      const body = escapeHtml(item.body || "");
-      const items = splitItems(item.items);
-      const links = splitItems(item.links);
-      switch (item.type) {
-        case "nav":
-          return `<nav class="preview-nav"><strong>${escapeHtml(item.brand)}</strong><span>${links.map(escapeHtml).join(" · ")}</span></nav>`;
-        case "hero":
-          return `<header class="preview-hero"><h1>${headline}</h1><p>${body}</p><a class="preview-cta" href="#contact">${escapeHtml(item.button || "Get started")}</a></header>`;
-        case "features":
-        case "services":
-        case "testimonials":
-        case "pricing":
-        case "faq":
-          return `<section><h2>${headline}</h2><div class="preview-grid">${items.map((value) => `<article class="preview-card"><h3>${escapeHtml(value.split(" - ")[0])}</h3><p>${escapeHtml(value.includes(" - ") ? value.split(" - ").slice(1).join(" - ") : "Ready to edit in the builder.")}</p></article>`).join("")}</div></section>`;
-        case "gallery":
-          return `<section><h2>${headline}</h2><div class="preview-gallery"><div></div><div></div><div></div></div></section>`;
-        case "contact":
-          return `<section id="contact"><h2>${headline}</h2><p>${body}</p><form class="preview-form"><input placeholder="Name"><input placeholder="Email"><textarea placeholder="Message"></textarea><button class="preview-cta" type="button">Send</button></form></section>`;
-        case "booking":
-          return `<section><h2>${headline}</h2><p>${body}</p><div class="preview-embed"></div></section>`;
-        case "map":
-          return `<section><h2>${headline}</h2><p>${body}</p><div class="preview-map"></div></section>`;
-        case "social":
-          return `<section><h2>${headline}</h2><p>${links.map(escapeHtml).join(" · ")}</p></section>`;
-        case "custom":
-          return `<section><h2>${headline}</h2><pre>${escapeHtml(item.body || "")}</pre></section>`;
-        case "footer":
-          return `<footer><strong>${escapeHtml(item.brand)}</strong><p>${body}</p></footer>`;
-        default:
-          return `<section><h2>${headline}</h2><p>${body}</p></section>`;
-      }
-    }
-
-    function addComponent(type) {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      const catalogItem = componentCatalog.find((item) => item.type === type);
-      if (catalogItem?.paid && site.plan !== "paid") {
-        showToast("Upgrade this site to add paid builder blocks.");
-        return;
-      }
-      const next = component(type);
-      site.components.push(next);
-      state.selectedComponentId = next.id;
-      saveState();
-      render();
-    }
-
-    function moveComponent(componentId, direction) {
-      const site = selectedSite();
-      const index = site?.components.findIndex((item) => item.id === componentId) ?? -1;
-      const target = index + direction;
-      if (!site || index < 0 || target < 0 || target >= site.components.length) {
-        return;
-      }
-      const [item] = site.components.splice(index, 1);
-      site.components.splice(target, 0, item);
-      saveState();
-      render();
-    }
-
-    function deleteComponent(componentId) {
-      const site = selectedSite();
-      if (!site || site.components.length <= 1) {
-        return;
-      }
-      site.components = site.components.filter((item) => item.id !== componentId);
-      state.selectedComponentId = site.components[0]?.id || null;
-      saveState();
-      render();
-    }
-
-    function updateComponentField(field, value) {
-      const item = selectedComponent();
-      if (!item) {
-        return;
-      }
-      item[field] = value;
-      saveState();
-      els.sitePreview.innerHTML = renderPreview(selectedSite());
-    }
-
-    function renderDomains() {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      els.domainSiteName.textContent = `${site.name} URLs`;
-      els.domainPlanPill.className = `pill ${site.plan === "paid" ? "blue" : "green"}`;
-      els.domainPlanPill.textContent = site.plan === "paid" ? "Paid" : "Free";
-      els.subdomainInput.value = site.slug;
-      els.customDomainInput.value = site.customDomain || "";
-      els.customDomainInput.disabled = site.plan !== "paid";
-      els.domainTable.innerHTML = `
-        <div class="table-row"><span>URL</span><span>Status</span><span>Plan</span><span>Routing</span></div>
-        <div class="table-row"><span>${escapeHtml(site.slug)}.${FREE_DOMAIN}</span><span><span class="pill green">Ready</span></span><span>Free</span><span>Wildcard DNS</span></div>
-        <div class="table-row"><span>${escapeHtml(site.customDomain || "Add custom domain")}</span><span><span class="pill ${site.plan === "paid" && site.customDomain ? "amber" : "rose"}">${site.plan === "paid" ? "DNS pending" : "Locked"}</span></span><span>Paid</span><span>CNAME / A record</span></div>
-      `;
-      els.domainUpgradePanel.innerHTML = site.plan === "paid"
-        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
-        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
-      document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
-        button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
-      });
-    }
-
-    function renderIntegrations() {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      const locked = site.plan !== "paid";
-      els.githubPlanPill.className = `pill ${locked ? "amber" : "blue"}`;
-      els.githubPlanPill.textContent = locked ? "Upgrade" : "Paid";
-      els.backupPlanPill.className = `pill ${locked ? "amber" : "blue"}`;
-      els.backupPlanPill.textContent = locked ? "Upgrade" : "Paid";
-      els.repoInput.value = site.github.repo;
-      els.branchInput.value = site.github.branch;
-      els.buildInput.value = site.github.build;
-      els.outputInput.value = site.github.output;
-      [els.repoInput, els.branchInput, els.buildInput, els.outputInput, document.getElementById("connectGithub"), document.getElementById("saveIntegration")].forEach((element) => {
-        element.disabled = locked;
-      });
-      els.backupPanel.innerHTML = locked
-        ? `<div class="lock-panel"><strong>Backups are on paid hosting.</strong><span>Paid sites get restore points, retention settings, and GitHub-backed rebuild paths.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`
-        : `<div class="table"><div class="table-row"><span>Restore point</span><span>Size</span><span>Status</span><span></span></div>${backupRows(site)}</div><div class="toolbar"><button class="button" type="button" id="runBackup"><i data-lucide="archive" class="icon"></i><span>Run backup</span></button></div>`;
-      document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
-        button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
-      });
-      document.getElementById("runBackup")?.addEventListener("click", runBackup);
-    }
-
-    function backupRows(site) {
-      const backups = site.backups.length ? site.backups : [{ at: "No backups yet", size: "—", status: "Ready" }];
-      return backups.map((backup) => `<div class="table-row"><span>${escapeHtml(backup.at)}</span><span>${escapeHtml(backup.size)}</span><span><span class="pill green">${escapeHtml(backup.status)}</span></span><span></span></div>`).join("");
-    }
-
-    function upgradeSite(siteId) {
-      const site = state.sites.find((item) => item.id === siteId);
-      if (!site) {
-        return;
-      }
-      site.plan = "paid";
-      site.customDomain ||= `www.${site.slug}.com`;
-      site.status = site.status === "draft" ? "configured" : site.status;
-      saveState();
-      showToast(`${site.name} is on paid hosting.`);
-      render();
-    }
-
-    function runBackup() {
-      const site = selectedSite();
-      if (!site || site.plan !== "paid") {
-        return;
-      }
-      site.backups.unshift({
-        at: new Date().toLocaleString(),
-        size: `${Math.max(12, Math.floor(site.components.length * 4.2))} MB`,
-        status: "Complete"
-      });
-      saveState();
-      showToast("Backup snapshot created.");
-      render();
-    }
-
-    function publishSite() {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      site.status = "published";
-      site.publishedAt = new Date().toISOString();
-      site.visits += Math.floor(10 + Math.random() * 80);
-      saveState();
-      showToast(`${site.name} published to ${siteUrl(site)}.`);
-      render();
-    }
-
-    function openSiteModal() {
-      els.siteNameInput.value = "";
-      els.siteSlugInput.value = "";
-      els.siteTemplateInput.value = "service";
-      els.sitePlanInput.value = "free";
-      els.siteModal.classList.add("active");
-      els.siteNameInput.focus();
-    }
-
-    function closeSiteModal() {
-      els.siteModal.classList.remove("active");
-    }
-
-    function createSite() {
-      const name = els.siteNameInput.value.trim() || "Untitled site";
-      const site = createSiteRecord({
-        name,
-        slug: slugify(els.siteSlugInput.value || name),
-        plan: els.sitePlanInput.value,
-        template: els.siteTemplateInput.value,
-        status: "draft"
-      });
-      state.sites.unshift(site);
-      state.selectedSiteId = site.id;
-      state.selectedComponentId = site.components[0]?.id || null;
-      state.view = "builder";
-      saveState();
-      closeSiteModal();
-      showToast(`${site.name} created.`);
-      render();
-    }
-
-    async function signInWithEmail(create) {
-      const email = document.getElementById("emailInput").value.trim();
-      const password = document.getElementById("passwordInput").value;
-      if (!email || !password) {
-        showToast("Enter an email and password.");
-        return;
-      }
-      if (state.authMode === "firebase" && firebaseAuth && firebaseModules) {
-        try {
-          if (create) {
-            await firebaseModules.createUserWithEmailAndPassword(firebaseAuth, email, password);
-          } else {
-            await firebaseModules.signInWithEmailAndPassword(firebaseAuth, email, password);
-          }
-        } catch (error) {
-          showToast(error.message || "Firebase sign-in failed.");
-        }
-        return;
-      }
-      state.user = { uid: "preview", email, name: email.split("@")[0] };
-      state.view = "sites";
-      saveState();
-      render();
-    }
-
-    async function signInWithGoogle() {
-      if (state.authMode === "firebase" && firebaseAuth && firebaseModules) {
-        try {
-          const provider = new firebaseModules.GoogleAuthProvider();
-          await firebaseModules.signInWithPopup(firebaseAuth, provider);
-        } catch (error) {
-          showToast(error.message || "Google sign-in failed.");
-        }
-        return;
-      }
-      state.user = { uid: "preview-google", email: "preview@getaudo.com", name: "Preview user" };
-      state.view = "sites";
-      saveState();
-      render();
-    }
-
-    async function signOutUser() {
-      if (state.authMode === "firebase" && firebaseAuth && firebaseModules) {
-        await firebaseModules.signOut(firebaseAuth);
-      } else {
-        state.user = null;
-        state.view = "auth";
-        saveState();
-        render();
-      }
-    }
-
-    function showToast(message) {
-      els.toast.textContent = message;
-      els.toast.classList.add("active");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => els.toast.classList.remove("active"), 3200);
-    }
-
-    function refreshIcons() {
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
-    }
-
-    document.querySelectorAll("[data-view-button]").forEach((button) => {
-      button.addEventListener("click", () => setView(button.dataset.viewButton));
-    });
-    document.getElementById("newSiteButton").addEventListener("click", openSiteModal);
-    document.getElementById("newSiteSidebar").addEventListener("click", openSiteModal);
-    document.getElementById("closeSiteModal").addEventListener("click", closeSiteModal);
-    document.getElementById("cancelSiteModal").addEventListener("click", closeSiteModal);
-    document.getElementById("createSite").addEventListener("click", createSite);
-    document.getElementById("publishButton").addEventListener("click", publishSite);
-    document.getElementById("sidebarSignOut").addEventListener("click", signOutUser);
-    document.getElementById("emailSignIn").addEventListener("click", () => signInWithEmail(false));
-    document.getElementById("emailCreate").addEventListener("click", () => signInWithEmail(true));
-    document.getElementById("googleSignIn").addEventListener("click", signInWithGoogle);
-    document.getElementById("siteNameInput").addEventListener("input", (event) => {
-      if (!els.siteSlugInput.value.trim()) {
-        els.siteSlugInput.placeholder = slugify(event.target.value || "site-name");
-      }
-    });
-    els.previewPlanSwitch.addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-plan]");
-      const site = selectedSite();
-      if (!button || !site) {
-        return;
-      }
-      if (button.dataset.plan === "free") {
-        site.plan = "free";
-        site.customDomain = "";
-      } else {
-        upgradeSite(site.id);
-        return;
-      }
-      saveState();
-      render();
-    });
-    els.subdomainInput.addEventListener("input", () => {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      site.slug = slugify(els.subdomainInput.value);
-      saveState();
-      render();
-    });
-    els.customDomainInput.addEventListener("input", () => {
-      const site = selectedSite();
-      if (!site || site.plan !== "paid") {
-        return;
-      }
-      site.customDomain = els.customDomainInput.value.trim().toLowerCase();
-      saveState();
-      render();
-    });
-    document.getElementById("saveIntegration").addEventListener("click", () => {
-      const site = selectedSite();
-      if (!site || site.plan !== "paid") {
-        return;
-      }
-      site.github.repo = els.repoInput.value.trim();
-      site.github.branch = els.branchInput.value.trim() || "main";
-      site.github.build = els.buildInput.value.trim();
-      site.github.output = els.outputInput.value.trim() || "dist";
-      saveState();
-      showToast("GitHub settings saved.");
-      render();
-    });
-    document.getElementById("connectGithub").addEventListener("click", () => {
-      const site = selectedSite();
-      if (!site || site.plan !== "paid") {
-        return;
-      }
-      site.github.connected = true;
-      saveState();
-      showToast("GitHub connection marked ready.");
-      render();
-    });
-
-    render();
-    initAuth();
-    window.addEventListener("load", refreshIcons);
-  </script>
+  <footer>
+    <div class="shell">
+      <span>Audo managed web hosting</span>
+      <span>getaudo.com</span>
+    </div>
+  </footer>
 </body>
 </html>

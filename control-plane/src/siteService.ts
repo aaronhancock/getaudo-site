@@ -311,14 +311,17 @@ export class SiteService {
   }
 
   private async event(site: SiteRecord, type: string, message: string, data?: Record<string, unknown>): Promise<void> {
-    await this.services.store.appendEvent({
+    const event: SiteEvent = {
       id: nanoid(),
       siteId: site.id,
       teamId: site.teamId,
       type,
       message,
-      createdAt: now(),
-      data
-    });
+      createdAt: now()
+    };
+    if (data !== undefined) {
+      event.data = data;
+    }
+    await this.services.store.appendEvent(event);
   }
 }

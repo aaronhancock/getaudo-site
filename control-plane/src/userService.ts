@@ -23,6 +23,10 @@ function now(): string {
   return new Date().toISOString();
 }
 
+function clean<T extends object>(value: T): T {
+  return Object.fromEntries(Object.entries(value).filter(([, item]) => item !== undefined)) as T;
+}
+
 function normalizeEmail(email: string): string {
   const value = email.trim().toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -88,14 +92,15 @@ export class UserService {
         lastSeenAt: timestamp,
         updatedAt: timestamp
       };
-      transaction.set(teamRef, {
+      const team = clean({
         id: user.teamId,
         ownerUid: existing?.role === "owner" ? existing.uid : user.role === "owner" ? user.uid : undefined,
         updatedAt: timestamp,
         createdAt: existing?.createdAt || timestamp
-      }, { merge: true });
-      transaction.set(memberRef, next, { merge: true });
-      transaction.set(profileRef, next, { merge: true });
+      });
+      transaction.set(teamRef, team, { merge: true });
+      transaction.set(memberRef, clean(next), { merge: true });
+      transaction.set(profileRef, clean(next), { merge: true });
     });
     const saved = await memberRef.get();
     return saved.data() as ManagedUser;
@@ -207,8 +212,8 @@ export class UserService {
 
   private async writeUser(user: ManagedUser): Promise<void> {
     await Promise.all([
-      this.db!.collection("teams").doc(user.teamId).collection("users").doc(user.uid).set(user, { merge: true }),
-      this.db!.collection("userProfiles").doc(user.uid).set(user, { merge: true })
+      this.db!.collection("teams").doc(user.teamId).collection("users").doc(user.uid).set(clean(user), { merge: true }),
+      this.db!.collection("userProfiles").doc(user.uid).set(clean(user), { merge: true })
     ]);
   }
 }

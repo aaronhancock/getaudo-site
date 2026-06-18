@@ -119,6 +119,7 @@ describe("Audo control plane", () => {
     assert.equal(published.response.status, 200);
     assert.equal(published.body.site.status, "published");
     assert.equal(published.body.site.domains[0].status, "ready");
+    assert.equal(published.body.site.deployments.some((deployment: any) => "commit" in deployment), false);
     assert.deepEqual(cloudflare.slugs, ["test-site"]);
 
     const publicSite = await fetch(`${baseUrl}/`, { headers: { "x-forwarded-host": "test-site.getaudo.com" } });

@@ -598,17 +598,42 @@
       text-transform: uppercase;
     }
 
-    .builder-layout {
-      display: grid;
-      grid-template-columns: 270px minmax(0, 1fr) 310px;
-      gap: 12px;
-      align-items: start;
-    }
+	    .builder-layout {
+	      display: grid;
+	      grid-template-columns: 270px minmax(0, 1fr) 310px;
+	      gap: 12px;
+	      align-items: start;
+	    }
 
-    .builder-pane {
-      padding: 14px;
-      display: grid;
-      gap: 12px;
+	    .builder-mobile-tabs {
+	      display: none;
+	      gap: 8px;
+	      margin-bottom: 12px;
+	    }
+
+	    .builder-mobile-tabs button,
+	    .wizard-progress button {
+	      min-height: 40px;
+	      border: 1px solid var(--line);
+	      border-radius: var(--radius);
+	      background: #ffffff;
+	      color: var(--muted);
+	      font-weight: 780;
+	      cursor: pointer;
+	    }
+
+	    .builder-mobile-tabs button.active,
+	    .wizard-progress button.active {
+	      color: #08704c;
+	      border-color: #90cdb3;
+	      background: var(--green-2);
+	      box-shadow: 0 0 0 3px rgba(18, 151, 102, 0.1);
+	    }
+
+	    .builder-pane {
+	      padding: 14px;
+	      display: grid;
+	      gap: 12px;
       min-height: 280px;
     }
 
@@ -833,12 +858,94 @@
       box-shadow: var(--shadow);
     }
 
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+	    .modal-actions {
+	      display: flex;
+	      justify-content: flex-end;
+	      gap: 10px;
+	      flex-wrap: wrap;
+	    }
+
+	    .site-wizard {
+	      width: min(840px, 100%);
+	    }
+
+	    .wizard-progress {
+	      display: grid;
+	      grid-template-columns: repeat(4, minmax(0, 1fr));
+	      gap: 8px;
+	    }
+
+	    .wizard-panel {
+	      display: none;
+	      gap: 14px;
+	    }
+
+	    .wizard-panel.active {
+	      display: grid;
+	    }
+
+	    .wizard-options {
+	      display: grid;
+	      grid-template-columns: repeat(2, minmax(0, 1fr));
+	      gap: 10px;
+	    }
+
+	    .wizard-option {
+	      min-height: 128px;
+	      border: 1px solid var(--line);
+	      border-radius: var(--radius);
+	      background: #ffffff;
+	      padding: 14px;
+	      color: inherit;
+	      display: grid;
+	      align-content: start;
+	      gap: 8px;
+	      cursor: pointer;
+	      text-align: left;
+	    }
+
+	    .wizard-option strong {
+	      font-size: 16px;
+	    }
+
+	    .wizard-option span {
+	      color: var(--muted);
+	      line-height: 1.4;
+	    }
+
+	    .wizard-option.active {
+	      border-color: #90cdb3;
+	      background: var(--green-2);
+	      box-shadow: 0 0 0 3px rgba(18, 151, 102, 0.12);
+	    }
+
+	    .wizard-review {
+	      display: grid;
+	      grid-template-columns: repeat(2, minmax(0, 1fr));
+	      gap: 10px;
+	    }
+
+	    .wizard-review div {
+	      min-height: 76px;
+	      border: 1px solid var(--line);
+	      border-radius: var(--radius);
+	      padding: 12px;
+	      background: var(--surface-2);
+	      display: grid;
+	      align-content: center;
+	      gap: 6px;
+	    }
+
+	    .wizard-review span {
+	      color: var(--muted);
+	      font-size: 12px;
+	      font-weight: 800;
+	      text-transform: uppercase;
+	    }
+
+	    .wizard-review strong {
+	      overflow-wrap: anywhere;
+	    }
 
     .toast {
       position: fixed;
@@ -956,24 +1063,75 @@
         padding: 18px 14px 28px;
       }
 
-      .metrics,
-      .grid,
-      .field-grid,
-      .auth-side,
-      .preview-grid,
-      .preview-gallery {
-        grid-template-columns: 1fr;
-      }
+	      .metrics,
+	      .grid,
+	      .field-grid,
+	      .auth-side,
+	      .wizard-options,
+	      .wizard-review,
+	      .preview-grid,
+	      .preview-gallery {
+	        grid-template-columns: 1fr;
+	      }
 
       .nav {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .table-row {
-        grid-template-columns: 1fr;
-        padding: 12px;
-      }
-    }
+	      .table-row {
+	        grid-template-columns: 1fr;
+	        padding: 12px;
+	      }
+
+	      .builder-mobile-tabs {
+	        display: grid;
+	        grid-template-columns: repeat(3, minmax(0, 1fr));
+	        position: sticky;
+	        top: 0;
+	        z-index: 8;
+	        padding: 8px 0;
+	        background: var(--bg);
+	      }
+
+	      .builder-layout {
+	        display: block;
+	      }
+
+	      .builder-layout[data-mobile-tab="preview"] [data-builder-pane]:not([data-builder-pane="preview"]),
+	      .builder-layout[data-mobile-tab="structure"] [data-builder-pane]:not([data-builder-pane="structure"]),
+	      .builder-layout[data-mobile-tab="library"] [data-builder-pane]:not([data-builder-pane="library"]) {
+	        display: none;
+	      }
+
+	      .builder-pane {
+	        min-height: auto;
+	      }
+
+	      .preview-frame {
+	        min-height: 560px;
+	      }
+
+	      .site-preview {
+	        min-height: 520px;
+	      }
+
+	      .preview-hero h1 {
+	        font-size: 38px;
+	      }
+
+	      .component-row {
+	        align-items: stretch;
+	        flex-direction: column;
+	      }
+
+	      .component-row .toolbar {
+	        justify-content: flex-start;
+	      }
+
+	      .wizard-progress {
+	        grid-template-columns: repeat(2, minmax(0, 1fr));
+	      }
+	    }
   </style>
 </head>
 <body>
@@ -1113,37 +1271,42 @@
           </div>
         </section>
 
-        <section class="view" id="builderView">
-          <div class="builder-layout">
-            <aside class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Components</span>
-                  <h2>Library</h2>
-                </div>
+	        <section class="view" id="builderView">
+	          <div class="builder-mobile-tabs" id="builderMobileTabs" aria-label="Builder panels">
+	            <button class="active" data-builder-mobile-tab="preview" type="button">Preview</button>
+	            <button data-builder-mobile-tab="structure" type="button">Sections</button>
+	            <button data-builder-mobile-tab="library" type="button">Add</button>
+	          </div>
+	          <div class="builder-layout" id="builderLayout" data-mobile-tab="preview">
+	            <aside class="builder-pane" data-builder-pane="library">
+	              <div class="panel-header">
+	                <div>
+	                  <span class="panel-kicker">Components</span>
+	                  <h2>Library</h2>
+	                </div>
               </div>
-              <div class="tool-list" id="componentCatalog"></div>
-            </aside>
+	              <div class="tool-list" id="componentCatalog"></div>
+	            </aside>
 
-            <section class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker" id="builderSiteUrl">No site selected</span>
-                  <h2 id="builderSiteName">Builder</h2>
+	            <section class="builder-pane" data-builder-pane="preview">
+	              <div class="panel-header">
+	                <div>
+	                  <span class="panel-kicker" id="builderSiteUrl">No site selected</span>
+	                  <h2 id="builderSiteName">Builder</h2>
                 </div>
                 <div class="segmented" id="previewPlanSwitch">
                   <button type="button" data-plan="free">Free</button>
                   <button type="button" data-plan="paid">Paid</button>
                 </div>
               </div>
-              <div class="preview-frame" id="sitePreview"></div>
-            </section>
+	              <div class="preview-frame" id="sitePreview"></div>
+	            </section>
 
-            <aside class="builder-pane">
-              <div class="panel-header">
-                <div>
-                  <span class="panel-kicker">Page</span>
-                  <h2>Structure</h2>
+	            <aside class="builder-pane" data-builder-pane="structure">
+	              <div class="panel-header">
+	                <div>
+	                  <span class="panel-kicker">Page</span>
+	                  <h2>Structure</h2>
                 </div>
               </div>
               <div class="component-list" id="componentList"></div>
@@ -1235,47 +1398,60 @@
     </main>
   </div>
 
-  <div class="modal" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="siteModalTitle">
-    <div class="modal-panel">
-      <div class="panel-header">
-        <div>
-          <span class="panel-kicker">Create</span>
-          <h2 id="siteModalTitle">New website</h2>
-        </div>
-        <button class="icon-button" id="closeSiteModal" type="button" aria-label="Close"><i data-lucide="x" class="icon"></i></button>
-      </div>
-      <div class="field-grid">
-        <div class="field">
-          <label for="siteNameInput">Site name</label>
-          <input id="siteNameInput" placeholder="Acme Studio">
-        </div>
-        <div class="field">
-          <label for="siteSlugInput">Subdomain</label>
-          <input id="siteSlugInput" placeholder="acme-studio">
-        </div>
-        <div class="field">
-          <label for="siteTemplateInput">Template</label>
-          <select id="siteTemplateInput">
-            <option value="service">Local service</option>
-            <option value="portfolio">Portfolio</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="saas">SaaS product</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="sitePlanInput">Plan</label>
-          <select id="sitePlanInput">
-            <option value="free">Free one-page</option>
-            <option value="paid">Paid hosting</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="button" id="cancelSiteModal" type="button">Cancel</button>
-        <button class="button primary" id="createSite" type="button"><i data-lucide="plus" class="icon"></i><span>Create site</span></button>
-      </div>
-    </div>
-  </div>
+	  <div class="modal" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="siteModalTitle">
+	    <div class="modal-panel site-wizard">
+	      <div class="panel-header">
+	        <div>
+	          <span class="panel-kicker">Create</span>
+	          <h2 id="siteModalTitle">Website setup</h2>
+	        </div>
+	        <button class="icon-button" id="closeSiteModal" type="button" aria-label="Close"><i data-lucide="x" class="icon"></i></button>
+	      </div>
+	      <div class="wizard-progress" id="siteWizardProgress" aria-label="Setup steps">
+	        <button class="active" data-site-wizard-step="0" type="button">Basics</button>
+	        <button data-site-wizard-step="1" type="button">Template</button>
+	        <button data-site-wizard-step="2" type="button">Plan</button>
+	        <button data-site-wizard-step="3" type="button">Review</button>
+	      </div>
+	      <div class="wizard-panel active" data-site-wizard-panel="0">
+	        <div class="field-grid">
+	          <div class="field">
+	            <label for="siteNameInput">Site name</label>
+	            <input id="siteNameInput" placeholder="Acme Studio" autocomplete="organization">
+	          </div>
+	          <div class="field">
+	            <label for="siteSlugInput">Subdomain</label>
+	            <input id="siteSlugInput" placeholder="acme-studio" autocapitalize="none" spellcheck="false">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="wizard-panel" data-site-wizard-panel="1">
+	        <input id="siteTemplateInput" type="hidden" value="service">
+	        <div class="wizard-options">
+	          <button class="wizard-option active" data-template-option="service" type="button"><strong>Local service</strong><span>Services, proof, testimonials, and contact.</span></button>
+	          <button class="wizard-option" data-template-option="portfolio" type="button"><strong>Portfolio</strong><span>Selected work, capabilities, proof, and inquiries.</span></button>
+	          <button class="wizard-option" data-template-option="restaurant" type="button"><strong>Restaurant</strong><span>Menu highlights, hours, reservations, and location.</span></button>
+	          <button class="wizard-option" data-template-option="saas" type="button"><strong>SaaS product</strong><span>Features, use cases, pricing, FAQ, and demo paths.</span></button>
+	        </div>
+	      </div>
+	      <div class="wizard-panel" data-site-wizard-panel="2">
+	        <input id="sitePlanInput" type="hidden" value="free">
+	        <div class="wizard-options">
+	          <button class="wizard-option active" data-plan-option="free" type="button"><strong>Free one-page</strong><span>getaudo.com subdomain, Audo banner, basic publish controls.</span></button>
+	          <button class="wizard-option" data-plan-option="paid" type="button"><strong>Paid hosting</strong><span>Custom URL, backups, GitHub integration, no Audo banner.</span></button>
+	        </div>
+	      </div>
+	      <div class="wizard-panel" data-site-wizard-panel="3">
+	        <div class="wizard-review" id="siteWizardReview"></div>
+	      </div>
+	      <div class="modal-actions">
+	        <button class="button" id="cancelSiteModal" type="button">Cancel</button>
+	        <button class="button" id="siteWizardBack" type="button"><i data-lucide="arrow-left" class="icon"></i><span>Back</span></button>
+	        <button class="button primary" id="siteWizardNext" type="button"><span>Next</span><i data-lucide="arrow-right" class="icon"></i></button>
+	        <button class="button primary" id="createSite" type="button"><i data-lucide="plus" class="icon"></i><span>Create site</span></button>
+	      </div>
+	    </div>
+	  </div>
 
   <div class="toast" id="toast" role="status"></div>
 
@@ -1285,8 +1461,27 @@
     const FIREBASE_CONFIG = await loadFirebaseConfig();
     const API_BASE_URL = String(APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
     const GOOGLE_AUTH_ENABLED = APP_CONFIG.authProviders?.google === true;
-    const STORAGE_KEY = "audo-console-state-v1";
-    const FREE_DOMAIN = "getaudo.com";
+	    const STORAGE_KEY = "audo-console-state-v1";
+	    const FREE_DOMAIN = "getaudo.com";
+	    const wizardStepLabels = ["Basics", "Template", "Plan", "Review"];
+	    const templateLabels = {
+	      service: "Local service",
+	      portfolio: "Portfolio",
+	      restaurant: "Restaurant",
+	      saas: "SaaS product"
+	    };
+	    const planLabels = {
+	      free: "Free one-page",
+	      paid: "Paid hosting"
+	    };
+	    const fieldLabels = {
+	      brand: "Brand",
+	      links: "Links",
+	      headline: "Headline",
+	      body: "Body",
+	      button: "Button text",
+	      items: "Items"
+	    };
 
     const componentCatalog = [
       { type: "nav", label: "Navigation", icon: "menu", fields: ["brand", "links"] },
@@ -1329,10 +1524,13 @@
       }
     };
 
-    const state = loadState();
-    let firebaseAuth = null;
-    let firebaseModules = null;
-    let toastTimer = null;
+	    const state = loadState();
+	    let firebaseAuth = null;
+	    let firebaseModules = null;
+	    let toastTimer = null;
+	    let siteWizardStep = 0;
+	    let publishing = false;
+	    let creatingSite = false;
 
     const els = {
       views: {
@@ -1350,13 +1548,15 @@
       sidebarAuthMode: document.getElementById("sidebarAuthMode"),
       siteGrid: document.getElementById("siteGrid"),
       metrics: document.getElementById("metrics"),
-      componentCatalog: document.getElementById("componentCatalog"),
-      componentList: document.getElementById("componentList"),
-      editorFields: document.getElementById("editorFields"),
-      sitePreview: document.getElementById("sitePreview"),
-      builderSiteName: document.getElementById("builderSiteName"),
-      builderSiteUrl: document.getElementById("builderSiteUrl"),
-      previewPlanSwitch: document.getElementById("previewPlanSwitch"),
+	      componentCatalog: document.getElementById("componentCatalog"),
+	      componentList: document.getElementById("componentList"),
+	      editorFields: document.getElementById("editorFields"),
+	      sitePreview: document.getElementById("sitePreview"),
+	      builderLayout: document.getElementById("builderLayout"),
+	      builderMobileTabs: document.getElementById("builderMobileTabs"),
+	      builderSiteName: document.getElementById("builderSiteName"),
+	      builderSiteUrl: document.getElementById("builderSiteUrl"),
+	      previewPlanSwitch: document.getElementById("previewPlanSwitch"),
       domainSiteName: document.getElementById("domainSiteName"),
       domainPlanPill: document.getElementById("domainPlanPill"),
       domainTable: document.getElementById("domainTable"),
@@ -1377,12 +1577,17 @@
       managedUserPasswordInput: document.getElementById("managedUserPasswordInput"),
       managedUserRoleInput: document.getElementById("managedUserRoleInput"),
       siteModal: document.getElementById("siteModal"),
-      siteNameInput: document.getElementById("siteNameInput"),
-      siteSlugInput: document.getElementById("siteSlugInput"),
-      siteTemplateInput: document.getElementById("siteTemplateInput"),
-      sitePlanInput: document.getElementById("sitePlanInput"),
-      toast: document.getElementById("toast")
-    };
+	      siteNameInput: document.getElementById("siteNameInput"),
+	      siteSlugInput: document.getElementById("siteSlugInput"),
+	      siteTemplateInput: document.getElementById("siteTemplateInput"),
+	      sitePlanInput: document.getElementById("sitePlanInput"),
+	      siteWizardProgress: document.getElementById("siteWizardProgress"),
+	      siteWizardReview: document.getElementById("siteWizardReview"),
+	      siteWizardBack: document.getElementById("siteWizardBack"),
+	      siteWizardNext: document.getElementById("siteWizardNext"),
+	      createSite: document.getElementById("createSite"),
+	      toast: document.getElementById("toast")
+	    };
 
     async function loadAppConfig() {
       if (window.AUDO_APP_CONFIG) {
@@ -1422,12 +1627,13 @@
       const fallback = {
         authReady: false,
         authMode: "loading",
-        user: null,
-        view: "sites",
-        selectedSiteId: "demo-service",
-        selectedComponentId: null,
-        users: [],
-        sites: [
+	        user: null,
+	        view: "sites",
+	        selectedSiteId: "demo-service",
+	        selectedComponentId: null,
+	        builderMobileTab: "preview",
+	        users: [],
+	        sites: [
           createSiteRecord({
             id: "demo-service",
             name: "Demo service site",
@@ -1460,10 +1666,11 @@
       const saved = {
         user: null,
         view: state.view,
-        selectedSiteId: state.selectedSiteId,
-        selectedComponentId: state.selectedComponentId,
-        users: state.users,
-        sites: state.sites
+	        selectedSiteId: state.selectedSiteId,
+	        selectedComponentId: state.selectedComponentId,
+	        builderMobileTab: state.builderMobileTab,
+	        users: state.users,
+	        sites: state.sites
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
     }
@@ -1486,34 +1693,66 @@
       return normalized;
     }
 
-    async function apiFetch(path, init = {}) {
-      if (!API_BASE_URL) {
-        return null;
-      }
-      const headers = {
-        "content-type": "application/json",
-        ...(await authHeaders()),
-        ...(init.headers || {})
-      };
-      const response = await fetch(`${API_BASE_URL}${path}`, {
-        ...init,
-        headers
-      });
-      const body = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const message = body.error?.message || `API request failed: ${response.status}`;
-        throw new Error(message);
-      }
-      return body;
-    }
+	    function friendlyErrorMessage(error, fallback = "Something went wrong.") {
+	      const raw = String(error?.message || error || "");
+	      if (!raw) {
+	        return fallback;
+	      }
+	      if (/Firebase|auth\/|TOKEN_EXPIRED|INVALID_ID_TOKEN|user-token-expired|user-not-found/i.test(raw)) {
+	        return "Your sign-in expired. Sign in again and retry.";
+	      }
+	      if (/Authentication required|401|unauthorized/i.test(raw)) {
+	        return "Sign in again and retry.";
+	      }
+	      if (/Failed to fetch|NetworkError|fetch failed/i.test(raw)) {
+	        return "Network request failed. Check the connection and retry.";
+	      }
+	      return raw;
+	    }
 
-    async function authHeaders() {
-      if (state.authMode === "firebase" && firebaseAuth?.currentUser) {
-        return { authorization: `Bearer ${await firebaseAuth.currentUser.getIdToken()}` };
-      }
-      if (state.user?.uid) {
-        return { "x-audo-preview-user": state.user.uid };
-      }
+	    async function apiFetch(path, init = {}) {
+	      if (!API_BASE_URL) {
+	        return null;
+	      }
+	      let response = await apiRequest(path, init, false);
+	      if (response.status === 401 && state.authMode === "firebase" && firebaseAuth?.currentUser) {
+	        response = await apiRequest(path, init, true);
+	      }
+	      const body = await response.json().catch(() => ({}));
+	      if (!response.ok) {
+	        const message = body.error?.message || `API request failed: ${response.status}`;
+	        throw new Error(message);
+	      }
+	      return body;
+	    }
+
+	    async function apiRequest(path, init, forceRefresh) {
+	      const headers = {
+	        "content-type": "application/json",
+	        ...(await authHeaders(forceRefresh)),
+	        ...(init.headers || {})
+	      };
+	      return fetch(`${API_BASE_URL}${path}`, {
+	        ...init,
+	        headers
+	      });
+	    }
+
+	    async function authHeaders(forceRefresh = false) {
+	      if (state.authMode === "firebase" && firebaseAuth?.currentUser) {
+	        try {
+	          return { authorization: `Bearer ${await firebaseAuth.currentUser.getIdToken(forceRefresh)}` };
+	        } catch (error) {
+	          state.user = null;
+	          state.users = [];
+	          state.view = "auth";
+	          saveState();
+	          throw new Error(friendlyErrorMessage(error, "Your sign-in expired. Sign in again and retry."));
+	        }
+	      }
+	      if (state.user?.uid) {
+	        return { "x-audo-preview-user": state.user.uid };
+	      }
       return {};
     }
 
@@ -1746,17 +1985,21 @@
               uid: user.uid,
               email: user.email || "",
               name: user.displayName || user.email || "Audo user"
-            } : null;
-            if (!state.user) {
-              state.users = [];
-            }
-            saveState();
+	            } : null;
+	            if (!state.user) {
+	              state.users = [];
+	            } else if (API_BASE_URL) {
+	              state.sites = [];
+	              state.selectedSiteId = null;
+	              state.selectedComponentId = null;
+	            }
+	            saveState();
             if (state.user) {
               try {
                 await syncSitesFromApi();
                 await syncUsersFromApi();
-              } catch (error) {
-                showToast(error.message || "Could not load account data from the control plane.");
+	              } catch (error) {
+	                showToast(friendlyErrorMessage(error, "Could not load account data from the control plane."));
               }
             }
             render();
@@ -1812,7 +2055,7 @@
       els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
       document.querySelector("#googleSignIn span").textContent = state.authMode === "firebase" ? "Google" : "Demo login";
       document.getElementById("googleSignIn").disabled = state.authMode === "firebase" && !GOOGLE_AUTH_ENABLED;
-      document.getElementById("publishButton").disabled = !signedIn || !selectedSite();
+	      document.getElementById("publishButton").disabled = publishing || !signedIn || !selectedSite();
       document.getElementById("newSiteButton").disabled = !signedIn;
       document.getElementById("newSiteSidebar").disabled = !signedIn;
       document.getElementById("sidebarSignOut").disabled = !signedIn;
@@ -1821,13 +2064,20 @@
       });
     }
 
-    function setView(view, persist = true) {
-      state.view = view;
-      if (persist) {
-        saveState();
-      }
-      renderChrome();
-    }
+	    function setView(view, persist = true) {
+	      state.view = view;
+	      if (persist) {
+	        saveState();
+	      }
+	      renderChrome();
+	    }
+
+	    function setBuilderMobileTab(tab) {
+	      state.builderMobileTab = ["preview", "structure", "library"].includes(tab) ? tab : "preview";
+	      saveState();
+	      renderBuilder();
+	      refreshIcons();
+	    }
 
     function renderSites() {
       const totalVisits = state.sites.reduce((sum, site) => sum + Number(site.visits || 0), 0);
@@ -1915,18 +2165,23 @@
       if (!site) {
         return;
       }
-      state.selectedSiteId = siteId;
-      state.selectedComponentId = site.components[0]?.id || null;
-      state.view = "builder";
-      saveState();
-      render();
+	      state.selectedSiteId = siteId;
+	      state.selectedComponentId = site.components[0]?.id || null;
+	      state.view = "builder";
+	      state.builderMobileTab = "preview";
+	      saveState();
+	      render();
     }
 
-    function renderBuilder() {
-      const site = selectedSite();
-      const activeComponent = selectedComponent(site);
-      if (!site) {
-        els.builderSiteName.textContent = "Builder";
+	    function renderBuilder() {
+	      const site = selectedSite();
+	      const activeComponent = selectedComponent(site);
+	      els.builderLayout.dataset.mobileTab = state.builderMobileTab || "preview";
+	      els.builderMobileTabs.querySelectorAll("[data-builder-mobile-tab]").forEach((button) => {
+	        button.classList.toggle("active", button.dataset.builderMobileTab === (state.builderMobileTab || "preview"));
+	      });
+	      if (!site) {
+	        els.builderSiteName.textContent = "Builder";
         els.builderSiteUrl.textContent = "No site selected";
         els.componentCatalog.innerHTML = "";
         els.componentList.innerHTML = "";
@@ -1970,10 +2225,11 @@
       });
       document.querySelectorAll("[data-select-component]").forEach((button) => {
         button.addEventListener("click", () => {
-          state.selectedComponentId = button.dataset.selectComponent;
-          saveState();
-          renderBuilder();
-          refreshIcons();
+	          state.selectedComponentId = button.dataset.selectComponent;
+	          state.builderMobileTab = "structure";
+	          saveState();
+	          renderBuilder();
+	          refreshIcons();
         });
       });
       document.querySelectorAll("[data-move-component]").forEach((button) => {
@@ -1987,21 +2243,22 @@
       });
     }
 
-    function editorFields(activeComponent) {
-      const fields = componentCatalog.find((item) => item.type === activeComponent.type)?.fields || ["headline", "body"];
-      return fields.map((field) => {
-        const value = activeComponent[field] || "";
-        const textArea = field === "body" || field === "items" || field === "links";
-        return `
-          <div class="field" style="grid-column: 1 / -1;">
-            <label for="field-${field}">${escapeHtml(field)}</label>
-            ${textArea
-              ? `<textarea id="field-${field}" data-editor-field="${field}">${escapeHtml(value)}</textarea>`
-              : `<input id="field-${field}" data-editor-field="${field}" value="${escapeHtml(value)}">`}
-          </div>
-        `;
-      }).join("");
-    }
+	    function editorFields(activeComponent) {
+	      const fields = componentCatalog.find((item) => item.type === activeComponent.type)?.fields || ["headline", "body"];
+	      return fields.map((field) => {
+	        const value = activeComponent[field] || "";
+	        const textArea = field === "body" || field === "items" || field === "links";
+	        const label = fieldLabels[field] || field.replace(/^\w/, (letter) => letter.toUpperCase());
+	        return `
+	          <div class="field" style="grid-column: 1 / -1;">
+	            <label for="field-${field}">${escapeHtml(label)}</label>
+	            ${textArea
+	              ? `<textarea id="field-${field}" data-editor-field="${field}" placeholder="${field === "items" || field === "links" ? "Separate entries with |" : ""}">${escapeHtml(value)}</textarea>`
+	              : `<input id="field-${field}" data-editor-field="${field}" value="${escapeHtml(value)}">`}
+	          </div>
+	        `;
+	      }).join("");
+	    }
 
     function renderPreview(site) {
       const ad = site.plan === "free" ? `<div class="preview-ad">Created with Audo free hosting</div>` : "";
@@ -2053,11 +2310,12 @@
         showToast("Upgrade this site to add paid builder blocks.");
         return;
       }
-      const next = component(type);
-      site.components.push(next);
-      state.selectedComponentId = next.id;
-      saveState();
-      render();
+	      const next = component(type);
+	      site.components.push(next);
+	      state.selectedComponentId = next.id;
+	      state.builderMobileTab = "structure";
+	      saveState();
+	      render();
     }
 
     function moveComponent(componentId, direction) {
@@ -2163,8 +2421,8 @@
             return;
           }
           showToast("Upgrade checkout is ready in preview mode.");
-        } catch (error) {
-          showToast(error.message || "Upgrade checkout failed.");
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Upgrade checkout failed."));
         }
         return;
       }
@@ -2188,8 +2446,8 @@
           saveState();
           showToast("Backup snapshot queued.");
           render();
-        } catch (error) {
-          showToast(error.message || "Backup request failed.");
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Backup request failed."));
         }
         return;
       }
@@ -2203,14 +2461,16 @@
       render();
     }
 
-    async function publishSite() {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      if (API_BASE_URL) {
-        try {
-          await apiFetch(`/api/sites/${site.id}`, {
+	    async function publishSite() {
+	      const site = selectedSite();
+	      if (!site || publishing) {
+	        return;
+	      }
+	      publishing = true;
+	      renderChrome();
+	      if (API_BASE_URL) {
+	        try {
+	          await apiFetch(`/api/sites/${site.id}`, {
             method: "PATCH",
             body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
           });
@@ -2219,74 +2479,149 @@
           saveState();
           showToast(`${result.site.name} published to ${result.site.primaryDomain}.`);
           render();
-        } catch (error) {
-          showToast(error.message || "Publish failed.");
-        }
-        return;
-      }
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Publish failed."));
+	        } finally {
+	          publishing = false;
+	          renderChrome();
+	        }
+	        return;
+	      }
       site.status = "published";
       site.publishedAt = new Date().toISOString();
-      site.visits += Math.floor(10 + Math.random() * 80);
-      saveState();
-      showToast(`${site.name} published to ${siteUrl(site)}.`);
-      render();
-    }
+	      site.visits += Math.floor(10 + Math.random() * 80);
+	      saveState();
+	      showToast(`${site.name} published to ${siteUrl(site)}.`);
+	      publishing = false;
+	      render();
+	    }
 
-    function openSiteModal() {
-      els.siteNameInput.value = "";
-      els.siteSlugInput.value = "";
-      els.siteTemplateInput.value = "service";
-      els.sitePlanInput.value = "free";
-      els.siteModal.classList.add("active");
-      els.siteNameInput.focus();
-    }
+	    function wizardPayload() {
+	      const name = els.siteNameInput.value.trim();
+	      const slug = slugify(els.siteSlugInput.value || name);
+	      return {
+	        name,
+	        slug,
+	        plan: els.sitePlanInput.value || "free",
+	        template: els.siteTemplateInput.value || "service"
+	      };
+	    }
+
+	    function validateWizardStep(step = siteWizardStep) {
+	      const payload = wizardPayload();
+	      if (step === 0) {
+	        return Boolean(payload.name && /^[a-z0-9](?:[a-z0-9-]{0,46}[a-z0-9])?$/.test(payload.slug));
+	      }
+	      return true;
+	    }
+
+	    function renderSiteWizard() {
+	      const payload = wizardPayload();
+	      document.querySelectorAll("[data-site-wizard-panel]").forEach((panel) => {
+	        panel.classList.toggle("active", Number(panel.dataset.siteWizardPanel) === siteWizardStep);
+	      });
+	      els.siteWizardProgress.querySelectorAll("[data-site-wizard-step]").forEach((button) => {
+	        const step = Number(button.dataset.siteWizardStep);
+	        button.classList.toggle("active", step === siteWizardStep);
+	        button.disabled = step > siteWizardStep && !validateWizardStep(siteWizardStep);
+	      });
+	      document.querySelectorAll("[data-template-option]").forEach((button) => {
+	        button.classList.toggle("active", button.dataset.templateOption === payload.template);
+	      });
+	      document.querySelectorAll("[data-plan-option]").forEach((button) => {
+	        button.classList.toggle("active", button.dataset.planOption === payload.plan);
+	      });
+	      els.siteWizardBack.style.display = siteWizardStep === 0 ? "none" : "";
+	      els.siteWizardNext.style.display = siteWizardStep === wizardStepLabels.length - 1 ? "none" : "";
+	      els.createSite.style.display = siteWizardStep === wizardStepLabels.length - 1 ? "" : "none";
+	      els.siteWizardNext.disabled = !validateWizardStep(siteWizardStep);
+	      els.createSite.disabled = creatingSite || !validateWizardStep(0);
+	      els.siteWizardReview.innerHTML = `
+	        <div><span>Name</span><strong>${escapeHtml(payload.name || "Untitled site")}</strong></div>
+	        <div><span>URL</span><strong>${escapeHtml(payload.slug)}.${FREE_DOMAIN}</strong></div>
+	        <div><span>Template</span><strong>${escapeHtml(templateLabels[payload.template] || payload.template)}</strong></div>
+	        <div><span>Plan</span><strong>${escapeHtml(planLabels[payload.plan] || payload.plan)}</strong></div>
+	      `;
+	      refreshIcons();
+	    }
+
+	    function setSiteWizardStep(step) {
+	      const next = Math.max(0, Math.min(wizardStepLabels.length - 1, step));
+	      if (next > siteWizardStep && !validateWizardStep(siteWizardStep)) {
+	        showToast("Enter a site name and valid subdomain.");
+	        return;
+	      }
+	      siteWizardStep = next;
+	      renderSiteWizard();
+	    }
+
+	    function openSiteModal() {
+	      siteWizardStep = 0;
+	      els.siteNameInput.value = "";
+	      els.siteSlugInput.value = "";
+	      els.siteTemplateInput.value = "service";
+	      els.sitePlanInput.value = "free";
+	      els.siteModal.classList.add("active");
+	      renderSiteWizard();
+	      els.siteNameInput.focus();
+	    }
 
     function closeSiteModal() {
       els.siteModal.classList.remove("active");
     }
 
-    async function createSite() {
-      const name = els.siteNameInput.value.trim() || "Untitled site";
-      const payload = {
-        name,
-        slug: slugify(els.siteSlugInput.value || name),
-        plan: els.sitePlanInput.value,
-        template: els.siteTemplateInput.value
-      };
-      if (API_BASE_URL) {
-        try {
-          const result = await apiFetch("/api/sites", {
+	    async function createSite() {
+	      if (creatingSite) {
+	        return;
+	      }
+	      const payload = wizardPayload();
+	      if (!validateWizardStep(0)) {
+	        setSiteWizardStep(0);
+	        showToast("Enter a site name and valid subdomain.");
+	        return;
+	      }
+	      creatingSite = true;
+	      renderSiteWizard();
+	      if (API_BASE_URL) {
+	        try {
+	          const result = await apiFetch("/api/sites", {
             method: "POST",
             body: JSON.stringify(payload)
           });
-          const site = replaceSite(result.site);
-          state.selectedComponentId = site.components[0]?.id || null;
-          state.view = "builder";
-          saveState();
-          closeSiteModal();
-          showToast(`${site.name} created.`);
+	          const site = replaceSite(result.site);
+	          state.selectedComponentId = site.components[0]?.id || null;
+	          state.view = "builder";
+	          state.builderMobileTab = "preview";
+	          saveState();
+	          closeSiteModal();
+	          showToast(`${site.name} created.`);
           render();
-        } catch (error) {
-          showToast(error.message || "Site creation failed.");
-        }
-        return;
-      }
-      const site = createSiteRecord({
-        name,
-        slug: payload.slug,
-        plan: payload.plan,
-        template: payload.template,
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Site creation failed."));
+	        } finally {
+	          creatingSite = false;
+	          renderSiteWizard();
+	        }
+	        return;
+	      }
+	      const site = createSiteRecord({
+	        name: payload.name,
+	        slug: payload.slug,
+	        plan: payload.plan,
+	        template: payload.template,
         status: "draft"
       });
       state.sites.unshift(site);
-      state.selectedSiteId = site.id;
-      state.selectedComponentId = site.components[0]?.id || null;
-      state.view = "builder";
-      saveState();
-      closeSiteModal();
-      showToast(`${site.name} created.`);
-      render();
-    }
+	      state.selectedSiteId = site.id;
+	      state.selectedComponentId = site.components[0]?.id || null;
+	      state.view = "builder";
+	      state.builderMobileTab = "preview";
+	      saveState();
+	      closeSiteModal();
+	      showToast(`${site.name} created.`);
+	      creatingSite = false;
+	      render();
+	    }
 
     async function createManagedUser() {
       if (!API_BASE_URL || state.authMode !== "firebase") {
@@ -2315,8 +2650,8 @@
         await syncUsersFromApi();
         showToast("User created.");
         render();
-      } catch (error) {
-        showToast(error.message || "User creation failed.");
+	      } catch (error) {
+	        showToast(friendlyErrorMessage(error, "User creation failed."));
       }
     }
 
@@ -2332,8 +2667,8 @@
         await syncUsersFromApi();
         showToast(disabled ? "User disabled." : "User enabled.");
         render();
-      } catch (error) {
-        showToast(error.message || "User update failed.");
+	      } catch (error) {
+	        showToast(friendlyErrorMessage(error, "User update failed."));
       }
     }
 
@@ -2351,8 +2686,8 @@
           } else {
             await firebaseModules.signInWithEmailAndPassword(firebaseAuth, email, password);
           }
-        } catch (error) {
-          showToast(error.message || "Firebase sign-in failed.");
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Firebase sign-in failed."));
         }
         return;
       }
@@ -2362,8 +2697,8 @@
       try {
         await syncSitesFromApi();
         await syncUsersFromApi();
-      } catch (error) {
-        showToast(error.message || "Could not load account data from the control plane.");
+	      } catch (error) {
+	        showToast(friendlyErrorMessage(error, "Could not load account data from the control plane."));
       }
       render();
     }
@@ -2373,8 +2708,8 @@
         try {
           const provider = new firebaseModules.GoogleAuthProvider();
           await firebaseModules.signInWithPopup(firebaseAuth, provider);
-        } catch (error) {
-          showToast(error.message || "Google sign-in failed.");
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Google sign-in failed."));
         }
         return;
       }
@@ -2384,8 +2719,8 @@
       try {
         await syncSitesFromApi();
         await syncUsersFromApi();
-      } catch (error) {
-        showToast(error.message || "Could not load account data from the control plane.");
+	      } catch (error) {
+	        showToast(friendlyErrorMessage(error, "Could not load account data from the control plane."));
       }
       render();
     }
@@ -2420,20 +2755,48 @@
     });
     document.getElementById("newSiteButton").addEventListener("click", openSiteModal);
     document.getElementById("newSiteSidebar").addEventListener("click", openSiteModal);
-    document.getElementById("closeSiteModal").addEventListener("click", closeSiteModal);
-    document.getElementById("cancelSiteModal").addEventListener("click", closeSiteModal);
-    document.getElementById("createSite").addEventListener("click", createSite);
-    document.getElementById("publishButton").addEventListener("click", publishSite);
-    document.getElementById("sidebarSignOut").addEventListener("click", signOutUser);
+	    document.getElementById("closeSiteModal").addEventListener("click", closeSiteModal);
+	    document.getElementById("cancelSiteModal").addEventListener("click", closeSiteModal);
+	    document.getElementById("createSite").addEventListener("click", createSite);
+	    els.siteWizardBack.addEventListener("click", () => setSiteWizardStep(siteWizardStep - 1));
+	    els.siteWizardNext.addEventListener("click", () => setSiteWizardStep(siteWizardStep + 1));
+	    els.siteWizardProgress.addEventListener("click", (event) => {
+	      const button = event.target.closest("[data-site-wizard-step]");
+	      if (button) {
+	        setSiteWizardStep(Number(button.dataset.siteWizardStep));
+	      }
+	    });
+	    document.querySelectorAll("[data-template-option]").forEach((button) => {
+	      button.addEventListener("click", () => {
+	        els.siteTemplateInput.value = button.dataset.templateOption;
+	        renderSiteWizard();
+	      });
+	    });
+	    document.querySelectorAll("[data-plan-option]").forEach((button) => {
+	      button.addEventListener("click", () => {
+	        els.sitePlanInput.value = button.dataset.planOption;
+	        renderSiteWizard();
+	      });
+	    });
+	    els.builderMobileTabs.addEventListener("click", (event) => {
+	      const button = event.target.closest("[data-builder-mobile-tab]");
+	      if (button) {
+	        setBuilderMobileTab(button.dataset.builderMobileTab);
+	      }
+	    });
+	    document.getElementById("publishButton").addEventListener("click", publishSite);
+	    document.getElementById("sidebarSignOut").addEventListener("click", signOutUser);
     document.getElementById("emailSignIn").addEventListener("click", () => signInWithEmail(false));
     document.getElementById("emailCreate").addEventListener("click", () => signInWithEmail(true));
     document.getElementById("googleSignIn").addEventListener("click", signInWithGoogle);
     document.getElementById("createManagedUser").addEventListener("click", createManagedUser);
-    document.getElementById("siteNameInput").addEventListener("input", (event) => {
-      if (!els.siteSlugInput.value.trim()) {
-        els.siteSlugInput.placeholder = slugify(event.target.value || "site-name");
-      }
-    });
+	    document.getElementById("siteNameInput").addEventListener("input", (event) => {
+	      if (!els.siteSlugInput.value.trim()) {
+	        els.siteSlugInput.placeholder = slugify(event.target.value || "site-name");
+	      }
+	      renderSiteWizard();
+	    });
+	    document.getElementById("siteSlugInput").addEventListener("input", renderSiteWizard);
     els.previewPlanSwitch.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-plan]");
       const site = selectedSite();
@@ -2483,8 +2846,8 @@
         saveState();
         showToast("Custom domain saved. DNS verification is pending.");
         render();
-      } catch (error) {
-        showToast(error.message || "Custom domain save failed.");
+	      } catch (error) {
+	        showToast(friendlyErrorMessage(error, "Custom domain save failed."));
       }
     });
     document.getElementById("saveIntegration").addEventListener("click", () => {
@@ -2526,8 +2889,8 @@
           saveState();
           showToast("GitHub connection queued.");
           render();
-        } catch (error) {
-          showToast(error.message || "GitHub connection failed.");
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "GitHub connection failed."));
         }
         return;
       }

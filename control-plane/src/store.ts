@@ -7,6 +7,20 @@ function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+function stripUndefined<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => stripUndefined(item)) as T;
+  }
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, item]) => item !== undefined)
+        .map(([key, item]) => [key, stripUndefined(item)])
+    ) as T;
+  }
+  return value;
+}
+
 export class MemorySiteStore implements SiteStore {
   private sites = new Map<string, SiteRecord>();
   private events = new Map<string, SiteEvent[]>();
@@ -89,7 +103,7 @@ export class FirestoreSiteStore implements SiteStore {
   }
 
   async createSite(site: SiteRecord): Promise<SiteRecord> {
-    await this.db.collection("sites").doc(site.id).set(site);
+    await this.db.collection("sites").doc(site.id).set(stripUndefined(site));
     return site;
   }
 
@@ -106,15 +120,16 @@ export class FirestoreSiteStore implements SiteStore {
         throw notFound("Site not found");
       }
       const updated = { ...existing, ...patch, id: existing.id, teamId: existing.teamId, updatedAt };
-      transaction.set(ref, updated);
+      transaction.set(ref, stripUndefined(updated));
       return updated;
     });
     return result;
   }
 
   async appendEvent(event: SiteEvent): Promise<SiteEvent> {
-    await this.db.collection("sites").doc(event.siteId).collection("events").doc(event.id).set(event);
-    await this.db.collection("siteEvents").doc(event.id).set(event);
+    const cleanEvent = stripUndefined(event);
+    await this.db.collection("sites").doc(event.siteId).collection("events").doc(event.id).set(cleanEvent);
+    await this.db.collection("siteEvents").doc(event.id).set(cleanEvent);
     return event;
   }
 

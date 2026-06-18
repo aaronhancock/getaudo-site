@@ -1,30 +1,45 @@
 services:
   wordpress:
-    image: wordpress:6.6-php8.3-apache
+    image: wordpress:php8.3-apache
     restart: unless-stopped
     depends_on:
       - mariadb
+      - redis
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
+      WORDPRESS_REDIS_HOST: redis
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DISALLOW_FILE_EDIT', true);
+        define('WP_AUTO_UPDATE_CORE', 'minor');
+        define('WP_POST_REVISIONS', 10);
+        define('WP_CACHE', true);
+        define('WP_REDIS_HOST', getenv('WORDPRESS_REDIS_HOST') ?: 'redis');
+        define('WP_DEFAULT_THEME', getenv('AUDO_THEME_SLUG') ?: 'audo-neighborhood');
       AUDO_SITE_ID: ${AUDO_SITE_ID:-}
       AUDO_SITE_DOMAIN: ${AUDO_SITE_DOMAIN:-}
+      AUDO_SITE_TITLE: ${AUDO_SITE_TITLE:-}
+      AUDO_OWNER_EMAIL: ${AUDO_OWNER_EMAIL:-}
+      AUDO_ADMIN_EMAIL: ${AUDO_ADMIN_EMAIL:-}
+      AUDO_THEME_SLUG: ${AUDO_THEME_SLUG:-audo-neighborhood}
       AUDO_SITE_PLAN: ${AUDO_SITE_PLAN:-free}
       AUDO_ADS_ENABLED: ${AUDO_ADS_ENABLED:-true}
+      AUDO_FREE_PAGE_LIMIT: ${AUDO_FREE_PAGE_LIMIT:-5}
+      AUDO_FREE_UPLOAD_LIMIT_MB: ${AUDO_FREE_UPLOAD_LIMIT_MB:-250}
     volumes:
       - wordpress-files:/var/www/html
       - ./mu-plugins:/audo/mu-plugins:ro
-      - ./themes/audo-starter:/audo/themes/audo-starter:ro
+      - ./themes:/audo/themes:ro
     command:
       - sh
       - -c
       - |
-        mkdir -p /var/www/html/wp-content/mu-plugins /var/www/html/wp-content/themes/audo-starter
+        mkdir -p /var/www/html/wp-content/mu-plugins /var/www/html/wp-content/themes
         cp /audo/mu-plugins/audo-platform.php /var/www/html/wp-content/mu-plugins/audo-platform.php
-        cp -R /audo/themes/audo-starter/. /var/www/html/wp-content/themes/audo-starter/
+        cp -R /audo/themes/. /var/www/html/wp-content/themes/
         docker-entrypoint.sh apache2-foreground
 
   mariadb:
@@ -37,6 +52,11 @@ services:
       MARIADB_RANDOM_ROOT_PASSWORD: "1"
     volumes:
       - mariadb-data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --save "" --appendonly no
 
 volumes:
   wordpress-files:

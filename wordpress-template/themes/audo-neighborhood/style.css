@@ -1,0 +1,19 @@
+/*
+Theme Name: Audo Neighborhood
+Theme URI: https://getaudo.com
+Author: Audo
+Description: Service-business starter theme with confident calls to action and practical local proof sections.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+Text Domain: audo-neighborhood
+*/
+
+body {
+  letter-spacing: 0;
+}
+
+.wp-block-button__link {
+  font-weight: 800;
+}

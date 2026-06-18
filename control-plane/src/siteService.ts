@@ -9,7 +9,8 @@ import type {
   Plan,
   SiteDeployment,
   SiteEvent,
-  SiteRecord
+  SiteRecord,
+  WordPressSettings
 } from "./types.js";
 import type { AppConfig } from "./config.js";
 import { badRequest, conflict, notFound, paymentRequired } from "./errors.js";
@@ -31,6 +32,7 @@ const RESERVED_SLUGS = new Set([
   "support",
   "www"
 ]);
+const WORDPRESS_THEME_SLUGS = new Set(["audo-neighborhood", "audo-studio", "audo-table", "audo-signal", "audo-sanctuary"]);
 
 export interface CreateSiteInput {
   name: string;
@@ -38,11 +40,13 @@ export interface CreateSiteInput {
   platform?: "builder" | "wordpress" | "github-app" | "concierge";
   template?: string;
   builder?: BuilderDocument;
+  wordpress?: Partial<WordPressSettings>;
 }
 
 export interface UpdateSiteInput {
   name?: string;
   builder?: BuilderDocument;
+  wordpress?: Partial<WordPressSettings>;
 }
 
 export interface GitHubInput {
@@ -127,6 +131,20 @@ function errorDetails(error: unknown): Record<string, unknown> {
   };
 }
 
+function wordpressSettings(user: AuthUser, name: string, input: CreateSiteInput): WordPressSettings | undefined {
+  if (input.platform && input.platform !== "wordpress") {
+    return undefined;
+  }
+  const accountEmail = user.email || `${user.uid}@preview.getaudo.com`;
+  const themeSlug = input.wordpress?.themeSlug?.trim() || "audo-neighborhood";
+  return {
+    siteTitle: input.wordpress?.siteTitle?.trim() || name,
+    ownerEmail: accountEmail,
+    adminEmail: accountEmail,
+    themeSlug: WORDPRESS_THEME_SLUGS.has(themeSlug) ? themeSlug : "audo-neighborhood"
+  };
+}
+
 export class SiteService {
   constructor(private config: AppConfig, private services: AppServices) {}
 
@@ -188,6 +206,7 @@ export class SiteService {
       primaryDomain: domain.host,
       domains: [domain],
       builder: input.builder || defaultBuilderDocument(input.template),
+      wordpress: wordpressSettings(user, name, { ...input, platform }),
       github: { connected: false },
       deployments: [],
       backups: [],
@@ -222,6 +241,9 @@ export class SiteService {
     }
     if (input.builder != null) {
       patch.builder = input.builder;
+    }
+    if (input.wordpress != null && site.type === "wordpress") {
+      patch.wordpress = wordpressSettings(user, patch.name || site.name, { name: patch.name || site.name, platform: "wordpress", wordpress: input.wordpress });
     }
     const updated = await this.services.store.updateSite(site.teamId, site.id, patch);
     await this.event(updated, "site.updated", `Updated ${updated.name}`);
@@ -384,6 +406,34 @@ export class SiteService {
       backups: backupList(site, backup)
     });
     await this.event(updated, "backup.requested", `Backup requested for ${site.primaryDomain}`, backup.details);
+    return updated;
+  }
+
+  async unpublishSite(user: AuthUser, siteId: string): Promise<SiteRecord> {
+    const site = await this.getSite(user, siteId);
+    const deployment = await this.services.coolify.stopSite(site);
+    const unpublishedAt = now();
+    const updated = await this.services.store.updateSite(site.teamId, site.id, {
+      status: "configured",
+      unpublishedAt,
+      deployments: deploymentList(site, deployment)
+    });
+    await this.event(updated, "site.unpublished", `Unpublished ${site.primaryDomain}`, deployment.details);
+    return updated;
+  }
+
+  async deleteSite(user: AuthUser, siteId: string): Promise<SiteRecord> {
+    const site = await this.getSite(user, siteId);
+    const deployment = await this.services.coolify.deleteSite(site);
+    const dns = await this.services.cloudflare.deleteFreeSubdomain(site.slug);
+    const deletedAt = now();
+    const updated = await this.services.store.updateSite(site.teamId, site.id, {
+      status: "deleted",
+      deletedAt,
+      unpublishedAt: deletedAt,
+      deployments: deploymentList(site, deployment)
+    });
+    await this.event(updated, "site.deleted", `Deleted ${site.primaryDomain} from Audo`, { deployment: deployment.details, dns });
     return updated;
   }
 

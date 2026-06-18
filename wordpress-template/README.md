@@ -1,12 +1,28 @@
 # Audo WordPress Template
 
-This folder is the Audo-managed WordPress stack that should back the Coolify `wordpress-with-mariadb` service template.
+This folder is the Audo-managed WordPress stack that backs the Coolify `wordpress-with-mariadb` service template.
 
 It includes:
 
-- `docker-compose.yml`: WordPress plus MariaDB with persistent volumes.
+- `docker-compose.yml`: WordPress, MariaDB, and Redis with persistent WordPress and database volumes.
 - `mu-plugins/audo-platform.php`: always-on Audo platform controls.
-- `themes/audo-starter`: a small starter theme for clean first launches.
+- `themes/audo-neighborhood`: local service and professional-services starter.
+- `themes/audo-studio`: portfolio, creative-services, and case-study starter.
+- `themes/audo-table`: restaurant, hospitality, menu, and reservation starter.
+- `themes/audo-signal`: SaaS, product, and technical-services starter.
+- `themes/audo-sanctuary`: wellness, care, coaching, and practice starter.
+- `plugins.json`: the curated plugin policy for free and paid WordPress sites.
+
+## User Setup Fields
+
+Collect these in Audo before provisioning:
+
+- Site name: required, becomes the WordPress site title and generates the subdomain.
+- Plan: free or paid.
+- Theme: one of the curated Audo themes.
+- Owner/admin email: use the authenticated Audo account email.
+
+Do not collect or expose an editable subdomain. The control plane generates it from the site name, checks for uniqueness, and appends a numeric suffix when needed.
 
 ## Plan Environment
 
@@ -15,8 +31,14 @@ Set these on each generated service:
 ```bash
 AUDO_SITE_ID=<site-record-id>
 AUDO_SITE_DOMAIN=<slug>.getaudo.com
+AUDO_SITE_TITLE=<site-name>
+AUDO_OWNER_EMAIL=<audo-account-email>
+AUDO_ADMIN_EMAIL=<audo-account-email>
+AUDO_THEME_SLUG=audo-neighborhood
 AUDO_SITE_PLAN=free
 AUDO_ADS_ENABLED=true
+AUDO_FREE_PAGE_LIMIT=5
+AUDO_FREE_UPLOAD_LIMIT_MB=250
 ```
 
 For paid sites:
@@ -31,6 +53,16 @@ AUDO_ADS_ENABLED=false
 The WordPress service must mount or copy:
 
 - `/audo/mu-plugins/audo-platform.php` into `/var/www/html/wp-content/mu-plugins/audo-platform.php`
-- `/audo/themes/audo-starter` into `/var/www/html/wp-content/themes/audo-starter`
+- `/audo/themes/*` into `/var/www/html/wp-content/themes/`
 
-The included compose file does that at container start and then hands off to the official WordPress entrypoint.
+The included compose file does that at container start and then hands off to the official WordPress entrypoint. The MU plugin applies the selected Audo theme, site title, admin email, free-plan page/media limits, free badge, and plan-based capability limits.
+
+## Default Plugin Policy
+
+Keep the default install lean:
+
+- Always: Audo Platform MU plugin, Redis Object Cache, Performance Lab, The SEO Framework, Contact Form 7.
+- Paid by default: Wordfence Security, WP Super Cache, WooCommerce, SMTP/mail-delivery plugin, premium form plugin.
+- Free plan limits: no custom plugins, no theme installs, no theme switching outside Audo, 5 pages, 250 MB media storage, Audo badge enabled.
+
+Free sites should be enough for a simple business presence. Paid sites unlock custom URL, backups, remove Audo badge, stronger security/performance controls, and heavier feature plugins.

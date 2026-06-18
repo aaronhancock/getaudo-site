@@ -79,6 +79,25 @@ export class CloudflareDnsProvider implements CloudflareProvider {
     };
   }
 
+  async deleteFreeSubdomain(slug: string): Promise<{ status: "ready" | "skipped"; details?: Record<string, unknown> }> {
+    const host = `${slug}.${this.freeDomain}`;
+    const zone = this.config.apiToken ? await this.getZone() : null;
+    if (!this.config.apiToken || !zone) {
+      return { status: "skipped", details: { reason: "cloudflare_not_configured", host, zoneName: this.zoneName() } };
+    }
+
+    const deleted: string[] = [];
+    for (const type of ["CNAME", "A"] as const) {
+      const existing = await this.findRecord(zone.id, type, host);
+      if (existing) {
+        await this.cloudflare(`/zones/${zone.id}/dns_records/${existing.id}`, { method: "DELETE" });
+        deleted.push(existing.id);
+      }
+    }
+
+    return { status: "ready", details: { host, deletedRecordIds: deleted } };
+  }
+
   customDomainInstructions(host: string): DnsInstruction[] {
     const target = this.config.freeSiteTarget || this.freeDomain;
     return [

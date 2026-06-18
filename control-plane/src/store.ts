@@ -27,18 +27,18 @@ export class MemorySiteStore implements SiteStore {
 
   async listSites(teamId: string): Promise<SiteRecord[]> {
     return [...this.sites.values()]
-      .filter((site) => site.teamId === teamId)
+      .filter((site) => site.teamId === teamId && site.status !== "deleted")
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
       .map(clone);
   }
 
   async getSite(teamId: string, siteId: string): Promise<SiteRecord | null> {
     const site = this.sites.get(siteId);
-    return site && site.teamId === teamId ? clone(site) : null;
+    return site && site.teamId === teamId && site.status !== "deleted" ? clone(site) : null;
   }
 
   async findSiteBySlug(slug: string): Promise<SiteRecord | null> {
-    const site = [...this.sites.values()].find((item) => item.slug === slug);
+    const site = [...this.sites.values()].find((item) => item.slug === slug && item.status !== "deleted");
     return site ? clone(site) : null;
   }
 
@@ -85,6 +85,7 @@ export class FirestoreSiteStore implements SiteStore {
     const snap = await this.db.collection("sites").where("teamId", "==", teamId).get();
     return snap.docs
       .map((doc) => doc.data() as SiteRecord)
+      .filter((site) => site.status !== "deleted")
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
@@ -94,12 +95,16 @@ export class FirestoreSiteStore implements SiteStore {
       return null;
     }
     const site = doc.data() as SiteRecord;
-    return site.teamId === teamId ? site : null;
+    return site.teamId === teamId && site.status !== "deleted" ? site : null;
   }
 
   async findSiteBySlug(slug: string): Promise<SiteRecord | null> {
     const snap = await this.db.collection("sites").where("slug", "==", slug).limit(1).get();
-    return snap.empty ? null : (snap.docs[0].data() as SiteRecord);
+    if (snap.empty) {
+      return null;
+    }
+    const site = snap.docs[0].data() as SiteRecord;
+    return site.status === "deleted" ? null : site;
   }
 
   async createSite(site: SiteRecord): Promise<SiteRecord> {

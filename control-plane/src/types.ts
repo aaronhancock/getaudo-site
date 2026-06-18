@@ -1,5 +1,5 @@
 export type Plan = "free" | "paid";
-export type SiteStatus = "draft" | "configured" | "published" | "suspended";
+export type SiteStatus = "draft" | "configured" | "published" | "suspended" | "deleted";
 
 export interface AuthUser {
   uid: string;
@@ -91,6 +91,13 @@ export interface SiteDeployment {
   details?: Record<string, unknown>;
 }
 
+export interface WordPressSettings {
+  siteTitle: string;
+  ownerEmail: string;
+  adminEmail: string;
+  themeSlug: string;
+}
+
 export interface BackupRecord {
   id: string;
   status: "queued" | "running" | "complete" | "failed";
@@ -111,12 +118,15 @@ export interface SiteRecord {
   primaryDomain: string;
   domains: DomainRecord[];
   builder: BuilderDocument;
+  wordpress?: WordPressSettings;
   github: GitHubIntegration;
   deployments: SiteDeployment[];
   backups: BackupRecord[];
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
+  unpublishedAt?: string;
+  deletedAt?: string;
 }
 
 export interface SiteEvent {
@@ -150,6 +160,7 @@ export interface SiteStore {
 export interface CloudflareProvider {
   verifyConnection(): Promise<{ status: "ready" | "skipped"; zoneId?: string; zoneName?: string; details?: Record<string, unknown> }>;
   ensureFreeSubdomain(slug: string): Promise<{ status: "ready" | "skipped"; record?: DnsInstruction; details?: Record<string, unknown> }>;
+  deleteFreeSubdomain(slug: string): Promise<{ status: "ready" | "skipped"; details?: Record<string, unknown> }>;
   customDomainInstructions(host: string): DnsInstruction[];
 }
 
@@ -157,6 +168,8 @@ export interface CoolifyProvider {
   deploySharedBuilder(commit?: string): Promise<SiteDeployment>;
   createGitHubApplication(site: SiteRecord): Promise<SiteDeployment>;
   provisionWordPressSite(site: SiteRecord): Promise<SiteDeployment>;
+  stopSite(site: SiteRecord): Promise<SiteDeployment>;
+  deleteSite(site: SiteRecord): Promise<SiteDeployment>;
 }
 
 export interface BackupProvider {

@@ -1,0 +1,19 @@
+/*
+Theme Name: Audo Sanctuary
+Theme URI: https://getaudo.com
+Author: Audo
+Description: Wellness, care, coaching, and professional-practice theme with soft structure and readable typography.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+Text Domain: audo-sanctuary
+*/
+
+body {
+  letter-spacing: 0;
+}
+
+.wp-block-quote {
+  border-left-width: 4px;
+}

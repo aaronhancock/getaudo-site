@@ -72,6 +72,7 @@ export class CoolifyApiProvider implements CoolifyProvider {
 
     const existingServiceUuid = this.existingWordPressServiceUuid(site);
     if (existingServiceUuid) {
+      const envResponse = await this.upsertWordPressEnv(existingServiceUuid, site);
       const startResponse = this.config.wordpressInstantDeploy
         ? await this.coolify(`/api/v1/services/${existingServiceUuid}/start`, { method: "POST" })
         : undefined;
@@ -86,6 +87,7 @@ export class CoolifyApiProvider implements CoolifyProvider {
           serviceUuid: existingServiceUuid,
           serviceType: this.config.wordpressServiceType,
           requestedDomain: site.primaryDomain,
+          envResponse,
           startResponse
         }
       };
@@ -118,6 +120,7 @@ export class CoolifyApiProvider implements CoolifyProvider {
       body: JSON.stringify(payload)
     });
     const serviceUuid = String(response.uuid || "");
+    const envResponse = serviceUuid ? await this.upsertWordPressEnv(serviceUuid, site) : undefined;
     const startResponse =
       this.config.wordpressInstantDeploy && serviceUuid
         ? await this.coolify(`/api/v1/services/${serviceUuid}/start`, { method: "POST" })
@@ -135,7 +138,74 @@ export class CoolifyApiProvider implements CoolifyProvider {
         serviceType: this.config.wordpressServiceType,
         requestedDomain: site.primaryDomain,
         domains: response.domains || [],
+        envResponse,
         startResponse
+      }
+    };
+  }
+
+  async stopSite(site: SiteRecord): Promise<SiteDeployment> {
+    const createdAt = new Date().toISOString();
+    const serviceUuid = this.existingWordPressServiceUuid(site);
+    if (!this.config.baseUrl || !this.config.apiToken || !serviceUuid) {
+      return {
+        id: nanoid(),
+        provider: "preview",
+        status: "skipped",
+        url: `https://${site.primaryDomain}`,
+        createdAt,
+        details: {
+          action: "unpublish_skipped",
+          reason: serviceUuid ? "coolify_not_configured" : "no_managed_coolify_service",
+          requestedDomain: site.primaryDomain
+        }
+      };
+    }
+
+    const response = await this.coolify(`/api/v1/services/${serviceUuid}/stop`, { method: "POST" });
+    return {
+      id: nanoid(),
+      provider: "coolify",
+      status: "finished",
+      url: `https://${site.primaryDomain}`,
+      createdAt,
+      details: {
+        action: "stopped_coolify_service",
+        serviceUuid,
+        stopResponse: response
+      }
+    };
+  }
+
+  async deleteSite(site: SiteRecord): Promise<SiteDeployment> {
+    const createdAt = new Date().toISOString();
+    const serviceUuid = this.existingWordPressServiceUuid(site);
+    if (!this.config.baseUrl || !this.config.apiToken || !serviceUuid) {
+      return {
+        id: nanoid(),
+        provider: "preview",
+        status: "skipped",
+        url: `https://${site.primaryDomain}`,
+        createdAt,
+        details: {
+          action: "delete_skipped",
+          reason: serviceUuid ? "coolify_not_configured" : "no_managed_coolify_service",
+          requestedDomain: site.primaryDomain
+        }
+      };
+    }
+
+    const response = await this.coolify(`/api/v1/services/${serviceUuid}`, { method: "DELETE" });
+    return {
+      id: nanoid(),
+      provider: "coolify",
+      status: "finished",
+      url: `https://${site.primaryDomain}`,
+      createdAt,
+      details: {
+        action: "deleted_coolify_service",
+        serviceUuid,
+        deleteResponse: response
       }
     };
   }
@@ -152,6 +222,41 @@ export class CoolifyApiProvider implements CoolifyProvider {
 
   private wordpressServiceName(site: SiteRecord): string {
     return `audo-${site.slug}-wordpress`.replace(/[^a-z0-9-]/gi, "-").replace(/-+/g, "-").toLowerCase();
+  }
+
+  private wordpressEnv(site: SiteRecord): Record<string, string> {
+    const settings = site.wordpress;
+    const ownerEmail = settings?.ownerEmail || `${site.ownerUid}@preview.getaudo.com`;
+    const adminEmail = settings?.adminEmail || ownerEmail;
+    return {
+      AUDO_SITE_ID: site.id,
+      AUDO_SITE_DOMAIN: site.primaryDomain,
+      AUDO_SITE_TITLE: settings?.siteTitle || site.name,
+      AUDO_OWNER_EMAIL: ownerEmail,
+      AUDO_ADMIN_EMAIL: adminEmail,
+      AUDO_THEME_SLUG: settings?.themeSlug || "audo-neighborhood",
+      AUDO_SITE_PLAN: site.plan,
+      AUDO_ADS_ENABLED: site.plan === "paid" ? "false" : "true",
+      AUDO_FREE_PAGE_LIMIT: "5",
+      AUDO_FREE_UPLOAD_LIMIT_MB: "250",
+      WORDPRESS_REDIS_HOST: "redis"
+    };
+  }
+
+  private async upsertWordPressEnv(serviceUuid: string, site: SiteRecord): Promise<{ count: number; response: unknown }> {
+    const data = Object.entries(this.wordpressEnv(site)).map(([key, value]) => ({
+      key,
+      value,
+      is_literal: true,
+      is_multiline: false,
+      is_shown_once: false,
+      comment: "Managed by Audo control plane"
+    }));
+    const response = await this.coolify(`/api/v1/services/${serviceUuid}/envs/bulk`, {
+      method: "PATCH",
+      body: JSON.stringify({ data })
+    });
+    return { count: data.length, response };
   }
 
   private async coolify(path: string, init: RequestInit): Promise<any> {

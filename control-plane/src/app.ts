@@ -21,12 +21,24 @@ const createSiteSchema = z.object({
   plan: z.enum(["free", "paid"]).optional(),
   platform: z.enum(["builder", "wordpress", "github-app", "concierge"]).optional(),
   template: z.string().optional(),
-  builder: z.any().optional()
+  builder: z.any().optional(),
+  wordpress: z.object({
+    siteTitle: z.string().optional(),
+    ownerEmail: z.string().email().optional(),
+    adminEmail: z.string().email().optional(),
+    themeSlug: z.string().optional()
+  }).optional()
 });
 
 const updateSiteSchema = z.object({
   name: z.string().min(1).optional(),
-  builder: z.any().optional()
+  builder: z.any().optional(),
+  wordpress: z.object({
+    siteTitle: z.string().optional(),
+    ownerEmail: z.string().email().optional(),
+    adminEmail: z.string().email().optional(),
+    themeSlug: z.string().optional()
+  }).optional()
 });
 
 const customDomainSchema = z.object({
@@ -155,6 +167,14 @@ export function createApp(config: AppConfig, services = createDefaultServices(co
   app.post("/api/sites/:siteId/publish", asyncRoute(async (request, response) => {
     const commit = typeof request.body?.commit === "string" ? request.body.commit : undefined;
     response.json({ site: await service.publishSite(requireUser(request), request.params.siteId, commit) });
+  }));
+
+  app.post("/api/sites/:siteId/unpublish", asyncRoute(async (request, response) => {
+    response.json({ site: await service.unpublishSite(requireUser(request), request.params.siteId) });
+  }));
+
+  app.delete("/api/sites/:siteId", asyncRoute(async (request, response) => {
+    response.json({ site: await service.deleteSite(requireUser(request), request.params.siteId) });
   }));
 
   app.post("/api/sites/:siteId/github", asyncRoute(async (request, response) => {

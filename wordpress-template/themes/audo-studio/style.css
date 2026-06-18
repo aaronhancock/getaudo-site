@@ -1,0 +1,19 @@
+/*
+Theme Name: Audo Studio
+Theme URI: https://getaudo.com
+Author: Audo
+Description: Portfolio and creative-services theme with editorial spacing, sharp type, and bold project sections.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+Text Domain: audo-studio
+*/
+
+body {
+  letter-spacing: 0;
+}
+
+.wp-block-cover {
+  border-radius: 8px;
+}

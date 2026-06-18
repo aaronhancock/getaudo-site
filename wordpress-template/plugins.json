@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "defaults": [
+    {
+      "slug": "redis-cache",
+      "name": "Redis Object Cache",
+      "category": "performance",
+      "plans": ["free", "paid"],
+      "autoActivate": true
+    },
+    {
+      "slug": "performance-lab",
+      "name": "Performance Lab",
+      "category": "performance",
+      "plans": ["free", "paid"],
+      "autoActivate": true
+    },
+    {
+      "slug": "autodescription",
+      "name": "The SEO Framework",
+      "category": "seo",
+      "plans": ["free", "paid"],
+      "autoActivate": true
+    },
+    {
+      "slug": "contact-form-7",
+      "name": "Contact Form 7",
+      "category": "forms",
+      "plans": ["free", "paid"],
+      "autoActivate": true
+    }
+  ],
+  "paidOnly": [
+    {
+      "slug": "wordfence",
+      "name": "Wordfence Security",
+      "category": "security",
+      "reason": "Firewall, scanning, and 2FA add resource load and operational support."
+    },
+    {
+      "slug": "wp-super-cache",
+      "name": "WP Super Cache",
+      "category": "performance",
+      "reason": "Advanced cache behavior should be tested per paid site and custom domain."
+    },
+    {
+      "slug": "woocommerce",
+      "name": "WooCommerce",
+      "category": "commerce",
+      "reason": "E-commerce needs paid hosting, backups, stronger security, and support boundaries."
+    },
+    {
+      "slug": "wp-mail-smtp",
+      "name": "WP Mail SMTP",
+      "category": "email",
+      "reason": "Mail delivery requires provider credentials and support."
+    }
+  ],
+  "freeLimits": {
+    "pages": 5,
+    "mediaMb": 250,
+    "customPlugins": false,
+    "customThemeInstalls": false,
+    "customDomain": false,
+    "backups": false,
+    "audoBadge": true
+  },
+  "paidUnlocks": {
+    "customDomain": true,
+    "backups": true,
+    "audoBadge": false,
+    "customPlugins": true,
+    "customThemeInstalls": true,
+    "githubIntegration": false
+  }
+}

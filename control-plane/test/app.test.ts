@@ -24,6 +24,7 @@ const config: AppConfig = {
 
 class FakeCloudflare implements CloudflareProvider {
   slugs: string[] = [];
+  deletedSlugs: string[] = [];
 
   async verifyConnection() {
     return { status: "ready" as const, zoneId: "zone_test", zoneName: "getaudo.com" };
@@ -36,6 +37,11 @@ class FakeCloudflare implements CloudflareProvider {
       record: { type: "CNAME" as const, name: `${slug}.getaudo.com`, value: "getaudo.com", proxied: true },
       details: { recordId: `record_${slug}` }
     };
+  }
+
+  async deleteFreeSubdomain(slug: string) {
+    this.deletedSlugs.push(slug);
+    return { status: "ready" as const, details: { recordId: `record_${slug}` } };
   }
 
   customDomainInstructions(host: string) {
@@ -66,6 +72,28 @@ class FakeCoolify implements CoolifyProvider {
       url: `https://${site.primaryDomain}`,
       createdAt: new Date().toISOString(),
       details: { template: "wordpress", host: site.primaryDomain }
+    };
+  }
+
+  async stopSite(site: SiteRecord): Promise<SiteDeployment> {
+    return {
+      id: "stop_site_test",
+      provider: "preview",
+      status: "skipped",
+      url: `https://${site.primaryDomain}`,
+      createdAt: new Date().toISOString(),
+      details: { action: "stopped", host: site.primaryDomain }
+    };
+  }
+
+  async deleteSite(site: SiteRecord): Promise<SiteDeployment> {
+    return {
+      id: "delete_site_test",
+      provider: "preview",
+      status: "skipped",
+      url: `https://${site.primaryDomain}`,
+      createdAt: new Date().toISOString(),
+      details: { action: "deleted", host: site.primaryDomain }
     };
   }
 }
@@ -178,12 +206,32 @@ describe("Audo control plane", () => {
   it("creates free DIY WordPress sites and provisions WordPress separately", async () => {
     const created = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "WordPress Free", platform: "wordpress", plan: "free" })
+      body: JSON.stringify({
+        name: "WordPress Free",
+        platform: "wordpress",
+        plan: "free",
+        wordpress: {
+          adminEmail: "not-the-owner@example.com",
+          ownerEmail: "also-not-the-owner@example.com",
+          themeSlug: "audo-studio"
+        }
+      })
     });
     assert.equal(created.response.status, 201);
     assert.equal(created.body.site.type, "wordpress");
     assert.equal(created.body.site.plan, "free");
     assert.equal(created.body.site.primaryDomain, "wordpress-free.getaudo.com");
+    assert.equal(created.body.site.wordpress.ownerEmail, "test-owner@preview.getaudo.com");
+    assert.equal(created.body.site.wordpress.adminEmail, "test-owner@preview.getaudo.com");
+    assert.equal(created.body.site.wordpress.themeSlug, "audo-studio");
+
+    const updated = await request(`/api/sites/${created.body.site.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ wordpress: { themeSlug: "audo-table" } })
+    });
+    assert.equal(updated.response.status, 200);
+    assert.equal(updated.body.site.wordpress.themeSlug, "audo-table");
+    assert.equal(updated.body.site.wordpress.adminEmail, "test-owner@preview.getaudo.com");
 
     const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
     assert.equal(published.response.status, 200);
@@ -260,6 +308,35 @@ describe("Audo control plane", () => {
     } finally {
       await new Promise<void>((resolve, reject) => failingServer.close((error) => (error ? reject(error) : resolve())));
     }
+  });
+
+  it("unpublishes and deletes sites from Audo", async () => {
+    const created = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "Delete Me", platform: "wordpress", plan: "free" })
+    });
+    const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
+    assert.equal(published.body.site.status, "published");
+
+    const unpublished = await request(`/api/sites/${created.body.site.id}/unpublish`, { method: "POST", body: "{}" });
+    assert.equal(unpublished.response.status, 200);
+    assert.equal(unpublished.body.site.status, "configured");
+    assert.equal(unpublished.body.site.deployments[0].id, "stop_site_test");
+
+    const deleted = await request(`/api/sites/${created.body.site.id}`, { method: "DELETE" });
+    assert.equal(deleted.response.status, 200);
+    assert.equal(deleted.body.site.status, "deleted");
+    assert.equal(deleted.body.site.deployments[0].id, "delete_site_test");
+    assert.ok(cloudflare.deletedSlugs.includes("delete-me"));
+
+    const list = await request("/api/sites");
+    assert.equal(list.body.sites.some((site: any) => site.id === created.body.site.id), false);
+
+    const sameName = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "Delete Me", platform: "wordpress", plan: "free" })
+    });
+    assert.equal(sameName.body.site.slug, "delete-me");
   });
 
   it("reports Cloudflare status", async () => {

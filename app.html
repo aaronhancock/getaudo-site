@@ -1553,6 +1553,22 @@
 		          <button class="wizard-option active" data-platform-option="wordpress" data-plan-option="free" type="button"><strong>Free DIY</strong><span>Use a generated getaudo.com subdomain with Audo ad placement.</span></button>
 		          <button class="wizard-option" data-platform-option="wordpress" data-plan-option="paid" type="button"><strong>Paid WordPress</strong><span>Add a custom domain, backups, restore points, and no Audo ads.</span></button>
 		        </div>
+		        <div class="field-grid" data-wordpress-settings hidden>
+		          <div class="field">
+		            <label for="siteWordPressThemeInput">Theme</label>
+		            <select id="siteWordPressThemeInput">
+		              <option value="audo-neighborhood">Audo Neighborhood</option>
+		              <option value="audo-studio">Audo Studio</option>
+		              <option value="audo-table">Audo Table</option>
+		              <option value="audo-signal">Audo Signal</option>
+		              <option value="audo-sanctuary">Audo Sanctuary</option>
+		            </select>
+		          </div>
+		          <div class="field">
+		            <label for="siteAdminEmailInput">Admin email</label>
+		            <input id="siteAdminEmailInput" readonly>
+		          </div>
+		        </div>
 		        <div class="empty-state" data-wordpress-setup-note hidden style="min-height: 140px;">
 		          <div>
 		            <strong>WordPress provisioning</strong>
@@ -1674,6 +1690,13 @@
 	      concierge: "Done-for-you website",
 	      "github-app": "Custom app hosting"
 	    };
+	    const wordpressThemeLabels = {
+	      "audo-neighborhood": "Audo Neighborhood",
+	      "audo-studio": "Audo Studio",
+	      "audo-table": "Audo Table",
+	      "audo-signal": "Audo Signal",
+	      "audo-sanctuary": "Audo Sanctuary"
+	    };
 	    const designLabels = {
 	      system: "System",
 	      inter: "Inter",
@@ -1778,6 +1801,25 @@
 	      };
 	    }
 
+	    function accountEmail() {
+	      try {
+	        return state?.user?.email || "preview@getaudo.com";
+	      } catch {
+	        return "preview@getaudo.com";
+	      }
+	    }
+
+	    function normalizeWordPressSettings(settings = {}, siteName = "") {
+	      const themeSlug = wordpressThemeLabels[settings.themeSlug] ? settings.themeSlug : "audo-neighborhood";
+	      const email = accountEmail();
+	      return {
+	        siteTitle: String(settings.siteTitle || siteName || "").trim(),
+	        ownerEmail: email,
+	        adminEmail: String(settings.adminEmail || email).trim() || email,
+	        themeSlug
+	      };
+	    }
+
 	    function cloneComponents(components) {
 	      return components.map((item) => normalizeComponentFromApi({ ...item, id: item.id || crypto.randomUUID() }));
 	    }
@@ -1857,9 +1899,12 @@
 	      siteBackgroundColorInput: document.getElementById("siteBackgroundColorInput"),
 	      siteTextColorInput: document.getElementById("siteTextColorInput"),
 	      siteHeroImageInput: document.getElementById("siteHeroImageInput"),
+	      siteWordPressThemeInput: document.getElementById("siteWordPressThemeInput"),
+	      siteAdminEmailInput: document.getElementById("siteAdminEmailInput"),
 	      siteWizardProgress: document.getElementById("siteWizardProgress"),
 		      flowOptions: document.querySelector("[data-flow-options]"),
 		      wordpressPlanOptions: document.querySelector("[data-wordpress-plan-options]"),
+		      wordpressSettings: document.querySelector("[data-wordpress-settings]"),
 		      builderPlanOptions: document.querySelector("[data-builder-plan-options]"),
 		      builderTemplateOptions: document.querySelector("[data-builder-template-options]"),
 		      wordpressSetupNote: document.querySelector("[data-wordpress-setup-note]"),
@@ -2093,6 +2138,7 @@
         customDomain: customDomain?.host || "",
         createdAt: apiSite.createdAt,
         publishedAt: apiSite.publishedAt || "",
+        wordpress: normalizeWordPressSettings(apiSite.wordpress || existing?.wordpress, apiSite.name),
         visits: existing?.visits || 0,
         leads: existing?.leads || 0,
         components,
@@ -2156,7 +2202,7 @@
       return normalized;
     }
 
-    function createSiteRecord({ id, name, slug, plan, platform, template, status, design, components }) {
+    function createSiteRecord({ id, name, slug, plan, platform, template, status, design, components, wordpress }) {
       const safeSlug = slugify(slug || name || "site");
       return {
         id: id || crypto.randomUUID(),
@@ -2174,6 +2220,7 @@
         leads: Math.floor(3 + Math.random() * 28),
         design: normalizeDesign(design, template || "service"),
         components: Array.isArray(components) && components.length ? cloneComponents(components) : createTemplateComponents(template || "service"),
+        wordpress: normalizeWordPressSettings(wordpress, name || "Untitled site"),
         github: { repo: "", branch: "main", build: "", output: "dist", connected: false },
         backups: []
       };
@@ -2791,10 +2838,31 @@
 	        : site.plan === "paid"
 	        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
 	        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
-      document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
-        button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
-      });
-    }
+	      els.domainUpgradePanel.innerHTML += siteControlsPanel(site);
+	      document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
+	        button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
+	      });
+	      document.querySelectorAll("[data-unpublish-site]").forEach((button) => {
+	        button.addEventListener("click", () => unpublishSite(button.dataset.unpublishSite));
+	      });
+	      document.querySelectorAll("[data-delete-site]").forEach((button) => {
+	        button.addEventListener("click", () => deleteSiteFromAudo(button.dataset.deleteSite));
+	      });
+	    }
+
+	    function siteControlsPanel(site) {
+	      const published = site.status === "published";
+	      return `
+	        <div class="lock-panel">
+	          <strong>Site controls</strong>
+	          <span>Unpublish removes public routing. Delete removes this website from your Audo console and releases the generated subdomain.</span>
+	          <div class="toolbar" style="justify-content:flex-start;">
+	            <button class="button" type="button" data-unpublish-site="${escapeHtml(site.id)}" ${published ? "" : "disabled"}><i data-lucide="circle-pause" class="icon"></i><span>Unpublish</span></button>
+	            <button class="button danger" type="button" data-delete-site="${escapeHtml(site.id)}"><i data-lucide="trash-2" class="icon"></i><span>Delete from Audo</span></button>
+	          </div>
+	        </div>
+	      `;
+	    }
 
     function renderIntegrations() {
       const site = selectedSite();
@@ -2817,8 +2885,15 @@
       els.backupPanel.innerHTML = locked
         ? `<div class="lock-panel"><strong>Backups are on paid hosting.</strong><span>Paid sites get restore points, retention settings, and GitHub-backed rebuild paths.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`
         : `<div class="table"><div class="table-row"><span>Restore point</span><span>Size</span><span>Status</span><span></span></div>${backupRows(site)}</div><div class="toolbar"><button class="button" type="button" id="runBackup"><i data-lucide="archive" class="icon"></i><span>Run backup</span></button></div>`;
+      els.backupPanel.innerHTML += siteControlsPanel(site);
       document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
         button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
+      });
+      document.querySelectorAll("[data-unpublish-site]").forEach((button) => {
+        button.addEventListener("click", () => unpublishSite(button.dataset.unpublishSite));
+      });
+      document.querySelectorAll("[data-delete-site]").forEach((button) => {
+        button.addEventListener("click", () => deleteSiteFromAudo(button.dataset.deleteSite));
       });
       document.getElementById("runBackup")?.addEventListener("click", runBackup);
     }
@@ -2918,6 +2993,65 @@
 	      render();
 	    }
 
+	    async function unpublishSite(siteId) {
+	      const site = state.sites.find((item) => item.id === siteId);
+	      if (!site || site.status !== "published") {
+	        return;
+	      }
+	      if (!window.confirm(`Unpublish ${site.name}? The site will stop serving publicly until you publish it again.`)) {
+	        return;
+	      }
+	      if (API_BASE_URL) {
+	        try {
+	          const result = await apiFetch(`/api/sites/${site.id}/unpublish`, { method: "POST", body: "{}" });
+	          replaceSite(result.site);
+	          saveState();
+	          showToast(`${site.name} unpublished.`);
+	          render();
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Unpublish failed."));
+	        }
+	        return;
+	      }
+	      site.status = "configured";
+	      site.unpublishedAt = new Date().toISOString();
+	      saveState();
+	      showToast(`${site.name} unpublished.`);
+	      render();
+	    }
+
+	    async function deleteSiteFromAudo(siteId) {
+	      const site = state.sites.find((item) => item.id === siteId);
+	      if (!site) {
+	        return;
+	      }
+	      if (!window.confirm(`Delete ${site.name} from Audo? This removes it from your console and releases ${site.slug}.${FREE_DOMAIN}.`)) {
+	        return;
+	      }
+	      if (API_BASE_URL) {
+	        try {
+	          await apiFetch(`/api/sites/${site.id}`, { method: "DELETE" });
+	          removeSiteFromState(site.id);
+	          showToast(`${site.name} deleted from Audo.`);
+	          render();
+	        } catch (error) {
+	          showToast(friendlyErrorMessage(error, "Delete failed."));
+	        }
+	        return;
+	      }
+	      removeSiteFromState(site.id);
+	      showToast(`${site.name} deleted from Audo.`);
+	      render();
+	    }
+
+	    function removeSiteFromState(siteId) {
+	      state.sites = state.sites.filter((site) => site.id !== siteId);
+	      state.selectedSiteId = state.sites[0]?.id || null;
+	      state.selectedComponentId = isBuilderPlatform(selectedSite()) ? selectedSite()?.components[0]?.id || null : null;
+	      state.view = state.selectedSiteId ? "sites" : "sites";
+	      saveState();
+	    }
+
 	    function newWizardDraft() {
 	      const template = "service";
 	      const components = createTemplateComponents(template);
@@ -2926,10 +3060,11 @@
 		        siteId: null,
 		        name: "",
 		        slug: "",
-		        plan: "",
-		        platform: "",
-		        template,
+	        plan: "",
+	        platform: "",
+	        template,
 	        design: defaultDesign(template),
+	        wordpress: normalizeWordPressSettings({}, ""),
 	        components,
 	        selectedComponentId: components[0]?.id || null
 	      };
@@ -2946,6 +3081,7 @@
 	        platform: site.platform || (site.type === "wordpress" ? "wordpress" : "builder"),
 	        template: site.template || "service",
 	        design: normalizeDesign(site.design, site.template),
+	        wordpress: normalizeWordPressSettings(site.wordpress, site.name),
 	        components,
 	        selectedComponentId: componentId || state.selectedComponentId || components[0]?.id || null
 	      };
@@ -2968,6 +3104,13 @@
 		      } else {
 		        siteWizardDraft.plan = els.sitePlanInput.value || siteWizardDraft.plan || (siteWizardDraft.platform === "builder" ? "free" : "");
 		      }
+		      siteWizardDraft.wordpress = normalizeWordPressSettings({
+		        ...(siteWizardDraft.wordpress || {}),
+		        siteTitle: siteWizardDraft.name,
+		        ownerEmail: accountEmail(),
+		        adminEmail: els.siteAdminEmailInput.value.trim() || accountEmail(),
+		        themeSlug: els.siteWordPressThemeInput.value
+		      }, siteWizardDraft.name);
 	      siteWizardDraft.design = normalizeDesign({
 	        font: els.siteFontInput.value,
 	        layout: els.siteLayoutInput.value,
@@ -2990,6 +3133,9 @@
 	      els.siteTemplateInput.value = draft.template || "service";
 		      els.sitePlanInput.value = draft.plan || "";
 		      els.sitePlatformInput.value = draft.platform || "";
+		      const wordpress = normalizeWordPressSettings(draft.wordpress, draft.name);
+		      els.siteWordPressThemeInput.value = wordpress.themeSlug;
+		      els.siteAdminEmailInput.value = wordpress.adminEmail || accountEmail();
 	      const design = normalizeDesign(draft.design, draft.template);
 	      els.siteFontInput.value = design.font;
 	      els.siteLayoutInput.value = design.layout;
@@ -3009,6 +3155,7 @@
 	        platform: draft.platform,
 	        template: draft.template,
 	        design: normalizeDesign(draft.design, draft.template),
+	        wordpress: normalizeWordPressSettings(draft.wordpress, draft.name),
 		        components: cloneComponents(draft.components)
 		      };
 		    }
@@ -3155,6 +3302,7 @@
 		        button.disabled = siteWizardMode === "edit";
 		      });
 		      els.wordpressPlanOptions.hidden = !wordPressFlow;
+		      els.wordpressSettings.hidden = !wordPressFlow;
 		      els.builderPlanOptions.hidden = !builderFlow || !payload.platform;
 		      els.builderTemplateOptions.hidden = !builderFlow || !payload.platform;
 		      els.wordpressSetupNote.hidden = !wordPressFlow;
@@ -3287,7 +3435,9 @@
 		          <div><span>URL</span><strong>${escapeHtml(host)}</strong></div>
 		          <div><span>Platform</span><strong>${escapeHtml(platformLabels[payload.platform] || payload.platform)}</strong></div>
 		          <div><span>Plan</span><strong>${escapeHtml(planLabels[payload.plan] || payload.plan)}</strong></div>
-		          <div><span>Hosting stack</span><strong>WordPress + MariaDB</strong></div>
+		          <div><span>Theme</span><strong>${escapeHtml(wordpressThemeLabels[payload.wordpress?.themeSlug] || "Audo Neighborhood")}</strong></div>
+		          <div><span>Admin email</span><strong>${escapeHtml(payload.wordpress?.adminEmail || accountEmail())}</strong></div>
+		          <div><span>Hosting stack</span><strong>WordPress + MariaDB + Redis</strong></div>
 		          <div><span>Audo setup</span><strong>DNS, SSL route, storage, and database</strong></div>
 		          <div><span>Site setup</span><strong>Handled in WordPress admin</strong></div>
 		          <div><span>Admin URL</span><strong>${escapeHtml(host)}/wp-admin</strong></div>
@@ -3509,6 +3659,9 @@
 		          if (isBuilderPlatform(payload)) {
 		            createBody.builder = { version: 1, design: payload.design, components: payload.components };
 		          }
+		          if (isWordPressPlatform(payload)) {
+		            createBody.wordpress = payload.wordpress;
+		          }
 		          const result = await apiFetch("/api/sites", {
 		            method: "POST",
 		            body: JSON.stringify(createBody)
@@ -3554,6 +3707,7 @@
 	        template: payload.template,
 	        design: payload.design,
 	        components: payload.components,
+	        wordpress: payload.wordpress,
 	        status: isWordPressPlatform(payload) ? "published" : "draft"
 	      });
 	      state.sites.unshift(site);
@@ -3580,6 +3734,9 @@
 		        site.design = payload.design;
 		        site.components = payload.components;
 		      }
+		      if (isWordPressPlatform(site)) {
+		        site.wordpress = payload.wordpress;
+		      }
 		      state.selectedComponentId = builderSite ? siteWizardDraft.selectedComponentId || site.components[0]?.id || null : null;
 		      if (!API_BASE_URL) {
 		        saveState();
@@ -3592,6 +3749,9 @@
 		        const updateBody = { name: site.name };
 		        if (builderSite) {
 		          updateBody.builder = builderDocumentFromSite(site);
+		        }
+		        if (isWordPressPlatform(site)) {
+		          updateBody.wordpress = site.wordpress;
 		        }
 		        const result = await apiFetch(`/api/sites/${site.id}`, {
 		          method: "PATCH",
@@ -3795,7 +3955,7 @@
 		        renderSiteWizard();
 		        return;
 		      }
-		      if ([els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput].includes(event.target)) {
+		      if ([els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput, els.siteWordPressThemeInput].includes(event.target)) {
 	        readWizardInputs();
 	        renderWizardPreview();
 	        renderWizardReview(wizardPayload());
@@ -3807,7 +3967,7 @@
 	      }
 	    });
 	    els.siteModal.addEventListener("change", (event) => {
-	      if ([els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput].includes(event.target)) {
+	      if ([els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput, els.siteWordPressThemeInput].includes(event.target)) {
 	        readWizardInputs();
 	        renderWizardReview(wizardPayload());
 	        return;

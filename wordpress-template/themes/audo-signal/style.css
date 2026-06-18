@@ -1,0 +1,19 @@
+/*
+Theme Name: Audo Signal
+Theme URI: https://getaudo.com
+Author: Audo
+Description: SaaS and professional tech theme with feature blocks, pricing paths, and conversion-focused typography.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+Text Domain: audo-signal
+*/
+
+body {
+  letter-spacing: 0;
+}
+
+.wp-block-code {
+  border-radius: 8px;
+}

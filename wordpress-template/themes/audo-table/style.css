@@ -1,0 +1,19 @@
+/*
+Theme Name: Audo Table
+Theme URI: https://getaudo.com
+Author: Audo
+Description: Restaurant and hospitality theme for menus, hours, reservations, and private events.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+Text Domain: audo-table
+*/
+
+body {
+  letter-spacing: 0;
+}
+
+.wp-block-separator {
+  opacity: 1;
+}

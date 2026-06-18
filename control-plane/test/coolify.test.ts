@@ -16,6 +16,12 @@ const site: SiteRecord = {
   primaryDomain: "test-wordpress.getaudo.com",
   domains: [],
   builder: { version: 1, components: [] },
+  wordpress: {
+    siteTitle: "Test WordPress",
+    ownerEmail: "owner@example.com",
+    adminEmail: "owner@example.com",
+    themeSlug: "audo-studio"
+  },
   github: { connected: false },
   deployments: [],
   backups: [],
@@ -25,12 +31,15 @@ const site: SiteRecord = {
 
 describe("Coolify WordPress provisioning", () => {
   it("creates a WordPress service from the configured Coolify template", async () => {
-    const requests: Array<{ url: string; body: any }> = [];
+    const requests: Array<{ url: string; method?: string; body: any }> = [];
     const originalFetch = global.fetch;
     global.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
-      requests.push({ url: String(url), body: JSON.parse(String(init?.body || "{}")) });
+      requests.push({ url: String(url), method: init?.method, body: JSON.parse(String(init?.body || "{}")) });
       if (String(url).endsWith("/start")) {
         return new Response(JSON.stringify({ message: "Service starting request queued." }), { status: 200 });
+      }
+      if (String(url).endsWith("/envs/bulk")) {
+        return new Response(JSON.stringify({ message: "Environment variables updated." }), { status: 200 });
       }
       return new Response(JSON.stringify({ uuid: "service_test", domains: ["https://test-wordpress.getaudo.com"] }), { status: 201 });
     }) as typeof fetch;
@@ -63,7 +72,20 @@ describe("Coolify WordPress provisioning", () => {
         urls: [{ name: "wordpress", url: "https://test-wordpress.getaudo.com" }],
         environment_name: "production"
       });
-      assert.equal(requests[1].url, "http://coolify:8080/api/v1/services/service_test/start");
+      assert.equal(requests[1].url, "http://coolify:8080/api/v1/services/service_test/envs/bulk");
+      assert.equal(requests[1].method, "PATCH");
+      assert.deepEqual(
+        requests[1].body.data.find((item: any) => item.key === "AUDO_THEME_SLUG"),
+        {
+          key: "AUDO_THEME_SLUG",
+          value: "audo-studio",
+          is_literal: true,
+          is_multiline: false,
+          is_shown_once: false,
+          comment: "Managed by Audo control plane"
+        }
+      );
+      assert.equal(requests[2].url, "http://coolify:8080/api/v1/services/service_test/start");
     } finally {
       global.fetch = originalFetch;
     }

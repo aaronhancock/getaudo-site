@@ -121,9 +121,10 @@ describe("Audo control plane", () => {
   it("creates a site, provisions DNS, and publishes it", async () => {
     const created = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Test Site", slug: "test-site", template: "service" })
+      body: JSON.stringify({ name: "Test Site", template: "service" })
     });
     assert.equal(created.response.status, 201);
+    assert.equal(created.body.site.slug, "test-site");
     assert.equal(created.body.site.primaryDomain, "test-site.getaudo.com");
 
     const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
@@ -138,19 +139,20 @@ describe("Audo control plane", () => {
     assert.match(await publicSite.text(), /Test Site|Created with Audo free hosting/);
   });
 
-  it("prevents duplicate free subdomains", async () => {
-    const duplicate = await request("/api/sites", {
+  it("generates unique free subdomains and ignores client supplied slugs", async () => {
+    const duplicateName = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Another Test", slug: "test-site" })
+      body: JSON.stringify({ name: "Test Site", slug: "manual-slug" })
     });
-    assert.equal(duplicate.response.status, 409);
-    assert.equal(duplicate.body.error.code, "conflict");
+    assert.equal(duplicateName.response.status, 201);
+    assert.equal(duplicateName.body.site.slug, "test-site-2");
+    assert.equal(duplicateName.body.site.primaryDomain, "test-site-2.getaudo.com");
   });
 
   it("gates custom domains, GitHub, and backups to paid sites", async () => {
     const free = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Free Site", slug: "free-site" })
+      body: JSON.stringify({ name: "Free Site" })
     });
     const domain = await request(`/api/sites/${free.body.site.id}/domains`, {
       method: "POST",
@@ -160,7 +162,7 @@ describe("Audo control plane", () => {
 
     const paid = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Paid Site", slug: "paid-site", plan: "paid" })
+      body: JSON.stringify({ name: "Paid Site", plan: "paid" })
     });
     const backup = await request(`/api/sites/${paid.body.site.id}/backups`, { method: "POST", body: "{}" });
     assert.equal(backup.response.status, 202);
@@ -170,13 +172,13 @@ describe("Audo control plane", () => {
   it("requires paid plan for managed WordPress and provisions WordPress sites separately", async () => {
     const rejected = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "WordPress Free", slug: "wordpress-free", platform: "wordpress", plan: "free" })
+      body: JSON.stringify({ name: "WordPress Free", platform: "wordpress", plan: "free" })
     });
     assert.equal(rejected.response.status, 402);
 
     const created = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "WordPress Paid", slug: "wordpress-paid", platform: "wordpress", plan: "paid" })
+      body: JSON.stringify({ name: "WordPress Paid", platform: "wordpress", plan: "paid" })
     });
     assert.equal(created.response.status, 201);
     assert.equal(created.body.site.type, "wordpress");

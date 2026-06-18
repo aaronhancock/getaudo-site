@@ -547,6 +547,19 @@
       padding: 9px 10px;
     }
 
+    .readonly-value {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: var(--ink);
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      overflow-wrap: anywhere;
+    }
+
     .field textarea {
       min-height: 96px;
       resize: vertical;
@@ -1436,10 +1449,10 @@
                 <span class="pill" id="domainPlanPill">Free</span>
               </div>
               <div class="field-grid">
-                <div class="field">
-                  <label for="subdomainInput">Free subdomain</label>
-                  <input id="subdomainInput">
-                </div>
+	                <div class="field">
+	                  <label>Free subdomain</label>
+	                  <div class="readonly-value" id="subdomainDisplay"></div>
+	                </div>
                 <div class="field">
                   <label for="customDomainInput">Custom domain</label>
                   <input id="customDomainInput" placeholder="www.example.com">
@@ -1529,10 +1542,11 @@
 		            <label for="siteNameInput">Site name</label>
 		            <input id="siteNameInput" placeholder="Acme Studio" autocomplete="organization">
 		          </div>
-		          <div class="field">
-		            <label for="siteSlugInput">Subdomain</label>
-		            <input id="siteSlugInput" placeholder="acme-studio" autocapitalize="none" spellcheck="false">
-		          </div>
+			          <div class="field">
+			            <label>Generated URL</label>
+			            <input id="siteSlugInput" type="hidden">
+			            <div class="readonly-value" id="siteSlugPreview">Enter a site name</div>
+			          </div>
 		        </div>
 		        <div class="empty-state" data-wordpress-setup-note hidden style="min-height: 140px;">
 		          <div>
@@ -1624,6 +1638,7 @@
     const GOOGLE_AUTH_ENABLED = APP_CONFIG.authProviders?.google === true;
 	    const STORAGE_KEY = "audo-console-state-v1";
 	    const FREE_DOMAIN = "getaudo.com";
+	    const reservedSlugs = new Set(["admin", "api", "app", "assets", "billing", "cdn", "dashboard", "docs", "ftp", "mail", "root", "static", "support", "www"]);
 		    const createBuilderWizardStepLabels = ["Choose", "Basics", "Site type", "Design", "Sections", "Content", "Review"];
 		    const editBuilderWizardStepLabels = ["Basics", "Site type", "Design", "Sections", "Content", "Review"];
 		    const createWordPressWizardStepLabels = ["Choose", "WordPress", "Review"];
@@ -1794,7 +1809,7 @@
       domainPlanPill: document.getElementById("domainPlanPill"),
       domainTable: document.getElementById("domainTable"),
       domainUpgradePanel: document.getElementById("domainUpgradePanel"),
-      subdomainInput: document.getElementById("subdomainInput"),
+      subdomainDisplay: document.getElementById("subdomainDisplay"),
       customDomainInput: document.getElementById("customDomainInput"),
       githubPlanPill: document.getElementById("githubPlanPill"),
       repoInput: document.getElementById("repoInput"),
@@ -1814,6 +1829,7 @@
 	      siteModalTitle: document.getElementById("siteModalTitle"),
 	      siteNameInput: document.getElementById("siteNameInput"),
 	      siteSlugInput: document.getElementById("siteSlugInput"),
+	      siteSlugPreview: document.getElementById("siteSlugPreview"),
 	      siteTemplateInput: document.getElementById("siteTemplateInput"),
 	      sitePlanInput: document.getElementById("sitePlanInput"),
 	      sitePlatformInput: document.getElementById("sitePlatformInput"),
@@ -2222,6 +2238,35 @@
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "")
         .slice(0, 48) || "site";
+    }
+
+    function trimSlug(value) {
+      return String(value || "site").slice(0, 48).replace(/-+$/g, "") || "site";
+    }
+
+    function generatedSlugBase(name) {
+      const base = slugify(name || "site");
+      return reservedSlugs.has(base) ? trimSlug(`${base}-site`) : base;
+    }
+
+    function slugWithSuffix(base, suffix) {
+      if (suffix <= 1) {
+        return trimSlug(base);
+      }
+      const tail = `-${suffix}`;
+      return `${trimSlug(base).slice(0, 48 - tail.length).replace(/-+$/g, "") || "site"}${tail}`;
+    }
+
+    function uniqueGeneratedSlug(name, excludeSiteId = null) {
+      const base = generatedSlugBase(name);
+      const used = new Set(state.sites.filter((site) => site.id !== excludeSiteId).map((site) => site.slug));
+      for (let suffix = 1; suffix <= 1000; suffix += 1) {
+        const candidate = slugWithSuffix(base, suffix);
+        if (!reservedSlugs.has(candidate) && !used.has(candidate)) {
+          return candidate;
+        }
+      }
+      return `${crypto.randomUUID().slice(0, 8)}-site`;
     }
 
     function escapeHtml(value) {
@@ -2689,8 +2734,7 @@
 	      els.domainSiteName.textContent = `${site.name} URLs`;
       els.domainPlanPill.className = `pill ${site.plan === "paid" ? "blue" : "green"}`;
       els.domainPlanPill.textContent = site.plan === "paid" ? "Paid" : "Free";
-      els.subdomainInput.value = site.slug;
-      els.subdomainInput.disabled = Boolean(API_BASE_URL);
+      els.subdomainDisplay.textContent = `${site.slug}.${FREE_DOMAIN}`;
       els.customDomainInput.value = site.customDomain || "";
       els.customDomainInput.disabled = site.plan !== "paid";
       els.domainTable.innerHTML = `
@@ -2865,9 +2909,11 @@
 	    function readWizardInputs() {
 	      if (!siteWizardDraft) {
 	        siteWizardDraft = newWizardDraft();
-	      }
-	      siteWizardDraft.name = els.siteNameInput.value.trim();
-	      siteWizardDraft.slug = slugify(els.siteSlugInput.value || siteWizardDraft.name);
+		      }
+		      siteWizardDraft.name = els.siteNameInput.value.trim();
+		      if (siteWizardMode === "create") {
+		        siteWizardDraft.slug = siteWizardDraft.name ? uniqueGeneratedSlug(siteWizardDraft.name, siteWizardDraft.siteId) : "";
+		      }
 		      siteWizardDraft.template = els.siteTemplateInput.value || siteWizardDraft.template || "service";
 		      siteWizardDraft.platform = els.sitePlatformInput.value || siteWizardDraft.platform || "";
 		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress"
@@ -2888,9 +2934,10 @@
 		    }
 
 	    function syncWizardInputs() {
-	      const draft = siteWizardDraft || newWizardDraft();
-	      els.siteNameInput.value = draft.name || "";
-	      els.siteSlugInput.value = draft.slug || "";
+		      const draft = siteWizardDraft || newWizardDraft();
+		      els.siteNameInput.value = draft.name || "";
+		      els.siteSlugInput.value = draft.slug || "";
+		      els.siteSlugPreview.textContent = draft.name ? `${draft.slug || uniqueGeneratedSlug(draft.name, draft.siteId)}.${FREE_DOMAIN}` : "Generated from site name";
 	      els.siteTemplateInput.value = draft.template || "service";
 		      els.sitePlanInput.value = draft.plan || "";
 		      els.sitePlatformInput.value = draft.platform || "";
@@ -2953,7 +3000,7 @@
 		    }
 
 		    function validSiteBasics(payload) {
-		      return Boolean(payload.name && /^[a-z0-9](?:[a-z0-9-]{0,46}[a-z0-9])?$/.test(payload.slug));
+		      return Boolean(payload.name);
 		    }
 
 		    function basicsStepForPayload(payload) {
@@ -3178,7 +3225,7 @@
 		      const steps = wizardStepsForPayload(payload);
 		      const next = Math.max(0, Math.min(steps.length - 1, step));
 		      if (next > siteWizardStep && !validateWizardStep(siteWizardStep)) {
-		        showToast(wizardStepLabel(siteWizardStep, payload) === "Choose" ? "Choose Managed WordPress or Build your own website." : "Enter a site name and valid subdomain.");
+		        showToast(wizardStepLabel(siteWizardStep, payload) === "Choose" ? "Choose Managed WordPress or Build your own website." : "Enter a site name.");
 		        return;
 		      }
 	      siteWizardStep = next;
@@ -3304,7 +3351,7 @@
 		      if (!validSiteBasics(payload)) {
 		        siteWizardStep = basicsStepForPayload(payload);
 		        renderSiteWizard();
-		        showToast("Enter a site name and valid subdomain.");
+		        showToast("Enter a site name.");
 		        return;
 		      }
 	      creatingSite = true;
@@ -3319,11 +3366,10 @@
 	      }
 		      if (API_BASE_URL) {
 		        try {
-		          const createBody = {
-		            name: payload.name,
-		            slug: payload.slug,
-		            plan: payload.plan,
-		            platform: payload.platform,
+			          const createBody = {
+			            name: payload.name,
+			            plan: payload.plan,
+			            platform: payload.platform,
 		            template: payload.template
 		          };
 		          if (!isWordPressPlatform(payload)) {
@@ -3368,7 +3414,7 @@
 	      }
 	      const site = createSiteRecord({
 	        name: payload.name,
-	        slug: payload.slug,
+	        slug: uniqueGeneratedSlug(payload.name),
 	        plan: payload.plan,
 	        platform: payload.platform,
 	        template: payload.template,
@@ -3395,7 +3441,6 @@
 		      }
 		      const wordPressSite = isWordPressPlatform(site);
 		      site.name = payload.name || site.name;
-		      site.slug = payload.slug || site.slug;
 		      if (!wordPressSite) {
 		        site.template = payload.template;
 		        site.design = payload.design;
@@ -3611,15 +3656,12 @@
 	      }
 	    });
 	    els.siteModal.addEventListener("input", (event) => {
-	      if ([els.siteNameInput, els.siteSlugInput].includes(event.target)) {
-	        if (event.target === els.siteNameInput && !els.siteSlugInput.value.trim()) {
-	          els.siteSlugInput.placeholder = slugify(event.target.value || "site-name");
-	        }
-	        readWizardInputs();
-	        renderSiteWizard();
-	        return;
-	      }
-	      if ([els.siteNameInput, els.siteSlugInput, els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput].includes(event.target)) {
+		      if (event.target === els.siteNameInput) {
+		        readWizardInputs();
+		        renderSiteWizard();
+		        return;
+		      }
+		      if ([els.siteFontInput, els.siteLayoutInput, els.sitePrimaryColorInput, els.siteAccentColorInput, els.siteBackgroundColorInput, els.siteTextColorInput, els.siteHeroImageInput].includes(event.target)) {
 	        readWizardInputs();
 	        renderWizardPreview();
 	        renderWizardReview(wizardPayload());
@@ -3681,15 +3723,6 @@
         upgradeSite(site.id);
         return;
       }
-      saveState();
-      render();
-    });
-    els.subdomainInput.addEventListener("input", () => {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      site.slug = slugify(els.subdomainInput.value);
       saveState();
       render();
     });

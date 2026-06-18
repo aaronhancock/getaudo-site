@@ -34,7 +34,6 @@ const RESERVED_SLUGS = new Set([
 
 export interface CreateSiteInput {
   name: string;
-  slug?: string;
   plan?: Plan;
   platform?: "builder" | "wordpress";
   template?: string;
@@ -77,6 +76,23 @@ function normalizeSlug(value: string): string {
     throw conflict("That subdomain is reserved.", { slug });
   }
   return slug;
+}
+
+function generatedSlugBase(value: string): string {
+  const base = slugify(value) || "site";
+  return RESERVED_SLUGS.has(base) ? trimSlug(`${base}-site`) : base;
+}
+
+function trimSlug(value: string): string {
+  return value.slice(0, 48).replace(/-+$/g, "") || "site";
+}
+
+function slugWithSuffix(base: string, suffix: number): string {
+  if (suffix <= 1) {
+    return trimSlug(base);
+  }
+  const tail = `-${suffix}`;
+  return `${trimSlug(base).slice(0, 48 - tail.length).replace(/-+$/g, "") || "site"}${tail}`;
 }
 
 function normalizeHost(value: string): string {
@@ -136,11 +152,7 @@ export class SiteService {
     if (!name) {
       throw badRequest("Site name is required.");
     }
-    const slug = normalizeSlug(input.slug || name);
-    const existing = await this.services.store.findSiteBySlug(slug);
-    if (existing) {
-      throw conflict("That subdomain is already taken.", { slug });
-    }
+    const slug = await this.generateUniqueSlug(name);
     if (input.platform === "wordpress" && input.plan !== "paid") {
       throw paymentRequired("Managed WordPress requires a paid plan.");
     }
@@ -175,6 +187,17 @@ export class SiteService {
     const created = await this.services.store.createSite(site);
     await this.event(created, "site.created", `Created ${created.name}`);
     return created;
+  }
+
+  private async generateUniqueSlug(name: string): Promise<string> {
+    const base = generatedSlugBase(name);
+    for (let suffix = 1; suffix <= 1000; suffix += 1) {
+      const candidate = normalizeSlug(slugWithSuffix(base, suffix));
+      if (!(await this.services.store.findSiteBySlug(candidate))) {
+        return candidate;
+      }
+    }
+    throw conflict("Could not generate a unique subdomain for that site name.", { name });
   }
 
   async updateSite(user: AuthUser, siteId: string, input: UpdateSiteInput): Promise<SiteRecord> {

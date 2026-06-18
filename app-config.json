@@ -1,7 +1,7 @@
 {
   "apiBaseUrl": "https://api.getaudo.com",
   "authProviders": {
-    "google": false
+    "google": true
   },
   "firebase": {
     "projectId": "getaudo",

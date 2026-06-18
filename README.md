@@ -26,7 +26,7 @@ For production, create `firebase-config.json` next to `index.html` using `fireba
 
 The Firebase web config is public client configuration. Do not put Cloudflare, Coolify, GitHub App, Stripe, or backup credentials in this repo.
 
-The production Firebase project is `getaudo`. Email/password auth is enabled. Google sign-in is disabled in `app-config.json` until a Google OAuth client ID and secret are explicitly configured for Firebase Auth.
+The production Firebase project is `getaudo`. Email/password auth and Google sign-in are enabled.
 
 If `firebase-config.json` and `app-config.json` are absent, the app runs with local preview auth so the console can be developed without blocking on Firebase setup.
 

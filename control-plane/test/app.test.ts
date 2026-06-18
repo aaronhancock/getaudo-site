@@ -120,6 +120,10 @@ describe("Audo control plane", () => {
     assert.equal(published.body.site.status, "published");
     assert.equal(published.body.site.domains[0].status, "ready");
     assert.deepEqual(cloudflare.slugs, ["test-site"]);
+
+    const publicSite = await fetch(`${baseUrl}/`, { headers: { "x-forwarded-host": "test-site.getaudo.com" } });
+    assert.equal(publicSite.status, 200);
+    assert.match(await publicSite.text(), /Test Site|Created with Audo free hosting/);
   });
 
   it("prevents duplicate free subdomains", async () => {

@@ -1,6 +1,8 @@
 import cors from "cors";
 import express, { type NextFunction, type Request, type Response } from "express";
+import fs from "node:fs/promises";
 import helmet from "helmet";
+import path from "node:path";
 import { z } from "zod";
 import { authMiddleware, requireUser } from "./auth.js";
 import type { AppConfig } from "./config.js";
@@ -170,6 +172,21 @@ export function createApp(config: AppConfig, services = createDefaultServices(co
 
   app.get("/api/sites/:siteId/events", asyncRoute(async (request, response) => {
     response.json({ events: await service.listEvents(requireUser(request), request.params.siteId) });
+  }));
+
+  app.get("*", asyncRoute(async (request, response) => {
+    const host = String(request.headers["x-forwarded-host"] || request.headers.host || "").split(",")[0];
+    const site = await service.getPublishedFreeSiteByHost(host);
+    if (!site) {
+      throw notFound();
+    }
+    const artifactPath = path.join(config.publishedSiteRoot, site.slug, "index.html");
+    try {
+      const html = await fs.readFile(artifactPath, "utf8");
+      response.type("html").send(html);
+    } catch {
+      throw notFound("Published site not found");
+    }
   }));
 
   app.use((_request, _response, next) => next(notFound()));

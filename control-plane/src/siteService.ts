@@ -113,6 +113,23 @@ export class SiteService {
     return site;
   }
 
+  async getPublishedFreeSiteByHost(hostValue: string): Promise<SiteRecord | null> {
+    const host = hostValue.toLowerCase().trim().replace(/\.$/, "").replace(/:\d+$/, "");
+    const suffix = `.${this.config.freeDomain}`;
+    if (!host.endsWith(suffix) || host === this.config.freeDomain) {
+      return null;
+    }
+    const slug = host.slice(0, -suffix.length);
+    if (!slug || slug.includes(".")) {
+      return null;
+    }
+    const site = await this.services.store.findSiteBySlug(slug);
+    if (!site || site.status !== "published") {
+      return null;
+    }
+    return site.domains.some((domain) => domain.host === host) ? site : null;
+  }
+
   async createSite(user: AuthUser, input: CreateSiteInput): Promise<SiteRecord> {
     const name = input.name.trim();
     if (!name) {

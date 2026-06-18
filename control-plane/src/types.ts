@@ -156,7 +156,7 @@ export interface CloudflareProvider {
 export interface CoolifyProvider {
   deploySharedBuilder(commit?: string): Promise<SiteDeployment>;
   createGitHubApplication(site: SiteRecord): Promise<SiteDeployment>;
-  cloneWordPressTemplate(site: SiteRecord): Promise<SiteDeployment>;
+  provisionWordPressSite(site: SiteRecord): Promise<SiteDeployment>;
 }
 
 export interface BackupProvider {

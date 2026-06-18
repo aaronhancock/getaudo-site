@@ -247,7 +247,7 @@ export class SiteService {
   async publishSite(user: AuthUser, siteId: string, commit?: string): Promise<SiteRecord> {
     let site = await this.provisionFreeDomain(user, siteId);
     if (site.type === "wordpress") {
-      const deployment = await this.services.coolify.cloneWordPressTemplate(site);
+      const deployment = await this.services.coolify.provisionWordPressSite(site);
       site = await this.services.store.updateSite(site.teamId, site.id, {
         status: "published",
         deployments: deploymentList(site, deployment),

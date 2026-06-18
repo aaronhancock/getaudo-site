@@ -17,7 +17,7 @@ const config: AppConfig = {
   publicBaseUrl: "https://getaudo.com",
   publishedSiteRoot: "/tmp/audo-control-plane-test",
   cloudflare: { proxied: true, zoneName: "getaudo.com" },
-  coolify: {},
+  coolify: { wordpressServiceType: "wordpress-with-mariadb", wordpressInstantDeploy: true },
   backups: {},
   stripe: {}
 };
@@ -58,7 +58,7 @@ class FakeCoolify implements CoolifyProvider {
     };
   }
 
-  async cloneWordPressTemplate(site: SiteRecord): Promise<SiteDeployment> {
+  async provisionWordPressSite(site: SiteRecord): Promise<SiteDeployment> {
     return {
       id: "deploy_wordpress_test",
       provider: "preview",

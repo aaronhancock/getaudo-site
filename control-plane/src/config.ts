@@ -26,7 +26,13 @@ export interface AppConfig {
     baseUrl?: string;
     apiToken?: string;
     sharedBuilderAppUuid?: string;
-    wordpressTemplateAppUuid?: string;
+    wordpressServiceType: string;
+    wordpressProjectUuid?: string;
+    wordpressEnvironmentName?: string;
+    wordpressEnvironmentUuid?: string;
+    wordpressServerUuid?: string;
+    wordpressDestinationUuid?: string;
+    wordpressInstantDeploy: boolean;
   };
   backups: {
     webhookUrl?: string;
@@ -75,7 +81,13 @@ export function loadConfig(): AppConfig {
       baseUrl: env("COOLIFY_BASE_URL") || undefined,
       apiToken: env("COOLIFY_API_TOKEN") || undefined,
       sharedBuilderAppUuid: env("COOLIFY_BUILDER_APP_UUID") || undefined,
-      wordpressTemplateAppUuid: env("COOLIFY_WORDPRESS_TEMPLATE_APP_UUID") || undefined
+      wordpressServiceType: env("COOLIFY_WORDPRESS_SERVICE_TYPE", "wordpress-with-mariadb"),
+      wordpressProjectUuid: env("COOLIFY_WORDPRESS_PROJECT_UUID") || undefined,
+      wordpressEnvironmentName: env("COOLIFY_WORDPRESS_ENVIRONMENT_NAME", "production") || undefined,
+      wordpressEnvironmentUuid: env("COOLIFY_WORDPRESS_ENVIRONMENT_UUID") || undefined,
+      wordpressServerUuid: env("COOLIFY_WORDPRESS_SERVER_UUID") || undefined,
+      wordpressDestinationUuid: env("COOLIFY_WORDPRESS_DESTINATION_UUID") || undefined,
+      wordpressInstantDeploy: envBool("COOLIFY_WORDPRESS_INSTANT_DEPLOY", true)
     },
     backups: {
       webhookUrl: env("BACKUP_WEBHOOK_URL") || undefined

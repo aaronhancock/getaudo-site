@@ -11,6 +11,7 @@ Backend API for Audo self-service hosting.
 - Publishes one-page builder output to a local artifact directory.
 - Gates custom domains, backups, and GitHub application hosting to paid plans.
 - Calls optional Coolify, backup, and Stripe integrations when configured.
+- Provisions paid WordPress sites as isolated Coolify services from the `wordpress-with-mariadb` Docker template.
 
 ## Local Development
 
@@ -46,6 +47,23 @@ CLOUDFLARE_FREE_SITE_TARGET=getaudo.com
 `CLOUDFLARE_ZONE_ID` is optional. If it is not set, the control plane looks up the zone by `CLOUDFLARE_ZONE_NAME` and `CLOUDFLARE_ACCOUNT_ID`.
 
 If `AUTH_MODE=preview` is used on a public host, set `AUDO_PREVIEW_API_SECRET`. Requests must include `x-audo-preview-secret` or they will be rejected. Do not expose Cloudflare-write endpoints publicly with unrestricted preview auth.
+
+## Managed WordPress
+
+Paid WordPress sites use Coolify's Docker service template named `wordpress-with-mariadb`. Publishing a WordPress site creates one Coolify service per Audo site, assigns the site's `https://<slug>.getaudo.com` URL to the `wordpress` container, and keeps MariaDB private with persistent `wordpress-files` and `mariadb-data` volumes.
+
+Required Coolify env:
+
+```bash
+COOLIFY_BASE_URL=http://coolify:8080
+COOLIFY_API_TOKEN=<coolify-token-with-write-and-deploy-access>
+COOLIFY_WORDPRESS_SERVICE_TYPE=wordpress-with-mariadb
+COOLIFY_WORDPRESS_PROJECT_UUID=<coolify-project-uuid>
+COOLIFY_WORDPRESS_ENVIRONMENT_NAME=production
+COOLIFY_WORDPRESS_SERVER_UUID=<coolify-server-uuid>
+COOLIFY_WORDPRESS_DESTINATION_UUID=<coolify-docker-destination-uuid>
+COOLIFY_WORDPRESS_INSTANT_DEPLOY=true
+```
 
 ## API Summary
 

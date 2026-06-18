@@ -68,8 +68,10 @@ export class FirestoreSiteStore implements SiteStore {
   }
 
   async listSites(teamId: string): Promise<SiteRecord[]> {
-    const snap = await this.db.collection("sites").where("teamId", "==", teamId).orderBy("createdAt", "desc").get();
-    return snap.docs.map((doc) => doc.data() as SiteRecord);
+    const snap = await this.db.collection("sites").where("teamId", "==", teamId).get();
+    return snap.docs
+      .map((doc) => doc.data() as SiteRecord)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
   async getSite(teamId: string, siteId: string): Promise<SiteRecord | null> {

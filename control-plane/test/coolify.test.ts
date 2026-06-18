@@ -29,6 +29,9 @@ describe("Coolify WordPress provisioning", () => {
     const originalFetch = global.fetch;
     global.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
       requests.push({ url: String(url), body: JSON.parse(String(init?.body || "{}")) });
+      if (String(url).endsWith("/start")) {
+        return new Response(JSON.stringify({ message: "Service starting request queued." }), { status: 200 });
+      }
       return new Response(JSON.stringify({ uuid: "service_test", domains: ["https://test-wordpress.getaudo.com"] }), { status: 201 });
     }) as typeof fetch;
 
@@ -56,10 +59,11 @@ describe("Coolify WordPress provisioning", () => {
         project_uuid: "project_test",
         server_uuid: "server_test",
         destination_uuid: "destination_test",
-        instant_deploy: true,
+        instant_deploy: false,
         urls: [{ name: "wordpress", url: "https://test-wordpress.getaudo.com" }],
         environment_name: "production"
       });
+      assert.equal(requests[1].url, "http://coolify:8080/api/v1/services/service_test/start");
     } finally {
       global.fetch = originalFetch;
     }

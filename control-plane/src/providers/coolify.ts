@@ -70,6 +70,27 @@ export class CoolifyApiProvider implements CoolifyProvider {
       };
     }
 
+    const existingServiceUuid = this.existingWordPressServiceUuid(site);
+    if (existingServiceUuid) {
+      const startResponse = this.config.wordpressInstantDeploy
+        ? await this.coolify(`/api/v1/services/${existingServiceUuid}/start`, { method: "POST" })
+        : undefined;
+      return {
+        id: existingServiceUuid,
+        provider: "coolify",
+        status: this.config.wordpressInstantDeploy ? "queued" : "finished",
+        url: `https://${site.primaryDomain}`,
+        createdAt,
+        details: {
+          action: this.config.wordpressInstantDeploy ? "started_existing_wordpress_service" : "reused_existing_wordpress_service",
+          serviceUuid: existingServiceUuid,
+          serviceType: this.config.wordpressServiceType,
+          requestedDomain: site.primaryDomain,
+          startResponse
+        }
+      };
+    }
+
     const payload: Record<string, unknown> = {
       type: this.config.wordpressServiceType,
       name: this.wordpressServiceName(site),
@@ -77,7 +98,7 @@ export class CoolifyApiProvider implements CoolifyProvider {
       project_uuid: this.config.wordpressProjectUuid,
       server_uuid: this.config.wordpressServerUuid,
       destination_uuid: this.config.wordpressDestinationUuid,
-      instant_deploy: this.config.wordpressInstantDeploy,
+      instant_deploy: false,
       urls: [{ name: "wordpress", url: `https://${site.primaryDomain}` }]
     };
     if (this.config.wordpressEnvironmentUuid) {
@@ -96,20 +117,37 @@ export class CoolifyApiProvider implements CoolifyProvider {
       method: "POST",
       body: JSON.stringify(payload)
     });
+    const serviceUuid = String(response.uuid || "");
+    const startResponse =
+      this.config.wordpressInstantDeploy && serviceUuid
+        ? await this.coolify(`/api/v1/services/${serviceUuid}/start`, { method: "POST" })
+        : undefined;
 
     return {
-      id: String(response.uuid || nanoid()),
+      id: serviceUuid || nanoid(),
       provider: "coolify",
       status: this.config.wordpressInstantDeploy ? "queued" : "finished",
       url: `https://${site.primaryDomain}`,
       createdAt,
       details: {
+        action: this.config.wordpressInstantDeploy ? "created_and_started_wordpress_service" : "created_wordpress_service",
         serviceUuid: response.uuid,
         serviceType: this.config.wordpressServiceType,
         requestedDomain: site.primaryDomain,
-        domains: response.domains || []
+        domains: response.domains || [],
+        startResponse
       }
     };
+  }
+
+  private existingWordPressServiceUuid(site: SiteRecord): string | undefined {
+    for (const deployment of site.deployments) {
+      const value = deployment.details?.serviceUuid;
+      if (typeof value === "string" && value) {
+        return value;
+      }
+    }
+    return undefined;
   }
 
   private wordpressServiceName(site: SiteRecord): string {

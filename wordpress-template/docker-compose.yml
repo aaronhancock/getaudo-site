@@ -1,6 +1,7 @@
 services:
   wordpress:
-    image: wordpress:php8.3-apache
+    build: .
+    image: audo-wordpress:${AUDO_SITE_ID:-local}
     restart: unless-stopped
     depends_on:
       - mariadb
@@ -31,15 +32,13 @@ services:
       AUDO_FREE_UPLOAD_LIMIT_MB: ${AUDO_FREE_UPLOAD_LIMIT_MB:-250}
     volumes:
       - wordpress-files:/var/www/html
-      - ./mu-plugins:/audo/mu-plugins:ro
-      - ./themes:/audo/themes:ro
     command:
       - sh
       - -c
       - |
         mkdir -p /var/www/html/wp-content/mu-plugins /var/www/html/wp-content/themes
-        cp /audo/mu-plugins/audo-platform.php /var/www/html/wp-content/mu-plugins/audo-platform.php
-        cp -R /audo/themes/. /var/www/html/wp-content/themes/
+        cp /usr/src/audo/mu-plugins/audo-platform.php /var/www/html/wp-content/mu-plugins/audo-platform.php
+        cp -R /usr/src/audo/themes/. /var/www/html/wp-content/themes/
         docker-entrypoint.sh apache2-foreground
 
   mariadb:

@@ -4,7 +4,8 @@ This folder is the Audo-managed WordPress stack that backs the Coolify `wordpres
 
 It includes:
 
-- `docker-compose.yml`: WordPress, MariaDB, and Redis with persistent WordPress and database volumes.
+- `Dockerfile`: Audo WordPress image built from the official WordPress Apache image with Audo themes and MU plugin baked in.
+- `docker-compose.yml`: Audo WordPress image, MariaDB, and Redis with persistent WordPress and database volumes.
 - `mu-plugins/audo-platform.php`: always-on Audo platform controls.
 - `themes/audo-neighborhood`: local service and professional-services starter.
 - `themes/audo-studio`: portfolio, creative-services, and case-study starter.
@@ -50,12 +51,12 @@ AUDO_ADS_ENABLED=false
 
 ## Coolify Template Notes
 
-The WordPress service must mount or copy:
+The WordPress image bakes these into `/usr/src/audo`:
 
-- `/audo/mu-plugins/audo-platform.php` into `/var/www/html/wp-content/mu-plugins/audo-platform.php`
-- `/audo/themes/*` into `/var/www/html/wp-content/themes/`
+- `mu-plugins/audo-platform.php`
+- all `themes/audo-*` directories
 
-The included compose file does that at container start and then hands off to the official WordPress entrypoint. The MU plugin applies the selected Audo theme, site title, admin email, free-plan page/media limits, free badge, and plan-based capability limits.
+The included compose file copies those baked assets into the persistent WordPress volume at container start and then hands off to the official WordPress entrypoint. The MU plugin applies the selected Audo theme, site title, admin email, free-plan page/media limits, free badge, and plan-based capability limits.
 
 ## Default Plugin Policy
 

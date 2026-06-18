@@ -1511,43 +1511,52 @@
 	        </div>
 	        <button class="icon-button" id="closeSiteModal" type="button" aria-label="Close"><i data-lucide="x" class="icon"></i></button>
 	      </div>
-	      <div class="wizard-progress" id="siteWizardProgress" aria-label="Setup steps">
-	        <button class="active" data-site-wizard-step="0" type="button">Basics</button>
-	        <button data-site-wizard-step="1" type="button">Design</button>
-	        <button data-site-wizard-step="2" type="button">Sections</button>
-	        <button data-site-wizard-step="3" type="button">Content</button>
-	        <button data-site-wizard-step="4" type="button">Review</button>
-	      </div>
-	      <div class="wizard-panel active" data-site-wizard-panel="0">
-	        <input id="siteTemplateInput" type="hidden" value="service">
-	        <input id="sitePlanInput" type="hidden" value="free">
-	        <input id="sitePlatformInput" type="hidden" value="builder">
-	        <div class="field-grid">
-	          <div class="field">
-	            <label for="siteNameInput">Site name</label>
-	            <input id="siteNameInput" placeholder="Acme Studio" autocomplete="organization">
-	          </div>
-	          <div class="field">
-	            <label for="siteSlugInput">Subdomain</label>
-	            <input id="siteSlugInput" placeholder="acme-studio" autocapitalize="none" spellcheck="false">
-	          </div>
-	        </div>
-	        <div class="wizard-options">
-	          <button class="wizard-option active" data-template-option="service" type="button"><strong>Local service</strong><span>Services, proof, testimonials, and contact.</span></button>
-	          <button class="wizard-option" data-template-option="portfolio" type="button"><strong>Portfolio</strong><span>Selected work, capabilities, proof, and inquiries.</span></button>
-	          <button class="wizard-option" data-template-option="restaurant" type="button"><strong>Restaurant</strong><span>Menu highlights, hours, reservations, and location.</span></button>
-	          <button class="wizard-option" data-template-option="saas" type="button"><strong>SaaS product</strong><span>Features, use cases, pricing, FAQ, and demo paths.</span></button>
-	        </div>
-	        <div class="wizard-options">
-	          <button class="wizard-option active" data-platform-option="builder" data-plan-option="free" type="button"><strong>Free one-page</strong><span>Subdomain on getaudo.com with Audo ad placement.</span></button>
-	          <button class="wizard-option" data-platform-option="builder" data-plan-option="paid" type="button"><strong>Paid builder</strong><span>Custom URL, backups, GitHub integration, no ad placement.</span></button>
-	          <button class="wizard-option" data-platform-option="wordpress" data-plan-option="paid" type="button"><strong>Managed WordPress</strong><span>Paid hosting using a cloned managed WordPress template.</span></button>
-	        </div>
-	      </div>
-	      <div class="wizard-panel" data-site-wizard-panel="1">
-	        <div class="field-grid">
-	          <div class="field">
-	            <label for="siteFontInput">Font</label>
+		      <div class="wizard-progress" id="siteWizardProgress" aria-label="Setup steps">
+		        <button class="active" data-site-wizard-step="0" type="button">Choose</button>
+		      </div>
+		      <div class="wizard-panel active" data-site-wizard-panel="0">
+		        <input id="siteTemplateInput" type="hidden" value="service">
+		        <input id="sitePlanInput" type="hidden" value="">
+		        <input id="sitePlatformInput" type="hidden" value="">
+		        <div class="wizard-options" data-flow-options>
+		          <button class="wizard-option" data-flow-option="builder" type="button"><strong>Build your own website</strong><span>Use the Audo builder for design, sections, content, publishing, and optional paid hosting.</span></button>
+		          <button class="wizard-option" data-flow-option="wordpress" type="button"><strong>Managed WordPress</strong><span>Provision WordPress hosting. Themes, pages, plugins, media, and content are managed in WordPress admin.</span></button>
+		        </div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="1">
+		        <div class="field-grid">
+		          <div class="field">
+		            <label for="siteNameInput">Site name</label>
+		            <input id="siteNameInput" placeholder="Acme Studio" autocomplete="organization">
+		          </div>
+		          <div class="field">
+		            <label for="siteSlugInput">Subdomain</label>
+		            <input id="siteSlugInput" placeholder="acme-studio" autocapitalize="none" spellcheck="false">
+		          </div>
+		        </div>
+		        <div class="empty-state" data-wordpress-setup-note hidden style="min-height: 140px;">
+		          <div>
+		            <strong>Managed WordPress provisioning</strong>
+		            <p>Audo creates the host, database, DNS route, SSL route, and storage. WordPress admin handles the website build.</p>
+		          </div>
+		        </div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="2">
+		        <div class="wizard-options" data-builder-plan-options>
+		          <button class="wizard-option active" data-platform-option="builder" data-plan-option="free" type="button"><strong>Free one-page</strong><span>Subdomain on getaudo.com with Audo ad placement.</span></button>
+		          <button class="wizard-option" data-platform-option="builder" data-plan-option="paid" type="button"><strong>Paid builder</strong><span>Custom URL, backups, GitHub integration, no ad placement.</span></button>
+		        </div>
+		        <div class="wizard-options" data-builder-template-options>
+		          <button class="wizard-option active" data-template-option="service" type="button"><strong>Local service</strong><span>Services, proof, testimonials, and contact.</span></button>
+		          <button class="wizard-option" data-template-option="portfolio" type="button"><strong>Portfolio</strong><span>Selected work, capabilities, proof, and inquiries.</span></button>
+		          <button class="wizard-option" data-template-option="restaurant" type="button"><strong>Restaurant</strong><span>Menu highlights, hours, reservations, and location.</span></button>
+		          <button class="wizard-option" data-template-option="saas" type="button"><strong>SaaS product</strong><span>Features, use cases, pricing, FAQ, and demo paths.</span></button>
+		        </div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="3">
+		        <div class="field-grid">
+		          <div class="field">
+		            <label for="siteFontInput">Font</label>
 	            <select id="siteFontInput">
 	              <option value="inter">Inter</option>
 	              <option value="system">System</option>
@@ -1582,20 +1591,20 @@
 	          <div class="field" style="grid-column: 1 / -1;">
 	            <label for="siteHeroImageInput">Hero image URL</label>
 	            <input id="siteHeroImageInput" placeholder="https://images.example.com/hero.jpg">
-	          </div>
-	        </div>
-	      </div>
-	      <div class="wizard-panel" data-site-wizard-panel="2">
-	        <div class="wizard-section-list" id="siteWizardSections"></div>
-	        <div class="tool-list wizard-add-list" id="siteWizardAddList"></div>
-	      </div>
-	      <div class="wizard-panel" data-site-wizard-panel="3">
-	        <div class="field-grid" id="siteWizardContentFields"></div>
-	      </div>
-	      <div class="wizard-panel" data-site-wizard-panel="4">
-	        <div class="wizard-review" id="siteWizardReview"></div>
-	        <div class="wizard-preview" id="siteWizardPreview"></div>
-	      </div>
+		          </div>
+		        </div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="4">
+		        <div class="wizard-section-list" id="siteWizardSections"></div>
+		        <div class="tool-list wizard-add-list" id="siteWizardAddList"></div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="5">
+		        <div class="field-grid" id="siteWizardContentFields"></div>
+		      </div>
+		      <div class="wizard-panel" data-site-wizard-panel="6">
+		        <div class="wizard-review" id="siteWizardReview"></div>
+		        <div class="wizard-preview" id="siteWizardPreview"></div>
+		      </div>
 	      <div class="modal-actions">
 	        <button class="button" id="cancelSiteModal" type="button">Cancel</button>
 	        <button class="button" id="siteWizardBack" type="button"><i data-lucide="arrow-left" class="icon"></i><span>Back</span></button>
@@ -1615,7 +1624,10 @@
     const GOOGLE_AUTH_ENABLED = APP_CONFIG.authProviders?.google === true;
 	    const STORAGE_KEY = "audo-console-state-v1";
 	    const FREE_DOMAIN = "getaudo.com";
-	    const wizardStepLabels = ["Basics", "Design", "Sections", "Content", "Review"];
+		    const createBuilderWizardStepLabels = ["Choose", "Basics", "Site type", "Design", "Sections", "Content", "Review"];
+		    const editBuilderWizardStepLabels = ["Basics", "Site type", "Design", "Sections", "Content", "Review"];
+		    const createWordPressWizardStepLabels = ["Choose", "WordPress", "Review"];
+		    const editWordPressWizardStepLabels = ["WordPress", "Review"];
 	    const templateLabels = {
 	      service: "Local service",
 	      portfolio: "Portfolio",
@@ -1813,7 +1825,11 @@
 	      siteTextColorInput: document.getElementById("siteTextColorInput"),
 	      siteHeroImageInput: document.getElementById("siteHeroImageInput"),
 	      siteWizardProgress: document.getElementById("siteWizardProgress"),
-	      siteWizardSections: document.getElementById("siteWizardSections"),
+		      flowOptions: document.querySelector("[data-flow-options]"),
+		      builderPlanOptions: document.querySelector("[data-builder-plan-options]"),
+		      builderTemplateOptions: document.querySelector("[data-builder-template-options]"),
+		      wordpressSetupNote: document.querySelector("[data-wordpress-setup-note]"),
+		      siteWizardSections: document.getElementById("siteWizardSections"),
 	      siteWizardAddList: document.getElementById("siteWizardAddList"),
 	      siteWizardContentFields: document.getElementById("siteWizardContentFields"),
 	      siteWizardReview: document.getElementById("siteWizardReview"),
@@ -2272,13 +2288,15 @@
       render();
     }
 
-    function render() {
-      const signedIn = Boolean(state.user);
-      if (!signedIn) {
-        setView("auth", false);
-      } else if (state.view === "auth") {
-        setView("sites", false);
-      }
+	    function render() {
+	      const signedIn = Boolean(state.user);
+	      if (!signedIn) {
+	        setView("auth", false);
+	      } else if (state.view === "auth") {
+	        setView("sites", false);
+	      } else if (state.view === "builder" && isWordPressPlatform(selectedSite())) {
+	        state.view = "domains";
+	      }
       renderChrome();
       renderSites();
       renderUsers();
@@ -2290,28 +2308,31 @@
 
     function renderChrome() {
       const signedIn = Boolean(state.user);
-      const viewLabels = {
-        auth: ["Sign in", "Access your Audo hosting account."],
-        sites: ["Sites", "Self-service websites on Audo."],
-        users: ["Users", "Team access and account management."],
-        builder: ["Builder", selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
-        domains: ["Domains", "Subdomains, custom URLs, and DNS status."],
-        integrations: ["Integrations", "GitHub deployments and restore points."]
-      };
+	      const viewLabels = {
+	        auth: ["Sign in", "Access your Audo hosting account."],
+	        sites: ["Sites", "Self-service websites on Audo."],
+	        users: ["Users", "Team access and account management."],
+	        builder: [isWordPressPlatform(selectedSite()) ? "WordPress" : "Builder", selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
+	        domains: ["Domains", "Subdomains, custom URLs, and DNS status."],
+	        integrations: ["Integrations", "GitHub deployments and restore points."]
+	      };
       const [heading, subheading] = viewLabels[state.view] || viewLabels.sites;
       els.pageHeading.textContent = heading;
       els.pageSubheading.textContent = subheading;
-      document.querySelectorAll("[data-view-button]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.viewButton === state.view);
-        button.disabled = !signedIn;
-      });
+	      document.querySelectorAll("[data-view-button]").forEach((button) => {
+	        const builderBlocked = button.dataset.viewButton === "builder" && isWordPressPlatform(selectedSite());
+	        button.classList.toggle("active", button.dataset.viewButton === state.view);
+	        button.disabled = !signedIn || builderBlocked;
+	        button.title = builderBlocked ? "WordPress content is managed in WordPress admin." : "";
+	      });
       els.sidebarUser.textContent = state.user ? (state.user.name || state.user.email) : "Signed out";
       els.sidebarAuthMode.textContent = `${state.authMode === "firebase" ? "Firebase Auth" : "Local preview auth"}${API_BASE_URL ? " + API" : ""}`;
       els.authModePill.className = `pill ${state.authMode === "firebase" ? "green" : "amber"}`;
       els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
       document.querySelector("#googleSignIn span").textContent = state.authMode === "firebase" ? "Google" : "Demo login";
       document.getElementById("googleSignIn").disabled = state.authMode === "firebase" && !GOOGLE_AUTH_ENABLED;
-	      document.getElementById("publishButton").disabled = publishing || !signedIn || !selectedSite();
+		      document.querySelector("#publishButton span").textContent = isWordPressPlatform(selectedSite()) ? "Provision" : "Publish";
+		      document.getElementById("publishButton").disabled = publishing || !signedIn || !selectedSite();
       document.getElementById("newSiteButton").disabled = !signedIn;
       document.getElementById("newSiteSidebar").disabled = !signedIn;
       document.getElementById("sidebarSignOut").disabled = !signedIn;
@@ -2356,12 +2377,12 @@
             </div>
             <span class="pill ${site.plan === "paid" ? "blue" : "green"}">${site.plan === "paid" ? "Paid" : "Free"}</span>
           </div>
-          <div class="status-row">
-            <span class="pill ${site.status === "published" ? "green" : "amber"}"><span class="dot"></span>${site.status}</span>
-            <span class="pill">${site.platform === "wordpress" ? "WordPress" : "Builder"}</span>
-            <span class="pill">${site.components.length} sections</span>
-            ${site.plan === "free" ? `<span class="pill rose">Ads on</span>` : `<span class="pill green">No ads</span>`}
-          </div>
+	          <div class="status-row">
+	            <span class="pill ${site.status === "published" ? "green" : "amber"}"><span class="dot"></span>${site.status}</span>
+	            <span class="pill">${site.platform === "wordpress" ? "WordPress" : "Builder"}</span>
+	            ${site.platform === "wordpress" ? `<span class="pill">Admin managed</span>` : `<span class="pill">${site.components.length} sections</span>`}
+	            ${site.plan === "free" ? `<span class="pill rose">Ads on</span>` : `<span class="pill green">No ads</span>`}
+	          </div>
           <div class="site-stats">
             <div class="site-stat"><span>Visits</span><strong>${Number(site.visits || 0).toLocaleString()}</strong></div>
             <div class="site-stat"><span>Leads</span><strong>${Number(site.leads || 0)}</strong></div>
@@ -2417,15 +2438,15 @@
       `;
     }
 
-    function selectSite(siteId) {
-      const site = state.sites.find((item) => item.id === siteId);
+	    function selectSite(siteId) {
+	      const site = state.sites.find((item) => item.id === siteId);
       if (!site) {
         return;
       }
-	      state.selectedSiteId = siteId;
-	      state.selectedComponentId = site.components[0]?.id || null;
-	      state.view = "builder";
-	      state.builderMobileTab = "preview";
+		      state.selectedSiteId = siteId;
+		      state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		      state.view = siteDetailView(site);
+		      state.builderMobileTab = "preview";
 	      saveState();
 	      render();
     }
@@ -2439,15 +2460,34 @@
 	      });
 	      if (!site) {
 	        els.builderSiteName.textContent = "Builder";
-        els.builderSiteUrl.textContent = "No site selected";
+	        els.builderSiteUrl.textContent = "No site selected";
         els.componentCatalog.innerHTML = "";
         els.componentList.innerHTML = "";
         els.editorFields.innerHTML = "";
         els.sitePreview.innerHTML = `<div class="empty-state">Create a website to start.</div>`;
-        return;
-      }
+	        return;
+	      }
+	      if (isWordPressPlatform(site)) {
+	        els.builderSiteName.textContent = site.name;
+	        els.builderSiteUrl.textContent = siteUrl(site);
+	        els.componentCatalog.innerHTML = "";
+	        els.componentList.innerHTML = "";
+	        els.editorFields.innerHTML = "";
+	        els.sitePreview.innerHTML = `
+	          <div class="empty-state">
+	            <div>
+	              <strong>Managed WordPress site</strong>
+	              <p>Use WordPress admin for themes, pages, plugins, media, and content.</p>
+	            </div>
+	          </div>
+	        `;
+	        els.previewPlanSwitch.querySelectorAll("button").forEach((button) => {
+	          button.classList.toggle("active", button.dataset.plan === "paid");
+	        });
+	        return;
+	      }
 
-      els.builderSiteName.textContent = site.name;
+	      els.builderSiteName.textContent = site.name;
       els.builderSiteUrl.textContent = siteUrl(site);
       els.componentCatalog.innerHTML = componentCatalog.map((item) => {
         const locked = item.paid && site.plan !== "paid";
@@ -2639,12 +2679,14 @@
       els.sitePreview.innerHTML = renderPreview(selectedSite());
     }
 
-    function renderDomains() {
-      const site = selectedSite();
-      if (!site) {
-        return;
-      }
-      els.domainSiteName.textContent = `${site.name} URLs`;
+	    function renderDomains() {
+	      const site = selectedSite();
+	      if (!site) {
+	        return;
+	      }
+	      const wordPressSite = isWordPressPlatform(site);
+	      const adminUrl = `https://${siteUrl(site)}/wp-admin`;
+	      els.domainSiteName.textContent = `${site.name} URLs`;
       els.domainPlanPill.className = `pill ${site.plan === "paid" ? "blue" : "green"}`;
       els.domainPlanPill.textContent = site.plan === "paid" ? "Paid" : "Free";
       els.subdomainInput.value = site.slug;
@@ -2656,9 +2698,11 @@
         <div class="table-row"><span>${escapeHtml(site.slug)}.${FREE_DOMAIN}</span><span><span class="pill ${site.domainStatus === "ready" ? "green" : "amber"}">${site.domainStatus === "ready" ? "Ready" : "Pending"}</span></span><span>Free</span><span>Cloudflare DNS</span></div>
         <div class="table-row"><span>${escapeHtml(site.customDomain || "Add custom domain")}</span><span><span class="pill ${site.plan === "paid" && site.customDomain ? "amber" : "rose"}">${site.plan === "paid" ? "DNS pending" : "Locked"}</span></span><span>Paid</span><span>CNAME / A record</span></div>
       `;
-      els.domainUpgradePanel.innerHTML = site.plan === "paid"
-        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
-        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
+	      els.domainUpgradePanel.innerHTML = wordPressSite
+	        ? `<div class="lock-panel"><strong>WordPress admin</strong><span>Themes, pages, plugins, media, and content are managed inside WordPress.</span><a class="button primary" href="${escapeHtml(adminUrl)}" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon"></i><span>Open admin</span></a></div>`
+	        : site.plan === "paid"
+	        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
+	        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
       document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
         button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
       });
@@ -2755,16 +2799,18 @@
 	      }
 	      publishing = true;
 	      renderChrome();
-	      if (API_BASE_URL) {
-	        try {
-	          await apiFetch(`/api/sites/${site.id}`, {
-            method: "PATCH",
-            body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
-          });
-          const result = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
-          replaceSite(result.site);
-          saveState();
-          showToast(`${result.site.name} published to ${result.site.primaryDomain}.`);
+		      if (API_BASE_URL) {
+		        try {
+		          if (!isWordPressPlatform(site)) {
+		            await apiFetch(`/api/sites/${site.id}`, {
+		              method: "PATCH",
+		              body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
+		            });
+		          }
+	          const result = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
+	          replaceSite(result.site);
+	          saveState();
+	          showToast(isWordPressPlatform(result.site) ? `${result.site.name} WordPress provisioning started.` : `${result.site.name} published to ${result.site.primaryDomain}.`);
           render();
 	        } catch (error) {
 	          showToast(friendlyErrorMessage(error, "Publish failed."));
@@ -2774,11 +2820,11 @@
 	        }
 	        return;
 	      }
-      site.status = "published";
-      site.publishedAt = new Date().toISOString();
-	      site.visits += Math.floor(10 + Math.random() * 80);
-	      saveState();
-	      showToast(`${site.name} published to ${siteUrl(site)}.`);
+	      site.status = "published";
+	      site.publishedAt = new Date().toISOString();
+		      site.visits += Math.floor(10 + Math.random() * 80);
+		      saveState();
+		      showToast(isWordPressPlatform(site) ? `${site.name} WordPress provisioning started.` : `${site.name} published to ${siteUrl(site)}.`);
 	      publishing = false;
 	      render();
 	    }
@@ -2788,12 +2834,12 @@
 	      const components = createTemplateComponents(template);
 	      return {
 	        mode: "create",
-	        siteId: null,
-	        name: "",
-	        slug: "",
-	        plan: "free",
-	        platform: "builder",
-	        template,
+		        siteId: null,
+		        name: "",
+		        slug: "",
+		        plan: "",
+		        platform: "",
+		        template,
 	        design: defaultDesign(template),
 	        components,
 	        selectedComponentId: components[0]?.id || null
@@ -2822,9 +2868,11 @@
 	      }
 	      siteWizardDraft.name = els.siteNameInput.value.trim();
 	      siteWizardDraft.slug = slugify(els.siteSlugInput.value || siteWizardDraft.name);
-	      siteWizardDraft.template = els.siteTemplateInput.value || siteWizardDraft.template || "service";
-	      siteWizardDraft.plan = els.sitePlanInput.value || "free";
-	      siteWizardDraft.platform = els.sitePlatformInput.value || "builder";
+		      siteWizardDraft.template = els.siteTemplateInput.value || siteWizardDraft.template || "service";
+		      siteWizardDraft.platform = els.sitePlatformInput.value || siteWizardDraft.platform || "";
+		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress"
+		        ? "paid"
+		        : els.sitePlanInput.value || siteWizardDraft.plan || (siteWizardDraft.platform === "builder" ? "free" : "");
 	      siteWizardDraft.design = normalizeDesign({
 	        font: els.siteFontInput.value,
 	        layout: els.siteLayoutInput.value,
@@ -2835,20 +2883,17 @@
 	        heroImage: els.siteHeroImageInput.value.trim(),
 	        heroImageAlt: siteWizardDraft.design?.heroImageAlt || ""
 	      }, siteWizardDraft.template);
-	      if (siteWizardDraft.platform === "wordpress") {
-	        siteWizardDraft.plan = "paid";
-	        els.sitePlanInput.value = "paid";
-	      }
-	      return siteWizardDraft;
-	    }
+		      els.sitePlanInput.value = siteWizardDraft.plan;
+		      return siteWizardDraft;
+		    }
 
 	    function syncWizardInputs() {
 	      const draft = siteWizardDraft || newWizardDraft();
 	      els.siteNameInput.value = draft.name || "";
 	      els.siteSlugInput.value = draft.slug || "";
 	      els.siteTemplateInput.value = draft.template || "service";
-	      els.sitePlanInput.value = draft.plan || "free";
-	      els.sitePlatformInput.value = draft.platform || "builder";
+		      els.sitePlanInput.value = draft.plan || "";
+		      els.sitePlatformInput.value = draft.platform || "";
 	      const design = normalizeDesign(draft.design, draft.template);
 	      els.siteFontInput.value = design.font;
 	      els.siteLayoutInput.value = design.layout;
@@ -2859,65 +2904,141 @@
 	      els.siteHeroImageInput.value = design.heroImage || "";
 	    }
 
-	    function wizardPayload() {
-	      const draft = readWizardInputs();
-	      return {
-	        name: draft.name,
+		    function wizardPayload() {
+		      const draft = readWizardInputs();
+		      return {
+		        name: draft.name,
 	        slug: draft.slug,
 	        plan: draft.plan,
 	        platform: draft.platform,
 	        template: draft.template,
 	        design: normalizeDesign(draft.design, draft.template),
-	        components: cloneComponents(draft.components)
-	      };
-	    }
+		        components: cloneComponents(draft.components)
+		      };
+		    }
 
-	    function validateWizardStep(step = siteWizardStep) {
-	      const payload = wizardPayload();
-	      if (step === 0) {
-	        return Boolean(payload.name && /^[a-z0-9](?:[a-z0-9-]{0,46}[a-z0-9])?$/.test(payload.slug));
-	      }
-	      return true;
-	    }
+		    function isWordPressPlatform(payload = siteWizardDraft) {
+		      return (payload?.platform || payload?.type) === "wordpress";
+		    }
 
-	    function renderSiteWizard() {
-	      if (!siteWizardDraft) {
-	        siteWizardDraft = newWizardDraft();
-	      }
-	      syncWizardInputs();
-	      const payload = wizardPayload();
-	      els.siteModalKicker.textContent = siteWizardMode === "edit" ? "Edit" : "Create";
-	      els.siteModalTitle.textContent = siteWizardMode === "edit" ? "Website editor" : "Website setup";
-	      document.querySelectorAll("[data-site-wizard-panel]").forEach((panel) => {
-	        panel.classList.toggle("active", Number(panel.dataset.siteWizardPanel) === siteWizardStep);
-	      });
-	      els.siteWizardProgress.querySelectorAll("[data-site-wizard-step]").forEach((button) => {
-	        const step = Number(button.dataset.siteWizardStep);
-	        button.classList.toggle("active", step === siteWizardStep);
-	        button.disabled = step > siteWizardStep && !validateWizardStep(siteWizardStep);
-	      });
-	      document.querySelectorAll("[data-template-option]").forEach((button) => {
-	        button.classList.toggle("active", button.dataset.templateOption === payload.template);
-	        button.disabled = siteWizardMode === "edit";
-	      });
+		    function wizardStepsForPayload(payload = siteWizardDraft || newWizardDraft()) {
+		      if (siteWizardMode === "edit") {
+		        return isWordPressPlatform(payload) ? editWordPressWizardStepLabels : editBuilderWizardStepLabels;
+		      }
+		      if (!payload?.platform) {
+		        return ["Choose"];
+		      }
+		      return isWordPressPlatform(payload) ? createWordPressWizardStepLabels : createBuilderWizardStepLabels;
+		    }
+
+		    function wizardPanelForStep(step, payload) {
+		      if (siteWizardMode === "edit") {
+		        return isWordPressPlatform(payload) ? (step === 0 ? 1 : 6) : step + 1;
+		      }
+		      if (!payload?.platform || step === 0) {
+		        return 0;
+		      }
+		      if (isWordPressPlatform(payload)) {
+		        return step === 1 ? 1 : 6;
+		      }
+		      return step;
+		    }
+
+		    function siteDetailView(site) {
+		      return isWordPressPlatform(site) ? "domains" : "builder";
+		    }
+
+		    function wizardStepLabel(step, payload) {
+		      return wizardStepsForPayload(payload)[step] || "";
+		    }
+
+		    function validSiteBasics(payload) {
+		      return Boolean(payload.name && /^[a-z0-9](?:[a-z0-9-]{0,46}[a-z0-9])?$/.test(payload.slug));
+		    }
+
+		    function basicsStepForPayload(payload) {
+		      const steps = wizardStepsForPayload(payload);
+		      return Math.max(0, steps.findIndex((label) => label === "Basics" || label === "WordPress"));
+		    }
+
+		    function validateWizardForSubmit(payload = wizardPayload()) {
+		      return Boolean(payload.platform && validSiteBasics(payload));
+		    }
+
+		    function validateWizardStep(step = siteWizardStep) {
+		      const payload = wizardPayload();
+		      const label = wizardStepLabel(step, payload);
+		      if (label === "Choose") {
+		        return Boolean(payload.platform);
+		      }
+		      if (label === "Basics" || label === "WordPress") {
+		        return validSiteBasics(payload);
+		      }
+		      return true;
+		    }
+
+		    function renderSiteWizard() {
+		      if (!siteWizardDraft) {
+		        siteWizardDraft = newWizardDraft();
+		      }
+		      syncWizardInputs();
+		      const payload = wizardPayload();
+		      const steps = wizardStepsForPayload(payload);
+		      const lastStep = steps.length - 1;
+		      if (siteWizardStep > lastStep) {
+		        siteWizardStep = lastStep;
+		      }
+		      const activePanel = wizardPanelForStep(siteWizardStep, payload);
+		      const wordPressFlow = isWordPressPlatform(payload);
+		      els.siteModalKicker.textContent = siteWizardMode === "edit" ? "Edit" : "Create";
+		      els.siteModalTitle.textContent = wordPressFlow
+		        ? (siteWizardMode === "edit" ? "WordPress settings" : "WordPress setup")
+		        : payload.platform === "builder"
+		        ? (siteWizardMode === "edit" ? "Website editor" : "Build your own website")
+		        : "Website setup";
+		      els.siteWizardProgress.style.gridTemplateColumns = `repeat(${steps.length}, minmax(0, 1fr))`;
+		      els.siteWizardProgress.innerHTML = steps.map((label, index) => `
+		        <button class="${index === siteWizardStep ? "active" : ""}" data-site-wizard-step="${index}" type="button" ${index > siteWizardStep && !validateWizardStep(siteWizardStep) ? "disabled" : ""}>${escapeHtml(label)}</button>
+		      `).join("");
+		      document.querySelectorAll("[data-site-wizard-panel]").forEach((panel) => {
+		        panel.classList.toggle("active", Number(panel.dataset.siteWizardPanel) === activePanel);
+		      });
+		      els.flowOptions.querySelectorAll("[data-flow-option]").forEach((button) => {
+		        button.classList.toggle("active", button.dataset.flowOption === payload.platform);
+		        button.disabled = siteWizardMode === "edit";
+		      });
+		      els.builderPlanOptions.hidden = wordPressFlow || !payload.platform;
+		      els.builderTemplateOptions.hidden = wordPressFlow || !payload.platform;
+		      els.wordpressSetupNote.hidden = !wordPressFlow;
+		      document.querySelectorAll("[data-template-option]").forEach((button) => {
+		        button.classList.toggle("active", button.dataset.templateOption === payload.template);
+		        button.disabled = siteWizardMode === "edit" || wordPressFlow;
+		      });
 	      document.querySelectorAll("[data-platform-option]").forEach((button) => {
 	        button.classList.toggle("active", button.dataset.platformOption === payload.platform && button.dataset.planOption === payload.plan);
 	        button.disabled = siteWizardMode === "edit";
 	      });
-	      renderWizardSections(payload);
-	      renderWizardContentFields(payload);
-	      renderWizardReview(payload);
-	      els.siteWizardBack.style.display = siteWizardStep === 0 ? "none" : "";
-	      els.siteWizardNext.style.display = siteWizardStep === wizardStepLabels.length - 1 ? "none" : "";
-	      els.createSite.style.display = siteWizardStep === wizardStepLabels.length - 1 ? "" : "none";
-	      els.siteWizardNext.disabled = !validateWizardStep(siteWizardStep);
-	      els.createSite.disabled = creatingSite || !validateWizardStep(0);
-	      els.createSite.querySelector("span").textContent = siteWizardMode === "edit" ? "Save changes" : "Create site";
-	      refreshIcons();
-	    }
+		      renderWizardSections(payload);
+		      renderWizardContentFields(payload);
+		      renderWizardReview(payload);
+		      els.siteWizardBack.style.display = siteWizardStep === 0 ? "none" : "";
+		      els.siteWizardNext.style.display = siteWizardStep === lastStep ? "none" : "";
+		      els.createSite.style.display = payload.platform && siteWizardStep === lastStep ? "" : "none";
+		      els.siteWizardNext.disabled = !validateWizardStep(siteWizardStep);
+		      els.createSite.disabled = creatingSite || !validateWizardForSubmit(payload);
+		      els.createSite.querySelector("span").textContent = siteWizardMode === "edit"
+		        ? "Save changes"
+		        : (wordPressFlow ? "Provision WordPress" : "Create site");
+		      refreshIcons();
+		    }
 
-	    function renderWizardSections(payload) {
-	      els.siteWizardSections.innerHTML = payload.components.map((item, index) => `
+		    function renderWizardSections(payload) {
+		      if (isWordPressPlatform(payload)) {
+		        els.siteWizardSections.innerHTML = "";
+		        els.siteWizardAddList.innerHTML = "";
+		        return;
+		      }
+		      els.siteWizardSections.innerHTML = payload.components.map((item, index) => `
 	        <div class="wizard-section-row ${item.id === siteWizardDraft.selectedComponentId ? "active" : ""}">
 	          <label>
 	            <input type="checkbox" data-wizard-section-enabled="${item.id}" ${item.enabled !== false ? "checked" : ""}>
@@ -2956,8 +3077,12 @@
 	      return Array.from(fields);
 	    }
 
-	    function renderWizardContentFields(payload) {
-	      const active = payload.components.find((item) => item.id === siteWizardDraft.selectedComponentId) || payload.components[0];
+		    function renderWizardContentFields(payload) {
+		      if (isWordPressPlatform(payload)) {
+		        els.siteWizardContentFields.innerHTML = "";
+		        return;
+		      }
+		      const active = payload.components.find((item) => item.id === siteWizardDraft.selectedComponentId) || payload.components[0];
 	      if (!active) {
 	        els.siteWizardContentFields.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">Add a section first.</div>`;
 	        return;
@@ -2999,8 +3124,30 @@
 	      `;
 	    }
 
-	    function renderWizardReview(payload) {
-	      els.siteWizardReview.innerHTML = `
+		    function renderWizardReview(payload) {
+		      if (isWordPressPlatform(payload)) {
+		        const host = `${payload.slug || "site"}.${FREE_DOMAIN}`;
+		        els.siteWizardReview.innerHTML = `
+		          <div><span>Name</span><strong>${escapeHtml(payload.name || "Untitled site")}</strong></div>
+		          <div><span>URL</span><strong>${escapeHtml(host)}</strong></div>
+		          <div><span>Platform</span><strong>${escapeHtml(platformLabels[payload.platform] || payload.platform)}</strong></div>
+		          <div><span>Plan</span><strong>${escapeHtml(planLabels[payload.plan] || payload.plan)}</strong></div>
+		          <div><span>Hosting stack</span><strong>WordPress + MariaDB</strong></div>
+		          <div><span>Audo setup</span><strong>DNS, SSL route, storage, and database</strong></div>
+		          <div><span>Site setup</span><strong>Handled in WordPress admin</strong></div>
+		          <div><span>Admin URL</span><strong>${escapeHtml(host)}/wp-admin</strong></div>
+		        `;
+		        els.siteWizardPreview.innerHTML = `
+		          <div class="empty-state" style="min-height: 220px;">
+		            <div>
+		              <strong>WordPress admin handles the website build.</strong>
+		              <p>After provisioning, finish themes, pages, plugins, media, and content at ${escapeHtml(host)}/wp-admin.</p>
+		            </div>
+		          </div>
+		        `;
+		        return;
+		      }
+		      els.siteWizardReview.innerHTML = `
 	        <div><span>Name</span><strong>${escapeHtml(payload.name || "Untitled site")}</strong></div>
 	        <div><span>URL</span><strong>${escapeHtml(payload.slug)}.${FREE_DOMAIN}</strong></div>
 	        <div><span>Platform</span><strong>${escapeHtml(platformLabels[payload.platform] || payload.platform)}</strong></div>
@@ -3026,21 +3173,23 @@
 	      });
 	    }
 
-	    function setSiteWizardStep(step) {
-	      const next = Math.max(0, Math.min(wizardStepLabels.length - 1, step));
-	      if (next > siteWizardStep && !validateWizardStep(siteWizardStep)) {
-	        showToast("Enter a site name and valid subdomain.");
-	        return;
-	      }
+		    function setSiteWizardStep(step) {
+		      const payload = wizardPayload();
+		      const steps = wizardStepsForPayload(payload);
+		      const next = Math.max(0, Math.min(steps.length - 1, step));
+		      if (next > siteWizardStep && !validateWizardStep(siteWizardStep)) {
+		        showToast(wizardStepLabel(siteWizardStep, payload) === "Choose" ? "Choose Managed WordPress or Build your own website." : "Enter a site name and valid subdomain.");
+		        return;
+		      }
 	      siteWizardStep = next;
 	      renderSiteWizard();
 	    }
 
-	    function openSiteWizard(mode = "create", componentId = null) {
-	      const site = selectedSite();
-	      siteWizardMode = mode;
-	      siteWizardDraft = mode === "edit" && site ? siteToWizardDraft(site, componentId) : newWizardDraft();
-	      siteWizardStep = mode === "edit" && componentId ? 3 : 0;
+		    function openSiteWizard(mode = "create", componentId = null) {
+		      const site = selectedSite();
+		      siteWizardMode = mode;
+		      siteWizardDraft = mode === "edit" && site ? siteToWizardDraft(site, componentId) : newWizardDraft();
+		      siteWizardStep = mode === "edit" && componentId && !isWordPressPlatform(siteWizardDraft) ? 4 : 0;
 	      els.siteModal.classList.add("active");
 	      renderSiteWizard();
 	      const focusTarget = mode === "edit" && componentId ? document.querySelector("[data-wizard-field]") : els.siteNameInput;
@@ -3056,64 +3205,78 @@
       siteWizardDraft = null;
     }
 
-	    function setWizardTemplate(templateName) {
-	      if (!siteWizardDraft || siteWizardMode === "edit") {
-	        return;
-	      }
+		    function setWizardTemplate(templateName) {
+		      if (!siteWizardDraft || siteWizardMode === "edit" || isWordPressPlatform(siteWizardDraft)) {
+		        return;
+		      }
 	      siteWizardDraft.template = templateName;
 	      siteWizardDraft.design = defaultDesign(templateName);
 	      siteWizardDraft.components = createTemplateComponents(templateName);
 	      siteWizardDraft.selectedComponentId = siteWizardDraft.components[0]?.id || null;
-	      renderSiteWizard();
-	    }
+		      renderSiteWizard();
+		    }
 
-	    function setWizardPlatform(platform, plan) {
-	      if (!siteWizardDraft || siteWizardMode === "edit") {
-	        return;
-	      }
-	      siteWizardDraft.platform = platform || "builder";
-	      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress" ? "paid" : plan || "free";
-	      renderSiteWizard();
-	    }
+		    function setWizardFlow(platform) {
+		      if (!siteWizardDraft || siteWizardMode === "edit") {
+		        return;
+		      }
+		      siteWizardDraft.platform = platform === "wordpress" ? "wordpress" : "builder";
+		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress" ? "paid" : "free";
+		      els.sitePlatformInput.value = siteWizardDraft.platform;
+		      els.sitePlanInput.value = siteWizardDraft.plan;
+		      siteWizardStep = 1;
+		      renderSiteWizard();
+		    }
 
-	    function wizardActiveComponent() {
-	      if (!siteWizardDraft) {
-	        return null;
-	      }
+		    function setWizardPlatform(platform, plan) {
+		      if (!siteWizardDraft || siteWizardMode === "edit") {
+		        return;
+		      }
+		      siteWizardDraft.platform = platform || siteWizardDraft.platform || "builder";
+		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress" ? "paid" : plan || "free";
+		      els.sitePlatformInput.value = siteWizardDraft.platform;
+		      els.sitePlanInput.value = siteWizardDraft.plan;
+		      renderSiteWizard();
+		    }
+
+		    function wizardActiveComponent() {
+		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft)) {
+		        return null;
+		      }
 	      return siteWizardDraft.components.find((item) => item.id === siteWizardDraft.selectedComponentId) || siteWizardDraft.components[0] || null;
 	    }
 
-	    function addWizardSection(type) {
-	      if (!siteWizardDraft) {
-	        return;
-	      }
+		    function addWizardSection(type) {
+		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft)) {
+		        return;
+		      }
 	      const catalogItem = componentCatalog.find((item) => item.type === type);
 	      if (catalogItem?.paid && siteWizardDraft.plan !== "paid") {
 	        showToast("Upgrade this site to add paid builder blocks.");
 	        return;
 	      }
-	      const next = component(type);
-	      siteWizardDraft.components.push(next);
-	      siteWizardDraft.selectedComponentId = next.id;
-	      siteWizardStep = 3;
-	      renderSiteWizard();
-	    }
+		      const next = component(type);
+		      siteWizardDraft.components.push(next);
+		      siteWizardDraft.selectedComponentId = next.id;
+		      siteWizardStep = Math.max(0, wizardStepsForPayload(siteWizardDraft).findIndex((label) => label === "Content"));
+		      renderSiteWizard();
+		    }
 
-	    function moveWizardSection(componentId, direction) {
-	      const index = siteWizardDraft?.components.findIndex((item) => item.id === componentId) ?? -1;
-	      const target = index + direction;
-	      if (!siteWizardDraft || index < 0 || target < 0 || target >= siteWizardDraft.components.length) {
-	        return;
-	      }
+		    function moveWizardSection(componentId, direction) {
+		      const index = siteWizardDraft?.components.findIndex((item) => item.id === componentId) ?? -1;
+		      const target = index + direction;
+		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft) || index < 0 || target < 0 || target >= siteWizardDraft.components.length) {
+		        return;
+		      }
 	      const [item] = siteWizardDraft.components.splice(index, 1);
 	      siteWizardDraft.components.splice(target, 0, item);
 	      renderSiteWizard();
 	    }
 
-	    function deleteWizardSection(componentId) {
-	      if (!siteWizardDraft || siteWizardDraft.components.length <= 1) {
-	        return;
-	      }
+		    function deleteWizardSection(componentId) {
+		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft) || siteWizardDraft.components.length <= 1) {
+		        return;
+		      }
 	      siteWizardDraft.components = siteWizardDraft.components.filter((item) => item.id !== componentId);
 	      siteWizardDraft.selectedComponentId = siteWizardDraft.components[0]?.id || null;
 	      renderSiteWizard();
@@ -3131,13 +3294,19 @@
 	    async function createSite() {
 	      if (creatingSite) {
 	        return;
-	      }
-	      const payload = wizardPayload();
-	      if (!validateWizardStep(0)) {
-	        setSiteWizardStep(0);
-	        showToast("Enter a site name and valid subdomain.");
-	        return;
-	      }
+		      }
+		      const payload = wizardPayload();
+		      if (!payload.platform) {
+		        setSiteWizardStep(0);
+		        showToast("Choose Managed WordPress or Build your own website.");
+		        return;
+		      }
+		      if (!validSiteBasics(payload)) {
+		        siteWizardStep = basicsStepForPayload(payload);
+		        renderSiteWizard();
+		        showToast("Enter a site name and valid subdomain.");
+		        return;
+		      }
 	      creatingSite = true;
 	      renderSiteWizard();
 	      if (siteWizardMode === "edit") {
@@ -3148,27 +3317,45 @@
 	        }
 	        return;
 	      }
-	      if (API_BASE_URL) {
-	        try {
-	          const result = await apiFetch("/api/sites", {
-            method: "POST",
-            body: JSON.stringify({
-              name: payload.name,
-              slug: payload.slug,
-              plan: payload.plan,
-              platform: payload.platform,
-              template: payload.template,
-              builder: { version: 1, design: payload.design, components: payload.components }
-            })
-          });
-	          const site = replaceSite(result.site);
-	          state.selectedComponentId = site.components[0]?.id || null;
-	          state.view = "builder";
-	          state.builderMobileTab = "preview";
-	          saveState();
-	          closeSiteModal();
-	          showToast(`${site.name} created.`);
-          render();
+		      if (API_BASE_URL) {
+		        try {
+		          const createBody = {
+		            name: payload.name,
+		            slug: payload.slug,
+		            plan: payload.plan,
+		            platform: payload.platform,
+		            template: payload.template
+		          };
+		          if (!isWordPressPlatform(payload)) {
+		            createBody.builder = { version: 1, design: payload.design, components: payload.components };
+		          }
+		          const result = await apiFetch("/api/sites", {
+		            method: "POST",
+		            body: JSON.stringify(createBody)
+		          });
+		          let site = replaceSite(result.site);
+		          if (isWordPressPlatform(site)) {
+		            try {
+		              const provisioned = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
+		              site = replaceSite(provisioned.site);
+		            } catch (error) {
+		              creatingSite = false;
+		              state.selectedComponentId = null;
+		              state.view = siteDetailView(site);
+		              saveState();
+		              closeSiteModal();
+		              showToast(friendlyErrorMessage(error, "WordPress site created, but provisioning failed."));
+		              render();
+		              return;
+		            }
+		          }
+		          state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		          state.view = siteDetailView(site);
+		          state.builderMobileTab = "preview";
+		          saveState();
+		          closeSiteModal();
+		          showToast(isWordPressPlatform(site) ? `${site.name} WordPress provisioning started.` : `${site.name} created.`);
+	          render();
 	        } catch (error) {
 	          showToast(friendlyErrorMessage(error, "Site creation failed."));
 	        } finally {
@@ -3187,12 +3374,12 @@
 	        template: payload.template,
 	        design: payload.design,
 	        components: payload.components,
-        status: "draft"
-      });
-      state.sites.unshift(site);
-	      state.selectedSiteId = site.id;
-	      state.selectedComponentId = site.components[0]?.id || null;
-	      state.view = "builder";
+	        status: isWordPressPlatform(payload) ? "published" : "draft"
+	      });
+	      state.sites.unshift(site);
+		      state.selectedSiteId = site.id;
+		      state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		      state.view = siteDetailView(site);
 	      state.builderMobileTab = "preview";
 	      saveState();
 	      closeSiteModal();
@@ -3201,31 +3388,38 @@
 	      render();
 	    }
 
-	    async function saveWizardEdits(payload) {
-	      const site = selectedSite();
-	      if (!site) {
-	        return;
-	      }
-	      site.name = payload.name || site.name;
-	      site.slug = payload.slug || site.slug;
-	      site.template = payload.template;
-	      site.design = payload.design;
-	      site.components = payload.components;
-	      state.selectedComponentId = siteWizardDraft.selectedComponentId || site.components[0]?.id || null;
-	      if (!API_BASE_URL) {
-	        saveState();
+		    async function saveWizardEdits(payload) {
+		      const site = selectedSite();
+		      if (!site) {
+		        return;
+		      }
+		      const wordPressSite = isWordPressPlatform(site);
+		      site.name = payload.name || site.name;
+		      site.slug = payload.slug || site.slug;
+		      if (!wordPressSite) {
+		        site.template = payload.template;
+		        site.design = payload.design;
+		        site.components = payload.components;
+		      }
+		      state.selectedComponentId = wordPressSite ? null : siteWizardDraft.selectedComponentId || site.components[0]?.id || null;
+		      if (!API_BASE_URL) {
+		        saveState();
 	        closeSiteModal();
 	        showToast(`${site.name} updated.`);
 	        render();
 	        return;
 	      }
-	      try {
-	        const result = await apiFetch(`/api/sites/${site.id}`, {
-	          method: "PATCH",
-	          body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
-	        });
-	        replaceSite(result.site);
-	        state.selectedComponentId = siteWizardDraft.selectedComponentId || selectedSite()?.components[0]?.id || null;
+		      try {
+		        const updateBody = { name: site.name };
+		        if (!wordPressSite) {
+		          updateBody.builder = builderDocumentFromSite(site);
+		        }
+		        const result = await apiFetch(`/api/sites/${site.id}`, {
+		          method: "PATCH",
+		          body: JSON.stringify(updateBody)
+		        });
+		        replaceSite(result.site);
+		        state.selectedComponentId = wordPressSite ? null : siteWizardDraft.selectedComponentId || selectedSite()?.components[0]?.id || null;
 	        saveState();
 	        closeSiteModal();
 	        showToast(`${site.name} updated.`);
@@ -3378,8 +3572,13 @@
 	        setSiteWizardStep(Number(button.dataset.siteWizardStep));
 	      }
 	    });
-	    els.siteModal.addEventListener("click", (event) => {
-	      const templateButton = event.target.closest("[data-template-option]");
+		    els.siteModal.addEventListener("click", (event) => {
+		      const flowButton = event.target.closest("[data-flow-option]");
+		      if (flowButton && !flowButton.disabled) {
+		        setWizardFlow(flowButton.dataset.flowOption);
+		        return;
+		      }
+		      const templateButton = event.target.closest("[data-template-option]");
 	      if (templateButton && !templateButton.disabled) {
 	        setWizardTemplate(templateButton.dataset.templateOption);
 	        return;
@@ -3389,13 +3588,13 @@
 	        setWizardPlatform(platformButton.dataset.platformOption, platformButton.dataset.planOption);
 	        return;
 	      }
-	      const editButton = event.target.closest("[data-wizard-edit-section]");
-	      if (editButton) {
-	        siteWizardDraft.selectedComponentId = editButton.dataset.wizardEditSection;
-	        siteWizardStep = 3;
-	        renderSiteWizard();
-	        return;
-	      }
+		      const editButton = event.target.closest("[data-wizard-edit-section]");
+		      if (editButton) {
+		        siteWizardDraft.selectedComponentId = editButton.dataset.wizardEditSection;
+		        siteWizardStep = Math.max(0, wizardStepsForPayload(siteWizardDraft).findIndex((label) => label === "Content"));
+		        renderSiteWizard();
+		        return;
+		      }
 	      const addButton = event.target.closest("[data-wizard-add-section]");
 	      if (addButton && !addButton.disabled) {
 	        addWizardSection(addButton.dataset.wizardAddSection);

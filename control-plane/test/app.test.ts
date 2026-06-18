@@ -57,6 +57,17 @@ class FakeCoolify implements CoolifyProvider {
       details: { repo: site.github.repo }
     };
   }
+
+  async cloneWordPressTemplate(site: SiteRecord): Promise<SiteDeployment> {
+    return {
+      id: "deploy_wordpress_test",
+      provider: "preview",
+      status: "skipped",
+      url: `https://${site.primaryDomain}`,
+      createdAt: new Date().toISOString(),
+      details: { template: "wordpress", host: site.primaryDomain }
+    };
+  }
 }
 
 function createServices(cloudflare = new FakeCloudflare()): AppServices {
@@ -154,6 +165,28 @@ describe("Audo control plane", () => {
     const backup = await request(`/api/sites/${paid.body.site.id}/backups`, { method: "POST", body: "{}" });
     assert.equal(backup.response.status, 202);
     assert.equal(backup.body.site.backups[0].id, "backup_test");
+  });
+
+  it("requires paid plan for managed WordPress and provisions WordPress sites separately", async () => {
+    const rejected = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "WordPress Free", slug: "wordpress-free", platform: "wordpress", plan: "free" })
+    });
+    assert.equal(rejected.response.status, 402);
+
+    const created = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "WordPress Paid", slug: "wordpress-paid", platform: "wordpress", plan: "paid" })
+    });
+    assert.equal(created.response.status, 201);
+    assert.equal(created.body.site.type, "wordpress");
+    assert.equal(created.body.site.plan, "paid");
+
+    const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
+    assert.equal(published.response.status, 200);
+    assert.equal(published.body.site.status, "published");
+    assert.equal(published.body.site.deployments[0].id, "deploy_wordpress_test");
+    assert.equal(published.body.site.deployments.some((deployment: any) => deployment.provider === "local-static"), false);
   });
 
   it("reports Cloudflare status", async () => {

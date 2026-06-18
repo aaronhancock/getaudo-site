@@ -20,6 +20,7 @@ const createSiteSchema = z.object({
   name: z.string().min(1),
   slug: z.string().optional(),
   plan: z.enum(["free", "paid"]).optional(),
+  platform: z.enum(["builder", "wordpress"]).optional(),
   template: z.string().optional(),
   builder: z.any().optional()
 });

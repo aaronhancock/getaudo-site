@@ -25,16 +25,32 @@ export interface BuilderComponent {
   id: string;
   type: string;
   label?: string;
+  enabled?: boolean;
   headline?: string;
   body?: string;
   button?: string;
   brand?: string;
   links?: string;
   items?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  layout?: string;
+}
+
+export interface BuilderDesign {
+  font?: "system" | "inter" | "serif" | "mono";
+  primaryColor?: string;
+  accentColor?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  layout?: "classic" | "editorial" | "compact";
+  heroImage?: string;
+  heroImageAlt?: string;
 }
 
 export interface BuilderDocument {
   version: 1;
+  design?: BuilderDesign;
   components: BuilderComponent[];
 }
 
@@ -91,7 +107,7 @@ export interface SiteRecord {
   slug: string;
   plan: Plan;
   status: SiteStatus;
-  type: "builder" | "github-app";
+  type: "builder" | "github-app" | "wordpress";
   primaryDomain: string;
   domains: DomainRecord[];
   builder: BuilderDocument;
@@ -140,6 +156,7 @@ export interface CloudflareProvider {
 export interface CoolifyProvider {
   deploySharedBuilder(commit?: string): Promise<SiteDeployment>;
   createGitHubApplication(site: SiteRecord): Promise<SiteDeployment>;
+  cloneWordPressTemplate(site: SiteRecord): Promise<SiteDeployment>;
 }
 
 export interface BackupProvider {

@@ -36,6 +36,7 @@ export interface CreateSiteInput {
   name: string;
   slug?: string;
   plan?: Plan;
+  platform?: "builder" | "wordpress";
   template?: string;
   builder?: BuilderDocument;
 }
@@ -140,8 +141,12 @@ export class SiteService {
     if (existing) {
       throw conflict("That subdomain is already taken.", { slug });
     }
+    if (input.platform === "wordpress" && input.plan !== "paid") {
+      throw paymentRequired("Managed WordPress requires a paid plan.");
+    }
 
     const createdAt = now();
+    const plan = input.plan === "paid" || input.platform === "wordpress" ? "paid" : "free";
     const domain: DomainRecord = {
       id: nanoid(),
       host: freeHost(slug, this.config),
@@ -155,9 +160,9 @@ export class SiteService {
       ownerUid: user.uid,
       name,
       slug,
-      plan: input.plan === "paid" ? "paid" : "free",
+      plan,
       status: "draft",
-      type: "builder",
+      type: input.platform === "wordpress" ? "wordpress" : "builder",
       primaryDomain: domain.host,
       domains: [domain],
       builder: input.builder || defaultBuilderDocument(input.template),
@@ -241,6 +246,16 @@ export class SiteService {
 
   async publishSite(user: AuthUser, siteId: string, commit?: string): Promise<SiteRecord> {
     let site = await this.provisionFreeDomain(user, siteId);
+    if (site.type === "wordpress") {
+      const deployment = await this.services.coolify.cloneWordPressTemplate(site);
+      site = await this.services.store.updateSite(site.teamId, site.id, {
+        status: "published",
+        deployments: deploymentList(site, deployment),
+        publishedAt: now()
+      });
+      await this.event(site, "wordpress.provisioned", `Provisioned managed WordPress for ${site.primaryDomain}`, deployment.details);
+      return site;
+    }
     const artifactPath = await writePublishedSite(this.config.publishedSiteRoot, site);
     const localDeployment: SiteDeployment = {
       id: nanoid(),

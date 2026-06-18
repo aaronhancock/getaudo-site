@@ -26,6 +26,7 @@ export interface AppConfig {
     baseUrl?: string;
     apiToken?: string;
     sharedBuilderAppUuid?: string;
+    wordpressTemplateAppUuid?: string;
   };
   backups: {
     webhookUrl?: string;
@@ -73,7 +74,8 @@ export function loadConfig(): AppConfig {
     coolify: {
       baseUrl: env("COOLIFY_BASE_URL") || undefined,
       apiToken: env("COOLIFY_API_TOKEN") || undefined,
-      sharedBuilderAppUuid: env("COOLIFY_BUILDER_APP_UUID") || undefined
+      sharedBuilderAppUuid: env("COOLIFY_BUILDER_APP_UUID") || undefined,
+      wordpressTemplateAppUuid: env("COOLIFY_WORDPRESS_TEMPLATE_APP_UUID") || undefined
     },
     backups: {
       webhookUrl: env("BACKUP_WEBHOOK_URL") || undefined

@@ -54,6 +54,35 @@ export class CoolifyApiProvider implements CoolifyProvider {
     };
   }
 
+  async cloneWordPressTemplate(site: SiteRecord): Promise<SiteDeployment> {
+    const createdAt = new Date().toISOString();
+    if (!this.config.baseUrl || !this.config.apiToken || !this.config.wordpressTemplateAppUuid) {
+      return {
+        id: nanoid(),
+        provider: "preview",
+        status: "skipped",
+        url: `https://${site.primaryDomain}`,
+        createdAt,
+        details: {
+          reason: "wordpress_template_not_configured",
+          requestedDomain: site.primaryDomain
+        }
+      };
+    }
+    return {
+      id: nanoid(),
+      provider: "coolify",
+      status: "skipped",
+      url: `https://${site.primaryDomain}`,
+      createdAt,
+      details: {
+        reason: "coolify_wordpress_clone_requires_project_mapping",
+        templateAppUuid: this.config.wordpressTemplateAppUuid,
+        requestedDomain: site.primaryDomain
+      }
+    };
+  }
+
   private async coolify(path: string, init: RequestInit): Promise<any> {
     const base = this.config.baseUrl?.replace(/\/+$/, "");
     const response = await fetch(`${base}${path}`, {

@@ -1,0 +1,14 @@
+{
+  "apiBaseUrl": "https://api.getaudo.com",
+  "authProviders": {
+    "google": false
+  },
+  "firebase": {
+    "projectId": "getaudo",
+    "appId": "1:984459457638:web:a9f74f8e591e7ed61869a7",
+    "storageBucket": "getaudo.firebasestorage.app",
+    "apiKey": "AIzaSyA5UC9UTZYazz5vMMSrxoAlD6jh0KvVd2Y",
+    "authDomain": "getaudo.firebaseapp.com",
+    "messagingSenderId": "984459457638"
+  }
+}

@@ -157,6 +157,33 @@ describe("Audo control plane", () => {
     assert.equal(status.body.cloudflare.zoneName, "getaudo.com");
   });
 
+  it("manages team users", async () => {
+    const created = await request("/api/users", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "member@example.com",
+        password: "password123",
+        name: "Team Member",
+        role: "member"
+      })
+    });
+    assert.equal(created.response.status, 201);
+    assert.equal(created.body.user.email, "member@example.com");
+    assert.equal(created.body.user.role, "member");
+
+    const list = await request("/api/users");
+    assert.equal(list.response.status, 200);
+    assert.ok(list.body.users.some((user: any) => user.email === "member@example.com"));
+
+    const disabled = await request(`/api/users/${created.body.user.uid}`, {
+      method: "PATCH",
+      body: JSON.stringify({ disabled: true, role: "admin" })
+    });
+    assert.equal(disabled.response.status, 200);
+    assert.equal(disabled.body.user.disabled, true);
+    assert.equal(disabled.body.user.role, "admin");
+  });
+
   it("can require a preview API secret", async () => {
     const lockedConfig = { ...config, previewApiSecret: "preview-secret" };
     const lockedServer = createServer(createApp(lockedConfig, createServices()));

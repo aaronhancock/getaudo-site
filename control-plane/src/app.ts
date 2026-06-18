@@ -12,6 +12,7 @@ import { CoolifyApiProvider } from "./providers/coolify.js";
 import { FirestoreSiteStore, MemorySiteStore } from "./store.js";
 import { SiteService } from "./siteService.js";
 import type { AppServices } from "./types.js";
+import { UserService } from "./userService.js";
 
 const createSiteSchema = z.object({
   name: z.string().min(1),
@@ -44,6 +45,19 @@ const checkoutSchema = z.object({
   cancelUrl: z.string().url().optional()
 });
 
+const createUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+  name: z.string().optional(),
+  role: z.enum(["admin", "member"]).optional()
+});
+
+const updateUserSchema = z.object({
+  name: z.string().optional(),
+  role: z.enum(["admin", "member"]).optional(),
+  disabled: z.boolean().optional()
+});
+
 function asyncRoute(handler: (request: Request, response: Response) => Promise<void>) {
   return (request: Request, response: Response, next: NextFunction) => {
     handler(request, response).catch(next);
@@ -72,6 +86,7 @@ function createDefaultServices(config: AppConfig): AppServices {
 export function createApp(config: AppConfig, services = createDefaultServices(config)): express.Express {
   const app = express();
   const service = new SiteService(config, services);
+  const users = new UserService(config);
   const corsOrigins = config.corsOrigin.split(",").map((origin) => origin.trim()).filter(Boolean);
 
   app.use(helmet({ crossOriginResourcePolicy: false }));
@@ -84,9 +99,26 @@ export function createApp(config: AppConfig, services = createDefaultServices(co
 
   app.use("/api", authMiddleware(config));
 
-  app.get("/api/me", (request, response) => {
-    response.json({ user: requireUser(request) });
-  });
+  app.get("/api/me", asyncRoute(async (request, response) => {
+    const user = requireUser(request);
+    response.json({ user, profile: await users.ensureCurrentUser(user) });
+  }));
+
+  app.get("/api/users/me", asyncRoute(async (request, response) => {
+    response.json({ user: await users.ensureCurrentUser(requireUser(request)) });
+  }));
+
+  app.get("/api/users", asyncRoute(async (request, response) => {
+    response.json({ users: await users.listUsers(requireUser(request)) });
+  }));
+
+  app.post("/api/users", asyncRoute(async (request, response) => {
+    response.status(201).json({ user: await users.createUser(requireUser(request), parse(createUserSchema, request.body)) });
+  }));
+
+  app.patch("/api/users/:uid", asyncRoute(async (request, response) => {
+    response.json({ user: await users.updateUser(requireUser(request), request.params.uid, parse(updateUserSchema, request.body)) });
+  }));
 
   app.get("/api/dns/cloudflare/status", asyncRoute(async (_request, response) => {
     response.json({ cloudflare: await services.cloudflare.verifyConnection() });

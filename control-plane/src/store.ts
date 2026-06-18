@@ -1,7 +1,7 @@
-import { getApps, initializeApp, cert, applicationDefault } from "firebase-admin/app";
 import { getFirestore, Firestore } from "firebase-admin/firestore";
 import type { SiteEvent, SiteRecord, SiteStore } from "./types.js";
 import { notFound } from "./errors.js";
+import { initFirebaseAdmin } from "./firebaseAdmin.js";
 
 function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -57,18 +57,6 @@ export class MemorySiteStore implements SiteStore {
     }
     return (this.events.get(siteId) || []).map(clone);
   }
-}
-
-function initFirebaseAdmin(): void {
-  if (getApps().length) {
-    return;
-  }
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
-  if (raw) {
-    initializeApp({ credential: cert(JSON.parse(raw)) });
-    return;
-  }
-  initializeApp({ credential: applicationDefault() });
 }
 
 export class FirestoreSiteStore implements SiteStore {

@@ -9,6 +9,18 @@ export interface AuthUser {
   role: "owner" | "admin" | "member";
 }
 
+export interface ManagedUser {
+  uid: string;
+  email?: string;
+  name?: string;
+  teamId: string;
+  role: AuthUser["role"];
+  disabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+  lastSeenAt?: string;
+}
+
 export interface BuilderComponent {
   id: string;
   type: string;

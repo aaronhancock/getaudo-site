@@ -26,7 +26,9 @@ For production, create `firebase-config.json` next to `index.html` using `fireba
 
 The Firebase web config is public client configuration. Do not put Cloudflare, Coolify, GitHub App, Stripe, or backup credentials in this repo.
 
-If `firebase-config.json` is absent, the app runs with local preview auth so the console can be developed without blocking on Firebase setup.
+The production Firebase project is `getaudo`. Email/password auth is enabled. Google sign-in is disabled in `app-config.json` until a Google OAuth client ID and secret are explicitly configured for Firebase Auth.
+
+If `firebase-config.json` and `app-config.json` are absent, the app runs with local preview auth so the console can be developed without blocking on Firebase setup.
 
 ## Control Plane API
 
@@ -40,7 +42,7 @@ Use `app-config.example.json` as the shape:
 }
 ```
 
-Without `app-config.json`, the console stays in local/demo mode.
+Without `app-config.json`, the console stays in local/demo mode. With the checked-in production `app-config.json`, the console calls `https://api.getaudo.com`.
 
 ## Backend
 

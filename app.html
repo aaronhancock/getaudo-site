@@ -991,6 +991,7 @@
         <button data-view-button="builder" type="button"><i data-lucide="layout-template" class="icon"></i><span>Builder</span></button>
         <button data-view-button="domains" type="button"><i data-lucide="globe-2" class="icon"></i><span>Domains</span></button>
         <button data-view-button="integrations" type="button"><i data-lucide="git-branch" class="icon"></i><span>Integrations</span></button>
+        <button data-view-button="users" type="button"><i data-lucide="users" class="icon"></i><span>Users</span></button>
       </nav>
       <button class="sidebar-action" id="newSiteSidebar" type="button"><i data-lucide="plus" class="icon"></i><span>New site</span></button>
       <div class="sidebar-footer">
@@ -1064,6 +1065,52 @@
         <section class="view" id="sitesView">
           <div class="metrics" id="metrics"></div>
           <div class="grid" id="siteGrid"></div>
+        </section>
+
+        <section class="view" id="usersView">
+          <div class="detail-layout">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Team</span>
+                  <h2>Users</h2>
+                </div>
+                <span class="pill blue" id="usersModePill">Firebase</span>
+              </div>
+              <div class="table" id="userTable"></div>
+            </div>
+
+            <aside class="panel">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Invite</span>
+                  <h2>Create user</h2>
+                </div>
+              </div>
+              <div class="field-grid">
+                <div class="field" style="grid-column: 1 / -1;">
+                  <label for="managedUserNameInput">Name</label>
+                  <input id="managedUserNameInput" placeholder="Team member">
+                </div>
+                <div class="field" style="grid-column: 1 / -1;">
+                  <label for="managedUserEmailInput">Email</label>
+                  <input id="managedUserEmailInput" autocomplete="email" placeholder="member@example.com">
+                </div>
+                <div class="field" style="grid-column: 1 / -1;">
+                  <label for="managedUserPasswordInput">Temporary password</label>
+                  <input id="managedUserPasswordInput" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+                </div>
+                <div class="field" style="grid-column: 1 / -1;">
+                  <label for="managedUserRoleInput">Role</label>
+                  <select id="managedUserRoleInput">
+                    <option value="member">Member</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+              </div>
+              <button class="button primary" id="createManagedUser" type="button"><i data-lucide="user-plus" class="icon"></i><span>Create user</span></button>
+            </aside>
+          </div>
         </section>
 
         <section class="view" id="builderView">
@@ -1237,6 +1284,7 @@
     const APP_CONFIG = await loadAppConfig();
     const FIREBASE_CONFIG = await loadFirebaseConfig();
     const API_BASE_URL = String(APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
+    const GOOGLE_AUTH_ENABLED = APP_CONFIG.authProviders?.google === true;
     const STORAGE_KEY = "audo-console-state-v1";
     const FREE_DOMAIN = "getaudo.com";
 
@@ -1290,6 +1338,7 @@
       views: {
         auth: document.getElementById("authView"),
         sites: document.getElementById("sitesView"),
+        users: document.getElementById("usersView"),
         builder: document.getElementById("builderView"),
         domains: document.getElementById("domainsView"),
         integrations: document.getElementById("integrationsView")
@@ -1321,6 +1370,12 @@
       outputInput: document.getElementById("outputInput"),
       backupPanel: document.getElementById("backupPanel"),
       backupPlanPill: document.getElementById("backupPlanPill"),
+      usersModePill: document.getElementById("usersModePill"),
+      userTable: document.getElementById("userTable"),
+      managedUserNameInput: document.getElementById("managedUserNameInput"),
+      managedUserEmailInput: document.getElementById("managedUserEmailInput"),
+      managedUserPasswordInput: document.getElementById("managedUserPasswordInput"),
+      managedUserRoleInput: document.getElementById("managedUserRoleInput"),
       siteModal: document.getElementById("siteModal"),
       siteNameInput: document.getElementById("siteNameInput"),
       siteSlugInput: document.getElementById("siteSlugInput"),
@@ -1371,6 +1426,7 @@
         view: "sites",
         selectedSiteId: "demo-service",
         selectedComponentId: null,
+        users: [],
         sites: [
           createSiteRecord({
             id: "demo-service",
@@ -1406,6 +1462,7 @@
         view: state.view,
         selectedSiteId: state.selectedSiteId,
         selectedComponentId: state.selectedComponentId,
+        users: state.users,
         sites: state.sites
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
@@ -1472,6 +1529,16 @@
       state.sites = data.sites.map(frontendSiteFromApi);
       state.selectedSiteId = state.sites.some((site) => site.id === selectedId) ? selectedId : state.sites[0]?.id || null;
       state.selectedComponentId = selectedSite()?.components[0]?.id || null;
+      saveState();
+    }
+
+    async function syncUsersFromApi() {
+      if (!API_BASE_URL || !state.user) {
+        state.users = [];
+        return;
+      }
+      const data = await apiFetch("/api/users");
+      state.users = Array.isArray(data?.users) ? data.users : [];
       saveState();
     }
 
@@ -1680,12 +1747,16 @@
               email: user.email || "",
               name: user.displayName || user.email || "Audo user"
             } : null;
+            if (!state.user) {
+              state.users = [];
+            }
             saveState();
             if (state.user) {
               try {
                 await syncSitesFromApi();
+                await syncUsersFromApi();
               } catch (error) {
-                showToast(error.message || "Could not load sites from the control plane.");
+                showToast(error.message || "Could not load account data from the control plane.");
               }
             }
             render();
@@ -1711,6 +1782,7 @@
       }
       renderChrome();
       renderSites();
+      renderUsers();
       renderBuilder();
       renderDomains();
       renderIntegrations();
@@ -1722,6 +1794,7 @@
       const viewLabels = {
         auth: ["Sign in", "Access your Audo hosting account."],
         sites: ["Sites", "Self-service websites on Audo."],
+        users: ["Users", "Team access and account management."],
         builder: ["Builder", selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
         domains: ["Domains", "Subdomains, custom URLs, and DNS status."],
         integrations: ["Integrations", "GitHub deployments and restore points."]
@@ -1738,6 +1811,7 @@
       els.authModePill.className = `pill ${state.authMode === "firebase" ? "green" : "amber"}`;
       els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
       document.querySelector("#googleSignIn span").textContent = state.authMode === "firebase" ? "Google" : "Demo login";
+      document.getElementById("googleSignIn").disabled = state.authMode === "firebase" && !GOOGLE_AUTH_ENABLED;
       document.getElementById("publishButton").disabled = !signedIn || !selectedSite();
       document.getElementById("newSiteButton").disabled = !signedIn;
       document.getElementById("newSiteSidebar").disabled = !signedIn;
@@ -1797,6 +1871,32 @@
             selectSite(card.dataset.siteCard);
           }
         });
+      });
+    }
+
+    function renderUsers() {
+      if (!els.userTable) {
+        return;
+      }
+      els.usersModePill.className = `pill ${API_BASE_URL && state.authMode === "firebase" ? "green" : "amber"}`;
+      els.usersModePill.textContent = API_BASE_URL && state.authMode === "firebase" ? "Firebase" : "Preview";
+      const rows = state.users.length
+        ? state.users.map((user) => `
+          <div class="table-row">
+            <span>${escapeHtml(user.name || user.email || user.uid)}</span>
+            <span>${escapeHtml(user.email || "No email")}</span>
+            <span><span class="pill ${user.disabled ? "rose" : "green"}">${user.disabled ? "Disabled" : user.role}</span></span>
+            <span><button class="button" type="button" data-toggle-user="${escapeHtml(user.uid)}" data-disabled="${user.disabled ? "false" : "true"}">${user.disabled ? "Enable" : "Disable"}</button></span>
+          </div>
+        `).join("")
+        : `<div class="table-row"><span>No users loaded</span><span>Sign in with Firebase</span><span></span><span></span></div>`;
+      els.userTable.innerHTML = `<div class="table-row"><span>Name</span><span>Email</span><span>Role</span><span></span></div>${rows}`;
+      document.querySelectorAll("[data-toggle-user]").forEach((button) => {
+        button.addEventListener("click", () => toggleManagedUser(button.dataset.toggleUser, button.dataset.disabled === "true"));
+      });
+      const enabled = Boolean(API_BASE_URL && state.authMode === "firebase" && state.user);
+      [els.managedUserNameInput, els.managedUserEmailInput, els.managedUserPasswordInput, els.managedUserRoleInput, document.getElementById("createManagedUser")].forEach((element) => {
+        element.disabled = !enabled;
       });
     }
 
@@ -2188,6 +2288,55 @@
       render();
     }
 
+    async function createManagedUser() {
+      if (!API_BASE_URL || state.authMode !== "firebase") {
+        showToast("Firebase user management is not configured.");
+        return;
+      }
+      const payload = {
+        name: els.managedUserNameInput.value.trim(),
+        email: els.managedUserEmailInput.value.trim(),
+        password: els.managedUserPasswordInput.value,
+        role: els.managedUserRoleInput.value
+      };
+      if (!payload.email || !payload.password) {
+        showToast("Enter an email and temporary password.");
+        return;
+      }
+      try {
+        await apiFetch("/api/users", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        els.managedUserNameInput.value = "";
+        els.managedUserEmailInput.value = "";
+        els.managedUserPasswordInput.value = "";
+        els.managedUserRoleInput.value = "member";
+        await syncUsersFromApi();
+        showToast("User created.");
+        render();
+      } catch (error) {
+        showToast(error.message || "User creation failed.");
+      }
+    }
+
+    async function toggleManagedUser(uid, disabled) {
+      if (!API_BASE_URL || !uid) {
+        return;
+      }
+      try {
+        await apiFetch(`/api/users/${encodeURIComponent(uid)}`, {
+          method: "PATCH",
+          body: JSON.stringify({ disabled })
+        });
+        await syncUsersFromApi();
+        showToast(disabled ? "User disabled." : "User enabled.");
+        render();
+      } catch (error) {
+        showToast(error.message || "User update failed.");
+      }
+    }
+
     async function signInWithEmail(create) {
       const email = document.getElementById("emailInput").value.trim();
       const password = document.getElementById("passwordInput").value;
@@ -2212,8 +2361,9 @@
       saveState();
       try {
         await syncSitesFromApi();
+        await syncUsersFromApi();
       } catch (error) {
-        showToast(error.message || "Could not load sites from the control plane.");
+        showToast(error.message || "Could not load account data from the control plane.");
       }
       render();
     }
@@ -2233,8 +2383,9 @@
       saveState();
       try {
         await syncSitesFromApi();
+        await syncUsersFromApi();
       } catch (error) {
-        showToast(error.message || "Could not load sites from the control plane.");
+        showToast(error.message || "Could not load account data from the control plane.");
       }
       render();
     }
@@ -2244,6 +2395,7 @@
         await firebaseModules.signOut(firebaseAuth);
       } else {
         state.user = null;
+        state.users = [];
         state.view = "auth";
         saveState();
         render();
@@ -2276,6 +2428,7 @@
     document.getElementById("emailSignIn").addEventListener("click", () => signInWithEmail(false));
     document.getElementById("emailCreate").addEventListener("click", () => signInWithEmail(true));
     document.getElementById("googleSignIn").addEventListener("click", signInWithGoogle);
+    document.getElementById("createManagedUser").addEventListener("click", createManagedUser);
     document.getElementById("siteNameInput").addEventListener("input", (event) => {
       if (!els.siteSlugInput.value.trim()) {
         els.siteSlugInput.placeholder = slugify(event.target.value || "site-name");

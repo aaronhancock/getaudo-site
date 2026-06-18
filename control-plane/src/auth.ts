@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { getApps, initializeApp, cert, applicationDefault } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import type { AppConfig } from "./config.js";
 import type { AuthUser } from "./types.js";
 import { unauthorized } from "./errors.js";
+import { initFirebaseAdmin } from "./firebaseAdmin.js";
 
 declare global {
   namespace Express {
@@ -11,18 +11,6 @@ declare global {
       user?: AuthUser;
     }
   }
-}
-
-function initFirebaseAdmin(): void {
-  if (getApps().length) {
-    return;
-  }
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
-  if (raw) {
-    initializeApp({ credential: cert(JSON.parse(raw)) });
-    return;
-  }
-  initializeApp({ credential: applicationDefault() });
 }
 
 function previewUser(request: Request): AuthUser {

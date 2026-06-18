@@ -70,11 +70,17 @@ class FakeCoolify implements CoolifyProvider {
   }
 }
 
-function createServices(cloudflare = new FakeCloudflare()): AppServices {
+class FailingWordPressCoolify extends FakeCoolify {
+  async provisionWordPressSite(): Promise<SiteDeployment> {
+    throw new Error("Coolify API unavailable");
+  }
+}
+
+function createServices(cloudflare = new FakeCloudflare(), coolify: CoolifyProvider = new FakeCoolify()): AppServices {
   return {
     store: new MemorySiteStore(),
     cloudflare,
-    coolify: new FakeCoolify(),
+    coolify,
     backups: {
       async requestBackup(): Promise<BackupRecord> {
         return { id: "backup_test", status: "queued", createdAt: new Date().toISOString() };
@@ -189,6 +195,47 @@ describe("Audo control plane", () => {
     assert.equal(published.body.site.status, "published");
     assert.equal(published.body.site.deployments[0].id, "deploy_wordpress_test");
     assert.equal(published.body.site.deployments.some((deployment: any) => deployment.provider === "local-static"), false);
+  });
+
+  it("records failed WordPress provisioning attempts", async () => {
+    const failingServer = createServer(createApp(config, createServices(new FakeCloudflare(), new FailingWordPressCoolify())));
+    await new Promise<void>((resolve) => failingServer.listen(0, resolve));
+    const address = failingServer.address() as AddressInfo;
+    const failingBaseUrl = `http://127.0.0.1:${address.port}`;
+
+    async function failingRequest(path: string, init: RequestInit = {}) {
+      const response = await fetch(`${failingBaseUrl}${path}`, {
+        ...init,
+        headers: {
+          "content-type": "application/json",
+          "x-audo-preview-user": "test-owner",
+          ...(init.headers || {})
+        }
+      });
+      const body = await response.json();
+      return { response, body };
+    }
+
+    try {
+      const created = await failingRequest("/api/sites", {
+        method: "POST",
+        body: JSON.stringify({ name: "Failing WordPress", platform: "wordpress", plan: "paid" })
+      });
+      const published = await failingRequest(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
+      assert.equal(published.response.status, 500);
+      assert.match(published.body.error.message, /Coolify API unavailable/);
+
+      const site = await failingRequest(`/api/sites/${created.body.site.id}`);
+      assert.equal(site.body.site.status, "configured");
+      assert.equal(site.body.site.domains[0].status, "ready");
+      assert.equal(site.body.site.deployments[0].status, "failed");
+      assert.equal(site.body.site.deployments[0].details.action, "wordpress_provision_failed");
+
+      const events = await failingRequest(`/api/sites/${created.body.site.id}/events`);
+      assert.equal(events.body.events[0].type, "wordpress.provision_failed");
+    } finally {
+      await new Promise<void>((resolve, reject) => failingServer.close((error) => (error ? reject(error) : resolve())));
+    }
   });
 
   it("reports Cloudflare status", async () => {

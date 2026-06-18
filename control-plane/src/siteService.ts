@@ -115,6 +115,18 @@ function backupList(site: SiteRecord, backup: BackupRecord): BackupRecord[] {
   return [backup, ...site.backups].slice(0, 100);
 }
 
+function errorDetails(error: unknown): Record<string, unknown> {
+  if (error instanceof Error) {
+    return {
+      message: error.message,
+      name: error.name
+    };
+  }
+  return {
+    message: String(error)
+  };
+}
+
 export class SiteService {
   constructor(private config: AppConfig, private services: AppServices) {}
 
@@ -270,7 +282,29 @@ export class SiteService {
   async publishSite(user: AuthUser, siteId: string, commit?: string): Promise<SiteRecord> {
     let site = await this.provisionFreeDomain(user, siteId);
     if (site.type === "wordpress") {
-      const deployment = await this.services.coolify.provisionWordPressSite(site);
+      let deployment: SiteDeployment;
+      try {
+        deployment = await this.services.coolify.provisionWordPressSite(site);
+      } catch (error) {
+        const failedDeployment: SiteDeployment = {
+          id: nanoid(),
+          provider: "coolify",
+          status: "failed",
+          url: `https://${site.primaryDomain}`,
+          commit,
+          createdAt: now(),
+          details: {
+            action: "wordpress_provision_failed",
+            requestedDomain: site.primaryDomain,
+            error: errorDetails(error)
+          }
+        };
+        site = await this.services.store.updateSite(site.teamId, site.id, {
+          deployments: deploymentList(site, failedDeployment)
+        });
+        await this.event(site, "wordpress.provision_failed", `WordPress provisioning failed for ${site.primaryDomain}`, failedDeployment.details);
+        throw error;
+      }
       site = await this.services.store.updateSite(site.teamId, site.id, {
         status: "published",
         deployments: deploymentList(site, deployment),

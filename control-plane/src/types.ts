@@ -107,7 +107,7 @@ export interface SiteRecord {
   slug: string;
   plan: Plan;
   status: SiteStatus;
-  type: "builder" | "github-app" | "wordpress";
+  type: "builder" | "github-app" | "wordpress" | "concierge";
   primaryDomain: string;
   domains: DomainRecord[];
   builder: BuilderDocument;

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Audo Web Hosting Console</title>
-  <meta name="description" content="Self-service website hosting, one-page site builder, domains, backups, and GitHub deployments.">
+  <meta name="description" content="Self-service WordPress hosting, done-for-you websites, custom apps, domains, backups, and GitHub deployments.">
   <link rel="icon" href="/assets/audo-logo.svg" type="image/svg+xml">
   <style>
     :root {
@@ -1262,7 +1262,7 @@
       </div>
       <nav class="nav" aria-label="Primary">
         <button class="active" data-view-button="sites" type="button"><i data-lucide="panel-top" class="icon"></i><span>Sites</span></button>
-        <button data-view-button="builder" type="button"><i data-lucide="layout-template" class="icon"></i><span>Builder</span></button>
+        <button data-view-button="builder" type="button"><i data-lucide="layout-template" class="icon"></i><span>Editor</span></button>
         <button data-view-button="domains" type="button"><i data-lucide="globe-2" class="icon"></i><span>Domains</span></button>
         <button data-view-button="integrations" type="button"><i data-lucide="git-branch" class="icon"></i><span>Integrations</span></button>
         <button data-view-button="users" type="button"><i data-lucide="users" class="icon"></i><span>Users</span></button>
@@ -1312,25 +1312,25 @@
             <div class="auth-side">
               <article class="plan-card highlight">
                 <span class="pill green">Free</span>
-                <h3>One-page website</h3>
+                <h3>DIY WordPress</h3>
                 <strong>$0</strong>
                 <ul>
-                  <li>Builder-hosted page</li>
+                  <li>Managed WordPress install</li>
                   <li>Subdomain on getaudo.com</li>
                   <li>Audo ad placement</li>
-                  <li>Basic publish controls</li>
+                  <li>WordPress admin for content</li>
                 </ul>
               </article>
               <article class="plan-card">
                 <span class="pill blue">Paid</span>
-                <h3>Full website hosting</h3>
+                <h3>Growth hosting</h3>
                 <strong>$19+</strong>
                 <ul>
                   <li>Custom domain</li>
                   <li>Backups and restore points</li>
-                  <li>GitHub deploys</li>
-                  <li>Managed WordPress option</li>
-                  <li>Apps, databases, and workers</li>
+                  <li>No Audo ads</li>
+                  <li>Done-for-you options</li>
+                  <li>Custom apps and GitHub deploys</li>
                 </ul>
               </article>
             </div>
@@ -1532,8 +1532,9 @@
 		        <input id="sitePlanInput" type="hidden" value="">
 		        <input id="sitePlatformInput" type="hidden" value="">
 		        <div class="wizard-options" data-flow-options>
-		          <button class="wizard-option" data-flow-option="builder" type="button"><strong>Build your own website</strong><span>Use the Audo builder for design, sections, content, publishing, and optional paid hosting.</span></button>
-		          <button class="wizard-option" data-flow-option="wordpress" type="button"><strong>Managed WordPress</strong><span>Provision WordPress hosting. Themes, pages, plugins, media, and content are managed in WordPress admin.</span></button>
+		          <button class="wizard-option" data-flow-option="wordpress" type="button"><strong>DIY WordPress</strong><span>Provision managed WordPress. Themes, pages, plugins, media, and content are handled in WordPress admin.</span></button>
+		          <button class="wizard-option" data-flow-option="concierge" type="button"><strong>Done-for-you website</strong><span>Audo builds and hosts a custom one-page site, full website, or managed WordPress site for you.</span></button>
+		          <button class="wizard-option" data-flow-option="github-app" type="button"><strong>Custom app hosting</strong><span>Use Audo for a custom application, GitHub deployment, database, monitoring, and monthly hosting.</span></button>
 		        </div>
 		      </div>
 		      <div class="wizard-panel" data-site-wizard-panel="1">
@@ -1548,10 +1549,20 @@
 			            <div class="readonly-value" id="siteSlugPreview">Enter a site name</div>
 			          </div>
 		        </div>
+		        <div class="wizard-options" data-wordpress-plan-options hidden>
+		          <button class="wizard-option active" data-platform-option="wordpress" data-plan-option="free" type="button"><strong>Free DIY</strong><span>Use a generated getaudo.com subdomain with Audo ad placement.</span></button>
+		          <button class="wizard-option" data-platform-option="wordpress" data-plan-option="paid" type="button"><strong>Paid WordPress</strong><span>Add a custom domain, backups, restore points, and no Audo ads.</span></button>
+		        </div>
 		        <div class="empty-state" data-wordpress-setup-note hidden style="min-height: 140px;">
 		          <div>
-		            <strong>Managed WordPress provisioning</strong>
-		            <p>Audo creates the host, database, DNS route, SSL route, and storage. WordPress admin handles the website build.</p>
+		            <strong>WordPress provisioning</strong>
+		            <p>Audo creates the host, database, DNS route, SSL route, and storage. WordPress admin handles themes, pages, plugins, media, and content.</p>
+		          </div>
+		        </div>
+		        <div class="empty-state" data-project-setup-note hidden style="min-height: 140px;">
+		          <div>
+		            <strong>Manual Audo setup</strong>
+		            <p>This creates the project record and generated URL. Audo handles the build, deployment, and launch plan with you.</p>
 		          </div>
 		        </div>
 		      </div>
@@ -1643,6 +1654,10 @@
 		    const editBuilderWizardStepLabels = ["Basics", "Site type", "Design", "Sections", "Content", "Review"];
 		    const createWordPressWizardStepLabels = ["Choose", "WordPress", "Review"];
 		    const editWordPressWizardStepLabels = ["WordPress", "Review"];
+		    const createConciergeWizardStepLabels = ["Choose", "Project", "Review"];
+		    const editConciergeWizardStepLabels = ["Project", "Review"];
+		    const createCustomAppWizardStepLabels = ["Choose", "App", "Review"];
+		    const editCustomAppWizardStepLabels = ["App", "Review"];
 	    const templateLabels = {
 	      service: "Local service",
 	      portfolio: "Portfolio",
@@ -1650,12 +1665,14 @@
 	      saas: "SaaS product"
 	    };
 	    const planLabels = {
-	      free: "Free one-page",
+	      free: "Free DIY",
 	      paid: "Paid hosting"
 	    };
 	    const platformLabels = {
-	      builder: "Audo builder",
-	      wordpress: "Managed WordPress"
+	      builder: "Legacy builder",
+	      wordpress: "DIY WordPress",
+	      concierge: "Done-for-you website",
+	      "github-app": "Custom app hosting"
 	    };
 	    const designLabels = {
 	      system: "System",
@@ -1842,9 +1859,11 @@
 	      siteHeroImageInput: document.getElementById("siteHeroImageInput"),
 	      siteWizardProgress: document.getElementById("siteWizardProgress"),
 		      flowOptions: document.querySelector("[data-flow-options]"),
+		      wordpressPlanOptions: document.querySelector("[data-wordpress-plan-options]"),
 		      builderPlanOptions: document.querySelector("[data-builder-plan-options]"),
 		      builderTemplateOptions: document.querySelector("[data-builder-template-options]"),
 		      wordpressSetupNote: document.querySelector("[data-wordpress-setup-note]"),
+		      projectSetupNote: document.querySelector("[data-project-setup-note]"),
 		      siteWizardSections: document.getElementById("siteWizardSections"),
 	      siteWizardAddList: document.getElementById("siteWizardAddList"),
 	      siteWizardContentFields: document.getElementById("siteWizardContentFields"),
@@ -1955,8 +1974,8 @@
         }),
         ...site
       };
-      normalized.platform = normalized.type === "wordpress" ? "wordpress" : normalized.platform || "builder";
-      normalized.type = normalized.platform === "wordpress" ? "wordpress" : normalized.type || "builder";
+      normalized.platform = ["wordpress", "github-app", "concierge"].includes(normalized.type) ? normalized.type : normalized.platform || "builder";
+      normalized.type = ["wordpress", "github-app", "concierge"].includes(normalized.platform) ? normalized.platform : normalized.type || "builder";
       normalized.design = normalizeDesign(site.design, normalized.template);
       normalized.components = Array.isArray(site.components) && site.components.length
         ? site.components.map(normalizeComponentFromApi)
@@ -2040,7 +2059,7 @@
       const selectedId = state.selectedSiteId;
       state.sites = data.sites.map(frontendSiteFromApi);
       state.selectedSiteId = state.sites.some((site) => site.id === selectedId) ? selectedId : state.sites[0]?.id || null;
-      state.selectedComponentId = selectedSite()?.components[0]?.id || null;
+      state.selectedComponentId = isBuilderPlatform(selectedSite()) ? selectedSite()?.components[0]?.id || null : null;
       saveState();
     }
 
@@ -2067,7 +2086,7 @@
         name: apiSite.name,
         slug: apiSite.slug,
         plan: apiSite.plan,
-        platform: apiSite.type === "wordpress" ? "wordpress" : "builder",
+        platform: ["wordpress", "github-app", "concierge"].includes(apiSite.type) ? apiSite.type : "builder",
         type: apiSite.type,
         status: apiSite.status,
         design: normalizeDesign(apiSite.builder?.design || existing?.design, existing?.template || "service"),
@@ -2145,7 +2164,7 @@
         slug: safeSlug,
         plan: plan || "free",
         platform: platform || "builder",
-        type: platform === "wordpress" ? "wordpress" : "builder",
+        type: ["wordpress", "github-app", "concierge"].includes(platform) ? platform : "builder",
         template: template || "service",
         status: status || "draft",
         customDomain: "",
@@ -2229,6 +2248,22 @@
         return site.customDomain;
       }
       return `${site.slug}.${FREE_DOMAIN}`;
+    }
+
+    function publishButtonLabel(site) {
+      if (!site) {
+        return "Publish";
+      }
+      if (isWordPressPlatform(site)) {
+        return "Provision";
+      }
+      if (isCustomAppPlatform(site)) {
+        return "Deploy";
+      }
+      if (isConciergePlatform(site)) {
+        return "Manual";
+      }
+      return "Publish";
     }
 
     function slugify(value) {
@@ -2339,8 +2374,8 @@
 	        setView("auth", false);
 	      } else if (state.view === "auth") {
 	        setView("sites", false);
-	      } else if (state.view === "builder" && isWordPressPlatform(selectedSite())) {
-	        state.view = "domains";
+      } else if (state.view === "builder" && selectedSite() && !isBuilderPlatform(selectedSite())) {
+	        state.view = siteDetailView(selectedSite());
 	      }
       renderChrome();
       renderSites();
@@ -2357,7 +2392,7 @@
 	        auth: ["Sign in", "Access your Audo hosting account."],
 	        sites: ["Sites", "Self-service websites on Audo."],
 	        users: ["Users", "Team access and account management."],
-	        builder: [isWordPressPlatform(selectedSite()) ? "WordPress" : "Builder", selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
+	        builder: [isBuilderPlatform(selectedSite()) ? "Editor" : platformDetailLabel(selectedSite()), selectedSite() ? siteUrl(selectedSite()) : "Select a website."],
 	        domains: ["Domains", "Subdomains, custom URLs, and DNS status."],
 	        integrations: ["Integrations", "GitHub deployments and restore points."]
 	      };
@@ -2365,10 +2400,10 @@
       els.pageHeading.textContent = heading;
       els.pageSubheading.textContent = subheading;
 	      document.querySelectorAll("[data-view-button]").forEach((button) => {
-	        const builderBlocked = button.dataset.viewButton === "builder" && isWordPressPlatform(selectedSite());
+	        const builderBlocked = button.dataset.viewButton === "builder" && selectedSite() && !isBuilderPlatform(selectedSite());
 	        button.classList.toggle("active", button.dataset.viewButton === state.view);
 	        button.disabled = !signedIn || builderBlocked;
-	        button.title = builderBlocked ? "WordPress content is managed in WordPress admin." : "";
+	        button.title = builderBlocked ? `${platformDetailLabel(selectedSite())} is managed outside the legacy builder.` : "";
 	      });
       els.sidebarUser.textContent = state.user ? (state.user.name || state.user.email) : "Signed out";
       els.sidebarAuthMode.textContent = `${state.authMode === "firebase" ? "Firebase Auth" : "Local preview auth"}${API_BASE_URL ? " + API" : ""}`;
@@ -2376,8 +2411,8 @@
       els.authModePill.innerHTML = `<span class="dot"></span> ${state.authMode === "firebase" ? "Firebase Auth" : "Preview Auth"}`;
       document.querySelector("#googleSignIn span").textContent = state.authMode === "firebase" ? "Google" : "Demo login";
       document.getElementById("googleSignIn").disabled = state.authMode === "firebase" && !GOOGLE_AUTH_ENABLED;
-		      document.querySelector("#publishButton span").textContent = isWordPressPlatform(selectedSite()) ? "Provision" : "Publish";
-		      document.getElementById("publishButton").disabled = publishing || !signedIn || !selectedSite();
+		      document.querySelector("#publishButton span").textContent = publishButtonLabel(selectedSite());
+		      document.getElementById("publishButton").disabled = publishing || !signedIn || !selectedSite() || isConciergePlatform(selectedSite()) || (isCustomAppPlatform(selectedSite()) && !selectedSite()?.github?.connected);
       document.getElementById("newSiteButton").disabled = !signedIn;
       document.getElementById("newSiteSidebar").disabled = !signedIn;
       document.getElementById("sidebarSignOut").disabled = !signedIn;
@@ -2424,13 +2459,13 @@
           </div>
 	          <div class="status-row">
 	            <span class="pill ${site.status === "published" ? "green" : "amber"}"><span class="dot"></span>${site.status}</span>
-	            <span class="pill">${site.platform === "wordpress" ? "WordPress" : "Builder"}</span>
-	            ${site.platform === "wordpress" ? `<span class="pill">Admin managed</span>` : `<span class="pill">${site.components.length} sections</span>`}
+	            <span class="pill">${escapeHtml(platformDetailLabel(site))}</span>
+	            ${isWordPressPlatform(site) ? `<span class="pill">Admin managed</span>` : isBuilderPlatform(site) ? `<span class="pill">${site.components.length} sections</span>` : isCustomAppPlatform(site) ? `<span class="pill">GitHub app</span>` : `<span class="pill">Audo managed</span>`}
 	            ${site.plan === "free" ? `<span class="pill rose">Ads on</span>` : `<span class="pill green">No ads</span>`}
 	          </div>
           <div class="site-stats">
             <div class="site-stat"><span>Visits</span><strong>${Number(site.visits || 0).toLocaleString()}</strong></div>
-            <div class="site-stat"><span>Leads</span><strong>${Number(site.leads || 0)}</strong></div>
+            <div class="site-stat"><span>${isCustomAppPlatform(site) ? "Deploys" : "Leads"}</span><strong>${isCustomAppPlatform(site) ? Number(site.github?.connected ? 1 : 0) : Number(site.leads || 0)}</strong></div>
             <div class="site-stat"><span>Backups</span><strong>${site.plan === "paid" ? site.backups.length : "—"}</strong></div>
           </div>
         </article>
@@ -2489,7 +2524,7 @@
         return;
       }
 		      state.selectedSiteId = siteId;
-		      state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		      state.selectedComponentId = isBuilderPlatform(site) ? site.components[0]?.id || null : null;
 		      state.view = siteDetailView(site);
 		      state.builderMobileTab = "preview";
 	      saveState();
@@ -2512,22 +2547,27 @@
         els.sitePreview.innerHTML = `<div class="empty-state">Create a website to start.</div>`;
 	        return;
 	      }
-	      if (isWordPressPlatform(site)) {
+	      if (!isBuilderPlatform(site)) {
 	        els.builderSiteName.textContent = site.name;
 	        els.builderSiteUrl.textContent = siteUrl(site);
 	        els.componentCatalog.innerHTML = "";
 	        els.componentList.innerHTML = "";
 	        els.editorFields.innerHTML = "";
+	        const message = isWordPressPlatform(site)
+	          ? ["Managed WordPress site", "Use WordPress admin for themes, pages, plugins, media, and content."]
+	          : isCustomAppPlatform(site)
+	          ? ["Custom app hosting", "Connect GitHub from Integrations, then Audo can deploy and host the application."]
+	          : ["Done-for-you website", "Audo handles the build and launch plan for this project."];
 	        els.sitePreview.innerHTML = `
 	          <div class="empty-state">
 	            <div>
-	              <strong>Managed WordPress site</strong>
-	              <p>Use WordPress admin for themes, pages, plugins, media, and content.</p>
+	              <strong>${escapeHtml(message[0])}</strong>
+	              <p>${escapeHtml(message[1])}</p>
 	            </div>
 	          </div>
 	        `;
 	        els.previewPlanSwitch.querySelectorAll("button").forEach((button) => {
-	          button.classList.toggle("active", button.dataset.plan === "paid");
+	          button.classList.toggle("active", button.dataset.plan === site.plan);
 	        });
 	        return;
 	      }
@@ -2744,6 +2784,10 @@
       `;
 	      els.domainUpgradePanel.innerHTML = wordPressSite
 	        ? `<div class="lock-panel"><strong>WordPress admin</strong><span>Themes, pages, plugins, media, and content are managed inside WordPress.</span><a class="button primary" href="${escapeHtml(adminUrl)}" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon"></i><span>Open admin</span></a></div>`
+	        : isConciergePlatform(site)
+	        ? `<div class="lock-panel"><strong>Audo-managed project</strong><span>This project is planned and launched manually with Audo. Custom domains and deployment details are attached during onboarding.</span></div>`
+	        : isCustomAppPlatform(site)
+	        ? `<div class="lock-panel"><strong>Custom app route</strong><span>Connect the repository from Integrations, then Audo provisions the app route, runtime, and deployment settings.</span></div>`
 	        : site.plan === "paid"
 	        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
 	        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
@@ -2758,8 +2802,9 @@
         return;
       }
       const locked = site.plan !== "paid";
-      els.githubPlanPill.className = `pill ${locked ? "amber" : "blue"}`;
-      els.githubPlanPill.textContent = locked ? "Upgrade" : "Paid";
+      const githubLocked = locked || isWordPressPlatform(site) || isConciergePlatform(site);
+      els.githubPlanPill.className = `pill ${githubLocked ? "amber" : "blue"}`;
+      els.githubPlanPill.textContent = isCustomAppPlatform(site) ? "Custom app" : isWordPressPlatform(site) ? "WordPress admin" : locked ? "Upgrade" : "Paid";
       els.backupPlanPill.className = `pill ${locked ? "amber" : "blue"}`;
       els.backupPlanPill.textContent = locked ? "Upgrade" : "Paid";
       els.repoInput.value = site.github.repo;
@@ -2767,7 +2812,7 @@
       els.buildInput.value = site.github.build;
       els.outputInput.value = site.github.output;
       [els.repoInput, els.branchInput, els.buildInput, els.outputInput, document.getElementById("connectGithub"), document.getElementById("saveIntegration")].forEach((element) => {
-        element.disabled = locked;
+        element.disabled = githubLocked;
       });
       els.backupPanel.innerHTML = locked
         ? `<div class="lock-panel"><strong>Backups are on paid hosting.</strong><span>Paid sites get restore points, retention settings, and GitHub-backed rebuild paths.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`
@@ -2845,7 +2890,7 @@
 	      renderChrome();
 		      if (API_BASE_URL) {
 		        try {
-		          if (!isWordPressPlatform(site)) {
+		          if (isBuilderPlatform(site)) {
 		            await apiFetch(`/api/sites/${site.id}`, {
 		              method: "PATCH",
 		              body: JSON.stringify({ name: site.name, builder: builderDocumentFromSite(site) })
@@ -2854,7 +2899,7 @@
 	          const result = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
 	          replaceSite(result.site);
 	          saveState();
-	          showToast(isWordPressPlatform(result.site) ? `${result.site.name} WordPress provisioning started.` : `${result.site.name} published to ${result.site.primaryDomain}.`);
+	          showToast(isWordPressPlatform(result.site) ? `${result.site.name} WordPress provisioning started.` : `${result.site.name} ${isCustomAppPlatform(result.site) ? "deployment requested" : "published"} at ${result.site.primaryDomain}.`);
           render();
 	        } catch (error) {
 	          showToast(friendlyErrorMessage(error, "Publish failed."));
@@ -2868,7 +2913,7 @@
 	      site.publishedAt = new Date().toISOString();
 		      site.visits += Math.floor(10 + Math.random() * 80);
 		      saveState();
-		      showToast(isWordPressPlatform(site) ? `${site.name} WordPress provisioning started.` : `${site.name} published to ${siteUrl(site)}.`);
+		      showToast(isWordPressPlatform(site) ? `${site.name} WordPress provisioning started.` : `${site.name} ${isCustomAppPlatform(site) ? "deployment requested" : "published"} at ${siteUrl(site)}.`);
 	      publishing = false;
 	      render();
 	    }
@@ -2916,9 +2961,13 @@
 		      }
 		      siteWizardDraft.template = els.siteTemplateInput.value || siteWizardDraft.template || "service";
 		      siteWizardDraft.platform = els.sitePlatformInput.value || siteWizardDraft.platform || "";
-		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress"
-		        ? "paid"
-		        : els.sitePlanInput.value || siteWizardDraft.plan || (siteWizardDraft.platform === "builder" ? "free" : "");
+		      if (siteWizardDraft.platform === "github-app" || siteWizardDraft.platform === "concierge") {
+		        siteWizardDraft.plan = "paid";
+		      } else if (siteWizardDraft.platform === "wordpress") {
+		        siteWizardDraft.plan = els.sitePlanInput.value || siteWizardDraft.plan || "free";
+		      } else {
+		        siteWizardDraft.plan = els.sitePlanInput.value || siteWizardDraft.plan || (siteWizardDraft.platform === "builder" ? "free" : "");
+		      }
 	      siteWizardDraft.design = normalizeDesign({
 	        font: els.siteFontInput.value,
 	        layout: els.siteLayoutInput.value,
@@ -2968,31 +3017,76 @@
 		      return (payload?.platform || payload?.type) === "wordpress";
 		    }
 
+		    function isBuilderPlatform(payload = siteWizardDraft) {
+		      return (payload?.platform || payload?.type || "builder") === "builder";
+		    }
+
+		    function isConciergePlatform(payload = siteWizardDraft) {
+		      return (payload?.platform || payload?.type) === "concierge";
+		    }
+
+		    function isCustomAppPlatform(payload = siteWizardDraft) {
+		      return (payload?.platform || payload?.type) === "github-app";
+		    }
+
+		    function isManualPlatform(payload = siteWizardDraft) {
+		      return isConciergePlatform(payload) || isCustomAppPlatform(payload);
+		    }
+
+		    function platformDetailLabel(payload = siteWizardDraft) {
+		      const platform = payload?.platform || payload?.type || "builder";
+		      return platformLabels[platform] || platform;
+		    }
+
 		    function wizardStepsForPayload(payload = siteWizardDraft || newWizardDraft()) {
 		      if (siteWizardMode === "edit") {
-		        return isWordPressPlatform(payload) ? editWordPressWizardStepLabels : editBuilderWizardStepLabels;
+		        if (isWordPressPlatform(payload)) {
+		          return editWordPressWizardStepLabels;
+		        }
+		        if (isConciergePlatform(payload)) {
+		          return editConciergeWizardStepLabels;
+		        }
+		        if (isCustomAppPlatform(payload)) {
+		          return editCustomAppWizardStepLabels;
+		        }
+		        return editBuilderWizardStepLabels;
 		      }
 		      if (!payload?.platform) {
 		        return ["Choose"];
 		      }
-		      return isWordPressPlatform(payload) ? createWordPressWizardStepLabels : createBuilderWizardStepLabels;
+		      if (isWordPressPlatform(payload)) {
+		        return createWordPressWizardStepLabels;
+		      }
+		      if (isConciergePlatform(payload)) {
+		        return createConciergeWizardStepLabels;
+		      }
+		      if (isCustomAppPlatform(payload)) {
+		        return createCustomAppWizardStepLabels;
+		      }
+		      return createBuilderWizardStepLabels;
 		    }
 
 		    function wizardPanelForStep(step, payload) {
 		      if (siteWizardMode === "edit") {
-		        return isWordPressPlatform(payload) ? (step === 0 ? 1 : 6) : step + 1;
+		        return isBuilderPlatform(payload) ? step + 1 : (step === 0 ? 1 : 6);
 		      }
 		      if (!payload?.platform || step === 0) {
 		        return 0;
 		      }
-		      if (isWordPressPlatform(payload)) {
+		      if (!isBuilderPlatform(payload)) {
 		        return step === 1 ? 1 : 6;
 		      }
 		      return step;
 		    }
 
 		    function siteDetailView(site) {
-		      return isWordPressPlatform(site) ? "domains" : "builder";
+		      if (isBuilderPlatform(site)) {
+		        return "builder";
+		      }
+		      if (isCustomAppPlatform(site)) {
+		        return "integrations";
+		      }
+		      return "domains";
 		    }
 
 		    function wizardStepLabel(step, payload) {
@@ -3005,7 +3099,7 @@
 
 		    function basicsStepForPayload(payload) {
 		      const steps = wizardStepsForPayload(payload);
-		      return Math.max(0, steps.findIndex((label) => label === "Basics" || label === "WordPress"));
+		      return Math.max(0, steps.findIndex((label) => ["Basics", "WordPress", "Project", "App"].includes(label)));
 		    }
 
 		    function validateWizardForSubmit(payload = wizardPayload()) {
@@ -3018,7 +3112,7 @@
 		      if (label === "Choose") {
 		        return Boolean(payload.platform);
 		      }
-		      if (label === "Basics" || label === "WordPress") {
+		      if (["Basics", "WordPress", "Project", "App"].includes(label)) {
 		        return validSiteBasics(payload);
 		      }
 		      return true;
@@ -3037,11 +3131,17 @@
 		      }
 		      const activePanel = wizardPanelForStep(siteWizardStep, payload);
 		      const wordPressFlow = isWordPressPlatform(payload);
+		      const builderFlow = isBuilderPlatform(payload);
+		      const manualFlow = isManualPlatform(payload);
 		      els.siteModalKicker.textContent = siteWizardMode === "edit" ? "Edit" : "Create";
 		      els.siteModalTitle.textContent = wordPressFlow
-		        ? (siteWizardMode === "edit" ? "WordPress settings" : "WordPress setup")
+		        ? (siteWizardMode === "edit" ? "WordPress settings" : "DIY WordPress setup")
+		        : isConciergePlatform(payload)
+		        ? "Done-for-you website"
+		        : isCustomAppPlatform(payload)
+		        ? "Custom app hosting"
 		        : payload.platform === "builder"
-		        ? (siteWizardMode === "edit" ? "Website editor" : "Build your own website")
+		        ? (siteWizardMode === "edit" ? "Website editor" : "Legacy website editor")
 		        : "Website setup";
 		      els.siteWizardProgress.style.gridTemplateColumns = `repeat(${steps.length}, minmax(0, 1fr))`;
 		      els.siteWizardProgress.innerHTML = steps.map((label, index) => `
@@ -3054,16 +3154,18 @@
 		        button.classList.toggle("active", button.dataset.flowOption === payload.platform);
 		        button.disabled = siteWizardMode === "edit";
 		      });
-		      els.builderPlanOptions.hidden = wordPressFlow || !payload.platform;
-		      els.builderTemplateOptions.hidden = wordPressFlow || !payload.platform;
+		      els.wordpressPlanOptions.hidden = !wordPressFlow;
+		      els.builderPlanOptions.hidden = !builderFlow || !payload.platform;
+		      els.builderTemplateOptions.hidden = !builderFlow || !payload.platform;
 		      els.wordpressSetupNote.hidden = !wordPressFlow;
+		      els.projectSetupNote.hidden = !manualFlow;
 		      document.querySelectorAll("[data-template-option]").forEach((button) => {
 		        button.classList.toggle("active", button.dataset.templateOption === payload.template);
-		        button.disabled = siteWizardMode === "edit" || wordPressFlow;
+		        button.disabled = siteWizardMode === "edit" || !builderFlow;
 		      });
 	      document.querySelectorAll("[data-platform-option]").forEach((button) => {
 	        button.classList.toggle("active", button.dataset.platformOption === payload.platform && button.dataset.planOption === payload.plan);
-	        button.disabled = siteWizardMode === "edit";
+	        button.disabled = siteWizardMode === "edit" || button.dataset.platformOption !== payload.platform;
 	      });
 		      renderWizardSections(payload);
 		      renderWizardContentFields(payload);
@@ -3075,12 +3177,18 @@
 		      els.createSite.disabled = creatingSite || !validateWizardForSubmit(payload);
 		      els.createSite.querySelector("span").textContent = siteWizardMode === "edit"
 		        ? "Save changes"
-		        : (wordPressFlow ? "Provision WordPress" : "Create site");
+		        : wordPressFlow
+		        ? "Provision WordPress"
+		        : isCustomAppPlatform(payload)
+		        ? "Create app"
+		        : isConciergePlatform(payload)
+		        ? "Create project"
+		        : "Create site";
 		      refreshIcons();
 		    }
 
 		    function renderWizardSections(payload) {
-		      if (isWordPressPlatform(payload)) {
+		      if (!isBuilderPlatform(payload)) {
 		        els.siteWizardSections.innerHTML = "";
 		        els.siteWizardAddList.innerHTML = "";
 		        return;
@@ -3125,7 +3233,7 @@
 	    }
 
 		    function renderWizardContentFields(payload) {
-		      if (isWordPressPlatform(payload)) {
+		      if (!isBuilderPlatform(payload)) {
 		        els.siteWizardContentFields.innerHTML = "";
 		        return;
 		      }
@@ -3194,6 +3302,32 @@
 		        `;
 		        return;
 		      }
+		      if (!isBuilderPlatform(payload)) {
+		        const host = `${payload.slug || "site"}.${FREE_DOMAIN}`;
+		        const setupLabel = isCustomAppPlatform(payload)
+		          ? "GitHub deployment, runtime, database, monitoring, and launch support"
+		          : "Design, build, content handoff, deployment, monitoring, and launch support";
+		        const nextStep = isCustomAppPlatform(payload)
+		          ? "Connect the repository from Integrations after the app record is created."
+		          : "Audo will use this project record to plan and launch the website with you.";
+		        els.siteWizardReview.innerHTML = `
+		          <div><span>Name</span><strong>${escapeHtml(payload.name || "Untitled project")}</strong></div>
+		          <div><span>Generated URL</span><strong>${escapeHtml(host)}</strong></div>
+		          <div><span>Platform</span><strong>${escapeHtml(platformDetailLabel(payload))}</strong></div>
+		          <div><span>Plan</span><strong>${escapeHtml(planLabels[payload.plan] || payload.plan)}</strong></div>
+		          <div><span>Audo setup</span><strong>${escapeHtml(setupLabel)}</strong></div>
+		          <div><span>Next</span><strong>${escapeHtml(nextStep)}</strong></div>
+		        `;
+		        els.siteWizardPreview.innerHTML = `
+		          <div class="empty-state" style="min-height: 220px;">
+		            <div>
+		              <strong>${escapeHtml(platformDetailLabel(payload))}</strong>
+		              <p>${escapeHtml(nextStep)}</p>
+		            </div>
+		          </div>
+		        `;
+		        return;
+		      }
 		      els.siteWizardReview.innerHTML = `
 	        <div><span>Name</span><strong>${escapeHtml(payload.name || "Untitled site")}</strong></div>
 	        <div><span>URL</span><strong>${escapeHtml(payload.slug)}.${FREE_DOMAIN}</strong></div>
@@ -3225,7 +3359,7 @@
 		      const steps = wizardStepsForPayload(payload);
 		      const next = Math.max(0, Math.min(steps.length - 1, step));
 		      if (next > siteWizardStep && !validateWizardStep(siteWizardStep)) {
-		        showToast(wizardStepLabel(siteWizardStep, payload) === "Choose" ? "Choose Managed WordPress or Build your own website." : "Enter a site name.");
+		        showToast(wizardStepLabel(siteWizardStep, payload) === "Choose" ? "Choose DIY WordPress, done-for-you, or custom app hosting." : "Enter a site name.");
 		        return;
 		      }
 	      siteWizardStep = next;
@@ -3236,7 +3370,7 @@
 		      const site = selectedSite();
 		      siteWizardMode = mode;
 		      siteWizardDraft = mode === "edit" && site ? siteToWizardDraft(site, componentId) : newWizardDraft();
-		      siteWizardStep = mode === "edit" && componentId && !isWordPressPlatform(siteWizardDraft) ? 4 : 0;
+		      siteWizardStep = mode === "edit" && componentId && isBuilderPlatform(siteWizardDraft) ? 4 : 0;
 	      els.siteModal.classList.add("active");
 	      renderSiteWizard();
 	      const focusTarget = mode === "edit" && componentId ? document.querySelector("[data-wizard-field]") : els.siteNameInput;
@@ -3253,7 +3387,7 @@
     }
 
 		    function setWizardTemplate(templateName) {
-		      if (!siteWizardDraft || siteWizardMode === "edit" || isWordPressPlatform(siteWizardDraft)) {
+		      if (!siteWizardDraft || siteWizardMode === "edit" || !isBuilderPlatform(siteWizardDraft)) {
 		        return;
 		      }
 	      siteWizardDraft.template = templateName;
@@ -3267,8 +3401,8 @@
 		      if (!siteWizardDraft || siteWizardMode === "edit") {
 		        return;
 		      }
-		      siteWizardDraft.platform = platform === "wordpress" ? "wordpress" : "builder";
-		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress" ? "paid" : "free";
+		      siteWizardDraft.platform = ["wordpress", "github-app", "concierge", "builder"].includes(platform) ? platform : "wordpress";
+		      siteWizardDraft.plan = siteWizardDraft.platform === "github-app" || siteWizardDraft.platform === "concierge" ? "paid" : "free";
 		      els.sitePlatformInput.value = siteWizardDraft.platform;
 		      els.sitePlanInput.value = siteWizardDraft.plan;
 		      siteWizardStep = 1;
@@ -3279,22 +3413,22 @@
 		      if (!siteWizardDraft || siteWizardMode === "edit") {
 		        return;
 		      }
-		      siteWizardDraft.platform = platform || siteWizardDraft.platform || "builder";
-		      siteWizardDraft.plan = siteWizardDraft.platform === "wordpress" ? "paid" : plan || "free";
+		      siteWizardDraft.platform = platform || siteWizardDraft.platform || "wordpress";
+		      siteWizardDraft.plan = siteWizardDraft.platform === "github-app" || siteWizardDraft.platform === "concierge" ? "paid" : plan || "free";
 		      els.sitePlatformInput.value = siteWizardDraft.platform;
 		      els.sitePlanInput.value = siteWizardDraft.plan;
 		      renderSiteWizard();
 		    }
 
 		    function wizardActiveComponent() {
-		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft)) {
+		      if (!siteWizardDraft || !isBuilderPlatform(siteWizardDraft)) {
 		        return null;
 		      }
 	      return siteWizardDraft.components.find((item) => item.id === siteWizardDraft.selectedComponentId) || siteWizardDraft.components[0] || null;
 	    }
 
 		    function addWizardSection(type) {
-		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft)) {
+		      if (!siteWizardDraft || !isBuilderPlatform(siteWizardDraft)) {
 		        return;
 		      }
 	      const catalogItem = componentCatalog.find((item) => item.type === type);
@@ -3312,7 +3446,7 @@
 		    function moveWizardSection(componentId, direction) {
 		      const index = siteWizardDraft?.components.findIndex((item) => item.id === componentId) ?? -1;
 		      const target = index + direction;
-		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft) || index < 0 || target < 0 || target >= siteWizardDraft.components.length) {
+		      if (!siteWizardDraft || !isBuilderPlatform(siteWizardDraft) || index < 0 || target < 0 || target >= siteWizardDraft.components.length) {
 		        return;
 		      }
 	      const [item] = siteWizardDraft.components.splice(index, 1);
@@ -3321,7 +3455,7 @@
 	    }
 
 		    function deleteWizardSection(componentId) {
-		      if (!siteWizardDraft || isWordPressPlatform(siteWizardDraft) || siteWizardDraft.components.length <= 1) {
+		      if (!siteWizardDraft || !isBuilderPlatform(siteWizardDraft) || siteWizardDraft.components.length <= 1) {
 		        return;
 		      }
 	      siteWizardDraft.components = siteWizardDraft.components.filter((item) => item.id !== componentId);
@@ -3345,7 +3479,7 @@
 		      const payload = wizardPayload();
 		      if (!payload.platform) {
 		        setSiteWizardStep(0);
-		        showToast("Choose Managed WordPress or Build your own website.");
+		        showToast("Choose DIY WordPress, done-for-you, or custom app hosting.");
 		        return;
 		      }
 		      if (!validSiteBasics(payload)) {
@@ -3372,7 +3506,7 @@
 			            platform: payload.platform,
 		            template: payload.template
 		          };
-		          if (!isWordPressPlatform(payload)) {
+		          if (isBuilderPlatform(payload)) {
 		            createBody.builder = { version: 1, design: payload.design, components: payload.components };
 		          }
 		          const result = await apiFetch("/api/sites", {
@@ -3395,7 +3529,7 @@
 		              return;
 		            }
 		          }
-		          state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		          state.selectedComponentId = isBuilderPlatform(site) ? site.components[0]?.id || null : null;
 		          state.view = siteDetailView(site);
 		          state.builderMobileTab = "preview";
 		          saveState();
@@ -3424,7 +3558,7 @@
 	      });
 	      state.sites.unshift(site);
 		      state.selectedSiteId = site.id;
-		      state.selectedComponentId = isWordPressPlatform(site) ? null : site.components[0]?.id || null;
+		      state.selectedComponentId = isBuilderPlatform(site) ? site.components[0]?.id || null : null;
 		      state.view = siteDetailView(site);
 	      state.builderMobileTab = "preview";
 	      saveState();
@@ -3439,14 +3573,14 @@
 		      if (!site) {
 		        return;
 		      }
-		      const wordPressSite = isWordPressPlatform(site);
+		      const builderSite = isBuilderPlatform(site);
 		      site.name = payload.name || site.name;
-		      if (!wordPressSite) {
+		      if (builderSite) {
 		        site.template = payload.template;
 		        site.design = payload.design;
 		        site.components = payload.components;
 		      }
-		      state.selectedComponentId = wordPressSite ? null : siteWizardDraft.selectedComponentId || site.components[0]?.id || null;
+		      state.selectedComponentId = builderSite ? siteWizardDraft.selectedComponentId || site.components[0]?.id || null : null;
 		      if (!API_BASE_URL) {
 		        saveState();
 	        closeSiteModal();
@@ -3456,7 +3590,7 @@
 	      }
 		      try {
 		        const updateBody = { name: site.name };
-		        if (!wordPressSite) {
+		        if (builderSite) {
 		          updateBody.builder = builderDocumentFromSite(site);
 		        }
 		        const result = await apiFetch(`/api/sites/${site.id}`, {
@@ -3464,7 +3598,7 @@
 		          body: JSON.stringify(updateBody)
 		        });
 		        replaceSite(result.site);
-		        state.selectedComponentId = wordPressSite ? null : siteWizardDraft.selectedComponentId || selectedSite()?.components[0]?.id || null;
+		        state.selectedComponentId = builderSite ? siteWizardDraft.selectedComponentId || selectedSite()?.components[0]?.id || null : null;
 	        saveState();
 	        closeSiteModal();
 	        showToast(`${site.name} updated.`);

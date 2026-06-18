@@ -35,7 +35,7 @@ const RESERVED_SLUGS = new Set([
 export interface CreateSiteInput {
   name: string;
   plan?: Plan;
-  platform?: "builder" | "wordpress";
+  platform?: "builder" | "wordpress" | "github-app" | "concierge";
   template?: string;
   builder?: BuilderDocument;
 }
@@ -153,7 +153,7 @@ export class SiteService {
       return null;
     }
     const site = await this.services.store.findSiteBySlug(slug);
-    if (!site || site.status !== "published") {
+    if (!site || site.status !== "published" || site.type !== "builder") {
       return null;
     }
     return site.domains.some((domain) => domain.host === host) ? site : null;
@@ -165,12 +165,10 @@ export class SiteService {
       throw badRequest("Site name is required.");
     }
     const slug = await this.generateUniqueSlug(name);
-    if (input.platform === "wordpress" && input.plan !== "paid") {
-      throw paymentRequired("Managed WordPress requires a paid plan.");
-    }
 
     const createdAt = now();
-    const plan = input.plan === "paid" || input.platform === "wordpress" ? "paid" : "free";
+    const platform = input.platform || "wordpress";
+    const plan = input.plan === "paid" || platform === "github-app" || platform === "concierge" ? "paid" : "free";
     const domain: DomainRecord = {
       id: nanoid(),
       host: freeHost(slug, this.config),
@@ -186,7 +184,7 @@ export class SiteService {
       slug,
       plan,
       status: "draft",
-      type: input.platform === "wordpress" ? "wordpress" : "builder",
+      type: platform === "github-app" || platform === "concierge" || platform === "wordpress" ? platform : "builder",
       primaryDomain: domain.host,
       domains: [domain],
       builder: input.builder || defaultBuilderDocument(input.template),
@@ -312,6 +310,22 @@ export class SiteService {
       });
       await this.event(site, "wordpress.provisioned", `Provisioned managed WordPress for ${site.primaryDomain}`, deployment.details);
       return site;
+    }
+    if (site.type === "github-app") {
+      if (!site.github.connected) {
+        throw badRequest("Connect a GitHub repository before deploying a custom app.");
+      }
+      const deployment = await this.services.coolify.createGitHubApplication(site);
+      site = await this.services.store.updateSite(site.teamId, site.id, {
+        status: deployment.status === "failed" ? site.status : "published",
+        deployments: deploymentList(site, deployment),
+        publishedAt: deployment.status === "failed" ? site.publishedAt : now()
+      });
+      await this.event(site, "github.deployment_requested", `Requested app deployment for ${site.primaryDomain}`, deployment.details);
+      return site;
+    }
+    if (site.type === "concierge") {
+      throw badRequest("Done-for-you sites are planned and provisioned manually by Audo.");
     }
     const artifactPath = await writePublishedSite(this.config.publishedSiteRoot, site);
     const localDeployment: SiteDeployment = {

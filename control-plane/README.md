@@ -6,12 +6,12 @@ Backend API for Audo self-service hosting.
 
 - Authenticates users with Firebase ID tokens in production.
 - Stores site records in Firestore in production and memory locally.
-- Creates free builder sites on `*.getaudo.com`.
+- Creates free DIY WordPress sites on `*.getaudo.com`.
 - Provisions per-site Cloudflare DNS records through the Cloudflare API.
-- Publishes one-page builder output to a local artifact directory.
-- Gates custom domains, backups, and GitHub application hosting to paid plans.
+- Keeps the legacy one-page builder renderer available for existing builder records.
+- Gates custom domains, backups, done-for-you projects, and GitHub application hosting to paid plans.
 - Calls optional Coolify, backup, and Stripe integrations when configured.
-- Provisions paid WordPress sites as isolated Coolify services from the `wordpress-with-mariadb` Docker template.
+- Provisions free or paid WordPress sites as isolated Coolify services from the `wordpress-with-mariadb` Docker template.
 
 ## Local Development
 
@@ -50,7 +50,9 @@ If `AUTH_MODE=preview` is used on a public host, set `AUDO_PREVIEW_API_SECRET`. 
 
 ## Managed WordPress
 
-Paid WordPress sites use Coolify's Docker service template named `wordpress-with-mariadb`. Publishing a WordPress site creates one Coolify service per Audo site, assigns the site's `https://<slug>.getaudo.com` URL to the `wordpress` container, and keeps MariaDB private with persistent `wordpress-files` and `mariadb-data` volumes.
+Free and paid WordPress sites use Coolify's Docker service template named `wordpress-with-mariadb`. Publishing a WordPress site creates one Coolify service per Audo site, assigns the site's `https://<slug>.getaudo.com` URL to the `wordpress` container, and keeps MariaDB private with persistent `wordpress-files` and `mariadb-data` volumes.
+
+Free WordPress sites use a generated Audo subdomain and remain locked out of customer restore points, custom domains, and GitHub deployment controls. Paid WordPress sites can use custom domains and backup/restore points.
 
 Required Coolify env:
 

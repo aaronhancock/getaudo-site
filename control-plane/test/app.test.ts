@@ -127,7 +127,7 @@ describe("Audo control plane", () => {
   it("creates a site, provisions DNS, and publishes it", async () => {
     const created = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Test Site", template: "service" })
+      body: JSON.stringify({ name: "Test Site", platform: "builder", template: "service" })
     });
     assert.equal(created.response.status, 201);
     assert.equal(created.body.site.slug, "test-site");
@@ -148,7 +148,7 @@ describe("Audo control plane", () => {
   it("generates unique free subdomains and ignores client supplied slugs", async () => {
     const duplicateName = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Test Site", slug: "manual-slug" })
+      body: JSON.stringify({ name: "Test Site", platform: "builder", slug: "manual-slug" })
     });
     assert.equal(duplicateName.response.status, 201);
     assert.equal(duplicateName.body.site.slug, "test-site-2");
@@ -158,7 +158,7 @@ describe("Audo control plane", () => {
   it("gates custom domains, GitHub, and backups to paid sites", async () => {
     const free = await request("/api/sites", {
       method: "POST",
-      body: JSON.stringify({ name: "Free Site" })
+      body: JSON.stringify({ name: "Free Site", platform: "builder" })
     });
     const domain = await request(`/api/sites/${free.body.site.id}/domains`, {
       method: "POST",
@@ -175,26 +175,50 @@ describe("Audo control plane", () => {
     assert.equal(backup.body.site.backups[0].id, "backup_test");
   });
 
-  it("requires paid plan for managed WordPress and provisions WordPress sites separately", async () => {
-    const rejected = await request("/api/sites", {
+  it("creates free DIY WordPress sites and provisions WordPress separately", async () => {
+    const created = await request("/api/sites", {
       method: "POST",
       body: JSON.stringify({ name: "WordPress Free", platform: "wordpress", plan: "free" })
     });
-    assert.equal(rejected.response.status, 402);
-
-    const created = await request("/api/sites", {
-      method: "POST",
-      body: JSON.stringify({ name: "WordPress Paid", platform: "wordpress", plan: "paid" })
-    });
     assert.equal(created.response.status, 201);
     assert.equal(created.body.site.type, "wordpress");
-    assert.equal(created.body.site.plan, "paid");
+    assert.equal(created.body.site.plan, "free");
+    assert.equal(created.body.site.primaryDomain, "wordpress-free.getaudo.com");
 
     const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
     assert.equal(published.response.status, 200);
     assert.equal(published.body.site.status, "published");
     assert.equal(published.body.site.deployments[0].id, "deploy_wordpress_test");
     assert.equal(published.body.site.deployments.some((deployment: any) => deployment.provider === "local-static"), false);
+  });
+
+  it("creates paid custom app and concierge site records without the builder flow", async () => {
+    const appSite = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "Client Portal", platform: "github-app", plan: "free" })
+    });
+    assert.equal(appSite.response.status, 201);
+    assert.equal(appSite.body.site.type, "github-app");
+    assert.equal(appSite.body.site.plan, "paid");
+
+    const unconnectedDeploy = await request(`/api/sites/${appSite.body.site.id}/publish`, { method: "POST", body: "{}" });
+    assert.equal(unconnectedDeploy.response.status, 400);
+
+    const connected = await request(`/api/sites/${appSite.body.site.id}/github`, {
+      method: "POST",
+      body: JSON.stringify({ owner: "audo", repo: "client-portal", branch: "main" })
+    });
+    assert.equal(connected.response.status, 200);
+    assert.equal(connected.body.site.type, "github-app");
+    assert.equal(connected.body.site.deployments[0].id, "deploy_github_test");
+
+    const concierge = await request("/api/sites", {
+      method: "POST",
+      body: JSON.stringify({ name: "Done For You Site", platform: "concierge" })
+    });
+    assert.equal(concierge.response.status, 201);
+    assert.equal(concierge.body.site.type, "concierge");
+    assert.equal(concierge.body.site.plan, "paid");
   });
 
   it("records failed WordPress provisioning attempts", async () => {

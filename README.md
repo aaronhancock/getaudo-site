@@ -6,7 +6,10 @@ The app currently includes:
 
 - Firebase Auth wiring with local preview auth fallback
 - Self-service site creation
-- Free one-page website builder
+- Free DIY managed WordPress on a generated `*.getaudo.com` subdomain
+- Paid managed WordPress with custom-domain and backup gates
+- Done-for-you website project records for manual Audo builds
+- Custom app/GitHub hosting records for paid application hosting
 - Free subdomain model on `*.getaudo.com`
 - Paid plan gates for custom domains, backups, GitHub, and full app hosting
 - Audo SVG logo asset
@@ -49,3 +52,7 @@ Without `app-config.json`, the console stays in local/demo mode. With the checke
 The trusted API lives in `control-plane/`. It handles authenticated site records, Cloudflare DNS provisioning, publishing, backups, GitHub/Coolify handoff, and Stripe checkout.
 
 See `control-plane/README.md` for runtime configuration and API routes. See `PLATFORM_ARCHITECTURE.md` for the broader platform plan.
+
+## WordPress Template
+
+The Audo-managed WordPress scaffold lives in `wordpress-template/`. It includes a Coolify-ready WordPress/MariaDB compose file, an always-on Audo MU-plugin for plan/ad controls, and a clean starter theme.

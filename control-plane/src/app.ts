@@ -19,7 +19,7 @@ import { UserService } from "./userService.js";
 const createSiteSchema = z.object({
   name: z.string().min(1),
   plan: z.enum(["free", "paid"]).optional(),
-  platform: z.enum(["builder", "wordpress"]).optional(),
+  platform: z.enum(["builder", "wordpress", "github-app", "concierge"]).optional(),
   template: z.string().optional(),
   builder: z.any().optional()
 });

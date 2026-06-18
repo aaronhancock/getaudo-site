@@ -1,0 +1,43 @@
+services:
+  wordpress:
+    image: wordpress:6.6-php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX:-wp_}
+      AUDO_SITE_ID: ${AUDO_SITE_ID:-}
+      AUDO_SITE_DOMAIN: ${AUDO_SITE_DOMAIN:-}
+      AUDO_SITE_PLAN: ${AUDO_SITE_PLAN:-free}
+      AUDO_ADS_ENABLED: ${AUDO_ADS_ENABLED:-true}
+    volumes:
+      - wordpress-files:/var/www/html
+      - ./mu-plugins:/audo/mu-plugins:ro
+      - ./themes/audo-starter:/audo/themes/audo-starter:ro
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /var/www/html/wp-content/mu-plugins /var/www/html/wp-content/themes/audo-starter
+        cp /audo/mu-plugins/audo-platform.php /var/www/html/wp-content/mu-plugins/audo-platform.php
+        cp -R /audo/themes/audo-starter/. /var/www/html/wp-content/themes/audo-starter/
+        docker-entrypoint.sh apache2-foreground
+
+  mariadb:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${WORDPRESS_DB_NAME:-wordpress}
+      MARIADB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      MARIADB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+volumes:
+  wordpress-files:
+  mariadb-data:

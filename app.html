@@ -1553,26 +1553,14 @@
 		          <button class="wizard-option active" data-platform-option="wordpress" data-plan-option="free" type="button"><strong>Free DIY</strong><span>Use a generated getaudo.com subdomain with Audo ad placement.</span></button>
 		          <button class="wizard-option" data-platform-option="wordpress" data-plan-option="paid" type="button"><strong>Paid WordPress</strong><span>Add a custom domain, backups, restore points, and no Audo ads.</span></button>
 		        </div>
-		        <div class="field-grid" data-wordpress-settings hidden>
-		          <div class="field">
-		            <label for="siteWordPressThemeInput">Theme</label>
-		            <select id="siteWordPressThemeInput">
-		              <option value="audo-neighborhood">Audo Neighborhood</option>
-		              <option value="audo-studio">Audo Studio</option>
-		              <option value="audo-table">Audo Table</option>
-		              <option value="audo-signal">Audo Signal</option>
-		              <option value="audo-sanctuary">Audo Sanctuary</option>
-		            </select>
-		          </div>
-		          <div class="field">
-		            <label for="siteAdminEmailInput">Admin email</label>
-		            <input id="siteAdminEmailInput" readonly>
-		          </div>
+		        <div data-wordpress-settings hidden>
+		          <input id="siteWordPressThemeInput" type="hidden" value="audo-neighborhood">
+		          <input id="siteAdminEmailInput" type="hidden">
 		        </div>
 		        <div class="empty-state" data-wordpress-setup-note hidden style="min-height: 140px;">
 		          <div>
 		            <strong>WordPress provisioning</strong>
-		            <p>Audo creates the host, database, DNS route, SSL route, and storage. WordPress admin handles themes, pages, plugins, media, and content.</p>
+		            <p>Audo creates the host, database, DNS route, SSL route, storage, WordPress install, and admin login. Themes, pages, plugins, media, and content are handled in WordPress admin.</p>
 		          </div>
 		        </div>
 		        <div class="empty-state" data-project-setup-note hidden style="min-height: 140px;">
@@ -2027,6 +2015,7 @@
         : createTemplateComponents(normalized.template);
       normalized.github = { repo: "", branch: "main", build: "", output: "dist", connected: false, ...(site.github || {}) };
       normalized.backups = Array.isArray(site.backups) ? site.backups : [];
+      normalized.deployments = Array.isArray(site.deployments) ? site.deployments : [];
       return normalized;
     }
 
@@ -2139,6 +2128,7 @@
         createdAt: apiSite.createdAt,
         publishedAt: apiSite.publishedAt || "",
         wordpress: normalizeWordPressSettings(apiSite.wordpress || existing?.wordpress, apiSite.name),
+        deployments: Array.isArray(apiSite.deployments) ? apiSite.deployments : existing?.deployments || [],
         visits: existing?.visits || 0,
         leads: existing?.leads || 0,
         components,
@@ -2222,6 +2212,7 @@
         components: Array.isArray(components) && components.length ? cloneComponents(components) : createTemplateComponents(template || "service"),
         wordpress: normalizeWordPressSettings(wordpress, name || "Untitled site"),
         github: { repo: "", branch: "main", build: "", output: "dist", connected: false },
+        deployments: [],
         backups: []
       };
     }
@@ -2295,6 +2286,17 @@
         return site.customDomain;
       }
       return `${site.slug}.${FREE_DOMAIN}`;
+    }
+
+    function latestWordPressLogin(site) {
+      const deployments = Array.isArray(site?.deployments) ? site.deployments : [];
+      for (const deployment of deployments) {
+        const install = deployment?.details?.wordpressInstall;
+        if (install?.initialAdminPassword && install?.adminUsername) {
+          return install;
+        }
+      }
+      return null;
     }
 
     function publishButtonLabel(site) {
@@ -2818,6 +2820,10 @@
 	      }
 	      const wordPressSite = isWordPressPlatform(site);
 	      const adminUrl = `https://${siteUrl(site)}/wp-admin`;
+	      const wordpressLogin = latestWordPressLogin(site);
+	      const wordpressLoginPanel = wordPressSite && wordpressLogin
+	        ? `<div class="lock-panel"><strong>Initial WordPress login</strong><span>Use this generated login for the first sign-in, then change the password inside WordPress.</span><div class="table"><div class="table-row"><span>Username</span><span>${escapeHtml(wordpressLogin.adminUsername)}</span><span>Email</span><span>${escapeHtml(wordpressLogin.adminEmail || site.wordpress?.adminEmail || accountEmail())}</span></div><div class="table-row"><span>Password</span><span>${escapeHtml(wordpressLogin.initialAdminPassword)}</span><span>Login</span><span><a href="${escapeHtml(wordpressLogin.loginUrl || adminUrl)}" target="_blank" rel="noopener">Open WordPress</a></span></div></div></div>`
+	        : "";
 	      els.domainSiteName.textContent = `${site.name} URLs`;
       els.domainPlanPill.className = `pill ${site.plan === "paid" ? "blue" : "green"}`;
       els.domainPlanPill.textContent = site.plan === "paid" ? "Paid" : "Free";
@@ -2838,7 +2844,7 @@
 	        : site.plan === "paid"
 	        ? `<div class="status-row"><span class="pill blue">Custom URL enabled</span><span class="pill green">Ads removed</span></div>`
 	        : `<div class="lock-panel"><strong>Custom URLs are on paid hosting.</strong><span>Free websites publish on a getaudo.com subdomain and include the Audo ad banner.</span><button class="button blue" type="button" data-upgrade-site="${site.id}"><i data-lucide="arrow-up-right" class="icon"></i><span>Upgrade</span></button></div>`;
-	      els.domainUpgradePanel.innerHTML += siteControlsPanel(site);
+	      els.domainUpgradePanel.innerHTML += wordpressLoginPanel + siteControlsPanel(site);
 	      document.querySelectorAll("[data-upgrade-site]").forEach((button) => {
 	        button.addEventListener("click", () => upgradeSite(button.dataset.upgradeSite));
 	      });
@@ -3302,7 +3308,7 @@
 		        button.disabled = siteWizardMode === "edit";
 		      });
 		      els.wordpressPlanOptions.hidden = !wordPressFlow;
-		      els.wordpressSettings.hidden = !wordPressFlow;
+		      els.wordpressSettings.hidden = true;
 		      els.builderPlanOptions.hidden = !builderFlow || !payload.platform;
 		      els.builderTemplateOptions.hidden = !builderFlow || !payload.platform;
 		      els.wordpressSetupNote.hidden = !wordPressFlow;
@@ -3435,18 +3441,18 @@
 		          <div><span>URL</span><strong>${escapeHtml(host)}</strong></div>
 		          <div><span>Platform</span><strong>${escapeHtml(platformLabels[payload.platform] || payload.platform)}</strong></div>
 		          <div><span>Plan</span><strong>${escapeHtml(planLabels[payload.plan] || payload.plan)}</strong></div>
-		          <div><span>Theme</span><strong>${escapeHtml(wordpressThemeLabels[payload.wordpress?.themeSlug] || "Audo Neighborhood")}</strong></div>
-		          <div><span>Admin email</span><strong>${escapeHtml(payload.wordpress?.adminEmail || accountEmail())}</strong></div>
-		          <div><span>Hosting stack</span><strong>WordPress + MariaDB + Redis</strong></div>
+		          <div><span>Admin email</span><strong>${escapeHtml(accountEmail())}</strong></div>
+		          <div><span>Hosting stack</span><strong>WordPress + MariaDB</strong></div>
 		          <div><span>Audo setup</span><strong>DNS, SSL route, storage, and database</strong></div>
-		          <div><span>Site setup</span><strong>Handled in WordPress admin</strong></div>
+		          <div><span>WordPress install</span><strong>Audo creates the admin login</strong></div>
+		          <div><span>Theme</span><strong>Picked inside WordPress</strong></div>
 		          <div><span>Admin URL</span><strong>${escapeHtml(host)}/wp-admin</strong></div>
 		        `;
 		        els.siteWizardPreview.innerHTML = `
 		          <div class="empty-state" style="min-height: 220px;">
 		            <div>
-		              <strong>WordPress admin handles the website build.</strong>
-		              <p>After provisioning, finish themes, pages, plugins, media, and content at ${escapeHtml(host)}/wp-admin.</p>
+		              <strong>Audo installs WordPress for you.</strong>
+		              <p>After provisioning, choose themes, pages, plugins, media, and content at ${escapeHtml(host)}/wp-admin.</p>
 		            </div>
 		          </div>
 		        `;
@@ -3666,28 +3672,13 @@
 		            method: "POST",
 		            body: JSON.stringify(createBody)
 		          });
-		          let site = replaceSite(result.site);
-		          if (isWordPressPlatform(site)) {
-		            try {
-		              const provisioned = await apiFetch(`/api/sites/${site.id}/publish`, { method: "POST", body: "{}" });
-		              site = replaceSite(provisioned.site);
-		            } catch (error) {
-		              creatingSite = false;
-		              state.selectedComponentId = null;
-		              state.view = siteDetailView(site);
-		              saveState();
-		              closeSiteModal();
-		              showToast(friendlyErrorMessage(error, "WordPress site created, but provisioning failed."));
-		              render();
-		              return;
-		            }
-		          }
+		          const site = replaceSite(result.site);
 		          state.selectedComponentId = isBuilderPlatform(site) ? site.components[0]?.id || null : null;
 		          state.view = siteDetailView(site);
 		          state.builderMobileTab = "preview";
 		          saveState();
 		          closeSiteModal();
-		          showToast(isWordPressPlatform(site) ? `${site.name} WordPress provisioning started.` : `${site.name} created.`);
+		          showToast(result.warning?.message ? friendlyErrorMessage(result.warning, "WordPress site created, but provisioning needs attention.") : isWordPressPlatform(site) ? `${site.name} WordPress setup started.` : `${site.name} created.`);
 	          render();
 	        } catch (error) {
 	          showToast(friendlyErrorMessage(error, "Site creation failed."));

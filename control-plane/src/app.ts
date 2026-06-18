@@ -86,6 +86,10 @@ function parse<T>(schema: z.ZodSchema<T>, value: unknown): T {
   return result.data;
 }
 
+function warningFromError(error: unknown): { message: string } {
+  return { message: error instanceof Error ? error.message : String(error) };
+}
+
 function createDefaultServices(config: AppConfig): AppServices {
   const store = config.storeMode === "firestore" ? new FirestoreSiteStore() : new MemorySiteStore();
   return {
@@ -143,8 +147,18 @@ export function createApp(config: AppConfig, services = createDefaultServices(co
   }));
 
   app.post("/api/sites", asyncRoute(async (request, response) => {
-    const site = await service.createSite(requireUser(request), parse(createSiteSchema, request.body));
-    response.status(201).json({ site });
+    const user = requireUser(request);
+    let site = await service.createSite(user, parse(createSiteSchema, request.body));
+    let warning: { message: string } | undefined;
+    if (site.type === "wordpress") {
+      try {
+        site = await service.publishSite(user, site.id);
+      } catch (error) {
+        warning = warningFromError(error);
+        site = await service.getSite(user, site.id);
+      }
+    }
+    response.status(201).json({ site, warning });
   }));
 
   app.get("/api/sites/:siteId", asyncRoute(async (request, response) => {

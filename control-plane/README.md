@@ -41,16 +41,17 @@ AUDO_FREE_DOMAIN=getaudo.com
 CLOUDFLARE_API_TOKEN=<cloudflare-api-token>
 CLOUDFLARE_ACCOUNT_ID=<cloudflare-account-id>
 CLOUDFLARE_ZONE_NAME=getaudo.com
-CLOUDFLARE_FREE_SITE_TARGET=getaudo.com
+CLOUDFLARE_FREE_SITE_TARGET=<cloudflare-tunnel-id>.cfargotunnel.com
+CLOUDFLARE_TUNNEL_ORIGIN_SERVICE=https://127.0.0.1:443
 ```
 
-`CLOUDFLARE_ZONE_ID` is optional. If it is not set, the control plane looks up the zone by `CLOUDFLARE_ZONE_NAME` and `CLOUDFLARE_ACCOUNT_ID`.
+`CLOUDFLARE_ZONE_ID` is optional. If it is not set, the control plane looks up the zone by `CLOUDFLARE_ZONE_NAME` and `CLOUDFLARE_ACCOUNT_ID`. `CLOUDFLARE_TUNNEL_ID` is optional when `CLOUDFLARE_FREE_SITE_TARGET` is the tunnel hostname because the control plane can infer it.
 
 If `AUTH_MODE=preview` is used on a public host, set `AUDO_PREVIEW_API_SECRET`. Requests must include `x-audo-preview-secret` or they will be rejected. Do not expose Cloudflare-write endpoints publicly with unrestricted preview auth.
 
 ## Managed WordPress
 
-Free and paid WordPress sites use Coolify's Docker service template named `wordpress-with-mariadb`. Publishing a WordPress site creates one Coolify service per Audo site, assigns the site's `https://<slug>.getaudo.com` URL to the `wordpress` container, and keeps MariaDB private with persistent `wordpress-files` and `mariadb-data` volumes.
+Free and paid WordPress sites use Coolify's Docker service template named `wordpress-with-mariadb`. Creating a WordPress site provisions DNS, adds an explicit Cloudflare Tunnel ingress rule, creates one Coolify service per Audo site, assigns the site's `https://<slug>.getaudo.com` URL to the `wordpress` container, starts the service, and submits the WordPress install form with Audo-generated admin credentials.
 
 Free WordPress sites use a generated Audo subdomain and remain locked out of customer restore points, custom domains, and GitHub deployment controls. Paid WordPress sites can use custom domains and backup/restore points.
 
@@ -65,6 +66,8 @@ COOLIFY_WORDPRESS_ENVIRONMENT_NAME=production
 COOLIFY_WORDPRESS_SERVER_UUID=<coolify-server-uuid>
 COOLIFY_WORDPRESS_DESTINATION_UUID=<coolify-docker-destination-uuid>
 COOLIFY_WORDPRESS_INSTANT_DEPLOY=true
+COOLIFY_WORDPRESS_AUTO_INSTALL=true
+COOLIFY_WORDPRESS_INSTALL_TIMEOUT_SECONDS=180
 ```
 
 ## API Summary

@@ -19,13 +19,12 @@ services:
         define('WP_POST_REVISIONS', 10);
         define('WP_CACHE', true);
         define('WP_REDIS_HOST', getenv('WORDPRESS_REDIS_HOST') ?: 'redis');
-        define('WP_DEFAULT_THEME', getenv('AUDO_THEME_SLUG') ?: 'audo-neighborhood');
+        define('WP_DEFAULT_THEME', 'audo-neighborhood');
       AUDO_SITE_ID: ${AUDO_SITE_ID:-}
       AUDO_SITE_DOMAIN: ${AUDO_SITE_DOMAIN:-}
       AUDO_SITE_TITLE: ${AUDO_SITE_TITLE:-}
       AUDO_OWNER_EMAIL: ${AUDO_OWNER_EMAIL:-}
       AUDO_ADMIN_EMAIL: ${AUDO_ADMIN_EMAIL:-}
-      AUDO_THEME_SLUG: ${AUDO_THEME_SLUG:-audo-neighborhood}
       AUDO_SITE_PLAN: ${AUDO_SITE_PLAN:-free}
       AUDO_ADS_ENABLED: ${AUDO_ADS_ENABLED:-true}
       AUDO_FREE_PAGE_LIMIT: ${AUDO_FREE_PAGE_LIMIT:-5}

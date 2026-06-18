@@ -16,8 +16,13 @@ const config: AppConfig = {
   freeDomain: "getaudo.com",
   publicBaseUrl: "https://getaudo.com",
   publishedSiteRoot: "/tmp/audo-control-plane-test",
-  cloudflare: { proxied: true, zoneName: "getaudo.com" },
-  coolify: { wordpressServiceType: "wordpress-with-mariadb", wordpressInstantDeploy: true },
+  cloudflare: { proxied: true, zoneName: "getaudo.com", tunnelOriginService: "https://127.0.0.1:443" },
+  coolify: {
+    wordpressServiceType: "wordpress-with-mariadb",
+    wordpressInstantDeploy: true,
+    wordpressAutoInstall: false,
+    wordpressInstallTimeoutSeconds: 1
+  },
   backups: {},
   stripe: {}
 };
@@ -203,7 +208,7 @@ describe("Audo control plane", () => {
     assert.equal(backup.body.site.backups[0].id, "backup_test");
   });
 
-  it("creates free DIY WordPress sites and provisions WordPress separately", async () => {
+  it("creates free DIY WordPress sites and provisions WordPress immediately", async () => {
     const created = await request("/api/sites", {
       method: "POST",
       body: JSON.stringify({
@@ -220,24 +225,21 @@ describe("Audo control plane", () => {
     assert.equal(created.response.status, 201);
     assert.equal(created.body.site.type, "wordpress");
     assert.equal(created.body.site.plan, "free");
+    assert.equal(created.body.site.status, "published");
     assert.equal(created.body.site.primaryDomain, "wordpress-free.getaudo.com");
     assert.equal(created.body.site.wordpress.ownerEmail, "test-owner@preview.getaudo.com");
     assert.equal(created.body.site.wordpress.adminEmail, "test-owner@preview.getaudo.com");
-    assert.equal(created.body.site.wordpress.themeSlug, "audo-studio");
+    assert.equal(created.body.site.wordpress.themeSlug, "audo-neighborhood");
+    assert.equal(created.body.site.deployments[0].id, "deploy_wordpress_test");
+    assert.equal(created.body.site.deployments.some((deployment: any) => deployment.provider === "local-static"), false);
 
     const updated = await request(`/api/sites/${created.body.site.id}`, {
       method: "PATCH",
       body: JSON.stringify({ wordpress: { themeSlug: "audo-table" } })
     });
     assert.equal(updated.response.status, 200);
-    assert.equal(updated.body.site.wordpress.themeSlug, "audo-table");
+    assert.equal(updated.body.site.wordpress.themeSlug, "audo-neighborhood");
     assert.equal(updated.body.site.wordpress.adminEmail, "test-owner@preview.getaudo.com");
-
-    const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
-    assert.equal(published.response.status, 200);
-    assert.equal(published.body.site.status, "published");
-    assert.equal(published.body.site.deployments[0].id, "deploy_wordpress_test");
-    assert.equal(published.body.site.deployments.some((deployment: any) => deployment.provider === "local-static"), false);
   });
 
   it("creates paid custom app and concierge site records without the builder flow", async () => {
@@ -293,9 +295,8 @@ describe("Audo control plane", () => {
         method: "POST",
         body: JSON.stringify({ name: "Failing WordPress", platform: "wordpress", plan: "paid" })
       });
-      const published = await failingRequest(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
-      assert.equal(published.response.status, 500);
-      assert.match(published.body.error.message, /Coolify API unavailable/);
+      assert.equal(created.response.status, 201);
+      assert.match(created.body.warning.message, /Coolify API unavailable/);
 
       const site = await failingRequest(`/api/sites/${created.body.site.id}`);
       assert.equal(site.body.site.status, "configured");
@@ -315,8 +316,7 @@ describe("Audo control plane", () => {
       method: "POST",
       body: JSON.stringify({ name: "Delete Me", platform: "wordpress", plan: "free" })
     });
-    const published = await request(`/api/sites/${created.body.site.id}/publish`, { method: "POST", body: "{}" });
-    assert.equal(published.body.site.status, "published");
+    assert.equal(created.body.site.status, "published");
 
     const unpublished = await request(`/api/sites/${created.body.site.id}/unpublish`, { method: "POST", body: "{}" });
     assert.equal(unpublished.response.status, 200);

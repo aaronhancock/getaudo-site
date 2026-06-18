@@ -20,6 +20,8 @@ export interface AppConfig {
     zoneName?: string;
     freeSiteTarget?: string;
     originIpv4?: string;
+    tunnelId?: string;
+    tunnelOriginService: string;
     proxied: boolean;
   };
   coolify: {
@@ -33,6 +35,8 @@ export interface AppConfig {
     wordpressServerUuid?: string;
     wordpressDestinationUuid?: string;
     wordpressInstantDeploy: boolean;
+    wordpressAutoInstall: boolean;
+    wordpressInstallTimeoutSeconds: number;
   };
   backups: {
     webhookUrl?: string;
@@ -75,6 +79,8 @@ export function loadConfig(): AppConfig {
       zoneName: env("CLOUDFLARE_ZONE_NAME", env("AUDO_FREE_DOMAIN", "getaudo.com")) || undefined,
       freeSiteTarget: env("CLOUDFLARE_FREE_SITE_TARGET") || undefined,
       originIpv4: env("CLOUDFLARE_ORIGIN_IPV4") || undefined,
+      tunnelId: env("CLOUDFLARE_TUNNEL_ID") || undefined,
+      tunnelOriginService: env("CLOUDFLARE_TUNNEL_ORIGIN_SERVICE", "https://127.0.0.1:443"),
       proxied: envBool("CLOUDFLARE_PROXIED", true)
     },
     coolify: {
@@ -87,7 +93,9 @@ export function loadConfig(): AppConfig {
       wordpressEnvironmentUuid: env("COOLIFY_WORDPRESS_ENVIRONMENT_UUID") || undefined,
       wordpressServerUuid: env("COOLIFY_WORDPRESS_SERVER_UUID") || undefined,
       wordpressDestinationUuid: env("COOLIFY_WORDPRESS_DESTINATION_UUID") || undefined,
-      wordpressInstantDeploy: envBool("COOLIFY_WORDPRESS_INSTANT_DEPLOY", true)
+      wordpressInstantDeploy: envBool("COOLIFY_WORDPRESS_INSTANT_DEPLOY", true),
+      wordpressAutoInstall: envBool("COOLIFY_WORDPRESS_AUTO_INSTALL", true),
+      wordpressInstallTimeoutSeconds: Number(env("COOLIFY_WORDPRESS_INSTALL_TIMEOUT_SECONDS", "180"))
     },
     backups: {
       webhookUrl: env("BACKUP_WEBHOOK_URL") || undefined

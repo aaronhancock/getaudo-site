@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import { nanoid } from "nanoid";
 import type { AppConfig } from "../config.js";
 import type { CoolifyProvider, SiteDeployment, SiteRecord } from "../types.js";
@@ -76,10 +77,11 @@ export class CoolifyApiProvider implements CoolifyProvider {
       const startResponse = this.config.wordpressInstantDeploy
         ? await this.coolify(`/api/v1/services/${existingServiceUuid}/start`, { method: "POST" })
         : undefined;
+      const installResponse = await this.maybeAutoInstallWordPress(site);
       return {
         id: existingServiceUuid,
         provider: "coolify",
-        status: this.config.wordpressInstantDeploy ? "queued" : "finished",
+        status: this.wordpressDeploymentStatus(installResponse),
         url: `https://${site.primaryDomain}`,
         createdAt,
         details: {
@@ -88,7 +90,8 @@ export class CoolifyApiProvider implements CoolifyProvider {
           serviceType: this.config.wordpressServiceType,
           requestedDomain: site.primaryDomain,
           envResponse,
-          startResponse
+          startResponse,
+          wordpressInstall: installResponse
         }
       };
     }
@@ -125,11 +128,12 @@ export class CoolifyApiProvider implements CoolifyProvider {
       this.config.wordpressInstantDeploy && serviceUuid
         ? await this.coolify(`/api/v1/services/${serviceUuid}/start`, { method: "POST" })
         : undefined;
+    const installResponse = serviceUuid ? await this.maybeAutoInstallWordPress(site) : { status: "skipped", reason: "missing_service_uuid" };
 
     return {
       id: serviceUuid || nanoid(),
       provider: "coolify",
-      status: this.config.wordpressInstantDeploy ? "queued" : "finished",
+      status: this.wordpressDeploymentStatus(installResponse),
       url: `https://${site.primaryDomain}`,
       createdAt,
       details: {
@@ -139,7 +143,8 @@ export class CoolifyApiProvider implements CoolifyProvider {
         requestedDomain: site.primaryDomain,
         domains: response.domains || [],
         envResponse,
-        startResponse
+        startResponse,
+        wordpressInstall: installResponse
       }
     };
   }
@@ -234,13 +239,139 @@ export class CoolifyApiProvider implements CoolifyProvider {
       AUDO_SITE_TITLE: settings?.siteTitle || site.name,
       AUDO_OWNER_EMAIL: ownerEmail,
       AUDO_ADMIN_EMAIL: adminEmail,
-      AUDO_THEME_SLUG: settings?.themeSlug || "audo-neighborhood",
       AUDO_SITE_PLAN: site.plan,
       AUDO_ADS_ENABLED: site.plan === "paid" ? "false" : "true",
       AUDO_FREE_PAGE_LIMIT: "5",
-      AUDO_FREE_UPLOAD_LIMIT_MB: "250",
-      WORDPRESS_REDIS_HOST: "redis"
+      AUDO_FREE_UPLOAD_LIMIT_MB: "250"
     };
+  }
+
+  private async maybeAutoInstallWordPress(site: SiteRecord): Promise<Record<string, unknown> | undefined> {
+    if (!this.config.wordpressAutoInstall) {
+      return { status: "skipped", reason: "wordpress_auto_install_disabled" };
+    }
+    try {
+      return await this.autoInstallWordPress(site);
+    } catch (error) {
+      return { status: "failed", error: this.errorDetails(error) };
+    }
+  }
+
+  private async autoInstallWordPress(site: SiteRecord): Promise<Record<string, unknown>> {
+    const baseUrl = `https://${site.primaryDomain}`.replace(/\/+$/, "");
+    const adminEmail = site.wordpress?.adminEmail || site.wordpress?.ownerEmail || `${site.ownerUid}@preview.getaudo.com`;
+    const adminUsername = this.wordpressAdminUsername(site);
+    const initialAdminPassword = randomBytes(24).toString("base64url");
+    const installUrl = `${baseUrl}/wp-admin/install.php`;
+    const loginUrl = `${baseUrl}/wp-login.php`;
+    const timeoutMs = Math.max(5, this.config.wordpressInstallTimeoutSeconds || 180) * 1000;
+    const deadline = Date.now() + timeoutMs;
+    let lastState: Record<string, unknown> = { status: "pending" };
+
+    while (Date.now() <= deadline) {
+      const state = await this.wordpressInstallState(installUrl);
+      lastState = state;
+      if (state.status === "already_installed") {
+        return { status: "already_installed", adminUsername, adminEmail, loginUrl };
+      }
+      if (state.status === "installer_ready") {
+        const installed = await this.submitWordPressInstall(installUrl, site, adminUsername, initialAdminPassword, adminEmail);
+        if (installed.status === "installed" || installed.status === "already_installed") {
+          return {
+            status: installed.status,
+            adminUsername,
+            adminEmail,
+            initialAdminPassword,
+            loginUrl
+          };
+        }
+        lastState = installed;
+      }
+      await this.sleep(5000);
+    }
+
+    return {
+      status: "pending",
+      reason: "wordpress_installer_not_ready",
+      adminUsername,
+      adminEmail,
+      loginUrl,
+      lastState
+    };
+  }
+
+  private async wordpressInstallState(installUrl: string): Promise<Record<string, unknown>> {
+    try {
+      const response = await fetch(installUrl, {
+        redirect: "manual",
+        headers: { "user-agent": "Audo-Control-Plane/1.0" }
+      });
+      const text = await response.text().catch(() => "");
+      if (/already installed/i.test(text) || response.headers.get("location")?.includes("wp-login.php")) {
+        return { status: "already_installed", httpStatus: response.status };
+      }
+      if (response.ok && /install\.php\?step=2|weblog_title|admin_password|user_name/i.test(text)) {
+        return { status: "installer_ready", httpStatus: response.status };
+      }
+      return { status: "waiting", httpStatus: response.status, sample: text.slice(0, 160) };
+    } catch (error) {
+      return { status: "waiting", error: this.errorDetails(error) };
+    }
+  }
+
+  private async submitWordPressInstall(
+    installUrl: string,
+    site: SiteRecord,
+    adminUsername: string,
+    initialAdminPassword: string,
+    adminEmail: string
+  ): Promise<Record<string, unknown>> {
+    const body = new URLSearchParams({
+      weblog_title: site.wordpress?.siteTitle || site.name,
+      user_name: adminUsername,
+      admin_password: initialAdminPassword,
+      admin_password2: initialAdminPassword,
+      admin_email: adminEmail,
+      blog_public: "1",
+      Submit: "Install WordPress"
+    });
+    const response = await fetch(`${installUrl}?step=2`, {
+      method: "POST",
+      redirect: "manual",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "user-agent": "Audo-Control-Plane/1.0"
+      },
+      body
+    });
+    const text = await response.text().catch(() => "");
+    if (/already installed/i.test(text)) {
+      return { status: "already_installed", httpStatus: response.status };
+    }
+    if ((response.ok || response.status < 400) && /success|log in|wp-login\.php/i.test(text + String(response.headers.get("location") || ""))) {
+      return { status: "installed", httpStatus: response.status };
+    }
+    return { status: "waiting", httpStatus: response.status, sample: text.slice(0, 160) };
+  }
+
+  private wordpressAdminUsername(site: SiteRecord): string {
+    const base = `audo_${site.slug}`.toLowerCase().replace(/[^a-z0-9_.@-]+/g, "_").replace(/-+/g, "_");
+    return base.slice(0, 60).replace(/^_+|_+$/g, "") || "audo_admin";
+  }
+
+  private wordpressDeploymentStatus(installResponse: Record<string, unknown> | undefined): SiteDeployment["status"] {
+    if (installResponse?.status === "installed" || installResponse?.status === "already_installed") {
+      return "finished";
+    }
+    return this.config.wordpressInstantDeploy ? "queued" : "finished";
+  }
+
+  private sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  private errorDetails(error: unknown): Record<string, unknown> {
+    return error instanceof Error ? { message: error.message, stack: error.stack } : { message: String(error) };
   }
 
   private async upsertWordPressEnv(serviceUuid: string, site: SiteRecord): Promise<{ count: number; response: unknown }> {

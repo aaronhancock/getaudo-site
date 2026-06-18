@@ -14,6 +14,17 @@ interface CloudflareZone {
   status?: string;
 }
 
+interface CloudflareTunnelIngressRule {
+  hostname?: string;
+  service: string;
+  originRequest?: Record<string, unknown>;
+}
+
+interface CloudflareTunnelConfig {
+  ingress?: CloudflareTunnelIngressRule[];
+  [key: string]: unknown;
+}
+
 export class CloudflareDnsProvider implements CloudflareProvider {
   private resolvedZone?: CloudflareZone;
 
@@ -72,10 +83,16 @@ export class CloudflareDnsProvider implements CloudflareProvider {
         body: JSON.stringify(payload)
       });
     }
+    const tunnelIngress = await this.ensureTunnelIngress(host);
     return {
       status: "ready",
       record: { type, name: host, value: target, proxied: this.config.proxied },
-      details: { zoneId: zone.id, recordId: saved.result?.id || existing?.id, action: existing ? "updated" : "created" }
+      details: {
+        zoneId: zone.id,
+        recordId: saved.result?.id || existing?.id,
+        action: existing ? "updated" : "created",
+        tunnelIngress
+      }
     };
   }
 
@@ -94,8 +111,9 @@ export class CloudflareDnsProvider implements CloudflareProvider {
         deleted.push(existing.id);
       }
     }
+    const tunnelIngress = await this.deleteTunnelIngress(host);
 
-    return { status: "ready", details: { host, deletedRecordIds: deleted } };
+    return { status: "ready", details: { host, deletedRecordIds: deleted, tunnelIngress } };
   }
 
   customDomainInstructions(host: string): DnsInstruction[] {
@@ -139,6 +157,69 @@ export class CloudflareDnsProvider implements CloudflareProvider {
     const result = await this.cloudflare(`/zones/${zoneId}/dns_records?${query.toString()}`);
     const records = Array.isArray(result.result) ? result.result : [];
     return records[0] || null;
+  }
+
+  private tunnelId(): string | undefined {
+    if (this.config.tunnelId) {
+      return this.config.tunnelId;
+    }
+    const target = this.config.freeSiteTarget || "";
+    const match = target.match(/^([0-9a-f-]{36})\.cfargotunnel\.com$/i);
+    return match?.[1];
+  }
+
+  private async ensureTunnelIngress(host: string): Promise<Record<string, unknown>> {
+    const tunnelId = this.tunnelId();
+    if (!this.config.apiToken || !this.config.accountId || !tunnelId || !this.config.freeSiteTarget?.includes("cfargotunnel.com")) {
+      return { status: "skipped", reason: "cloudflare_tunnel_not_configured", host };
+    }
+
+    const config = await this.getTunnelConfig(tunnelId);
+    const ingress = Array.isArray(config.ingress) ? [...config.ingress] : [];
+    const rule: CloudflareTunnelIngressRule = {
+      hostname: host,
+      service: this.config.tunnelOriginService,
+      originRequest: {
+        noTLSVerify: true,
+        httpHostHeader: host
+      }
+    };
+    const nextIngress = ingress.filter((item) => item.hostname !== host);
+    const wildcardIndex = nextIngress.findIndex((item) => item.hostname === `*.${this.freeDomain}`);
+    const fallbackIndex = nextIngress.findIndex((item) => item.service?.startsWith("http_status:"));
+    const insertIndex = wildcardIndex >= 0 ? wildcardIndex : fallbackIndex >= 0 ? fallbackIndex : nextIngress.length;
+    nextIngress.splice(insertIndex, 0, rule);
+
+    await this.putTunnelConfig(tunnelId, { ...config, ingress: nextIngress });
+    return { status: "ready", host, tunnelId, action: ingress.some((item) => item.hostname === host) ? "updated" : "created" };
+  }
+
+  private async deleteTunnelIngress(host: string): Promise<Record<string, unknown>> {
+    const tunnelId = this.tunnelId();
+    if (!this.config.apiToken || !this.config.accountId || !tunnelId || !this.config.freeSiteTarget?.includes("cfargotunnel.com")) {
+      return { status: "skipped", reason: "cloudflare_tunnel_not_configured", host };
+    }
+
+    const config = await this.getTunnelConfig(tunnelId);
+    const ingress = Array.isArray(config.ingress) ? config.ingress : [];
+    const nextIngress = ingress.filter((item) => item.hostname !== host);
+    if (nextIngress.length === ingress.length) {
+      return { status: "ready", host, tunnelId, action: "not_found" };
+    }
+    await this.putTunnelConfig(tunnelId, { ...config, ingress: nextIngress });
+    return { status: "ready", host, tunnelId, action: "deleted" };
+  }
+
+  private async getTunnelConfig(tunnelId: string): Promise<CloudflareTunnelConfig> {
+    const result = await this.cloudflare(`/accounts/${this.config.accountId}/cfd_tunnel/${tunnelId}/configurations`);
+    return result.result?.config || {};
+  }
+
+  private async putTunnelConfig(tunnelId: string, config: CloudflareTunnelConfig): Promise<void> {
+    await this.cloudflare(`/accounts/${this.config.accountId}/cfd_tunnel/${tunnelId}/configurations`, {
+      method: "PUT",
+      body: JSON.stringify({ config })
+    });
   }
 
   private async cloudflare(path: string, init: RequestInit = { method: "GET" }): Promise<any> {

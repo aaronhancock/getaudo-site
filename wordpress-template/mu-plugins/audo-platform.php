@@ -39,14 +39,6 @@ function audo_ads_enabled(): bool
     return audo_bool_env('AUDO_ADS_ENABLED', audo_site_plan() !== 'paid');
 }
 
-function audo_theme_slug(): string
-{
-    $theme = sanitize_key(audo_env('AUDO_THEME_SLUG', 'audo-neighborhood'));
-    $allowed = ['audo-neighborhood', 'audo-studio', 'audo-table', 'audo-signal', 'audo-sanctuary'];
-
-    return in_array($theme, $allowed, true) ? $theme : 'audo-neighborhood';
-}
-
 function audo_free_page_limit(): int
 {
     return max(1, (int) audo_env('AUDO_FREE_PAGE_LIMIT', '5'));
@@ -120,14 +112,6 @@ add_action('init', static function (): void {
         update_option('audo_initial_settings_applied', '1', false);
     }
 
-    $themeSlug = audo_theme_slug();
-    if (get_option('audo_applied_theme_slug') !== $themeSlug) {
-        $theme = wp_get_theme($themeSlug);
-        if ($theme->exists()) {
-            switch_theme($themeSlug);
-            update_option('audo_applied_theme_slug', $themeSlug, false);
-        }
-    }
 });
 
 add_filter('wp_insert_post_data', static function (array $data, array $postarr): array {
@@ -186,7 +170,6 @@ add_filter('user_has_cap', static function (array $allcaps): array {
         'upload_plugins',
         'delete_themes',
         'install_themes',
-        'switch_themes',
         'update_themes',
         'upload_themes',
     ];

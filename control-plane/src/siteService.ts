@@ -32,8 +32,6 @@ const RESERVED_SLUGS = new Set([
   "support",
   "www"
 ]);
-const WORDPRESS_THEME_SLUGS = new Set(["audo-neighborhood", "audo-studio", "audo-table", "audo-signal", "audo-sanctuary"]);
-
 export interface CreateSiteInput {
   name: string;
   plan?: Plan;
@@ -136,12 +134,11 @@ function wordpressSettings(user: AuthUser, name: string, input: CreateSiteInput)
     return undefined;
   }
   const accountEmail = user.email || `${user.uid}@preview.getaudo.com`;
-  const themeSlug = input.wordpress?.themeSlug?.trim() || "audo-neighborhood";
   return {
     siteTitle: input.wordpress?.siteTitle?.trim() || name,
     ownerEmail: accountEmail,
     adminEmail: accountEmail,
-    themeSlug: WORDPRESS_THEME_SLUGS.has(themeSlug) ? themeSlug : "audo-neighborhood"
+    themeSlug: "audo-neighborhood"
   };
 }
 

@@ -1,8 +1,16 @@
-# Audo Site
+# GetAudo Site
 
-Static SaaS console MVP for `getaudo.com` plus a separate trusted control-plane API.
+Public consulting marketing site for `getaudo.com` plus a separate client portal and trusted control-plane API at `/app`.
 
-The app currently includes:
+The public site now positions GetAudo as a personal consulting company for:
+
+- Life and business automation
+- AI coaching, training, and support
+- Ongoing website or web application management
+- Website or web application creation with ongoing support
+- Product consulting, brainstorming, and strategic innovation
+
+The client portal currently includes:
 
 - Firebase Auth wiring with local preview auth fallback
 - Self-service site creation

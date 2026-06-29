@@ -305,8 +305,7 @@
       background: var(--paper);
     }
 
-    .why-grid,
-    .proof-list {
+    .why-grid {
       display: grid;
       gap: 14px;
     }
@@ -314,13 +313,6 @@
     .service-grid {
       display: grid;
       border-top: 1px solid var(--line);
-    }
-
-    .proof-item {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--white);
-      box-shadow: 0 12px 42px rgba(32, 44, 36, 0.06);
     }
 
     .service-card {
@@ -384,7 +376,6 @@
 
     .service-card p,
     .service-card li,
-    .proof-item p,
     .about-copy p {
       margin: 13px 0 0;
       color: var(--muted);
@@ -435,61 +426,132 @@
     }
 
     .why-grid {
-      grid-template-columns: 0.9fr 1.1fr;
-      align-items: start;
-      gap: 38px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
+      align-items: stretch;
+      gap: 28px;
     }
 
-    .proof-list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .issue-panel,
+    .outcome-panel {
+      border-radius: 8px;
     }
 
-    .process-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .issue-panel {
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
 
-    .proof-item {
-      min-height: 196px;
-      padding: 24px;
-      color: var(--ink);
+    .panel-label {
+      margin: 0 0 14px;
+      color: #f4dca9;
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    .process-list .proof-item {
-      min-height: 224px;
-    }
-
-    .proof-item strong {
-      display: block;
-      color: var(--evergreen);
-      font-size: 15px;
-      margin-bottom: 18px;
-    }
-
-    .compare {
+    .issue-list,
+    .outcome-list {
       display: grid;
-      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .compare-row {
+    .issue-list li {
       display: grid;
-      grid-template-columns: 0.4fr 1fr;
+      grid-template-columns: 32px minmax(0, 1fr);
       gap: 14px;
-      padding: 18px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
-    }
-
-    .compare-row:last-child {
+      padding: 19px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     }
 
-    .compare-row strong {
-      color: #f4dca9;
+    .issue-dot {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      margin-top: 2px;
+      border: 1px solid rgba(244, 220, 169, 0.52);
+      border-radius: 50%;
+    }
+
+    .issue-dot::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f4dca9;
+    }
+
+    .issue-list strong {
+      display: block;
+      color: var(--white);
+      line-height: 1.28;
+    }
+
+    .issue-list span span {
+      display: block;
+      margin-top: 5px;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.55;
+    }
+
+    .outcome-panel {
+      display: grid;
+      align-content: start;
+      padding: 30px;
+      color: var(--ink);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .outcome-panel .panel-label {
+      color: var(--evergreen);
+    }
+
+    .outcome-panel h3 {
+      max-width: 430px;
+      font-size: clamp(28px, 3.1vw, 38px);
+      line-height: 1.06;
+    }
+
+    .outcome-list {
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .outcome-list li {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 13px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .outcome-number {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--evergreen);
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .outcome-list strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
       line-height: 1.25;
     }
 
-    .compare-row span {
-      color: rgba(255, 255, 255, 0.76);
-      line-height: 1.55;
+    .outcome-panel .button {
+      width: fit-content;
+      margin-top: 24px;
     }
 
     .about-band {
@@ -582,7 +644,6 @@
     }
 
     @media (max-width: 1040px) {
-      .proof-list,
       .proof-strip .shell {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -601,13 +662,6 @@
         margin-top: 4px;
       }
 
-      .proof-item:last-child {
-        grid-column: span 2;
-      }
-
-      .process-list .proof-item:last-child {
-        grid-column: auto;
-      }
     }
 
     @media (max-width: 760px) {
@@ -663,8 +717,6 @@
 
       .section-head,
       .why-grid,
-      .proof-list,
-      .process-list,
       .proof-strip .shell,
       .about-layout,
       .credential-list {
@@ -696,12 +748,12 @@
         margin-top: 3px;
       }
 
-      .proof-item:last-child {
-        grid-column: auto;
+      .outcome-panel {
+        padding: 24px;
       }
 
-      .compare-row {
-        grid-template-columns: 1fr;
+      .outcome-panel .button {
+        width: 100%;
       }
 
       .about-photo {
@@ -821,47 +873,55 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Why this keeps stealing time.</h2>
-          <p class="section-copy">The problem is not always the tool. It is that no one has time to turn the annoyance into a clear fix and then follow through.</p>
+          <h2>If it keeps interrupting your week, it is worth a look.</h2>
+          <p class="section-copy">You do not need to know whether it is a website problem, a process problem, or an AI opportunity. If it keeps taking time, creating confusion, or sitting on your list, bring it.</p>
         </div>
 
         <div class="why-grid">
-          <div class="compare" aria-label="Why work with Audo">
-            <div class="compare-row">
-              <strong>No one owns it</strong>
-              <span>It matters, but it is too fuzzy for a normal vendor request.</span>
-            </div>
-            <div class="compare-row">
-              <strong>Quick fixes fade</strong>
-              <span>A workaround helps for a week, then the same problem comes back.</span>
-            </div>
-            <div class="compare-row">
-              <strong>I stay with it</strong>
-              <span>You work directly with one experienced person who can explain, fix, build, and support.</span>
-            </div>
+          <div class="issue-panel" aria-label="Signs Audo can help">
+            <p class="panel-label">Signs Audo can help</p>
+            <ul class="issue-list">
+              <li>
+                <i class="issue-dot" aria-hidden="true"></i>
+                <span><strong>Customers hit dead ends.</strong><span>Forms break, pages are stale, or people ask questions your site should answer.</span></span>
+              </li>
+              <li>
+                <i class="issue-dot" aria-hidden="true"></i>
+                <span><strong>Your week has repeat chores.</strong><span>Someone keeps copying, chasing, exporting, rewriting, or checking the same thing.</span></span>
+              </li>
+              <li>
+                <i class="issue-dot" aria-hidden="true"></i>
+                <span><strong>Your tools create extra work.</strong><span>The tool works, but everyone has a workaround.</span></span>
+              </li>
+              <li>
+                <i class="issue-dot" aria-hidden="true"></i>
+                <span><strong>AI feels useful but unclear.</strong><span>You know it could help, but you are not sure where to start.</span></span>
+              </li>
+              <li>
+                <i class="issue-dot" aria-hidden="true"></i>
+                <span><strong>Small fixes never stick.</strong><span>The same issue returns because no one owns it after the first patch.</span></span>
+              </li>
+            </ul>
           </div>
 
-          <div class="proof-list process-list">
-            <article class="proof-item">
-              <strong>1. Show me the mess</strong>
-              <h3>Bring the problem.</h3>
-              <p>A broken form, repeat task, confusing tool, stale site, or idea you are unsure about.</p>
-            </article>
-            <article class="proof-item">
-              <strong>2. Find the real issue</strong>
-              <h3>I make it clear.</h3>
-              <p>I sort out what is causing the pain and what is worth doing next.</p>
-            </article>
-            <article class="proof-item">
-              <strong>3. Fix the right thing</strong>
-              <h3>I handle it.</h3>
-              <p>I repair, build, automate, simplify, or help you choose the better path.</p>
-            </article>
-            <article class="proof-item">
-              <strong>4. Keep it from coming back</strong>
-              <h3>We stay ahead of it.</h3>
-              <p>For ongoing work, we set a simple support rhythm so it keeps working.</p>
-            </article>
+          <div class="outcome-panel">
+            <p class="panel-label">What the free consultation gives you</p>
+            <h3>A clear next move, not a tech lecture.</h3>
+            <ul class="outcome-list">
+              <li>
+                <span class="outcome-number">1</span>
+                <span><strong>Name the real problem</strong> See what is actually wasting time, trust, or attention.</span>
+              </li>
+              <li>
+                <span class="outcome-number">2</span>
+                <span><strong>Choose the useful fix</strong> Repair it, automate it, build something, simplify, or leave it alone.</span>
+              </li>
+              <li>
+                <span class="outcome-number">3</span>
+                <span><strong>Know what support should look like</strong> If it should stay off your plate, map a simple rhythm for keeping it handled.</span>
+              </li>
+            </ul>
+            <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start with the free consultation</a>
           </div>
         </div>
       </div>

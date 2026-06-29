@@ -567,7 +567,7 @@
 
     .about-photo {
       min-height: 500px;
-      background: url("/assets/aaron-workshop-speaking-enhanced.webp") center top / cover no-repeat;
+      background: url("/assets/consulting-jobs-to-be-done-imac.webp") center / cover no-repeat;
     }
 
     .about-copy {
@@ -600,23 +600,40 @@
     }
 
     .cta-band {
-      padding: 92px 0;
       color: var(--white);
-      background:
-        linear-gradient(90deg, rgba(18, 25, 22, 0.94), rgba(18, 25, 22, 0.68)),
-        url("/assets/founder-hero-consulting.png") center / cover no-repeat;
+      background: #101815;
+      overflow: hidden;
     }
 
     .cta-inner {
-      max-width: 760px;
+      max-width: none;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.68fr);
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+      padding: 72px 0;
     }
 
-    .cta-inner p {
+    .cta-copy {
+      max-width: 700px;
+    }
+
+    .cta-copy p {
       max-width: 650px;
       margin: 20px 0 0;
       color: rgba(255, 255, 255, 0.78);
       font-size: 19px;
       line-height: 1.6;
+    }
+
+    .cta-photo {
+      min-height: 450px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(16, 24, 21, 0.04), rgba(16, 24, 21, 0.2)),
+        url("/assets/aaron-workshop-speaking-enhanced.webp") center 18% / cover no-repeat;
+      box-shadow: var(--shadow);
     }
 
     footer {
@@ -686,7 +703,7 @@
       }
 
       .hero {
-        min-height: 86svh;
+        min-height: auto;
       }
 
       .hero::before {
@@ -700,11 +717,27 @@
       }
 
       .hero-content {
-        padding: 104px 0 52px;
+        padding: 104px 0 44px;
       }
 
       h1 {
-        font-size: clamp(42px, 14vw, 62px);
+        font-size: clamp(38px, 13vw, 54px);
+        line-height: 0.98;
+      }
+
+      h2 {
+        font-size: clamp(31px, 9.5vw, 42px);
+        line-height: 1.06;
+      }
+
+      .hero-lead {
+        margin-top: 20px;
+        font-size: 17px;
+        line-height: 1.48;
+      }
+
+      .hero-note {
+        margin-top: 20px;
       }
 
       .button {
@@ -712,7 +745,23 @@
       }
 
       section {
-        padding: 62px 0;
+        padding: 54px 0;
+      }
+
+      .proof-strip {
+        padding: 14px 0;
+      }
+
+      .proof-strip .shell {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .proof-chip {
+        min-height: 0;
+        padding: 8px 10px;
+        font-size: 13px;
+        line-height: 1.35;
       }
 
       .section-head,
@@ -723,15 +772,24 @@
         grid-template-columns: 1fr;
       }
 
+      .proof-strip .shell {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .section-head {
-        gap: 20px;
-        margin-bottom: 28px;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .section-copy {
+        font-size: 16px;
+        line-height: 1.55;
       }
 
       .service-card {
         grid-template-columns: 1fr;
-        gap: 13px;
-        padding: 28px 0;
+        gap: 12px;
+        padding: 24px 0;
       }
 
       .mark,
@@ -743,13 +801,45 @@
 
       .service-meta {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 10px;
         align-self: start;
         margin-top: 3px;
       }
 
+      .service-card p,
+      .service-card li,
+      .about-copy p {
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .issue-list li {
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 10px;
+        padding: 15px 0;
+      }
+
+      .issue-dot {
+        width: 18px;
+        height: 18px;
+      }
+
+      .issue-dot::before {
+        width: 6px;
+        height: 6px;
+      }
+
       .outcome-panel {
-        padding: 24px;
+        padding: 20px;
+      }
+
+      .outcome-panel h3 {
+        font-size: 28px;
+      }
+
+      .outcome-list li {
+        grid-template-columns: 30px minmax(0, 1fr);
+        padding: 14px 0;
       }
 
       .outcome-panel .button {
@@ -757,12 +847,47 @@
       }
 
       .about-photo {
-        min-height: 360px;
-        background-position: center top;
+        min-height: 300px;
+        background-position: center;
       }
 
       .about-copy {
-        padding: 44px 18px 58px;
+        padding: 38px 18px 48px;
+      }
+
+      .credential-list {
+        gap: 16px;
+      }
+
+      .cta-inner {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 0;
+      }
+
+      .cta-photo {
+        order: -1;
+        min-height: 260px;
+        border: 0;
+        border-radius: 0;
+        background-position: center 18%;
+        box-shadow: none;
+      }
+
+      .cta-copy {
+        width: min(100% - 28px, 1160px);
+        margin: 0 auto;
+        padding: 48px 0 58px;
+      }
+
+      .cta-copy p {
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      .cta-copy .hero-actions {
+        margin-top: 24px;
       }
     }
   </style>
@@ -929,7 +1054,7 @@
 
     <section id="about" class="about-band">
       <div class="about-layout">
-        <div class="about-photo" aria-label="Aaron Hancock speaking at a workshop"></div>
+        <div class="about-photo" aria-label="Jobs to be done planning screen"></div>
         <div class="about-copy">
           <p class="eyebrow">About Aaron Hancock</p>
           <h2>You get a senior doer, not an agency handoff.</h2>
@@ -946,13 +1071,16 @@
 
     <section class="cta-band">
       <div class="shell cta-inner">
-        <p class="eyebrow">Free consultation</p>
-        <h2>What would feel great to stop dealing with?</h2>
-        <p>Send the website issue, repeat task, confusing tool, or AI question. In the free consultation, we will decide whether a simple fix, useful build, or support rhythm makes sense.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Book a free consultation</a>
-          <a class="button ghost" href="mailto:hello@getaudo.com?subject=Audo%20project%20help">Send the messy thing</a>
+        <div class="cta-copy">
+          <p class="eyebrow">Free consultation</p>
+          <h2>What would feel great to stop dealing with?</h2>
+          <p>Send the website issue, repeat task, confusing tool, or AI question. In the free consultation, we will decide whether a simple fix, useful build, or support rhythm makes sense.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Book a free consultation</a>
+            <a class="button ghost" href="mailto:hello@getaudo.com?subject=Audo%20project%20help">Send the messy thing</a>
+          </div>
         </div>
+        <div class="cta-photo" aria-label="Aaron Hancock speaking at a workshop"></div>
       </div>
     </section>
   </main>

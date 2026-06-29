@@ -305,7 +305,6 @@
       background: var(--paper);
     }
 
-    .service-grid,
     .why-grid,
     .proof-list {
       display: grid;
@@ -313,10 +312,10 @@
     }
 
     .service-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: grid;
+      border-top: 1px solid var(--line);
     }
 
-    .service-card,
     .proof-item {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -325,42 +324,62 @@
     }
 
     .service-card {
-      min-height: 244px;
-      padding: 22px;
+      display: grid;
+      grid-template-columns: 62px minmax(0, 0.9fr) minmax(280px, 0.72fr);
+      column-gap: 28px;
+      row-gap: 10px;
+      align-items: start;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
     }
 
     .mark {
-      width: 34px;
-      height: 34px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      color: var(--white);
-      background: var(--evergreen);
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      border: 1px solid rgba(31, 71, 57, 0.16);
+      border-radius: 50%;
+      color: var(--evergreen);
+      background: rgba(31, 71, 57, 0.07);
     }
 
     .mark svg {
-      width: 19px;
-      height: 19px;
+      width: 18px;
+      height: 18px;
       stroke: currentColor;
-      stroke-width: 2.15;
+      stroke-width: 2.05;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     .service-card:nth-child(2) .mark {
-      background: var(--teal);
+      border-color: rgba(77, 140, 131, 0.2);
+      color: var(--teal);
+      background: rgba(77, 140, 131, 0.09);
     }
 
     .service-card:nth-child(3) .mark {
-      color: #1b241f;
-      background: var(--brass);
+      border-color: rgba(208, 159, 75, 0.28);
+      color: #8c661e;
+      background: rgba(208, 159, 75, 0.12);
     }
 
     .service-card:nth-child(4) .mark {
-      background: var(--copper);
+      border-color: rgba(181, 103, 72, 0.24);
+      color: var(--copper);
+      background: rgba(181, 103, 72, 0.1);
+    }
+
+    .service-main {
+      grid-column: 2;
+    }
+
+    .service-main h3 {
+      margin-top: 3px;
     }
 
     .service-card p,
@@ -373,25 +392,35 @@
       font-size: 15px;
     }
 
+    .service-card .service-main p {
+      margin-top: 12px;
+    }
+
     .service-meta {
       display: grid;
-      gap: 9px;
-      margin: 18px 0 0;
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      align-self: center;
+      gap: 16px;
+      margin: 0;
       padding: 0;
       list-style: none;
     }
 
     .service-meta li {
       margin: 0;
-      padding-top: 9px;
-      border-top: 1px solid var(--line);
+      padding-left: 16px;
+      border-left: 2px solid rgba(31, 71, 57, 0.14);
     }
 
     .service-meta strong {
       display: block;
+      margin-bottom: 4px;
       color: var(--ink);
-      font-size: 13px;
-      margin-bottom: 3px;
+      font-size: 12px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .why-band {
@@ -553,10 +582,23 @@
     }
 
     @media (max-width: 1040px) {
-      .service-grid,
       .proof-list,
       .proof-strip .shell {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .service-card {
+        grid-template-columns: 54px minmax(0, 1fr);
+        column-gap: 20px;
+        row-gap: 10px;
+      }
+
+      .service-meta {
+        grid-column: 2;
+        grid-row: auto;
+        grid-template-columns: 1fr;
+        align-self: start;
+        margin-top: 4px;
       }
 
       .proof-item:last-child {
@@ -620,7 +662,6 @@
       }
 
       .section-head,
-      .service-grid,
       .why-grid,
       .proof-list,
       .process-list,
@@ -633,6 +674,26 @@
       .section-head {
         gap: 20px;
         margin-bottom: 28px;
+      }
+
+      .service-card {
+        grid-template-columns: 1fr;
+        gap: 13px;
+        padding: 28px 0;
+      }
+
+      .mark,
+      .service-main,
+      .service-meta {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .service-meta {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        align-self: start;
+        margin-top: 3px;
       }
 
       .proof-item:last-child {
@@ -706,11 +767,12 @@
             <div class="mark" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 5h16v12H4z"></path><path d="M8 21h8"></path><path d="M12 17v4"></path></svg>
             </div>
-            <h3>Website and app care</h3>
-            <p>Ongoing help for the site or web app that already matters: fixes, updates, improvements, and practical maintenance.</p>
+            <div class="service-main">
+              <h3>Website and app care</h3>
+              <p>Ongoing help for the site or web app that already matters: fixes, updates, improvements, and practical maintenance.</p>
+            </div>
             <ul class="service-meta">
-              <li><strong>Best for</strong> Existing sites, portals, apps, and workflows that work well enough but keep causing loose ends.</li>
-              <li><strong>Common work</strong> Forms, stale pages, confusing UX, integrations, analytics, hosting, security, and minor features.</li>
+              <li><strong>Useful when</strong> Your site, portal, or workflow works well enough to matter, but keeps creating loose ends.</li>
             </ul>
           </article>
 
@@ -718,11 +780,12 @@
             <div class="mark" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"></path><path d="M7 14v4"></path><path d="M17 14v4"></path><path d="M12 4v3"></path></svg>
             </div>
-            <h3>Build plus support</h3>
-            <p>Create a website, workflow, dashboard, or web app, then keep improving it with a partner who already knows the context.</p>
+            <div class="service-main">
+              <h3>Build plus support</h3>
+              <p>Create a website, workflow, dashboard, or web app, then keep improving it with a partner who already knows the context.</p>
+            </div>
             <ul class="service-meta">
-              <li><strong>Best for</strong> Teams that need something useful built but do not want a handoff-and-disappear vendor.</li>
-              <li><strong>What is different</strong> The person helping define the work also helps build, launch, and support it.</li>
+              <li><strong>Useful when</strong> You need something practical built, launched, and supported by the same partner.</li>
             </ul>
           </article>
 
@@ -730,11 +793,12 @@
             <div class="mark" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 3v18"></path><path d="M5 8h14"></path><path d="M7 16h10"></path><path d="M4 12h16"></path></svg>
             </div>
-            <h3>Automation and AI support</h3>
-            <p>Remove repeat work, connect tools, build better habits, and learn how to use AI with confidence in real decisions.</p>
+            <div class="service-main">
+              <h3>Automation and AI support</h3>
+              <p>Remove repeat work, connect tools, build better habits, and learn how to use AI with confidence in real decisions.</p>
+            </div>
             <ul class="service-meta">
-              <li><strong>Best for</strong> Businesses that know AI or automation could help but want to avoid fragile workflows and privacy mistakes.</li>
-              <li><strong>Common work</strong> Workflow review, tool selection, prompts, automations, coaching, human review points, and guardrails.</li>
+              <li><strong>Useful when</strong> You want less repeat work and better AI habits without fragile workflows or privacy mistakes.</li>
             </ul>
           </article>
 
@@ -742,11 +806,12 @@
             <div class="mark" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l3-4 3 2 5-7"></path></svg>
             </div>
-            <h3>Product and strategy sessions</h3>
-            <p>Pressure-test ideas, clarify customer jobs, simplify priorities, and choose the next move before you overbuild.</p>
+            <div class="service-main">
+              <h3>Product and strategy sessions</h3>
+              <p>Pressure-test ideas, clarify customer jobs, simplify priorities, and choose the next move before you overbuild.</p>
+            </div>
             <ul class="service-meta">
-              <li><strong>Best for</strong> Founders, operators, and small teams deciding whether to build, buy, automate, simplify, or wait.</li>
-              <li><strong>What you get</strong> Clear tradeoffs, a practical recommendation, and the next step worth taking.</li>
+              <li><strong>Useful when</strong> You need clear tradeoffs and a next move before you build, buy, automate, simplify, or wait.</li>
             </ul>
           </article>
         </div>

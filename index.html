@@ -122,6 +122,10 @@
       backdrop-filter: blur(10px);
     }
 
+    .nav-links .nav-cta {
+      padding: 0 14px;
+    }
+
     .hero {
       min-height: 88svh;
       position: relative;
@@ -264,6 +268,31 @@
       padding: 86px 0;
     }
 
+    .proof-strip {
+      padding: 22px 0;
+      color: var(--white);
+      background: #101815;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .proof-strip .shell {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .proof-chip {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      border-left: 2px solid var(--brass);
+      padding: 4px 14px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
     .section-head {
       display: grid;
       grid-template-columns: minmax(0, 0.86fr) minmax(300px, 0.64fr);
@@ -284,7 +313,7 @@
     }
 
     .service-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .service-card,
@@ -335,12 +364,34 @@
     }
 
     .service-card p,
+    .service-card li,
     .proof-item p,
     .about-copy p {
       margin: 13px 0 0;
       color: var(--muted);
       line-height: 1.6;
       font-size: 15px;
+    }
+
+    .service-meta {
+      display: grid;
+      gap: 9px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .service-meta li {
+      margin: 0;
+      padding-top: 9px;
+      border-top: 1px solid var(--line);
+    }
+
+    .service-meta strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      margin-bottom: 3px;
     }
 
     .why-band {
@@ -364,10 +415,18 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .process-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .proof-item {
       min-height: 196px;
       padding: 24px;
       color: var(--ink);
+    }
+
+    .process-list .proof-item {
+      min-height: 224px;
     }
 
     .proof-item strong {
@@ -440,6 +499,15 @@
       color: var(--ink);
     }
 
+    .work-note {
+      margin-top: 24px;
+      padding: 18px 0 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
     .cta-band {
       padding: 92px 0;
       color: var(--white);
@@ -475,14 +543,28 @@
       color: rgba(255, 255, 255, 0.86);
     }
 
+    footer .footer-stack {
+      display: grid;
+      gap: 5px;
+    }
+
+    footer strong {
+      color: var(--white);
+    }
+
     @media (max-width: 1040px) {
       .service-grid,
-      .proof-list {
+      .proof-list,
+      .proof-strip .shell {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .proof-item:last-child {
         grid-column: span 2;
+      }
+
+      .process-list .proof-item:last-child {
+        grid-column: auto;
       }
     }
 
@@ -541,6 +623,8 @@
       .service-grid,
       .why-grid,
       .proof-list,
+      .process-list,
+      .proof-strip .shell,
       .about-layout,
       .credential-list {
         grid-template-columns: 1fr;
@@ -590,22 +674,31 @@
       <div class="hero-content">
         <p class="eyebrow">Personal technology partner</p>
         <h1>Audo Consulting</h1>
-        <p class="hero-lead">Direct help with websites, apps, automation, AI, and product decisions from one experienced partner who can think, build, fix, and support the work.</p>
+        <p class="hero-lead">Senior technical help for small teams with websites, workflows, apps, and AI questions that keep getting pushed aside.</p>
         <div class="hero-actions">
           <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Find out what I'd fix first</a>
           <a class="button ghost" href="#services">Ways to work together</a>
         </div>
-        <p class="hero-note">I take on a small number of ongoing clients so the work stays personal, practical, and well cared for.</p>
+        <p class="hero-note">Audo helps owner-led businesses fix, improve, automate, and maintain important digital systems without agency overhead or full-time hiring.</p>
       </div>
     </div>
   </header>
 
   <main>
+    <section class="proof-strip" aria-label="Audo credibility">
+      <div class="shell">
+        <div class="proof-chip">Direct work with a senior technical partner</div>
+        <div class="proof-chip">Product leadership plus hands-on software delivery</div>
+        <div class="proof-chip">Practical AI adoption with clear guardrails</div>
+        <div class="proof-chip">Limited client roster for real ongoing context</div>
+      </div>
+    </section>
+
     <section id="services" class="services-band">
       <div class="shell">
         <div class="section-head">
           <h2>Ways to work together.</h2>
-          <p class="section-copy">Start with the problem in front of you, then choose the right level of help: one focused conversation, a useful build, or steady monthly support.</p>
+          <p class="section-copy">Bring Audo the recurring technology problem nobody owns internally, then choose the right level of help: a focused diagnosis, a useful build, or steady support.</p>
         </div>
 
         <div class="service-grid">
@@ -615,6 +708,10 @@
             </div>
             <h3>Website and app care</h3>
             <p>Ongoing help for the site or web app that already matters: fixes, updates, improvements, and practical maintenance.</p>
+            <ul class="service-meta">
+              <li><strong>Best for</strong> Existing sites, portals, apps, and workflows that work well enough but keep causing loose ends.</li>
+              <li><strong>Common work</strong> Forms, stale pages, confusing UX, integrations, analytics, hosting, security, and minor features.</li>
+            </ul>
           </article>
 
           <article class="service-card">
@@ -623,6 +720,10 @@
             </div>
             <h3>Build plus support</h3>
             <p>Create a website, workflow, dashboard, or web app, then keep improving it with a partner who already knows the context.</p>
+            <ul class="service-meta">
+              <li><strong>Best for</strong> Teams that need something useful built but do not want a handoff-and-disappear vendor.</li>
+              <li><strong>What is different</strong> The person helping define the work also helps build, launch, and support it.</li>
+            </ul>
           </article>
 
           <article class="service-card">
@@ -631,6 +732,10 @@
             </div>
             <h3>Automation and AI support</h3>
             <p>Remove repeat work, connect tools, build better habits, and learn how to use AI with confidence in real decisions.</p>
+            <ul class="service-meta">
+              <li><strong>Best for</strong> Businesses that know AI or automation could help but want to avoid fragile workflows and privacy mistakes.</li>
+              <li><strong>Common work</strong> Workflow review, tool selection, prompts, automations, coaching, human review points, and guardrails.</li>
+            </ul>
           </article>
 
           <article class="service-card">
@@ -639,6 +744,10 @@
             </div>
             <h3>Product and strategy sessions</h3>
             <p>Pressure-test ideas, clarify customer jobs, simplify priorities, and choose the next move before you overbuild.</p>
+            <ul class="service-meta">
+              <li><strong>Best for</strong> Founders, operators, and small teams deciding whether to build, buy, automate, simplify, or wait.</li>
+              <li><strong>What you get</strong> Clear tradeoffs, a practical recommendation, and the next step worth taking.</li>
+            </ul>
           </article>
         </div>
       </div>
@@ -648,40 +757,45 @@
       <div class="shell">
         <div class="section-head">
           <h2>A senior partner without agency overhead.</h2>
-          <p class="section-copy">Most small businesses do not need layers of meetings, account managers, and handoffs. They need direct access to someone who can understand the problem and move it forward.</p>
+          <p class="section-copy">Audo is consulting first. Hosting, maintenance, and tools are available when they are the simplest way to support the websites, apps, and workflows we build or improve together.</p>
         </div>
 
         <div class="why-grid">
           <div class="compare" aria-label="Why work with Audo">
             <div class="compare-row">
-              <strong>Best fit</strong>
-              <span>You have a website, app, workflow, AI question, or product idea that keeps needing attention but never gets enough of it.</span>
+              <strong>Good fit</strong>
+              <span>You need senior judgment, practical execution, and long-term context for a website, app, workflow, AI question, or product decision.</span>
             </div>
             <div class="compare-row">
-              <strong>First call</strong>
-              <span>We identify what is stuck, what matters most, what I would fix first, and whether ongoing support or a focused project makes sense.</span>
+              <strong>Not a fit</strong>
+              <span>You only want the cheapest one-off task, a large agency team, 24/7 emergency support, or AI for novelty rather than a real workflow.</span>
             </div>
             <div class="compare-row">
               <strong>Why now</strong>
-              <span>Neglected systems quietly cost time, opportunities, and trust. A few focused hours each month can keep important work from drifting.</span>
+              <span>Neglected systems quietly cost time, opportunities, and trust. A few focused hours each month can keep important work moving.</span>
             </div>
           </div>
 
-          <div class="proof-list">
+          <div class="proof-list process-list">
             <article class="proof-item">
-              <strong>Direct</strong>
-              <h3>One accountable expert.</h3>
-              <p>No relay teams. No bloated process. The person advising you stays close to the work.</p>
+              <strong>1. Triage</strong>
+              <h3>Find what is stuck.</h3>
+              <p>We look at the website, app, workflow, AI question, or product decision that needs ownership.</p>
             </article>
             <article class="proof-item">
-              <strong>Practical</strong>
-              <h3>Strategy ships.</h3>
-              <p>Clear priorities, realistic tradeoffs, useful improvements, and no pressure to overbuild.</p>
+              <strong>2. Prioritize</strong>
+              <h3>Choose what matters.</h3>
+              <p>We separate the useful next step from the nice-to-have work that can wait.</p>
             </article>
             <article class="proof-item">
-              <strong>Ongoing</strong>
-              <h3>Context compounds.</h3>
-              <p>Monthly help improves as your systems, preferences, and priorities carry forward.</p>
+              <strong>3. Improve</strong>
+              <h3>Fix, build, or simplify.</h3>
+              <p>I help execute the work directly or guide the decision when the smartest move is not to build.</p>
+            </article>
+            <article class="proof-item">
+              <strong>4. Support</strong>
+              <h3>Keep context alive.</h3>
+              <p>If it matters enough to keep, we create a rhythm for maintaining and improving it.</p>
             </article>
           </div>
         </div>
@@ -700,6 +814,7 @@
             <div class="credential">Generative AI coaching and practical adoption</div>
             <div class="credential">Web apps, dashboards, automations, and site care</div>
           </div>
+          <div class="work-note">I keep the client roster small because this work depends on context. The more I understand your systems, customers, constraints, and habits, the better the recommendations and fixes get over time.</div>
         </div>
       </div>
     </section>
@@ -708,7 +823,7 @@
       <div class="shell cta-inner">
         <p class="eyebrow">Free fit call</p>
         <h2>Bring me the thing that keeps getting pushed to next month.</h2>
-        <p>Whether it is a neglected website, a workflow that eats your week, an AI tool you are not sure how to trust, or a product idea that needs sharper thinking, we will find the most useful next step.</p>
+        <p>Send the website, workflow, app, AI question, or product decision that keeps getting stuck. On the call, we will identify what matters, what I would inspect first, and whether the right next step is a diagnostic, focused project, or ongoing support.</p>
         <div class="hero-actions">
           <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start with a free fit call</a>
           <a class="button ghost" href="mailto:hello@getaudo.com?subject=Audo%20project%20fit">Ask if this is a fit</a>
@@ -719,8 +834,14 @@
 
   <footer>
     <div class="shell">
-      <span>Audo Consulting</span>
-      <span><a href="mailto:hello@getaudo.com">hello@getaudo.com</a></span>
+      <span class="footer-stack">
+        <strong>Audo Consulting</strong>
+        <span>Aaron Hancock · Senior product, software, and AI partner</span>
+      </span>
+      <span class="footer-stack">
+        <span>Usually replies within 1-2 business days</span>
+        <a href="mailto:hello@getaudo.com">hello@getaudo.com</a>
+      </span>
     </div>
   </footer>
 </body>

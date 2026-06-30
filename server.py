@@ -8,20 +8,25 @@ import re
 import smtplib
 import sqlite3
 import sys
+import urllib.request
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse
 
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
-CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "getaudo@gmail.com")
+CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "matthewaaron@gmail.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
+RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
+RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
+RECAPTCHA_ACTION = "consultation_request"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 mimetypes.add_type("image/webp", ".webp")
@@ -41,21 +46,39 @@ def init_db() -> None:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 created_at TEXT NOT NULL,
                 name TEXT NOT NULL,
+                company_name TEXT,
+                website TEXT,
                 email TEXT NOT NULL,
                 phone TEXT,
                 service TEXT NOT NULL,
                 timeline TEXT NOT NULL,
+                preferred_times TEXT,
                 message TEXT NOT NULL,
                 source TEXT,
                 user_agent TEXT,
                 referrer TEXT,
                 ip_address TEXT,
+                recaptcha_score REAL,
+                recaptcha_action TEXT,
+                recaptcha_hostname TEXT,
                 email_status TEXT NOT NULL DEFAULT 'pending',
                 email_error TEXT,
                 emailed_at TEXT
             )
             """
         )
+        columns = {row[1] for row in conn.execute("PRAGMA table_info(consultation_requests)")}
+        migrations = {
+            "company_name": "ALTER TABLE consultation_requests ADD COLUMN company_name TEXT",
+            "website": "ALTER TABLE consultation_requests ADD COLUMN website TEXT",
+            "preferred_times": "ALTER TABLE consultation_requests ADD COLUMN preferred_times TEXT",
+            "recaptcha_score": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_score REAL",
+            "recaptcha_action": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_action TEXT",
+            "recaptcha_hostname": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_hostname TEXT",
+        }
+        for column, statement in migrations.items():
+            if column not in columns:
+                conn.execute(statement)
         conn.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_consultation_requests_created_at
@@ -75,23 +98,31 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
         cursor = conn.execute(
             """
             INSERT INTO consultation_requests (
-                created_at, name, email, phone, service, timeline, message,
-                source, user_agent, referrer, ip_address, email_status
+                created_at, name, company_name, website, email, phone, service,
+                timeline, preferred_times, message, source, user_agent, referrer,
+                ip_address, recaptcha_score, recaptcha_action, recaptcha_hostname,
+                email_status
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
             """,
             (
                 utc_now(),
                 fields["name"],
+                fields.get("company_name"),
+                fields.get("website"),
                 fields["email"],
                 fields.get("phone"),
                 fields["service"],
                 fields["timeline"],
+                fields.get("preferred_times"),
                 fields["message"],
                 fields.get("source"),
                 request_meta.get("user_agent"),
                 request_meta.get("referrer"),
                 request_meta.get("ip_address"),
+                fields.get("recaptcha_score"),
+                fields.get("recaptcha_action"),
+                fields.get("recaptcha_hostname"),
             ),
         )
         return int(cursor.lastrowid)
@@ -112,7 +143,8 @@ def mark_email_status(request_id: int, status: str, error: str | None = None) ->
 def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> EmailMessage:
     message = EmailMessage()
     service = fields.get("service", "Consultation")
-    message["Subject"] = f"New Audo consultation request: {service}"
+    company = fields.get("company_name") or fields["name"]
+    message["Subject"] = f"New Audo consultation: {company} - {service}"
     message["From"] = os.environ.get("SMTP_FROM") or os.environ.get("SMTP_USER") or "Audo <no-reply@getaudo.com>"
     message["To"] = CONSULTATION_TO
     message["Reply-To"] = fields["email"]
@@ -123,15 +155,21 @@ Request ID: {request_id}
 Submitted: {utc_now()}
 
 Name: {fields["name"]}
+Company / project: {fields.get("company_name") or "Not provided"}
+Website: {fields.get("website") or "Not provided"}
 Email: {fields["email"]}
 Phone: {fields.get("phone") or "Not provided"}
-Timing: {fields["timeline"]}
+Urgency: {fields["timeline"]}
+Consultation availability:
+{fields.get("preferred_times") or "Not provided"}
+
 Help needed: {fields["service"]}
 
 What is stuck:
 {fields["message"]}
 
 Source: {fields.get("source") or "Not provided"}
+reCAPTCHA score: {fields.get("recaptcha_score") if fields.get("recaptcha_score") is not None else "Not checked"}
 Referrer: {request_meta.get("referrer") or "Not provided"}
 IP address: {request_meta.get("ip_address") or "Not available"}
 User agent: {request_meta.get("user_agent") or "Not available"}
@@ -177,6 +215,43 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
         print(f"consultation request {request_id} stored; email failed: {exc}", file=sys.stderr)
 
 
+def verify_recaptcha(fields: dict[str, str], request_meta: dict[str, str]) -> dict[str, object]:
+    if not RECAPTCHA_SECRET_KEY:
+        return {}
+
+    token = clean(fields.get("recaptcha_token"), 4096)
+    if not token:
+        raise ValueError("Please refresh the page and try the spam check again.")
+
+    data = urlencode(
+        {
+            "secret": RECAPTCHA_SECRET_KEY,
+            "response": token,
+            "remoteip": request_meta.get("ip_address", ""),
+        }
+    ).encode("utf-8")
+    request = urllib.request.Request(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    with urllib.request.urlopen(request, timeout=8) as response:
+        result = json.loads(response.read().decode("utf-8"))
+
+    if not result.get("success"):
+        raise ValueError("The spam check failed. Please refresh the page and try again.")
+
+    action = result.get("action")
+    if action and action != RECAPTCHA_ACTION:
+        raise ValueError("The spam check did not match this form. Please refresh the page and try again.")
+
+    score = result.get("score")
+    if score is not None and float(score) < RECAPTCHA_MIN_SCORE:
+        raise ValueError("The spam check could not verify this request. Please try again.")
+
+    return result
+
+
 class AudoHandler(BaseHTTPRequestHandler):
     server_version = "AudoConsultationServer/1.0"
 
@@ -203,7 +278,10 @@ class AudoHandler(BaseHTTPRequestHandler):
             "/thank-you/": "thank-you.html",
         }
         if path in route_files:
-            self.serve_file(BASE_DIR / route_files[path])
+            if route_files[path] == "index.html":
+                self.serve_index()
+            else:
+                self.serve_file(BASE_DIR / route_files[path])
             return
 
         self.serve_static_or_index(path)
@@ -216,26 +294,34 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         try:
             fields = self.read_form_fields()
-            if clean(fields.get("company_website"), 255):
+            if clean(fields.get("website_url_confirm"), 255):
                 self.redirect("/thank-you")
                 return
-
-            payload = {
-                "name": clean(fields.get("name"), 120),
-                "email": clean(fields.get("email"), 254),
-                "phone": clean(fields.get("phone"), 80),
-                "timeline": clean(fields.get("timeline"), 80),
-                "service": clean(fields.get("service"), 120),
-                "message": clean(fields.get("message"), 5000),
-                "source": clean(fields.get("source"), 140),
-            }
-            self.validate_payload(payload)
 
             request_meta = {
                 "user_agent": clean(self.headers.get("User-Agent"), 500),
                 "referrer": clean(self.headers.get("Referer"), 500),
                 "ip_address": self.client_address[0] if self.client_address else "",
             }
+            recaptcha = verify_recaptcha(fields, request_meta)
+
+            payload = {
+                "name": clean(fields.get("name"), 120),
+                "company_name": clean(fields.get("company_name"), 160),
+                "website": clean(fields.get("website"), 260),
+                "email": clean(fields.get("email"), 254),
+                "phone": clean(fields.get("phone"), 80),
+                "timeline": clean(fields.get("timeline"), 80),
+                "preferred_times": clean(fields.get("preferred_times"), 1000),
+                "service": clean(fields.get("service"), 120),
+                "message": clean(fields.get("message"), 5000),
+                "source": clean(fields.get("source"), 140),
+                "recaptcha_score": recaptcha.get("score"),
+                "recaptcha_action": recaptcha.get("action"),
+                "recaptcha_hostname": recaptcha.get("hostname"),
+            }
+            self.validate_payload(payload)
+
             request_id = store_request(payload, request_meta)
             send_email(request_id, payload, request_meta)
             self.redirect("/thank-you")
@@ -267,10 +353,14 @@ class AudoHandler(BaseHTTPRequestHandler):
     def validate_payload(payload: dict[str, str]) -> None:
         if not payload["name"]:
             raise ValueError("Please include your name.")
+        if not payload["company_name"]:
+            raise ValueError("Please include your company or project name.")
         if not payload["email"] or not EMAIL_RE.match(payload["email"]):
             raise ValueError("Please include a valid email address.")
         if not payload["timeline"]:
             raise ValueError("Please choose a timing option.")
+        if not payload["preferred_times"]:
+            raise ValueError("Please share a few day and time options for a consultation.")
         if not payload["service"]:
             raise ValueError("Please choose the kind of help you need.")
         if not payload["message"]:
@@ -285,7 +375,17 @@ class AudoHandler(BaseHTTPRequestHandler):
         if candidate.exists():
             self.serve_file(candidate)
             return
-        self.serve_file(BASE_DIR / "index.html")
+        self.serve_index()
+
+    def serve_index(self) -> None:
+        data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
+        data = data.replace("__RECAPTCHA_SITE_KEY__", json.dumps(RECAPTCHA_SITE_KEY))
+        encoded = data.encode("utf-8")
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
 
     def serve_file(self, file_path: Path) -> None:
         if not file_path.exists() or not file_path.is_file():

@@ -42,7 +42,7 @@ as persistent storage in Coolify so form submissions survive rebuilds.
 Email delivery uses SMTP environment variables:
 
 ```bash
-CONSULTATION_TO=getaudo@gmail.com
+CONSULTATION_TO=matthewaaron@gmail.com
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=getaudo@gmail.com
@@ -53,6 +53,17 @@ SMTP_STARTTLS=true
 
 If SMTP is not configured, the request is still stored and marked
 `not_configured` in the database.
+
+Spam protection uses Google reCAPTCHA v3. Configure these runtime variables:
+
+```bash
+RECAPTCHA_SITE_KEY=<public-site-key>
+RECAPTCHA_SECRET_KEY=<secret-key>
+RECAPTCHA_MIN_SCORE=0.5
+```
+
+When `RECAPTCHA_SECRET_KEY` is set, `/api/consultation` verifies the token with
+Google before storing or emailing the request.
 
 ## Firebase Auth
 

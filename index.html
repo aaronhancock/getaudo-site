@@ -711,6 +711,14 @@
       line-height: 1.5;
     }
 
+    .form-status {
+      min-height: 18px;
+      margin: -4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
     .form-honey {
       position: absolute;
       left: -10000px;
@@ -1207,13 +1215,17 @@
         </div>
         <form class="consultation-form" action="/api/consultation" method="post">
           <div class="form-honey" aria-hidden="true">
-            <label for="company_website">Company website</label>
-            <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off">
+            <label for="website_url_confirm">Confirm website</label>
+            <input id="website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
           </div>
           <div class="form-grid">
             <div class="form-field">
               <label for="name">Name</label>
               <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+              <label for="company_name">Company / project</label>
+              <input id="company_name" name="company_name" type="text" autocomplete="organization" required>
             </div>
             <div class="form-field">
               <label for="email">Email</label>
@@ -1223,8 +1235,12 @@
               <label for="phone">Phone</label>
               <input id="phone" name="phone" type="tel" autocomplete="tel">
             </div>
+            <div class="form-field full">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
+            </div>
             <div class="form-field">
-              <label for="timeline">Timing</label>
+              <label for="timeline">Urgency</label>
               <select id="timeline" name="timeline" required>
                 <option value="">Choose one</option>
                 <option>This week</option>
@@ -1246,12 +1262,18 @@
               </select>
             </div>
             <div class="form-field full">
+              <label for="preferred_times">A few good consultation times</label>
+              <textarea id="preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
+            </div>
+            <div class="form-field full">
               <label for="message">What is stuck?</label>
-              <textarea id="message" name="message" placeholder="A few plain-English sentences are perfect." required></textarea>
+              <textarea id="message" name="message" placeholder="A few plain-English sentences are perfect. Include any useful context I should research before we talk." required></textarea>
             </div>
           </div>
           <input type="hidden" name="source" value="getaudo.com consultation form">
+          <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request my consultation</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-note">Your request goes directly to Aaron. No polished brief or technical language needed.</p>
         </form>
       </div>
@@ -1270,5 +1292,70 @@
       </span>
     </div>
   </footer>
+  <script>
+    window.AUDO_RECAPTCHA_SITE_KEY = __RECAPTCHA_SITE_KEY__;
+
+    (function () {
+      var form = document.querySelector(".consultation-form");
+      var siteKey = window.AUDO_RECAPTCHA_SITE_KEY;
+      if (!form || !siteKey) {
+        return;
+      }
+
+      var script = document.createElement("script");
+      script.src = "https://www.google.com/recaptcha/api.js?render=" + encodeURIComponent(siteKey);
+      script.async = true;
+      document.head.appendChild(script);
+
+      form.addEventListener("submit", function (event) {
+        if (form.dataset.recaptchaSubmitted === "true") {
+          return;
+        }
+
+        event.preventDefault();
+        var button = form.querySelector("button[type='submit']");
+        var status = form.querySelector(".form-status");
+        var tokenInput = form.querySelector("input[name='recaptcha_token']");
+        if (button) {
+          button.disabled = true;
+          button.textContent = "Checking request...";
+        }
+        if (status) {
+          status.textContent = "Running a quick spam check.";
+        }
+
+        function resetForm(message) {
+          if (button) {
+            button.disabled = false;
+            button.textContent = "Request my consultation";
+          }
+          if (status) {
+            status.textContent = message;
+          }
+        }
+
+        function runCheck() {
+          if (!window.grecaptcha || !window.grecaptcha.ready) {
+            resetForm("The spam check is still loading. Please try again in a moment.");
+            return;
+          }
+
+          window.grecaptcha.ready(function () {
+            window.grecaptcha.execute(siteKey, { action: "consultation_request" })
+              .then(function (token) {
+                tokenInput.value = token;
+                form.dataset.recaptchaSubmitted = "true";
+                form.submit();
+              })
+              .catch(function () {
+                resetForm("The spam check could not complete. Please try again.");
+              });
+          });
+        }
+
+        runCheck();
+      });
+    }());
+  </script>
 </body>
 </html>

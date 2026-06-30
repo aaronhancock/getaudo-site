@@ -450,44 +450,52 @@
       line-height: 1.55;
     }
 
-    .process-band {
-      background: var(--paper);
+    .cta-process {
+      display: grid;
+      gap: 14px;
+      margin-top: clamp(30px, 5vw, 48px);
+      padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     .process-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.13);
     }
 
     .process-card {
-      min-height: 230px;
       display: grid;
-      align-content: start;
-      gap: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 24px;
-      background: rgba(255, 255, 255, 0.7);
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 13px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
     }
 
     .process-number {
-      width: 30px;
-      height: 30px;
+      width: 26px;
+      height: 26px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      color: var(--white);
-      background: var(--evergreen);
-      font-size: 13px;
+      color: #101815;
+      background: var(--brass);
+      font-size: 12px;
       font-weight: 820;
     }
 
+    .process-card h3 {
+      margin-top: 0;
+      color: var(--white);
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
     .process-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .about-band {
@@ -546,6 +554,22 @@
       color: rgba(255, 255, 255, 0.78);
       font-size: 19px;
       line-height: 1.6;
+    }
+
+    .cta-copy .panel-label {
+      max-width: none;
+      margin: 0 0 14px;
+      color: var(--brass);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .cta-copy .process-card p {
+      max-width: none;
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .consultation-form {
@@ -664,10 +688,6 @@
     }
 
     @media (max-width: 1040px) {
-      .process-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
       .service-card {
         grid-template-columns: 54px minmax(0, 1fr);
         column-gap: 20px;
@@ -777,10 +797,6 @@
         line-height: 1.55;
       }
 
-      .process-grid {
-        grid-template-columns: 1fr;
-      }
-
       .issue-list li {
         grid-template-columns: 26px minmax(0, 1fr);
         gap: 10px;
@@ -795,11 +811,6 @@
       .issue-dot::before {
         width: 6px;
         height: 6px;
-      }
-
-      .process-card {
-        min-height: 0;
-        padding: 20px;
       }
 
       .about-photo {
@@ -975,34 +986,6 @@
       </div>
     </section>
 
-    <section id="process" class="process-band">
-      <div class="shell">
-        <div class="section-head">
-          <h2>What happens next.</h2>
-        </div>
-
-        <div class="process-grid">
-          <article class="process-card">
-            <span class="process-number">1</span>
-            <h3>I review the context.</h3>
-            <p>Your website, company, workflow, app, AI question, or product idea gets a real look before we talk.</p>
-          </article>
-
-          <article class="process-card">
-            <span class="process-number">2</span>
-            <h3>We find the best first move.</h3>
-            <p>We decide whether to fix, automate, build, coach, simplify, support, or wait.</p>
-          </article>
-
-          <article class="process-card">
-            <span class="process-number">3</span>
-            <h3>You leave with clarity.</h3>
-            <p>You will know what matters, what can wait, and what kind of help makes sense.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section id="about" class="about-band">
       <div class="about-layout">
         <div class="about-photo" aria-label="Portrait of Aaron Hancock outdoors"></div>
@@ -1022,6 +1005,34 @@
           <p class="eyebrow">Free consultation</p>
           <h2>Start with one issue.</h2>
           <p>Tell me what keeps getting pushed off. Your request goes directly to Aaron, and no polished brief or technical language is needed.</p>
+          <div class="cta-process" aria-label="What happens next">
+            <p class="panel-label">What happens next</p>
+            <div class="process-grid">
+              <article class="process-card">
+                <span class="process-number">1</span>
+                <div>
+                  <h3>I review the context.</h3>
+                  <p>Your website, company, workflow, app, AI question, or product idea gets a real look before we talk.</p>
+                </div>
+              </article>
+
+              <article class="process-card">
+                <span class="process-number">2</span>
+                <div>
+                  <h3>We find the best first move.</h3>
+                  <p>We decide whether to fix, automate, build, coach, simplify, support, or wait.</p>
+                </div>
+              </article>
+
+              <article class="process-card">
+                <span class="process-number">3</span>
+                <div>
+                  <h3>You leave with clarity.</h3>
+                  <p>You will know what matters, what can wait, and what kind of help makes sense.</p>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
         <form class="consultation-form" action="/api/consultation" method="post">
           <div class="form-honey" aria-hidden="true">

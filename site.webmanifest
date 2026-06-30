@@ -1,0 +1,22 @@
+{
+  "name": "Audo",
+  "short_name": "Audo",
+  "description": "Senior technology help for websites, AI, automation, apps, and product strategy.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101815",
+  "theme_color": "#101815",
+  "icons": [
+    {
+      "src": "/assets/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

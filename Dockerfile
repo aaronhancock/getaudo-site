@@ -16,6 +16,10 @@ COPY server.py /app/server.py
 COPY index.html /app/index.html
 COPY thank-you.html /app/thank-you.html
 COPY favicon.ico /app/favicon.ico
+COPY llms.txt /app/llms.txt
+COPY robots.txt /app/robots.txt
+COPY sitemap.xml /app/sitemap.xml
+COPY site.webmanifest /app/site.webmanifest
 COPY assets /app/assets
 
 VOLUME ["/data/audo"]

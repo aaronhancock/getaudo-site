@@ -1,0 +1,24 @@
+# Audo
+
+> Senior technology help for websites, web applications, automation, AI coaching, and product strategy.
+
+Audo helps individuals and small businesses get practical technology work off their plate. The business is led by Aaron Hancock and is intentionally small so clients can work directly with one senior partner who understands the context, makes the fix, and can continue supporting the work.
+
+Website: https://getaudo.com/
+Consultation: https://getaudo.com/#consultation
+
+## Services
+
+- Website and web application management: ongoing care for existing websites, apps, forms, hosting, analytics, integrations, UX cleanup, and practical improvements.
+- Website, dashboard, and internal tool creation: useful websites, dashboards, intake flows, internal tools, MVPs, prototypes, and supported launches.
+- Automation consulting: help with repeat tasks, follow-up, scheduling, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
+- AI coaching, training, and support: practical AI use cases, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
+- Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps.
+
+## Best Fit
+
+Audo is a good fit when a client has a website, app, workflow, AI question, automation idea, or product decision that matters but keeps getting pushed off. Clients do not need a technical project brief to start.
+
+## Why Audo
+
+Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone.

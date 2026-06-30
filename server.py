@@ -31,6 +31,8 @@ EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 mimetypes.add_type("image/webp", ".webp")
 mimetypes.add_type("image/svg+xml", ".svg")
+mimetypes.add_type("application/manifest+json", ".webmanifest")
+mimetypes.add_type("application/xml", ".xml")
 
 
 def utc_now() -> str:
@@ -261,13 +263,20 @@ class AudoHandler(BaseHTTPRequestHandler):
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         super().end_headers()
 
+    def do_HEAD(self) -> None:
+        self.handle_get(send_body=False)
+
     def do_GET(self) -> None:
+        self.handle_get(send_body=True)
+
+    def handle_get(self, send_body: bool = True) -> None:
         path = urlparse(self.path).path
         if path == "/health":
             self.send_response(HTTPStatus.OK)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
-            self.wfile.write(b"ok")
+            if send_body:
+                self.wfile.write(b"ok")
             return
 
         route_files = {
@@ -281,12 +290,12 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         if path in route_files:
             if route_files[path] == "index.html":
-                self.serve_index()
+                self.serve_index(send_body=send_body)
             else:
-                self.serve_file(BASE_DIR / route_files[path])
+                self.serve_file(BASE_DIR / route_files[path], send_body=send_body)
             return
 
-        self.serve_static_or_index(path)
+        self.serve_static_or_index(path, send_body=send_body)
 
     def do_POST(self) -> None:
         path = urlparse(self.path).path
@@ -366,18 +375,18 @@ class AudoHandler(BaseHTTPRequestHandler):
         if not payload["message"]:
             raise ValueError("Please describe what needs help.")
 
-    def serve_static_or_index(self, path: str) -> None:
+    def serve_static_or_index(self, path: str, send_body: bool = True) -> None:
         safe_path = Path(path.lstrip("/"))
         candidate = (BASE_DIR / safe_path).resolve()
         if not str(candidate).startswith(str(BASE_DIR)) or candidate.is_dir():
-            self.serve_file(BASE_DIR / "index.html")
+            self.serve_file(BASE_DIR / "index.html", send_body=send_body)
             return
         if candidate.exists():
-            self.serve_file(candidate)
+            self.serve_file(candidate, send_body=send_body)
             return
-        self.serve_index()
+        self.serve_index(send_body=send_body)
 
-    def serve_index(self) -> None:
+    def serve_index(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
         data = data.replace("__RECAPTCHA_SITE_KEY__", json.dumps(RECAPTCHA_SITE_KEY))
         encoded = data.encode("utf-8")
@@ -385,9 +394,10 @@ class AudoHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(encoded)))
         self.end_headers()
-        self.wfile.write(encoded)
+        if send_body:
+            self.wfile.write(encoded)
 
-    def serve_file(self, file_path: Path) -> None:
+    def serve_file(self, file_path: Path, send_body: bool = True) -> None:
         if not file_path.exists() or not file_path.is_file():
             self.send_error(HTTPStatus.NOT_FOUND)
             return
@@ -399,7 +409,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         if "/assets/" in str(file_path):
             self.send_header("Cache-Control", "public, max-age=2592000, immutable")
         self.end_headers()
-        self.wfile.write(data)
+        if send_body:
+            self.wfile.write(data)
 
     def redirect(self, location: str) -> None:
         self.send_response(HTTPStatus.SEE_OTHER)

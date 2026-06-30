@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Audo favicon</title>
+  <desc id="desc">A dark rounded square with a bright green Audo A mark.</desc>
+  <defs>
+    <linearGradient id="audoFaviconGradient" x1="68" y1="204" x2="188" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#22d39b"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="#101815"/>
+  <path d="M62 194 113 69c6-15 24-15 30 0l51 125" fill="none" stroke="url(#audoFaviconGradient)" stroke-width="32" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M100 151h56l13 28H87z" fill="#f7fff9"/>
+</svg>

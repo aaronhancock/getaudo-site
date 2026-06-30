@@ -31,6 +31,29 @@ docker run --rm -p 8080:80 getaudo-site
 
 Then open `http://127.0.0.1:8080`.
 
+## Consultation Form
+
+The public site posts consultation requests to `/api/consultation`.
+
+Each request is written to SQLite first, then emailed to `getaudo@gmail.com`.
+The default database path is `/data/audo/consultations.sqlite3`; keep `/data/audo`
+as persistent storage in Coolify so form submissions survive rebuilds.
+
+Email delivery uses SMTP environment variables:
+
+```bash
+CONSULTATION_TO=getaudo@gmail.com
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=getaudo@gmail.com
+SMTP_PASS=<gmail-app-password>
+SMTP_FROM=getaudo@gmail.com
+SMTP_STARTTLS=true
+```
+
+If SMTP is not configured, the request is still stored and marked
+`not_configured` in the database.
+
 ## Firebase Auth
 
 For production, create `firebase-config.json` next to `index.html` using `firebase-config.example.json` as the shape.

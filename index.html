@@ -618,7 +618,7 @@
     .cta-inner {
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.68fr);
+      grid-template-columns: minmax(0, 0.82fr) minmax(360px, 0.78fr);
       gap: clamp(32px, 5vw, 64px);
       align-items: center;
       padding: 72px 0;
@@ -636,14 +636,87 @@
       line-height: 1.6;
     }
 
-    .cta-photo {
-      min-height: 450px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+    .consultation-form {
+      display: grid;
+      gap: 16px;
+      padding: clamp(22px, 3vw, 32px);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(16, 24, 21, 0.04), rgba(16, 24, 21, 0.2)),
-        url("/assets/aaron-workshop-speaking-enhanced.webp") center 18% / cover no-repeat;
       box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(24, 34, 29, 0.18);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--ink);
+      background: var(--white);
+      font: inherit;
+      line-height: 1.35;
+      outline: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--brass);
+      box-shadow: 0 0 0 3px rgba(240, 198, 111, 0.24);
+    }
+
+    .form-field textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    .consultation-form .button {
+      width: 100%;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 820;
+    }
+
+    .form-note {
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .form-honey {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
     }
 
     footer {
@@ -876,19 +949,10 @@
         padding: 0;
       }
 
-      .cta-photo {
-        order: -1;
-        min-height: 260px;
-        border: 0;
-        border-radius: 0;
-        background-position: center 18%;
-        box-shadow: none;
-      }
-
       .cta-copy {
         width: min(100% - 28px, 1160px);
         margin: 0 auto;
-        padding: 48px 0 58px;
+        padding: 48px 0 28px;
       }
 
       .cta-copy p {
@@ -898,6 +962,17 @@
 
       .cta-copy .hero-actions {
         margin-top: 24px;
+      }
+
+      .consultation-form {
+        width: min(100% - 28px, 1160px);
+        margin: 0 auto 54px;
+        padding: 20px;
+        box-shadow: none;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -912,7 +987,7 @@
         <a href="#services">Services</a>
         <a href="#why">Why Audo</a>
         <a href="#about">About</a>
-        <a class="nav-cta" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start a consultation</a>
+        <a class="nav-cta" href="#consultation">Start a consultation</a>
       </div>
     </div>
   </nav>
@@ -924,7 +999,7 @@
         <h1>Get tech off your plate.</h1>
         <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage websites, web apps, AI, everyday workflows, and product ideas.</p>
         <div class="hero-actions">
-          <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start a free consultation</a>
+          <a class="button primary" href="#consultation">Start a free consultation</a>
           <a class="button ghost" href="#services">See how I can help</a>
         </div>
         <p class="hero-note">No polished project brief needed. Send the annoying thing; I will help sort the next step.</p>
@@ -1089,7 +1164,7 @@
             <ul class="outcome-list">
               <li>
                 <span class="outcome-number">1</span>
-                <span><strong>Send the messy thing</strong> A short email is enough. You do not need to know the technical answer.</span>
+                <span><strong>Share the messy thing</strong> You do not need to know the technical answer. Start with what is frustrating or stuck.</span>
               </li>
               <li>
                 <span class="outcome-number">2</span>
@@ -1100,7 +1175,7 @@
                 <span><strong>Choose the rhythm</strong> One-time help, build plus support, or a light monthly support plan.</span>
               </li>
             </ul>
-            <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start a free consultation</a>
+            <a class="button primary" href="#consultation">Start a free consultation</a>
           </div>
         </div>
       </div>
@@ -1123,18 +1198,62 @@
       </div>
     </section>
 
-    <section class="cta-band">
+    <section id="consultation" class="cta-band">
       <div class="shell cta-inner">
         <div class="cta-copy">
           <p class="eyebrow">Free consultation</p>
           <h2>Start with one stuck thing.</h2>
-          <p>Send the website, app, automation, AI, or product question that keeps taking time. A short email is enough; if it looks useful, we will schedule a conversation and choose a practical first step.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="mailto:hello@getaudo.com?subject=Free%20Audo%20consultation">Start a free consultation</a>
-            <a class="button ghost" href="mailto:hello@getaudo.com?subject=Audo%20messy%20digital%20problem">Email the messy thing</a>
-          </div>
+          <p>Tell me what keeps getting pushed off: the website, app, automation, AI, or product problem that needs a capable owner. I will review it personally and respond with a practical next step.</p>
         </div>
-        <div class="cta-photo" aria-label="Aaron Hancock speaking at a workshop"></div>
+        <form class="consultation-form" action="/api/consultation" method="post">
+          <div class="form-honey" aria-hidden="true">
+            <label for="company_website">Company website</label>
+            <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+            <div class="form-field">
+              <label for="timeline">Timing</label>
+              <select id="timeline" name="timeline" required>
+                <option value="">Choose one</option>
+                <option>This week</option>
+                <option>Next few weeks</option>
+                <option>This month</option>
+                <option>No rush yet</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="service">What kind of help do you need?</label>
+              <select id="service" name="service" required>
+                <option value="">Choose one</option>
+                <option>Website or app management</option>
+                <option>New website, app, or internal tool</option>
+                <option>Automation</option>
+                <option>AI coaching or support</option>
+                <option>Product consulting or strategy</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="message">What is stuck?</label>
+              <textarea id="message" name="message" placeholder="A few plain-English sentences are perfect." required></textarea>
+            </div>
+          </div>
+          <input type="hidden" name="source" value="getaudo.com consultation form">
+          <button class="button primary" type="submit">Request my consultation</button>
+          <p class="form-note">Your request goes directly to Aaron. No polished brief or technical language needed.</p>
+        </form>
       </div>
     </section>
   </main>
@@ -1147,7 +1266,7 @@
       </span>
       <span class="footer-stack">
         <span>Free consultation</span>
-        <a href="mailto:hello@getaudo.com">hello@getaudo.com</a>
+        <a href="#consultation">Request a consultation</a>
       </span>
     </div>
   </footer>

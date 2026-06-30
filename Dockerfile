@@ -1,12 +1,25 @@
-FROM nginx:1.27-alpine
+FROM python:3.12-slim
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY index.html /usr/share/nginx/html/index.html
-COPY app.html /usr/share/nginx/html/app.html
-COPY firebase-config*.json /usr/share/nginx/html/
-COPY app-config*.json /usr/share/nginx/html/
-COPY assets /usr/share/nginx/html/assets
+WORKDIR /app
+
+ENV PORT=80 \
+    DATA_DIR=/data/audo \
+    DATABASE_PATH=/data/audo/consultations.sqlite3 \
+    CONSULTATION_TO=getaudo@gmail.com \
+    PUBLIC_BASE_URL=https://getaudo.com
+
+COPY server.py /app/server.py
+COPY index.html /app/index.html
+COPY thank-you.html /app/thank-you.html
+COPY app.html /app/app.html
+COPY firebase-config*.json /app/
+COPY app-config*.json /app/
+COPY assets /app/assets
+
+VOLUME ["/data/audo"]
 
 EXPOSE 80
 
-HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD python -c "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:%s/health' % os.environ.get('PORT', '80'), timeout=2).read()" || exit 1
+
+CMD ["python", "server.py"]

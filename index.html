@@ -317,7 +317,7 @@
 
     .service-card {
       display: grid;
-      grid-template-columns: 62px minmax(0, 0.9fr) minmax(280px, 0.72fr);
+      grid-template-columns: 62px minmax(0, 1fr);
       column-gap: 28px;
       row-gap: 10px;
       align-items: start;
@@ -375,7 +375,6 @@
     }
 
     .service-card p,
-    .service-card li,
     .about-copy p {
       margin: 13px 0 0;
       color: var(--muted);
@@ -385,33 +384,6 @@
 
     .service-card .service-main p {
       margin-top: 12px;
-    }
-
-    .service-meta {
-      display: grid;
-      grid-column: 3;
-      grid-row: 1 / span 2;
-      align-self: center;
-      gap: 16px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .service-meta li {
-      margin: 0;
-      padding-left: 16px;
-      border-left: 2px solid rgba(31, 71, 57, 0.14);
-    }
-
-    .service-meta strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--ink);
-      font-size: 12px;
-      line-height: 1.2;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
     }
 
     .why-band {
@@ -671,14 +643,6 @@
         row-gap: 10px;
       }
 
-      .service-meta {
-        grid-column: 2;
-        grid-row: auto;
-        grid-template-columns: 1fr;
-        align-self: start;
-        margin-top: 4px;
-      }
-
     }
 
     @media (max-width: 760px) {
@@ -793,21 +757,12 @@
       }
 
       .mark,
-      .service-main,
-      .service-meta {
+      .service-main {
         grid-column: 1;
         grid-row: auto;
       }
 
-      .service-meta {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        align-self: start;
-        margin-top: 3px;
-      }
-
       .service-card p,
-      .service-card li,
       .about-copy p {
         font-size: 14px;
         line-height: 1.55;
@@ -948,9 +903,6 @@
               <h3>Website and app management</h3>
               <p>Ongoing care for the site, app, portal, or workflow you already rely on: fixes, updates, improvements, integrations, and support.</p>
             </div>
-            <ul class="service-meta">
-              <li><strong>Pain removed</strong> The important digital thing stays useful, current, and off your worry list.</li>
-            </ul>
           </article>
 
           <article class="service-card">
@@ -961,9 +913,6 @@
               <h3>New sites and useful tools</h3>
               <p>Create a website, workflow, dashboard, web app, or internal tool, then keep improving it with someone who knows the context.</p>
             </div>
-            <ul class="service-meta">
-              <li><strong>Pain removed</strong> You are not left with a launch and no one to support it.</li>
-            </ul>
           </article>
 
           <article class="service-card">
@@ -974,9 +923,6 @@
               <h3>Automation and AI coaching</h3>
               <p>Identify repeat work, connect tools, design useful prompts, and learn where AI can actually help your day-to-day decisions.</p>
             </div>
-            <ul class="service-meta">
-              <li><strong>Pain removed</strong> Practical time savings without turning work into a science project.</li>
-            </ul>
           </article>
 
           <article class="service-card">
@@ -987,9 +933,6 @@
               <h3>Product consulting and strategy</h3>
               <p>Pressure-test ideas, simplify priorities, and choose whether to build, buy, automate, support, or wait.</p>
             </div>
-            <ul class="service-meta">
-              <li><strong>Pain removed</strong> You make smarter decisions before spending real money or momentum.</li>
-            </ul>
           </article>
         </div>
       </div>

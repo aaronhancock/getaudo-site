@@ -15,10 +15,7 @@ ENV PORT=80 \
 COPY server.py /app/server.py
 COPY index.html /app/index.html
 COPY thank-you.html /app/thank-you.html
-COPY app.html /app/app.html
 COPY favicon.ico /app/favicon.ico
-COPY firebase-config*.json /app/
-COPY app-config*.json /app/
 COPY assets /app/assets
 
 VOLUME ["/data/audo"]

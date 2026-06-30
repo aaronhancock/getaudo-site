@@ -1,9 +1,0 @@
-{
-  "apiBaseUrl": "https://api.getaudo.com",
-  "firebase": {
-    "apiKey": "",
-    "authDomain": "",
-    "projectId": "",
-    "appId": ""
-  }
-}

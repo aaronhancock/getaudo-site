@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Audo | Technology Consulting for Individuals and Small Businesses</title>
-  <meta name="description" content="Audo helps individuals and small businesses automate work, use AI confidently, create and maintain websites and apps, and get practical product consulting.">
+  <meta name="description" content="Audo helps individuals and small businesses fix, build, automate, and manage the websites, apps, AI tools, workflows, and product ideas that need a capable owner.">
   <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
@@ -271,31 +271,6 @@
       padding: 86px 0;
     }
 
-    .proof-strip {
-      padding: 22px 0;
-      color: var(--white);
-      background: #101815;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .proof-strip .shell {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .proof-chip {
-      min-height: 54px;
-      display: flex;
-      align-items: center;
-      border-left: 2px solid var(--brass);
-      padding: 4px 14px;
-      color: rgba(255, 255, 255, 0.82);
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
     .section-head {
       display: grid;
       grid-template-columns: minmax(0, 0.86fr) minmax(300px, 0.64fr);
@@ -369,6 +344,12 @@
       background: rgba(181, 103, 72, 0.1);
     }
 
+    .service-card:nth-child(5) .mark {
+      border-color: rgba(140, 169, 180, 0.32);
+      color: #496f7c;
+      background: rgba(140, 169, 180, 0.13);
+    }
+
     .service-main {
       grid-column: 2;
     }
@@ -389,44 +370,6 @@
       margin-top: 12px;
     }
 
-    .examples-band {
-      padding-top: 0;
-      background: var(--paper);
-    }
-
-    .example-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .example-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .example-card h3 {
-      font-size: 16px;
-    }
-
-    .example-list {
-      display: grid;
-      gap: 9px;
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.42;
-    }
-
-    .example-list li {
-      padding-top: 9px;
-      border-top: 1px solid rgba(24, 34, 29, 0.1);
-    }
-
     .why-band {
       color: var(--white);
       background:
@@ -439,13 +382,12 @@
     }
 
     .why-grid {
-      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
+      grid-template-columns: minmax(0, 1fr);
       align-items: stretch;
       gap: 28px;
     }
 
-    .issue-panel,
-    .outcome-panel {
+    .issue-panel {
       border-radius: 8px;
     }
 
@@ -462,8 +404,7 @@
       text-transform: uppercase;
     }
 
-    .issue-list,
-    .outcome-list {
+    .issue-list {
       display: grid;
       margin: 0;
       padding: 0;
@@ -509,62 +450,44 @@
       line-height: 1.55;
     }
 
-    .outcome-panel {
+    .process-band {
+      background: var(--paper);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .process-card {
+      min-height: 230px;
       display: grid;
       align-content: start;
-      padding: 30px;
-      color: var(--ink);
-      background: var(--white);
-      box-shadow: var(--shadow);
+      gap: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.7);
     }
 
-    .outcome-panel .panel-label {
-      color: var(--evergreen);
-    }
-
-    .outcome-panel h3 {
-      max-width: 430px;
-      font-size: clamp(28px, 3.1vw, 38px);
-      line-height: 1.06;
-    }
-
-    .outcome-list {
-      margin-top: 20px;
-      border-top: 1px solid var(--line);
-    }
-
-    .outcome-list li {
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr);
-      gap: 13px;
-      padding: 17px 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .outcome-number {
-      width: 26px;
-      height: 26px;
+    .process-number {
+      width: 30px;
+      height: 30px;
       display: grid;
       place-items: center;
       border-radius: 50%;
       color: var(--white);
       background: var(--evergreen);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 820;
     }
 
-    .outcome-list strong {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--ink);
-      line-height: 1.25;
-    }
-
-    .outcome-panel .button {
-      width: fit-content;
-      margin-top: 24px;
+    .process-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
     }
 
     .about-band {
@@ -586,21 +509,6 @@
     .about-copy {
       align-self: center;
       padding: clamp(44px, 7vw, 82px);
-    }
-
-    .credential-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .credential {
-      border-top: 2px solid var(--brass);
-      padding-top: 12px;
-      font-size: 15px;
-      line-height: 1.45;
-      color: var(--ink);
     }
 
     .work-note {
@@ -638,84 +546,6 @@
       color: rgba(255, 255, 255, 0.78);
       font-size: 19px;
       line-height: 1.6;
-    }
-
-    .cta-copy .panel-label {
-      max-width: none;
-      margin: 0 0 14px;
-      color: var(--brass);
-      font-size: 12px;
-      line-height: 1.2;
-    }
-
-    .consultation-prompt {
-      display: grid;
-      gap: 14px;
-      margin-top: clamp(30px, 5vw, 54px);
-      padding-top: 28px;
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .prompt-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .prompt-pill {
-      min-height: 54px;
-      display: flex;
-      align-items: center;
-      padding: 13px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
-      color: rgba(255, 255, 255, 0.88);
-      background: rgba(255, 255, 255, 0.055);
-      font-size: 15px;
-      font-weight: 760;
-      line-height: 1.3;
-    }
-
-    .consultation-next {
-      display: grid;
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .next-list {
-      display: grid;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
-    }
-
-    .next-item {
-      display: grid;
-      grid-template-columns: 26px minmax(0, 1fr);
-      gap: 12px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-      color: rgba(255, 255, 255, 0.76);
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .next-item strong {
-      display: block;
-      margin-bottom: 2px;
-      color: var(--white);
-      font-size: 16px;
-      line-height: 1.25;
-    }
-
-    .next-number {
-      width: 26px;
-      height: 26px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #101815;
-      background: var(--brass);
-      font-size: 12px;
-      font-weight: 820;
     }
 
     .consultation-form {
@@ -834,11 +664,7 @@
     }
 
     @media (max-width: 1040px) {
-      .proof-strip .shell {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .example-grid {
+      .process-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -917,32 +743,10 @@
         padding: 54px 0;
       }
 
-      .proof-strip {
-        padding: 14px 0;
-      }
-
-      .proof-strip .shell {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-      }
-
-      .proof-chip {
-        min-height: 0;
-        padding: 8px 10px;
-        font-size: 13px;
-        line-height: 1.35;
-      }
-
       .section-head,
       .why-grid,
-      .proof-strip .shell,
-      .about-layout,
-      .credential-list {
+      .about-layout {
         grid-template-columns: 1fr;
-      }
-
-      .proof-strip .shell {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .section-head {
@@ -973,17 +777,8 @@
         line-height: 1.55;
       }
 
-      .example-grid {
+      .process-grid {
         grid-template-columns: 1fr;
-      }
-
-      .example-card {
-        padding: 16px;
-      }
-
-      .example-list {
-        gap: 7px;
-        font-size: 13px;
       }
 
       .issue-list li {
@@ -1002,21 +797,9 @@
         height: 6px;
       }
 
-      .outcome-panel {
+      .process-card {
+        min-height: 0;
         padding: 20px;
-      }
-
-      .outcome-panel h3 {
-        font-size: 28px;
-      }
-
-      .outcome-list li {
-        grid-template-columns: 30px minmax(0, 1fr);
-        padding: 14px 0;
-      }
-
-      .outcome-panel .button {
-        width: 100%;
       }
 
       .about-photo {
@@ -1026,10 +809,6 @@
 
       .about-copy {
         padding: 38px 18px 48px;
-      }
-
-      .credential-list {
-        gap: 16px;
       }
 
       .cta-inner {
@@ -1052,14 +831,6 @@
 
       .cta-copy .hero-actions {
         margin-top: 24px;
-      }
-
-      .consultation-prompt {
-        display: none;
-      }
-
-      .consultation-next {
-        display: none;
       }
 
       .consultation-form {
@@ -1095,7 +866,7 @@
       <div class="hero-content">
         <p class="eyebrow">Personal technology partner</p>
         <h1>Get tech off your plate.</h1>
-        <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage websites, web apps, AI, everyday workflows, and product ideas.</p>
+        <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the websites, apps, AI tools, workflows, and product ideas that need a capable owner.</p>
         <div class="hero-actions">
           <a class="button primary" href="#consultation">Start a free consultation</a>
           <a class="button ghost" href="#services">See how I can help</a>
@@ -1106,20 +877,11 @@
   </header>
 
   <main>
-    <section class="proof-strip" aria-label="Audo credibility">
-      <div class="shell">
-        <div class="proof-chip">Automate repeat work.</div>
-        <div class="proof-chip">Use AI with confidence.</div>
-        <div class="proof-chip">Build or improve sites and apps.</div>
-        <div class="proof-chip">Set up light monthly support.</div>
-      </div>
-    </section>
-
     <section id="services" class="services-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Ways I can help.</h2>
-          <p class="section-copy">Start with what is draining time or needs attention: a site that needs care, repeat work, an AI question, or an idea that needs shape.</p>
+          <h2>Things you can bring me.</h2>
+          <p class="section-copy">You do not have to know the technical category. If one of these sounds close, it is enough to start.</p>
         </div>
 
         <div class="service-grid">
@@ -1128,8 +890,8 @@
               <svg viewBox="0 0 24 24"><path d="M4 5h16v12H4z"></path><path d="M8 21h8"></path><path d="M12 17v4"></path></svg>
             </div>
             <div class="service-main">
-              <h3>Website and app management</h3>
-              <p>For existing sites, apps, portals, and workflows that need fixes, updates, cleanup, integrations, or steady monthly care.</p>
+              <h3>A site or app that needs attention</h3>
+              <p>Existing websites, apps, portals, forms, hosting, domains, analytics, UX cleanup, integrations, or steady monthly care.</p>
             </div>
           </article>
 
@@ -1138,8 +900,8 @@
               <svg viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"></path><path d="M7 14v4"></path><path d="M17 14v4"></path><path d="M12 4v3"></path></svg>
             </div>
             <div class="service-main">
-              <h3>New sites and useful tools</h3>
-              <p>For a website, dashboard, internal tool, workflow, or web app you want built, launched, and supported.</p>
+              <h3>A new site, dashboard, or useful tool</h3>
+              <p>Landing pages, simple websites, intake forms, dashboards, internal tools, MVPs, prototypes, or supported launches.</p>
             </div>
           </article>
 
@@ -1148,8 +910,18 @@
               <svg viewBox="0 0 24 24"><path d="M12 3v18"></path><path d="M5 8h14"></path><path d="M7 16h10"></path><path d="M4 12h16"></path></svg>
             </div>
             <div class="service-main">
-              <h3>Automation and AI coaching</h3>
-              <p>For repeat work, AI training, prompts, tool selection, simple automations, and practical guardrails.</p>
+              <h3>Repeat work that should be automated</h3>
+              <p>CRM follow-up, scheduling, reminders, documents, reports, invoices, spreadsheets, SOPs, and tool integrations.</p>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3v4"></path><path d="M12 17v4"></path><path d="M4.9 4.9l2.8 2.8"></path><path d="M16.3 16.3l2.8 2.8"></path><path d="M3 12h4"></path><path d="M17 12h4"></path><path d="M4.9 19.1l2.8-2.8"></path><path d="M16.3 7.7l2.8-2.8"></path></svg>
+            </div>
+            <div class="service-main">
+              <h3>AI that needs to become useful</h3>
+              <p>Prompt coaching, team training, privacy guardrails, tool selection, research, writing, analysis, and AI-assisted workflows.</p>
             </div>
           </article>
 
@@ -1158,65 +930,9 @@
               <svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l3-4 3 2 5-7"></path></svg>
             </div>
             <div class="service-main">
-              <h3>Product consulting and strategy</h3>
-              <p>For ideas that need better priorities, customer clarity, technical tradeoffs, MVP scope, or a smarter next move.</p>
+              <h3>A product idea that needs shape</h3>
+              <p>Customer jobs, feature priorities, MVP scope, prototypes, technical feasibility, build-vs-buy decisions, and avoiding overbuild.</p>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="examples-band" aria-label="Example problems Audo can help with">
-      <div class="shell">
-        <div class="section-head">
-          <h2>Things you can bring me.</h2>
-          <p class="section-copy">You do not have to know what category your problem belongs in. If one of these sounds close, it is enough to start.</p>
-        </div>
-
-        <div class="example-grid">
-          <article class="example-card">
-            <h3>Sites and apps</h3>
-            <ul class="example-list">
-              <li>WordPress, CMS, hosting, domain, or email issues</li>
-              <li>Forms, analytics, tracking, stale pages, and UX cleanup</li>
-              <li>Portals, internal apps, integrations, and monthly fixes</li>
-            </ul>
-          </article>
-
-          <article class="example-card">
-            <h3>New builds</h3>
-            <ul class="example-list">
-              <li>Landing pages, offer pages, and simple websites</li>
-              <li>Customer intake forms, dashboards, and internal tools</li>
-              <li>MVPs, prototypes, web apps, and supported launches</li>
-            </ul>
-          </article>
-
-          <article class="example-card">
-            <h3>Automation</h3>
-            <ul class="example-list">
-              <li>CRM, email, scheduling, reminders, and follow-up workflows</li>
-              <li>Files, documents, reports, invoices, and payment nudges</li>
-              <li>Spreadsheet cleanup, SOPs, tool selection, and integrations</li>
-            </ul>
-          </article>
-
-          <article class="example-card">
-            <h3>AI support</h3>
-            <ul class="example-list">
-              <li>Prompt coaching, team training, and practical AI support</li>
-              <li>Privacy, policy, guardrails, and tool selection</li>
-              <li>Writing, research, analysis, and AI-assisted workflows</li>
-            </ul>
-          </article>
-
-          <article class="example-card">
-            <h3>Product ideas</h3>
-            <ul class="example-list">
-              <li>Customer jobs, feature priorities, and roadmap choices</li>
-              <li>MVP scope, prototypes, technical feasibility, and tradeoffs</li>
-              <li>Build vs. buy decisions, brainstorming, and avoiding overbuild</li>
-            </ul>
           </article>
         </div>
       </div>
@@ -1225,56 +941,65 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>The missing piece is ownership.</h2>
+          <h2>Ownership is the missing piece.</h2>
           <p class="section-copy">Most tech problems sit between tools, workflows, people, and priorities. Instead of juggling vendors or a big agency process, you work with one senior person who can think, build, explain, and support.</p>
         </div>
 
         <div class="why-grid">
           <div class="issue-panel" aria-label="Signs Audo can help">
-            <p class="panel-label">Good reasons to reach out</p>
+            <p class="panel-label">Audo is a good fit when</p>
             <ul class="issue-list">
               <li>
                 <i class="issue-dot" aria-hidden="true"></i>
-                <span><strong>Your site or app needs attention.</strong><span>It works well enough to matter, but it needs fixes, updates, cleanup, integrations, or steady care.</span></span>
+                <span><strong>Your site or app works well enough to matter, but needs attention.</strong><span>Fixes, updates, cleanup, integrations, or steady care keep getting pushed off.</span></span>
               </li>
               <li>
                 <i class="issue-dot" aria-hidden="true"></i>
-                <span><strong>Repeat work is eating time.</strong><span>Someone keeps copying, chasing, retyping, exporting, or checking the same thing.</span></span>
+                <span><strong>Repeat work is eating time.</strong><span>Someone keeps copying, chasing, retyping, exporting, checking, or reminding.</span></span>
               </li>
               <li>
                 <i class="issue-dot" aria-hidden="true"></i>
-                <span><strong>AI feels useful but unclear.</strong><span>You want practical uses, guardrails, training, and support instead of hype.</span></span>
+                <span><strong>AI seems useful, but unclear.</strong><span>You need practical use cases, guardrails, training, or support instead of hype.</span></span>
               </li>
               <li>
                 <i class="issue-dot" aria-hidden="true"></i>
-                <span><strong>An idea needs shape.</strong><span>You need help deciding whether to build, buy, automate, simplify, or wait.</span></span>
+                <span><strong>An idea needs shape before you overbuild.</strong><span>You need help deciding whether to build, buy, automate, simplify, or wait.</span></span>
               </li>
               <li>
                 <i class="issue-dot" aria-hidden="true"></i>
-                <span><strong>You need someone to stay with it.</strong><span>You want direct help from the same person who understands the context after the first fix.</span></span>
+                <span><strong>You want someone who keeps the context.</strong><span>The same person who helps define the work can make the fix and support it afterward.</span></span>
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="outcome-panel">
-            <p class="panel-label">What happens next</p>
-            <h3>From unresolved to handled.</h3>
-            <ul class="outcome-list">
-              <li>
-                <span class="outcome-number">1</span>
-                <span><strong>Share what needs attention</strong> You do not need to know the technical answer. Start with what is frustrating, unclear, or unfinished.</span>
-              </li>
-              <li>
-                <span class="outcome-number">2</span>
-                <span><strong>I reply with the next move</strong> We decide whether to fix, automate, build, coach, simplify, or support it.</span>
-              </li>
-              <li>
-                <span class="outcome-number">3</span>
-                <span><strong>Choose the rhythm</strong> One-time help, build plus support, or a light monthly support plan.</span>
-              </li>
-            </ul>
-            <a class="button primary" href="#consultation">Start a free consultation</a>
-          </div>
+    <section id="process" class="process-band">
+      <div class="shell">
+        <div class="section-head">
+          <h2>What happens next.</h2>
+          <p class="section-copy">Start with the issue, not a polished plan. I will help sort what matters and what kind of help makes sense.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="process-number">1</span>
+            <h3>I review the context.</h3>
+            <p>Your website, company, workflow, app, AI question, or product idea gets a real look before we talk.</p>
+          </article>
+
+          <article class="process-card">
+            <span class="process-number">2</span>
+            <h3>We find the best first move.</h3>
+            <p>We decide whether to fix, automate, build, coach, simplify, support, or wait.</p>
+          </article>
+
+          <article class="process-card">
+            <span class="process-number">3</span>
+            <h3>You leave with clarity.</h3>
+            <p>You will know what matters, what can wait, and what kind of help makes sense.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -1285,13 +1010,9 @@
         <div class="about-copy">
           <p class="eyebrow">About Aaron Hancock</p>
           <h2>Senior tech help, without agency overhead.</h2>
-          <p>I bring product strategy, software execution, AI fluency, automation, website and app care, and plain-English support into one direct working relationship.</p>
-          <div class="credential-list">
-            <div class="credential">Automation for life and business</div>
-            <div class="credential">AI coaching, training, and support</div>
-            <div class="credential">Websites, web apps, and ongoing support</div>
-          </div>
-          <div class="work-note">You work directly with me: the person helping define the work, make the fix, and support it afterward.</div>
+          <p>I help individuals and small businesses make progress on websites, apps, automations, AI questions, and product ideas without adding a big agency process.</p>
+          <p>You work directly with me: the person helping define the work, make the fix, and support it afterward.</p>
+          <div class="work-note">Audo is intentionally small because this kind of work gets better with context. The more I understand your tools, workflows, customers, and priorities, the more useful the help becomes.</div>
         </div>
       </div>
     </section>
@@ -1301,33 +1022,7 @@
         <div class="cta-copy">
           <p class="eyebrow">Free consultation</p>
           <h2>Start with one issue.</h2>
-          <p>Tell me what keeps getting pushed off: the website, app, automation, AI, or product problem that needs a capable owner. I will review it personally and respond with a practical next step.</p>
-          <div class="consultation-prompt" aria-label="Good reasons to request a consultation">
-            <p class="panel-label">Good reasons to reach out</p>
-            <div class="prompt-grid">
-              <div class="prompt-pill">My website or app needs attention</div>
-              <div class="prompt-pill">I keep repeating the same work</div>
-              <div class="prompt-pill">I want AI to be useful, not confusing</div>
-              <div class="prompt-pill">I need a technical partner I can trust</div>
-            </div>
-          </div>
-          <div class="consultation-next" aria-label="What happens after submitting the consultation form">
-            <p class="panel-label">What happens next</p>
-            <div class="next-list">
-              <div class="next-item">
-                <span class="next-number">1</span>
-                <span><strong>I review the context.</strong> Your website, company, and request get a real look before we talk.</span>
-              </div>
-              <div class="next-item">
-                <span class="next-number">2</span>
-                <span><strong>We find the best first move.</strong> Fix, automate, build, coach, simplify, or support.</span>
-              </div>
-              <div class="next-item">
-                <span class="next-number">3</span>
-                <span><strong>You leave with clarity.</strong> You will know what matters, what can wait, and what help makes sense.</span>
-              </div>
-            </div>
-          </div>
+          <p>Tell me what keeps getting pushed off: the website, app, automation, AI, workflow, or product problem that needs a capable owner.</p>
         </div>
         <form class="consultation-form" action="/api/consultation" method="post">
           <div class="form-honey" aria-hidden="true">
@@ -1366,15 +1061,14 @@
               </select>
             </div>
             <div class="form-field full">
-              <label for="service">What kind of help do you need?</label>
-              <select id="service" name="service" required>
-                <option value="">Choose one</option>
+              <label for="service">Type of help (optional)</label>
+              <select id="service" name="service">
+                <option>Not sure yet</option>
                 <option>Website or app management</option>
                 <option>New website, app, or internal tool</option>
                 <option>Automation</option>
                 <option>AI coaching or support</option>
                 <option>Product consulting or strategy</option>
-                <option>Not sure yet</option>
               </select>
             </div>
             <div class="form-field full">

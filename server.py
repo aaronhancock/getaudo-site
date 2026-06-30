@@ -272,11 +272,13 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         route_files = {
             "/": "index.html",
-            "/app": "app.html",
-            "/app/": "app.html",
             "/thank-you": "thank-you.html",
             "/thank-you/": "thank-you.html",
         }
+        if path in {"/app", "/app/", "/app.html"}:
+            self.redirect("/")
+            return
+
         if path in route_files:
             if route_files[path] == "index.html":
                 self.serve_index()
@@ -313,7 +315,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                 "phone": clean(fields.get("phone"), 80),
                 "timeline": clean(fields.get("timeline"), 80),
                 "preferred_times": clean(fields.get("preferred_times"), 1000),
-                "service": clean(fields.get("service"), 120),
+                "service": clean(fields.get("service"), 120) or "Not sure yet",
                 "message": clean(fields.get("message"), 5000),
                 "source": clean(fields.get("source"), 140),
                 "recaptcha_score": recaptcha.get("score"),
@@ -361,8 +363,6 @@ class AudoHandler(BaseHTTPRequestHandler):
             raise ValueError("Please choose a timing option.")
         if not payload["preferred_times"]:
             raise ValueError("Please share a few day and time options for a consultation.")
-        if not payload["service"]:
-            raise ValueError("Please choose the kind of help you need.")
         if not payload["message"]:
             raise ValueError("Please describe what needs help.")
 

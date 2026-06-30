@@ -165,7 +165,7 @@ Consultation availability:
 
 Help needed: {fields["service"]}
 
-What is stuck:
+What needs help:
 {fields["message"]}
 
 Source: {fields.get("source") or "Not provided"}
@@ -364,7 +364,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         if not payload["service"]:
             raise ValueError("Please choose the kind of help you need.")
         if not payload["message"]:
-            raise ValueError("Please describe what is stuck.")
+            raise ValueError("Please describe what needs help.")
 
     def serve_static_or_index(self, path: str) -> None:
         safe_path = Path(path.lstrip("/"))

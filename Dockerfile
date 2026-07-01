@@ -13,6 +13,7 @@ ENV PORT=80 \
     PUBLIC_BASE_URL=https://getaudo.com
 
 COPY server.py /app/server.py
+COPY scenarios.py /app/scenarios.py
 COPY index.html /app/index.html
 COPY thank-you.html /app/thank-you.html
 COPY favicon.ico /app/favicon.ico

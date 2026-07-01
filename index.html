@@ -11,6 +11,7 @@
   <link rel="canonical" href="https://getaudo.com/">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" href="/llms.txt" type="text/plain" title="Audo AI summary">
+  <link rel="preload" href="/assets/scenarios.json" as="fetch" type="application/json" crossorigin="anonymous">
   <meta property="og:site_name" content="Audo">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
@@ -126,45 +127,6 @@
                   "@type": "Service",
                   "name": "Product consulting and strategy",
                   "description": "Clarify customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps."
-                }
-              },
-              {
-                "@type": "Offer",
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "priceCurrency": "USD",
-                  "minPrice": "100"
-                },
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "ADA-focused accessibility evaluation",
-                  "description": "Review important pages, forms, navigation, keyboard access, contrast, text alternatives, and practical accessibility blockers."
-                }
-              },
-              {
-                "@type": "Offer",
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "priceCurrency": "USD",
-                  "minPrice": "100"
-                },
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "SEO and AI search visibility scan",
-                  "description": "Review crawl basics, page titles, metadata, schema, content clarity, local/service intent, social previews, and AI answer readiness."
-                }
-              },
-              {
-                "@type": "Offer",
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "priceCurrency": "USD",
-                  "minPrice": "100"
-                },
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Website performance scan",
-                  "description": "Review page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements."
                 }
               }
             ]
@@ -646,113 +608,6 @@
       margin-top: 12px;
     }
 
-    .one-off-band {
-      padding: 42px 0 58px;
-      background: var(--paper);
-    }
-
-    .one-off-band .section-head {
-      padding-top: 28px;
-      border-top: 1px solid var(--line);
-      margin-bottom: 22px;
-    }
-
-    .one-off-band h2 {
-      font-size: clamp(28px, 3.4vw, 42px);
-      line-height: 1.04;
-    }
-
-    .one-off-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .one-off-card {
-      display: flex;
-      min-height: 200px;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      background: rgba(255, 255, 255, 0.62);
-    }
-
-    .one-off-card h3 {
-      font-size: 19px;
-      line-height: 1.18;
-    }
-
-    .one-off-card p {
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .one-off-meta {
-      display: grid;
-      gap: 8px;
-    }
-
-    .price-note {
-      margin: 0;
-      color: var(--ink);
-      font-size: 16px;
-      font-weight: 820;
-      line-height: 1.25;
-    }
-
-    .scope-note {
-      margin: 0;
-      color: var(--evergreen);
-      font-size: 11px;
-      font-weight: 820;
-      letter-spacing: 0.06em;
-      line-height: 1.35;
-      text-transform: uppercase;
-    }
-
-    .audit-request {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.44fr) minmax(360px, 1fr);
-      gap: clamp(18px, 3vw, 32px);
-      align-items: start;
-      margin-top: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: clamp(18px, 3vw, 24px);
-      background: var(--soft);
-    }
-
-    .audit-request-copy h3 {
-      font-size: 22px;
-      line-height: 1.12;
-    }
-
-    .audit-request-copy .panel-label {
-      color: var(--evergreen);
-    }
-
-    .audit-request-copy p:not(.panel-label) {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .audit-request .consultation-form {
-      padding: 18px;
-      border-color: var(--line);
-      box-shadow: none;
-    }
-
-    .audit-request .form-field textarea {
-      min-height: 96px;
-    }
-
     .why-band {
       color: var(--white);
       background:
@@ -1080,6 +935,105 @@
       overflow: hidden;
     }
 
+    .scenario-band {
+      padding: 70px 0 82px;
+      background: var(--paper);
+    }
+
+    .scenario-band .section-head {
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .scenario-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .scenario-filter {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 13px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.58);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 820;
+      cursor: pointer;
+    }
+
+    .scenario-filter.is-active {
+      color: #101815;
+      border-color: #f0c66f;
+      background: #f0c66f;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .scenario-card {
+      min-height: 192px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .scenario-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200, 155, 75, 0.56);
+      box-shadow: 0 18px 42px rgba(12, 18, 15, 0.1);
+    }
+
+    .scenario-card span {
+      display: block;
+      color: #725119;
+      font-size: 11px;
+      font-weight: 820;
+      letter-spacing: 0.07em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .scenario-card h3 {
+      margin-top: 8px;
+      font-size: 19px;
+      line-height: 1.14;
+    }
+
+    .scenario-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .scenario-status {
+      min-height: 22px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .scenario-sentinel {
+      height: 1px;
+    }
+
     footer {
       padding: 24px 0;
       color: rgba(255, 255, 255, 0.72);
@@ -1186,12 +1140,8 @@
         row-gap: 10px;
       }
 
-      .one-off-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .audit-request {
-        grid-template-columns: 1fr;
+      .scenario-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
     }
@@ -1292,26 +1242,9 @@
       }
 
       .service-card p,
-      .about-copy p,
-      .one-off-card p {
+      .about-copy p {
         font-size: 14px;
         line-height: 1.55;
-      }
-
-      .one-off-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .one-off-card {
-        min-height: auto;
-      }
-
-      .audit-request {
-        padding: 18px;
-      }
-
-      .audit-request .consultation-form {
-        padding: 18px;
       }
 
       .faq-item {
@@ -1391,6 +1324,28 @@
         grid-template-columns: 1fr;
       }
 
+      .scenario-band {
+        padding: 54px 0 62px;
+      }
+
+      .scenario-tools {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+      }
+
+      .scenario-filter {
+        flex: 0 0 auto;
+      }
+
+      .scenario-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .scenario-card {
+        min-height: auto;
+      }
+
       .cookie-consent {
         right: 14px;
         bottom: 14px;
@@ -1438,6 +1393,7 @@
         <a href="#services">Services</a>
         <a href="#why">Why Audo</a>
         <a href="#about">About</a>
+        <a href="#scenarios">Scenarios</a>
         <a class="nav-cta" href="#discovery">Book Free Discovery</a>
       </div>
     </div>
@@ -1602,99 +1558,6 @@
       </div>
     </section>
 
-    <section class="one-off-band" aria-labelledby="one-off-heading">
-      <div class="shell">
-        <div class="section-head">
-          <h2 id="one-off-heading">Focused paid services.</h2>
-          <p class="section-copy">A few defined one-off services for specific concerns. Each starts at $100 and can be included with ongoing support.</p>
-        </div>
-
-        <div class="one-off-grid">
-          <article class="one-off-card">
-            <div>
-              <h3>ADA Evaluation</h3>
-              <p>A practical review of key pages, forms, navigation, keyboard access, contrast, text alternatives, and accessibility blockers.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and complexity</p>
-            </div>
-          </article>
-
-          <article class="one-off-card">
-            <div>
-              <h3>SEO + AI SEO Scan</h3>
-              <p>Search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and content depth</p>
-            </div>
-          </article>
-
-          <article class="one-off-card">
-            <div>
-              <h3>Website Performance Scan</h3>
-              <p>Page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and platform</p>
-            </div>
-          </article>
-        </div>
-
-        <div class="audit-request" aria-labelledby="audit-request-heading">
-          <div class="audit-request-copy">
-            <p class="panel-label">Focused service request</p>
-            <h3 id="audit-request-heading">Request a paid service.</h3>
-            <p>Pick the service, share the site, and include anything I should know before I confirm scope.</p>
-          </div>
-          <form class="consultation-form audit-form" action="/api/consultation" method="post" aria-describedby="audit-form-status audit-form-note" data-recaptcha-form>
-            <div class="form-honey" aria-hidden="true">
-              <label for="audit_website_url_confirm">Confirm website</label>
-              <input id="audit_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
-            </div>
-            <div class="form-grid">
-              <div class="form-field full">
-                <label for="audit_service">Service type</label>
-                <select id="audit_service" name="service" required>
-                  <option value="">Choose one</option>
-                  <option>ADA evaluation</option>
-                  <option>SEO / AI SEO scan</option>
-                  <option>Website performance scan</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="audit_name">Name</label>
-                <input id="audit_name" name="name" type="text" autocomplete="name" required>
-              </div>
-              <div class="form-field">
-                <label for="audit_email">Email</label>
-                <input id="audit_email" name="email" type="email" autocomplete="email" required>
-              </div>
-              <div class="form-field full">
-                <label for="audit_website">Website</label>
-                <input id="audit_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com" required>
-              </div>
-              <div class="form-field full">
-                <label for="audit_message">What should I know?</label>
-                <textarea id="audit_message" name="message" placeholder="Approximate page count, platform, tools, or what you want checked." required></textarea>
-              </div>
-            </div>
-            <input type="hidden" name="company_name" value="Focused paid service request">
-            <input type="hidden" name="timeline" value="Paid service request">
-            <input type="hidden" name="preferred_times" value="Coordinate by email">
-            <input type="hidden" name="source" value="getaudo.com focused paid services form">
-            <input type="hidden" name="recaptcha_token" value="">
-            <button class="button primary" type="submit">Request paid service</button>
-            <p id="audit-form-status" class="form-status" role="status" aria-live="polite"></p>
-            <p id="audit-form-note" class="form-note">Starting at $100. Final scope is confirmed before work begins.</p>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <span id="consultation" class="anchor-alias" aria-hidden="true"></span>
     <section id="discovery" class="cta-band">
       <div class="shell cta-inner">
@@ -1776,9 +1639,6 @@
                 <option>Automation</option>
                 <option>AI coaching or support</option>
                 <option>Product consulting or strategy</option>
-                <option>ADA evaluation</option>
-                <option>SEO / AI SEO scan</option>
-                <option>Website performance scan</option>
               </select>
             </div>
             <div class="form-field full">
@@ -1791,11 +1651,35 @@
             </div>
           </div>
           <input type="hidden" name="source" value="getaudo.com discovery form">
+          <input type="hidden" name="interest_context" value="General Free Discovery request">
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request Free Discovery</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="form-note" class="form-note">Your request goes directly to Aaron. Spam protection may run when you submit.</p>
         </form>
+      </div>
+    </section>
+
+    <section id="scenarios" class="scenario-band" aria-labelledby="scenarios-heading">
+      <div class="shell">
+        <div class="section-head">
+          <h2 id="scenarios-heading">Specific ways I can help.</h2>
+          <p class="section-copy">Browse real scenarios if you are trying to name the problem. Each page explains the pain, the fix, the likely result, and how Free Discovery works.</p>
+        </div>
+        <div class="scenario-tools" aria-label="Scenario filters">
+          <button class="scenario-filter is-active" type="button" data-scenario-filter="All">All</button>
+          <button class="scenario-filter" type="button" data-scenario-filter="Website and app care">Websites and apps</button>
+          <button class="scenario-filter" type="button" data-scenario-filter="Automation">Automation</button>
+          <button class="scenario-filter" type="button" data-scenario-filter="AI coaching and support">AI support</button>
+          <button class="scenario-filter" type="button" data-scenario-filter="Product strategy">Product strategy</button>
+          <button class="scenario-filter" type="button" data-scenario-filter="Individual consulting">Individual help</button>
+        </div>
+        <div id="scenario-grid" class="scenario-grid" data-scenarios-endpoint="/assets/scenarios.json" aria-live="polite"></div>
+        <div id="scenario-sentinel" class="scenario-sentinel" aria-hidden="true"></div>
+        <p id="scenario-status" class="scenario-status" role="status">Loading scenarios...</p>
+        <noscript>
+          <p class="scenario-status">JavaScript is required to load the scenario grid. Search engines can still access every scenario through the sitemap.</p>
+        </noscript>
       </div>
     </section>
   </main>
@@ -1874,6 +1758,123 @@
           hideBanner();
         });
       }
+    }());
+
+    (function () {
+      var grid = document.getElementById("scenario-grid");
+      var status = document.getElementById("scenario-status");
+      var sentinel = document.getElementById("scenario-sentinel");
+      var filters = Array.prototype.slice.call(document.querySelectorAll("[data-scenario-filter]"));
+      if (!grid) {
+        return;
+      }
+
+      var endpoint = grid.getAttribute("data-scenarios-endpoint") || "/assets/scenarios.json";
+      var scenarios = [];
+      var visible = [];
+      var activeFilter = "All";
+      var nextIndex = 0;
+      var batchSize = 16;
+      var observer = null;
+
+      function updateStatus(message) {
+        if (status) {
+          status.textContent = message;
+        }
+      }
+
+      function createCard(scenario) {
+        var card = document.createElement("a");
+        var headingWrap = document.createElement("div");
+        var category = document.createElement("span");
+        var title = document.createElement("h3");
+        var summary = document.createElement("p");
+
+        card.className = "scenario-card";
+        card.href = scenario.url;
+        category.textContent = scenario.category;
+        title.textContent = scenario.title;
+        summary.textContent = scenario.summary;
+
+        headingWrap.appendChild(category);
+        headingWrap.appendChild(title);
+        card.appendChild(headingWrap);
+        card.appendChild(summary);
+        return card;
+      }
+
+      function renderNextBatch() {
+        if (!visible.length) {
+          grid.innerHTML = "";
+          updateStatus("No scenarios found for this filter.");
+          return;
+        }
+
+        var fragment = document.createDocumentFragment();
+        var end = Math.min(nextIndex + batchSize, visible.length);
+        for (; nextIndex < end; nextIndex += 1) {
+          fragment.appendChild(createCard(visible[nextIndex]));
+        }
+        grid.appendChild(fragment);
+
+        updateStatus("Showing " + nextIndex + " of " + visible.length + " scenarios.");
+        if (observer && nextIndex >= visible.length && sentinel) {
+          observer.unobserve(sentinel);
+        }
+      }
+
+      function applyFilter(category) {
+        activeFilter = category;
+        visible = category === "All" ? scenarios.slice() : scenarios.filter(function (scenario) {
+          return scenario.category === category;
+        });
+        nextIndex = 0;
+        grid.innerHTML = "";
+        filters.forEach(function (button) {
+          var isActive = button.getAttribute("data-scenario-filter") === activeFilter;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+        renderNextBatch();
+        if (observer && sentinel && nextIndex < visible.length) {
+          observer.observe(sentinel);
+        }
+      }
+
+      filters.forEach(function (button) {
+        button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
+        button.addEventListener("click", function () {
+          applyFilter(button.getAttribute("data-scenario-filter") || "All");
+        });
+      });
+
+      fetch(endpoint, { headers: { "Accept": "application/json" } })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Scenario request failed");
+          }
+          return response.json();
+        })
+        .then(function (payload) {
+          scenarios = Array.isArray(payload.scenarios) ? payload.scenarios : [];
+          visible = scenarios.slice();
+
+          if ("IntersectionObserver" in window && sentinel) {
+            observer = new IntersectionObserver(function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting && nextIndex < visible.length) {
+                  renderNextBatch();
+                }
+              });
+            }, { rootMargin: "320px 0px" });
+            observer.observe(sentinel);
+          }
+
+          renderNextBatch();
+        })
+        .catch(function () {
+          updateStatus("The scenario list could not load. Please refresh the page.");
+        });
     }());
 
     (function () {

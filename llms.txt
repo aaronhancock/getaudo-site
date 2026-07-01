@@ -14,10 +14,12 @@ Discovery: https://getaudo.com/#discovery
 - Automation consulting: help with repeat tasks, follow-up, scheduling, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
 - AI coaching, training, and support: practical AI use cases, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
 - Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps.
-- ADA Evaluation: starts at $100 for a practical accessibility review covering key pages, forms, navigation, keyboard access, contrast, text alternatives, and blockers. Scope depends on page count and complexity.
-- SEO + AI SEO Scan: starts at $100 for search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness. Scope depends on page count and content depth.
-- Website Performance Scan: starts at $100 for page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.
-- Focused paid services can also be included with ongoing support and maintenance.
+
+## Scenario Library
+
+The site includes 100 specific scenario pages covering website and app care, automation, AI support, product strategy, and individual consulting. Each scenario page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the scenario in the request.
+
+Scenario pages use clean URLs under https://getaudo.com/scenarios/ and are listed in the dynamic sitemap.
 
 ## Why Audo
 

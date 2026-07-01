@@ -10,9 +10,9 @@ and small businesses that need help with:
 - Business and life automation
 - Practical AI coaching, training, and support
 - Product consulting, brainstorming, and strategic decisions
-- Ad-hoc paid audits such as ADA accessibility checks, SEO/AI SEO scans,
-  website performance scans, and analytics/tracking audits, each starting at
-  $100 and included with ongoing support and maintenance
+- Ad-hoc paid services such as ADA accessibility checks, SEO/AI SEO scans, and
+  website performance scans. Each starts at $100 and can be included with
+  ongoing support and maintenance.
 
 ## Local Run
 

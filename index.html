@@ -166,19 +166,6 @@
                   "name": "Website performance scan",
                   "description": "Review page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements."
                 }
-              },
-              {
-                "@type": "Offer",
-                "priceSpecification": {
-                  "@type": "PriceSpecification",
-                  "priceCurrency": "USD",
-                  "minPrice": "100"
-                },
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Analytics and tracking audit",
-                  "description": "Review analytics setup, Search Console, conversion events, form tracking, campaign attribution, and whether the numbers are trustworthy."
-                }
               }
             ]
           }
@@ -671,7 +658,7 @@
 
     .one-off-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -1530,8 +1517,8 @@
     <section class="one-off-band" aria-labelledby="one-off-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="one-off-heading">Focused one-off audits.</h2>
-          <p class="section-copy">Defined paid reviews for specific concerns. Each starts at $100. These are also included with ongoing support and maintenance.</p>
+          <h2 id="one-off-heading">Focused paid services.</h2>
+          <p class="section-copy">Defined one-off services for specific concerns. Each starts at $100. These are also included with ongoing support and maintenance.</p>
         </div>
 
         <div class="one-off-grid">
@@ -1568,24 +1555,14 @@
             </div>
           </article>
 
-          <article class="one-off-card">
-            <div>
-              <h3>Analytics + Tracking Audit</h3>
-              <p>GA4, Search Console, conversion events, form tracking, campaign attribution, and whether the numbers are trustworthy.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by tools and conversion paths</p>
-            </div>
-          </article>
         </div>
 
         <div class="audit-request" aria-labelledby="audit-request-heading">
           <div class="audit-request-copy">
-            <p class="panel-label">Focused audit request</p>
-            <h3 id="audit-request-heading">Request a paid scan.</h3>
-            <p>Use this when you already know the kind of review you want. I will confirm scope before starting, especially when page count, tools, or access affect the work.</p>
-            <p>Already on ongoing support or maintenance? These reviews can be included as part of that work.</p>
+            <p class="panel-label">Focused service request</p>
+            <h3 id="audit-request-heading">Request a paid service.</h3>
+            <p>Use this when you already know the kind of service you want. I will confirm scope before starting, especially when page count, tools, or access affect the work.</p>
+            <p>Already on ongoing support or maintenance? These services can be included as part of that work.</p>
           </div>
           <form class="consultation-form audit-form" action="/api/consultation" method="post" aria-describedby="audit-form-status audit-form-note" data-recaptcha-form>
             <div class="form-honey" aria-hidden="true">
@@ -1594,13 +1571,12 @@
             </div>
             <div class="form-grid">
               <div class="form-field full">
-                <label for="audit_service">Audit type</label>
+                <label for="audit_service">Service type</label>
                 <select id="audit_service" name="service" required>
                   <option value="">Choose one</option>
                   <option>ADA evaluation</option>
                   <option>SEO / AI SEO scan</option>
                   <option>Website performance scan</option>
-                  <option>Analytics / tracking audit</option>
                 </select>
               </div>
               <div class="form-field">
@@ -1638,9 +1614,9 @@
                 <textarea id="audit_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for a quick scope confirmation." required></textarea>
               </div>
             </div>
-            <input type="hidden" name="source" value="getaudo.com focused audit form">
+            <input type="hidden" name="source" value="getaudo.com focused paid services form">
             <input type="hidden" name="recaptcha_token" value="">
-            <button class="button primary" type="submit">Request focused audit</button>
+            <button class="button primary" type="submit">Request paid service</button>
             <p id="audit-form-status" class="form-status" role="status" aria-live="polite"></p>
             <p id="audit-form-note" class="form-note">Starting at $100. Final scope is confirmed before work begins.</p>
           </form>
@@ -1814,7 +1790,6 @@
                 <option>ADA evaluation</option>
                 <option>SEO / AI SEO scan</option>
                 <option>Website performance scan</option>
-                <option>Analytics / tracking audit</option>
               </select>
             </div>
             <div class="form-field full">

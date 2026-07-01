@@ -130,6 +130,11 @@
               },
               {
                 "@type": "Offer",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "priceCurrency": "USD",
+                  "minPrice": "100"
+                },
                 "itemOffered": {
                   "@type": "Service",
                   "name": "ADA-focused accessibility evaluation",
@@ -138,6 +143,11 @@
               },
               {
                 "@type": "Offer",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "priceCurrency": "USD",
+                  "minPrice": "100"
+                },
                 "itemOffered": {
                   "@type": "Service",
                   "name": "SEO and AI search visibility scan",
@@ -146,18 +156,28 @@
               },
               {
                 "@type": "Offer",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "priceCurrency": "USD",
+                  "minPrice": "100"
+                },
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Website health check",
-                  "description": "Review mobile experience, forms, broken links, performance basics, trust signals, calls to action, and obvious conversion friction."
+                  "name": "Website performance scan",
+                  "description": "Review page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements."
                 }
               },
               {
                 "@type": "Offer",
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "priceCurrency": "USD",
+                  "minPrice": "100"
+                },
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Automation opportunity review",
-                  "description": "Identify repeat tasks, tool handoffs, reporting chores, reminders, and practical automation opportunities worth pursuing."
+                  "name": "Analytics and tracking audit",
+                  "description": "Review analytics setup, Search Console, conversion events, form tracking, campaign attribution, and whether the numbers are trustworthy."
                 }
               }
             ]
@@ -679,6 +699,19 @@
       line-height: 1.55;
     }
 
+    .one-off-meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    .price-note {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 820;
+      line-height: 1.25;
+    }
+
     .scope-note {
       margin: 0;
       color: var(--evergreen);
@@ -689,8 +722,42 @@
       text-transform: uppercase;
     }
 
-    .one-off-actions {
+    .audit-request {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(360px, 0.82fr);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start;
       margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: clamp(22px, 4vw, 34px);
+      background: var(--soft);
+    }
+
+    .audit-request-copy h3 {
+      font-size: clamp(26px, 3.4vw, 38px);
+      line-height: 1.05;
+    }
+
+    .audit-request-copy .panel-label {
+      color: var(--evergreen);
+    }
+
+    .audit-request-copy p:not(.panel-label) {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .audit-request .consultation-form {
+      padding: 22px;
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .audit-request .form-field textarea {
+      min-height: 116px;
     }
 
     .why-band {
@@ -1130,6 +1197,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .audit-request {
+        grid-template-columns: 1fr;
+      }
+
     }
 
     @media (max-width: 760px) {
@@ -1240,6 +1311,14 @@
 
       .one-off-card {
         min-height: auto;
+      }
+
+      .audit-request {
+        padding: 18px;
+      }
+
+      .audit-request .consultation-form {
+        padding: 18px;
       }
 
       .faq-item {
@@ -1451,8 +1530,8 @@
     <section class="one-off-band" aria-labelledby="one-off-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="one-off-heading">One-off services.</h2>
-          <p class="section-copy">Need a defined check before ongoing support? These are scoped quickly after I know the page count, tools, or workflow involved.</p>
+          <h2 id="one-off-heading">Focused one-off audits.</h2>
+          <p class="section-copy">Defined paid reviews for specific concerns. Each starts at $100. These are also included with ongoing support and maintenance.</p>
         </div>
 
         <div class="one-off-grid">
@@ -1461,7 +1540,10 @@
               <h3>ADA Evaluation</h3>
               <p>A practical review of key pages, forms, navigation, keyboard access, contrast, text alternatives, and accessibility blockers.</p>
             </div>
-            <p class="scope-note">Scoped by page count and complexity</p>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and complexity</p>
+            </div>
           </article>
 
           <article class="one-off-card">
@@ -1469,27 +1551,99 @@
               <h3>SEO + AI SEO Scan</h3>
               <p>Search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness.</p>
             </div>
-            <p class="scope-note">Scoped by page count and content depth</p>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and content depth</p>
+            </div>
           </article>
 
           <article class="one-off-card">
             <div>
-              <h3>Website Health Check</h3>
-              <p>Mobile experience, forms, broken links, performance basics, trust signals, CTAs, and obvious conversion friction.</p>
+              <h3>Website Performance Scan</h3>
+              <p>Page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.</p>
             </div>
-            <p class="scope-note">Scoped by site size and issue list</p>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and platform</p>
+            </div>
           </article>
 
           <article class="one-off-card">
             <div>
-              <h3>Automation Opportunity Review</h3>
-              <p>A plain-English look at repeat tasks, tool handoffs, reporting chores, reminders, and practical quick wins.</p>
+              <h3>Analytics + Tracking Audit</h3>
+              <p>GA4, Search Console, conversion events, form tracking, campaign attribution, and whether the numbers are trustworthy.</p>
             </div>
-            <p class="scope-note">Scoped by workflows and tools</p>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by tools and conversion paths</p>
+            </div>
           </article>
         </div>
-        <div class="one-off-actions">
-          <a class="button primary" href="#discovery">Ask about a one-off service</a>
+
+        <div class="audit-request" aria-labelledby="audit-request-heading">
+          <div class="audit-request-copy">
+            <p class="panel-label">Focused audit request</p>
+            <h3 id="audit-request-heading">Request a paid scan.</h3>
+            <p>Use this when you already know the kind of review you want. I will confirm scope before starting, especially when page count, tools, or access affect the work.</p>
+            <p>Already on ongoing support or maintenance? These reviews can be included as part of that work.</p>
+          </div>
+          <form class="consultation-form audit-form" action="/api/consultation" method="post" aria-describedby="audit-form-status audit-form-note" data-recaptcha-form>
+            <div class="form-honey" aria-hidden="true">
+              <label for="audit_website_url_confirm">Confirm website</label>
+              <input id="audit_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="audit_service">Audit type</label>
+                <select id="audit_service" name="service" required>
+                  <option value="">Choose one</option>
+                  <option>ADA evaluation</option>
+                  <option>SEO / AI SEO scan</option>
+                  <option>Website performance scan</option>
+                  <option>Analytics / tracking audit</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="audit_name">Name</label>
+                <input id="audit_name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="form-field">
+                <label for="audit_company_name">Company / project</label>
+                <input id="audit_company_name" name="company_name" type="text" autocomplete="organization" required>
+              </div>
+              <div class="form-field">
+                <label for="audit_email">Email</label>
+                <input id="audit_email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="form-field">
+                <label for="audit_timeline">Timing</label>
+                <select id="audit_timeline" name="timeline" required>
+                  <option value="">Choose one</option>
+                  <option>This week</option>
+                  <option>Next few weeks</option>
+                  <option>This month</option>
+                  <option>No rush yet</option>
+                </select>
+              </div>
+              <div class="form-field full">
+                <label for="audit_website">Website</label>
+                <input id="audit_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com" required>
+              </div>
+              <div class="form-field full">
+                <label for="audit_message">Pages, tools, or concern</label>
+                <textarea id="audit_message" name="message" placeholder="Approximate page count, platform, tools, and what you want checked." required></textarea>
+              </div>
+              <div class="form-field full">
+                <label for="audit_preferred_times">Best follow-up times</label>
+                <textarea id="audit_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for a quick scope confirmation." required></textarea>
+              </div>
+            </div>
+            <input type="hidden" name="source" value="getaudo.com focused audit form">
+            <input type="hidden" name="recaptcha_token" value="">
+            <button class="button primary" type="submit">Request focused audit</button>
+            <p id="audit-form-status" class="form-status" role="status" aria-live="polite"></p>
+            <p id="audit-form-note" class="form-note">Starting at $100. Final scope is confirmed before work begins.</p>
+          </form>
         </div>
       </div>
     </section>
@@ -1612,7 +1766,7 @@
             </div>
           </div>
         </div>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note">
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note" data-recaptcha-form>
           <div class="form-honey" aria-hidden="true">
             <label for="website_url_confirm">Confirm website</label>
             <input id="website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
@@ -1659,8 +1813,8 @@
                 <option>Product consulting or strategy</option>
                 <option>ADA evaluation</option>
                 <option>SEO / AI SEO scan</option>
-                <option>Website health check</option>
-                <option>Automation opportunity review</option>
+                <option>Website performance scan</option>
+                <option>Analytics / tracking audit</option>
               </select>
             </div>
             <div class="form-field full">
@@ -1759,9 +1913,9 @@
     }());
 
     (function () {
-      var form = document.querySelector(".consultation-form");
+      var forms = Array.prototype.slice.call(document.querySelectorAll("[data-recaptcha-form]"));
       var siteKey = window.AUDO_RECAPTCHA_SITE_KEY;
-      if (!form || !siteKey) {
+      if (!forms.length || !siteKey) {
         return;
       }
 
@@ -1789,63 +1943,67 @@
         return recaptchaPromise;
       }
 
-      form.addEventListener("submit", function (event) {
-        if (form.dataset.recaptchaSubmitted === "true") {
-          return;
-        }
-
-        event.preventDefault();
+      forms.forEach(function (form) {
         var button = form.querySelector("button[type='submit']");
         var status = form.querySelector(".form-status");
         var tokenInput = form.querySelector("input[name='recaptcha_token']");
-        if (button) {
-          button.disabled = true;
-          button.textContent = "Checking request...";
-        }
-        form.setAttribute("aria-busy", "true");
-        if (status) {
-          status.setAttribute("role", "status");
-          status.classList.remove("is-error");
-          status.textContent = "Running a quick spam check.";
-        }
+        var buttonLabel = button ? button.textContent : "";
 
-        function resetForm(message) {
-          if (button) {
-            button.disabled = false;
-            button.textContent = "Request Free Discovery";
-          }
-          form.removeAttribute("aria-busy");
-          if (status) {
-            status.setAttribute("role", "alert");
-            status.classList.add("is-error");
-            status.textContent = message;
-          }
-        }
-
-        function runCheck() {
-          if (!window.grecaptcha || !window.grecaptcha.ready) {
-            resetForm("The spam check is still loading. Please try again in a moment.");
+        form.addEventListener("submit", function (event) {
+          if (form.dataset.recaptchaSubmitted === "true") {
             return;
           }
 
-          window.grecaptcha.ready(function () {
-            window.grecaptcha.execute(siteKey, { action: "discovery_request" })
-              .then(function (token) {
-                tokenInput.value = token;
-                form.dataset.recaptchaSubmitted = "true";
-                form.submit();
-              })
-              .catch(function () {
-                resetForm("The spam check could not complete. Please try again.");
-              });
-          });
-        }
+          event.preventDefault();
+          if (button) {
+            button.disabled = true;
+            button.textContent = "Checking request...";
+          }
+          form.setAttribute("aria-busy", "true");
+          if (status) {
+            status.setAttribute("role", "status");
+            status.classList.remove("is-error");
+            status.textContent = "Running a quick spam check.";
+          }
 
-        loadRecaptcha()
-          .then(runCheck)
-          .catch(function () {
-            resetForm("The spam check could not load. Please try again.");
-          });
+          function resetForm(message) {
+            if (button) {
+              button.disabled = false;
+              button.textContent = buttonLabel;
+            }
+            form.removeAttribute("aria-busy");
+            if (status) {
+              status.setAttribute("role", "alert");
+              status.classList.add("is-error");
+              status.textContent = message;
+            }
+          }
+
+          function runCheck() {
+            if (!window.grecaptcha || !window.grecaptcha.ready) {
+              resetForm("The spam check is still loading. Please try again in a moment.");
+              return;
+            }
+
+            window.grecaptcha.ready(function () {
+              window.grecaptcha.execute(siteKey, { action: "discovery_request" })
+                .then(function (token) {
+                  tokenInput.value = token;
+                  form.dataset.recaptchaSubmitted = "true";
+                  form.submit();
+                })
+                .catch(function () {
+                  resetForm("The spam check could not complete. Please try again.");
+                });
+            });
+          }
+
+          loadRecaptcha()
+            .then(runCheck)
+            .catch(function () {
+              resetForm("The spam check could not load. Please try again.");
+            });
+        });
       });
     }());
   </script>

@@ -14,10 +14,11 @@ Discovery: https://getaudo.com/#discovery
 - Automation consulting: help with repeat tasks, follow-up, scheduling, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
 - AI coaching, training, and support: practical AI use cases, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
 - Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps.
-- ADA Evaluation: practical accessibility review for key pages, forms, navigation, keyboard access, contrast, text alternatives, and blockers. Scope depends on page count and complexity.
-- SEO + AI SEO Scan: search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness. Scope depends on page count and content depth.
-- Website Health Check: mobile experience, forms, broken links, performance basics, trust signals, calls to action, and obvious conversion friction.
-- Automation Opportunity Review: repeat tasks, tool handoffs, reporting chores, reminders, and practical quick wins.
+- ADA Evaluation: starts at $100 for a practical accessibility review covering key pages, forms, navigation, keyboard access, contrast, text alternatives, and blockers. Scope depends on page count and complexity.
+- SEO + AI SEO Scan: starts at $100 for search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness. Scope depends on page count and content depth.
+- Website Performance Scan: starts at $100 for page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.
+- Analytics + Tracking Audit: starts at $100 for GA4, Search Console, conversion events, form tracking, campaign attribution, and whether the numbers are trustworthy.
+- Focused audits can also be included with ongoing support and maintenance.
 
 ## Why Audo
 

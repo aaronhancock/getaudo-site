@@ -753,7 +753,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       border-top: 1px solid var(--line);
     }}
     .check-list li {{ padding: 15px 0; border-bottom: 1px solid var(--line); color: var(--muted); line-height: 1.55; }}
-    .faq-list {{ display: grid; gap: 12px; }}
+    .faq-list {{ display: grid; gap: 12px; margin-top: clamp(22px, 3vw, 34px); }}
     details {{
       border: 1px solid var(--line);
       border-radius: 8px;

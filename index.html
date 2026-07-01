@@ -608,6 +608,23 @@
       margin-top: 12px;
     }
 
+    .services-next {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .services-next p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
     .why-band {
       color: var(--white);
       background:
@@ -1247,6 +1264,12 @@
         line-height: 1.55;
       }
 
+      .services-next {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+      }
+
       .faq-item {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -1407,7 +1430,7 @@
         <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the tech work that needs a capable owner.</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book Free Discovery</a>
-          <a class="button ghost" href="#services">See how I can help</a>
+          <a class="button ghost" href="#scenarios">Browse 100 examples</a>
         </div>
         <p class="hero-note">No polished project brief needed. Share what needs attention; I will help sort the next step.</p>
       </div>
@@ -1472,6 +1495,11 @@
               <p>Customer jobs, priorities, MVP scope, feasibility, build-vs-buy decisions, or avoiding overbuild.</p>
             </div>
           </article>
+        </div>
+
+        <div class="services-next">
+          <p>Want something more specific? Browse common situations and see how I would approach them.</p>
+          <a class="button" href="#scenarios">See the scenario list</a>
         </div>
       </div>
     </section>

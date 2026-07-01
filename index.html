@@ -876,27 +876,36 @@
     }
 
     footer {
-      padding: 28px 0;
+      padding: 24px 0;
       color: rgba(255, 255, 255, 0.72);
       background: #0c1210;
       border-top: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 14px;
     }
 
-    footer a {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      color: rgba(255, 255, 255, 0.86);
+    footer .shell {
+      justify-content: center;
     }
 
-    footer .footer-stack {
-      display: grid;
-      gap: 5px;
+    .footer-line {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      text-align: center;
+      line-height: 1.45;
     }
 
     footer strong {
       color: var(--white);
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 820;
+      text-decoration: none;
     }
 
     @media (max-width: 1040px) {
@@ -1360,14 +1369,7 @@
 
   <footer>
     <div class="shell">
-      <span class="footer-stack">
-        <strong>Audo</strong>
-        <span>Aaron Hancock · Websites, AI, automation, apps, and product consulting</span>
-      </span>
-      <span class="footer-stack">
-        <span>Free Discovery</span>
-        <a href="#discovery">Request Free Discovery</a>
-      </span>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Book Free Discovery</a></p>
     </div>
   </footer>
   <script>

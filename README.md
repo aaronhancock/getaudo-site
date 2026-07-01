@@ -10,6 +10,8 @@ and small businesses that need help with:
 - Business and life automation
 - Practical AI coaching, training, and support
 - Product consulting, brainstorming, and strategic decisions
+- Ad-hoc evaluations such as ADA accessibility checks, SEO/AI SEO scans,
+  website health checks, and automation opportunity reviews
 
 ## Local Run
 

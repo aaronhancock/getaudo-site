@@ -127,6 +127,38 @@
                   "name": "Product consulting and strategy",
                   "description": "Clarify customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps."
                 }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "ADA-focused accessibility evaluation",
+                  "description": "Review important pages, forms, navigation, keyboard access, contrast, text alternatives, and practical accessibility blockers."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "SEO and AI search visibility scan",
+                  "description": "Review crawl basics, page titles, metadata, schema, content clarity, local/service intent, social previews, and AI answer readiness."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Website health check",
+                  "description": "Review mobile experience, forms, broken links, performance basics, trust signals, calls to action, and obvious conversion friction."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Automation opportunity review",
+                  "description": "Identify repeat tasks, tool handoffs, reporting chores, reminders, and practical automation opportunities worth pursuing."
+                }
               }
             ]
           }
@@ -516,6 +548,7 @@
     }
 
     .services-band {
+      padding-bottom: 54px;
       background: var(--paper);
     }
 
@@ -604,6 +637,60 @@
 
     .service-card .service-main p {
       margin-top: 12px;
+    }
+
+    .one-off-band {
+      padding-top: 0;
+      background: var(--paper);
+    }
+
+    .one-off-band .section-head {
+      padding-top: 42px;
+      border-top: 1px solid var(--line);
+    }
+
+    .one-off-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .one-off-card {
+      display: flex;
+      min-height: 240px;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .one-off-card h3 {
+      font-size: 19px;
+      line-height: 1.18;
+    }
+
+    .one-off-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .scope-note {
+      margin: 0;
+      color: var(--evergreen);
+      font-size: 11px;
+      font-weight: 820;
+      letter-spacing: 0.06em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .one-off-actions {
+      margin-top: 18px;
     }
 
     .why-band {
@@ -1039,6 +1126,10 @@
         row-gap: 10px;
       }
 
+      .one-off-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
     }
 
     @media (max-width: 760px) {
@@ -1137,9 +1228,18 @@
       }
 
       .service-card p,
-      .about-copy p {
+      .about-copy p,
+      .one-off-card p {
         font-size: 14px;
         line-height: 1.55;
+      }
+
+      .one-off-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .one-off-card {
+        min-height: auto;
       }
 
       .faq-item {
@@ -1348,6 +1448,52 @@
       </div>
     </section>
 
+    <section class="one-off-band" aria-labelledby="one-off-heading">
+      <div class="shell">
+        <div class="section-head">
+          <h2 id="one-off-heading">One-off services.</h2>
+          <p class="section-copy">Need a defined check before ongoing support? These are scoped quickly after I know the page count, tools, or workflow involved.</p>
+        </div>
+
+        <div class="one-off-grid">
+          <article class="one-off-card">
+            <div>
+              <h3>ADA Evaluation</h3>
+              <p>A practical review of key pages, forms, navigation, keyboard access, contrast, text alternatives, and accessibility blockers.</p>
+            </div>
+            <p class="scope-note">Scoped by page count and complexity</p>
+          </article>
+
+          <article class="one-off-card">
+            <div>
+              <h3>SEO + AI SEO Scan</h3>
+              <p>Search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness.</p>
+            </div>
+            <p class="scope-note">Scoped by page count and content depth</p>
+          </article>
+
+          <article class="one-off-card">
+            <div>
+              <h3>Website Health Check</h3>
+              <p>Mobile experience, forms, broken links, performance basics, trust signals, CTAs, and obvious conversion friction.</p>
+            </div>
+            <p class="scope-note">Scoped by site size and issue list</p>
+          </article>
+
+          <article class="one-off-card">
+            <div>
+              <h3>Automation Opportunity Review</h3>
+              <p>A plain-English look at repeat tasks, tool handoffs, reporting chores, reminders, and practical quick wins.</p>
+            </div>
+            <p class="scope-note">Scoped by workflows and tools</p>
+          </article>
+        </div>
+        <div class="one-off-actions">
+          <a class="button primary" href="#discovery">Ask about a one-off service</a>
+        </div>
+      </div>
+    </section>
+
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
@@ -1511,6 +1657,10 @@
                 <option>Automation</option>
                 <option>AI coaching or support</option>
                 <option>Product consulting or strategy</option>
+                <option>ADA evaluation</option>
+                <option>SEO / AI SEO scan</option>
+                <option>Website health check</option>
+                <option>Automation opportunity review</option>
               </select>
             </div>
             <div class="form-field full">

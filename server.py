@@ -16,7 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
-from scenarios import SCENARIOS, get_scenario, scenario_cards, scenario_dict
+from services import SERVICES, get_service, service_cards, service_dict
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -277,25 +277,34 @@ class AudoHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b"ok")
             return
 
-        if path == "/assets/scenarios.json":
-            self.serve_scenarios_json(send_body=send_body)
+        if path in {"/assets/services.json", "/assets/scenarios.json"}:
+            self.serve_services_json(send_body=send_body)
             return
 
         if path == "/sitemap.xml":
             self.serve_sitemap(send_body=send_body)
             return
 
-        if path in {"/scenarios", "/scenarios/"}:
-            self.redirect("/#scenarios")
+        if path in {"/services", "/services/"}:
+            self.redirect("/#service-list")
             return
 
-        scenario_match = re.fullmatch(r"/scenarios/([a-z0-9-]+)/?", path)
-        if scenario_match:
-            scenario = get_scenario(scenario_match.group(1))
-            if scenario:
-                self.serve_scenario_page(scenario.slug, send_body=send_body)
+        if path in {"/scenarios", "/scenarios/"}:
+            self.redirect_permanent("/#service-list")
+            return
+
+        service_match = re.fullmatch(r"/services/([a-z0-9-]+)/?", path)
+        if service_match:
+            service = get_service(service_match.group(1))
+            if service:
+                self.serve_service_page(service.slug, send_body=send_body)
                 return
-            self.render_error(HTTPStatus.NOT_FOUND, "That scenario page was not found.")
+            self.render_error(HTTPStatus.NOT_FOUND, "That service page was not found.")
+            return
+
+        legacy_service_match = re.fullmatch(r"/scenarios/([a-z0-9-]+)/?", path)
+        if legacy_service_match:
+            self.redirect_permanent(f"/services/{legacy_service_match.group(1)}")
             return
 
         route_files = {
@@ -395,11 +404,11 @@ class AudoHandler(BaseHTTPRequestHandler):
         if not payload["message"]:
             raise ValueError("Please describe what needs help.")
 
-    def serve_scenarios_json(self, send_body: bool = True) -> None:
+    def serve_services_json(self, send_body: bool = True) -> None:
         data = json.dumps(
             {
-                "count": len(SCENARIOS),
-                "scenarios": scenario_cards(),
+                "count": len(SERVICES),
+                "services": service_cards(),
             },
             separators=(",", ":"),
         ).encode("utf-8")
@@ -414,7 +423,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     def serve_sitemap(self, send_body: bool = True) -> None:
         urls = [
             ("https://getaudo.com/", "monthly", "1.0"),
-            *[(scenario.canonical_url, "monthly", "0.72") for scenario in SCENARIOS],
+            *[(service.canonical_url, "monthly", "0.72") for service in SERVICES],
         ]
         entries = "\n".join(
             f"""  <url>
@@ -438,16 +447,16 @@ class AudoHandler(BaseHTTPRequestHandler):
         if send_body:
             self.wfile.write(data)
 
-    def serve_scenario_page(self, slug: str, send_body: bool = True) -> None:
-        scenario = get_scenario(slug)
-        if not scenario:
-            self.render_error(HTTPStatus.NOT_FOUND, "That scenario page was not found.")
+    def serve_service_page(self, slug: str, send_body: bool = True) -> None:
+        service = get_service(slug)
+        if not service:
+            self.render_error(HTTPStatus.NOT_FOUND, "That service page was not found.")
             return
 
-        data = scenario_dict(scenario)
+        data = service_dict(service)
         h = lambda value: html.escape(str(value), quote=True)
         social_image = f"{PUBLIC_BASE_URL}/assets/audo-social-card-free-discovery.jpg"
-        form_context = f"Scenario: {scenario.title} ({PUBLIC_BASE_URL}{scenario.url})"
+        form_context = f"Service: {service.title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(f"<li>{h(check)}</li>" for check in data["checks"])
         faqs_html = "\n".join(
             f"""<details>
@@ -462,27 +471,27 @@ class AudoHandler(BaseHTTPRequestHandler):
                 "@graph": [
                     {
                         "@type": "WebPage",
-                        "@id": f"{PUBLIC_BASE_URL}{scenario.url}#webpage",
-                        "url": f"{PUBLIC_BASE_URL}{scenario.url}",
-                        "name": scenario.meta_title,
-                        "description": scenario.meta_description,
+                        "@id": f"{PUBLIC_BASE_URL}{service.url}#webpage",
+                        "url": f"{PUBLIC_BASE_URL}{service.url}",
+                        "name": service.meta_title,
+                        "description": service.meta_description,
                         "isPartOf": {"@id": "https://getaudo.com/#website"},
-                        "about": {"@id": f"{PUBLIC_BASE_URL}{scenario.url}#service"},
+                        "about": {"@id": f"{PUBLIC_BASE_URL}{service.url}#service"},
                         "primaryImageOfPage": social_image,
                         "inLanguage": "en-US",
                     },
                     {
                         "@type": "Service",
-                        "@id": f"{PUBLIC_BASE_URL}{scenario.url}#service",
-                        "name": scenario.title,
-                        "serviceType": scenario.category,
-                        "description": scenario.summary,
+                        "@id": f"{PUBLIC_BASE_URL}{service.url}#service",
+                        "name": service.title,
+                        "serviceType": service.category,
+                        "description": service.summary,
                         "provider": {"@id": "https://getaudo.com/#business"},
                         "areaServed": {"@type": "Country", "name": "United States"},
                         "offers": {
                             "@type": "Offer",
                             "availability": "https://schema.org/InStock",
-                            "url": f"{PUBLIC_BASE_URL}{scenario.url}#discovery",
+                            "url": f"{PUBLIC_BASE_URL}{service.url}#discovery",
                             "priceSpecification": {
                                 "@type": "PriceSpecification",
                                 "priceCurrency": "USD",
@@ -492,7 +501,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                     },
                     {
                         "@type": "FAQPage",
-                        "@id": f"{PUBLIC_BASE_URL}{scenario.url}#faq",
+                        "@id": f"{PUBLIC_BASE_URL}{service.url}#faq",
                         "mainEntity": [
                             {
                                 "@type": "Question",
@@ -507,7 +516,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                     },
                     {
                         "@type": "BreadcrumbList",
-                        "@id": f"{PUBLIC_BASE_URL}{scenario.url}#breadcrumb",
+                        "@id": f"{PUBLIC_BASE_URL}{service.url}#breadcrumb",
                         "itemListElement": [
                             {
                                 "@type": "ListItem",
@@ -518,14 +527,14 @@ class AudoHandler(BaseHTTPRequestHandler):
                             {
                                 "@type": "ListItem",
                                 "position": 2,
-                                "name": "Scenarios",
-                                "item": "https://getaudo.com/#scenarios",
+                                "name": "Services",
+                                "item": "https://getaudo.com/#service-list",
                             },
                             {
                                 "@type": "ListItem",
                                 "position": 3,
-                                "name": scenario.title,
-                                "item": f"{PUBLIC_BASE_URL}{scenario.url}",
+                                "name": service.title,
+                                "item": f"{PUBLIC_BASE_URL}{service.url}",
                             },
                         ],
                     },
@@ -566,20 +575,20 @@ class AudoHandler(BaseHTTPRequestHandler):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{h(scenario.meta_title)}</title>
-  <meta name="description" content="{h(scenario.meta_description)}">
+  <title>{h(service.meta_title)}</title>
+  <meta name="description" content="{h(service.meta_description)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron Hancock">
   <meta name="theme-color" content="#101815">
-  <link rel="canonical" href="{h(PUBLIC_BASE_URL + scenario.url)}">
+  <link rel="canonical" href="{h(PUBLIC_BASE_URL + service.url)}">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" href="/llms.txt" type="text/plain" title="Audo AI summary">
   <meta property="og:site_name" content="Audo">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="en_US">
-  <meta property="og:url" content="{h(PUBLIC_BASE_URL + scenario.url)}">
-  <meta property="og:title" content="{h(scenario.title)}">
-  <meta property="og:description" content="{h(scenario.summary)}">
+  <meta property="og:url" content="{h(PUBLIC_BASE_URL + service.url)}">
+  <meta property="og:title" content="{h(service.title)}">
+  <meta property="og:description" content="{h(service.summary)}">
   <meta property="og:image" content="{h(social_image)}">
   <meta property="og:image:secure_url" content="{h(social_image)}">
   <meta property="og:image:type" content="image/jpeg">
@@ -587,8 +596,8 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Audo social card with Aaron Hancock and a Free Discovery call to action.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{h(scenario.title)}">
-  <meta name="twitter:description" content="{h(scenario.summary)}">
+  <meta name="twitter:title" content="{h(service.title)}">
+  <meta name="twitter:description" content="{h(service.summary)}">
   <meta name="twitter:image" content="{h(social_image)}">
   <meta name="twitter:image:alt" content="Audo social card with Aaron Hancock and a Free Discovery call to action.">
   <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
@@ -864,9 +873,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         <img src="/assets/audo-logo-white.png" alt="Audo">
       </a>
       <div class="nav-links">
-        <a href="/#services">Services</a>
+        <a href="/#services">How I can help</a>
         <a href="/#why">Why Audo</a>
-        <a href="/#scenarios">Scenarios</a>
         <a class="nav-cta" href="#discovery">Free Discovery</a>
       </div>
     </div>
@@ -874,12 +882,12 @@ class AudoHandler(BaseHTTPRequestHandler):
   <header class="detail-hero">
     <div class="shell">
       <div class="hero-content">
-        <p class="eyebrow">{h(scenario.category)}</p>
-        <h1>{h(scenario.title)}.</h1>
-        <p class="hero-lead">{h(scenario.summary)}</p>
+        <p class="eyebrow">{h(service.category)}</p>
+        <h1>{h(service.title)}.</h1>
+        <p class="hero-lead">{h(service.summary)}</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Request Free Discovery</a>
-          <a class="button" href="/#scenarios">Browse scenarios</a>
+          <a class="button" href="/#service-list">Browse services</a>
         </div>
       </div>
     </div>
@@ -889,15 +897,15 @@ class AudoHandler(BaseHTTPRequestHandler):
       <article class="detail-content">
         <section class="story-block" aria-labelledby="problem-heading">
           <h2 id="problem-heading">The problem</h2>
-          <p>{h(scenario.pain)}</p>
+          <p>{h(service.pain)}</p>
         </section>
         <section class="story-block" aria-labelledby="solution-heading">
           <h2 id="solution-heading">How I help</h2>
-          <p>{h(scenario.solution)}</p>
+          <p>{h(service.solution)}</p>
         </section>
         <section class="story-block" aria-labelledby="result-heading">
           <h2 id="result-heading">Expected result</h2>
-          <p>{h(scenario.result)}</p>
+          <p>{h(service.result)}</p>
         </section>
         <section aria-labelledby="look-heading">
           <p class="eyebrow" id="look-heading">What I look at first</p>
@@ -914,31 +922,31 @@ class AudoHandler(BaseHTTPRequestHandler):
           </div>
         </section>
       </article>
-      <aside id="discovery" class="form-panel" aria-labelledby="scenario-form-heading">
+      <aside id="discovery" class="form-panel" aria-labelledby="service-form-heading">
         <p class="eyebrow">Free Discovery</p>
-        <h2 id="scenario-form-heading">Start with this scenario.</h2>
+        <h2 id="service-form-heading">Start with this service.</h2>
         <p>Share what is happening in plain English. I will review the context and respond with the best next step.</p>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="scenario-form-status scenario-form-note" data-recaptcha-form>
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form>
           <div class="form-honey" aria-hidden="true">
-            <label for="scenario_website_url_confirm">Confirm website</label>
-            <input id="scenario_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
+            <label for="service_website_url_confirm">Confirm website</label>
+            <input id="service_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
           </div>
           <div class="form-grid">
             <div class="form-field">
-              <label for="scenario_name">Name</label>
-              <input id="scenario_name" name="name" type="text" autocomplete="name" required>
+              <label for="service_name">Name</label>
+              <input id="service_name" name="name" type="text" autocomplete="name" required>
             </div>
             <div class="form-field">
-              <label for="scenario_company_name">Company / project</label>
-              <input id="scenario_company_name" name="company_name" type="text" autocomplete="organization" required>
+              <label for="service_company_name">Company / project</label>
+              <input id="service_company_name" name="company_name" type="text" autocomplete="organization" required>
             </div>
             <div class="form-field">
-              <label for="scenario_email">Email</label>
-              <input id="scenario_email" name="email" type="email" autocomplete="email" required>
+              <label for="service_email">Email</label>
+              <input id="service_email" name="email" type="email" autocomplete="email" required>
             </div>
             <div class="form-field">
-              <label for="scenario_timeline">Urgency</label>
-              <select id="scenario_timeline" name="timeline" required>
+              <label for="service_timeline">Urgency</label>
+              <select id="service_timeline" name="timeline" required>
                 <option value="">Choose one</option>
                 <option>This week</option>
                 <option>Next few weeks</option>
@@ -947,25 +955,25 @@ class AudoHandler(BaseHTTPRequestHandler):
               </select>
             </div>
             <div class="form-field full">
-              <label for="scenario_website">Website</label>
-              <input id="scenario_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
+              <label for="service_website">Website</label>
+              <input id="service_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
             </div>
             <div class="form-field full">
-              <label for="scenario_preferred_times">A few good discovery times</label>
-              <textarea id="scenario_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
+              <label for="service_preferred_times">A few good discovery times</label>
+              <textarea id="service_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
             </div>
             <div class="form-field full">
-              <label for="scenario_message">What should I know?</label>
-              <textarea id="scenario_message" name="message" placeholder="A few plain-English sentences are perfect. Include any useful context I should review first." required></textarea>
+              <label for="service_message">What should I know?</label>
+              <textarea id="service_message" name="message" placeholder="A few plain-English sentences are perfect. Include any useful context I should review first." required></textarea>
             </div>
           </div>
-          <input type="hidden" name="service" value="{h(scenario.title)}">
-          <input type="hidden" name="source" value="getaudo.com scenario page">
+          <input type="hidden" name="service" value="{h(service.title)}">
+          <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request Free Discovery</button>
-          <p id="scenario-form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="scenario-form-note" class="form-note">Your request goes directly to Aaron with this scenario attached.</p>
+          <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
+          <p id="service-form-note" class="form-note">Your request goes directly to Aaron with this service attached.</p>
         </form>
       </aside>
     </div>
@@ -1195,6 +1203,11 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def redirect(self, location: str) -> None:
         self.send_response(HTTPStatus.SEE_OTHER)
+        self.send_header("Location", location)
+        self.end_headers()
+
+    def redirect_permanent(self, location: str) -> None:
+        self.send_response(HTTPStatus.MOVED_PERMANENTLY)
         self.send_header("Location", location)
         self.end_headers()
 

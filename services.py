@@ -8,7 +8,7 @@ PUBLIC_BASE_URL = "https://getaudo.com"
 
 
 @dataclass(frozen=True)
-class Scenario:
+class Service:
     slug: str
     title: str
     category: str
@@ -19,7 +19,7 @@ class Scenario:
 
     @property
     def url(self) -> str:
-        return f"/scenarios/{self.slug}"
+        return f"/services/{self.slug}"
 
     @property
     def canonical_url(self) -> str:
@@ -45,7 +45,7 @@ def slugify(title: str) -> str:
     return slug
 
 
-SCENARIO_SEEDS = [
+SERVICE_SEEDS = [
     (
         "Fix a broken contact form",
         "Website and app care",
@@ -849,16 +849,16 @@ SCENARIO_SEEDS = [
 ]
 
 
-def _build_scenarios() -> list[Scenario]:
-    scenarios: list[Scenario] = []
+def _build_services() -> list[Service]:
+    services: list[Service] = []
     seen: set[str] = set()
-    for title, category, summary, pain, solution, result in SCENARIO_SEEDS:
+    for title, category, summary, pain, solution, result in SERVICE_SEEDS:
         slug = slugify(title)
         if slug in seen:
-            raise ValueError(f"Duplicate scenario slug: {slug}")
+            raise ValueError(f"Duplicate service slug: {slug}")
         seen.add(slug)
-        scenarios.append(
-            Scenario(
+        services.append(
+            Service(
                 slug=slug,
                 title=title,
                 category=category,
@@ -868,11 +868,11 @@ def _build_scenarios() -> list[Scenario]:
                 result=result,
             )
         )
-    return scenarios
+    return services
 
 
-SCENARIOS = _build_scenarios()
-SCENARIO_BY_SLUG = {scenario.slug: scenario for scenario in SCENARIOS}
+SERVICES = _build_services()
+SERVICE_BY_SLUG = {service.slug: service for service in SERVICES}
 
 
 CATEGORY_CHECKS = {
@@ -904,35 +904,35 @@ CATEGORY_CHECKS = {
 }
 
 
-def get_scenario(slug: str) -> Scenario | None:
-    return SCENARIO_BY_SLUG.get(slug)
+def get_service(slug: str) -> Service | None:
+    return SERVICE_BY_SLUG.get(slug)
 
 
-def scenario_cards() -> list[dict[str, str]]:
+def service_cards() -> list[dict[str, str]]:
     return [
         {
-            "title": scenario.title,
-            "category": scenario.category,
-            "summary": scenario.summary,
-            "url": scenario.url,
+            "title": service.title,
+            "category": service.category,
+            "summary": service.summary,
+            "url": service.url,
         }
-        for scenario in SCENARIOS
+        for service in SERVICES
     ]
 
 
-def scenario_dict(scenario: Scenario) -> dict[str, object]:
-    data = asdict(scenario)
-    data["url"] = scenario.url
-    data["canonical_url"] = scenario.canonical_url
-    data["meta_title"] = scenario.meta_title
-    data["meta_description"] = scenario.meta_description
-    data["checks"] = CATEGORY_CHECKS[scenario.category]
-    data["faqs"] = scenario_faqs(scenario)
+def service_dict(service: Service) -> dict[str, object]:
+    data = asdict(service)
+    data["url"] = service.url
+    data["canonical_url"] = service.canonical_url
+    data["meta_title"] = service.meta_title
+    data["meta_description"] = service.meta_description
+    data["checks"] = CATEGORY_CHECKS[service.category]
+    data["faqs"] = service_faqs(service)
     return data
 
 
-def scenario_faqs(scenario: Scenario) -> list[dict[str, str]]:
-    topic = scenario.title[0].lower() + scenario.title[1:]
+def service_faqs(service: Service) -> list[dict[str, str]]:
+    topic = service.title[0].lower() + service.title[1:]
     return [
         {
             "question": f"Can Audo help me {topic} if I do not know the technical cause?",

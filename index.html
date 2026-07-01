@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://getaudo.com/">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" href="/llms.txt" type="text/plain" title="Audo AI summary">
-  <link rel="preload" href="/assets/scenarios.json" as="fetch" type="application/json" crossorigin="anonymous">
+  <link rel="preload" href="/assets/services.json" as="fetch" type="application/json" crossorigin="anonymous">
   <meta property="og:site_name" content="Audo">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
@@ -952,24 +952,24 @@
       overflow: hidden;
     }
 
-    .scenario-band {
+    .service-list-band {
       padding: 70px 0 82px;
       background: var(--paper);
     }
 
-    .scenario-band .section-head {
+    .service-list-band .section-head {
       padding-top: 28px;
       border-top: 1px solid var(--line);
     }
 
-    .scenario-tools {
+    .service-list-tools {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 24px;
     }
 
-    .scenario-filter {
+    .service-list-filter {
       min-height: 38px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -982,19 +982,19 @@
       cursor: pointer;
     }
 
-    .scenario-filter.is-active {
+    .service-list-filter.is-active {
       color: #101815;
       border-color: #f0c66f;
       background: #f0c66f;
     }
 
-    .scenario-grid {
+    .service-list-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
 
-    .scenario-card {
+    .service-list-card {
       min-height: 192px;
       display: flex;
       flex-direction: column;
@@ -1009,13 +1009,13 @@
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
     }
 
-    .scenario-card:hover {
+    .service-list-card:hover {
       transform: translateY(-2px);
       border-color: rgba(200, 155, 75, 0.56);
       box-shadow: 0 18px 42px rgba(12, 18, 15, 0.1);
     }
 
-    .scenario-card span {
+    .service-list-card span {
       display: block;
       color: #725119;
       font-size: 11px;
@@ -1025,20 +1025,20 @@
       text-transform: uppercase;
     }
 
-    .scenario-card h3 {
+    .service-list-card h3 {
       margin-top: 8px;
       font-size: 19px;
       line-height: 1.14;
     }
 
-    .scenario-card p {
+    .service-list-card p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
     }
 
-    .scenario-status {
+    .service-list-status {
       min-height: 22px;
       margin: 18px 0 0;
       color: var(--muted);
@@ -1047,7 +1047,7 @@
       text-align: center;
     }
 
-    .scenario-sentinel {
+    .service-list-sentinel {
       height: 1px;
     }
 
@@ -1157,7 +1157,7 @@
         row-gap: 10px;
       }
 
-      .scenario-grid {
+      .service-list-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
@@ -1347,25 +1347,25 @@
         grid-template-columns: 1fr;
       }
 
-      .scenario-band {
+      .service-list-band {
         padding: 54px 0 62px;
       }
 
-      .scenario-tools {
+      .service-list-tools {
         overflow-x: auto;
         flex-wrap: nowrap;
         padding-bottom: 4px;
       }
 
-      .scenario-filter {
+      .service-list-filter {
         flex: 0 0 auto;
       }
 
-      .scenario-grid {
+      .service-list-grid {
         grid-template-columns: 1fr;
       }
 
-      .scenario-card {
+      .service-list-card {
         min-height: auto;
       }
 
@@ -1413,10 +1413,9 @@
         <img src="/assets/audo-logo-white.png" alt="Audo">
       </a>
       <div class="nav-links">
-        <a href="#services">Services</a>
+        <a href="#services">How I can help</a>
         <a href="#why">Why Audo</a>
         <a href="#about">About</a>
-        <a href="#scenarios">Scenarios</a>
         <a class="nav-cta" href="#discovery">Book Free Discovery</a>
       </div>
     </div>
@@ -1430,7 +1429,7 @@
         <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the tech work that needs a capable owner.</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book Free Discovery</a>
-          <a class="button ghost" href="#scenarios">Browse 100 examples</a>
+          <a class="button ghost" href="#service-list">Browse 100 services</a>
         </div>
         <p class="hero-note">No polished project brief needed. Share what needs attention; I will help sort the next step.</p>
       </div>
@@ -1498,8 +1497,8 @@
         </div>
 
         <div class="services-next">
-          <p>Want something more specific? Browse common situations and see how I would approach them.</p>
-          <a class="button" href="#scenarios">See the scenario list</a>
+          <p>Want something more specific? Browse the service list and see how I would approach the work.</p>
+          <a class="button" href="#service-list">See the service list</a>
         </div>
       </div>
     </section>
@@ -1688,25 +1687,25 @@
       </div>
     </section>
 
-    <section id="scenarios" class="scenario-band" aria-labelledby="scenarios-heading">
+    <section id="service-list" class="service-list-band" aria-labelledby="service-list-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="scenarios-heading">Specific ways I can help.</h2>
-          <p class="section-copy">Browse real scenarios if you are trying to name the problem. Each page explains the pain, the fix, the likely result, and how Free Discovery works.</p>
+          <h2 id="service-list-heading">Specific services I can help with.</h2>
+          <p class="section-copy">Browse specific services if you are trying to name the problem. Each page explains the pain, the fix, the likely result, and how Free Discovery works.</p>
         </div>
-        <div class="scenario-tools" aria-label="Scenario filters">
-          <button class="scenario-filter is-active" type="button" data-scenario-filter="All">All</button>
-          <button class="scenario-filter" type="button" data-scenario-filter="Website and app care">Websites and apps</button>
-          <button class="scenario-filter" type="button" data-scenario-filter="Automation">Automation</button>
-          <button class="scenario-filter" type="button" data-scenario-filter="AI coaching and support">AI support</button>
-          <button class="scenario-filter" type="button" data-scenario-filter="Product strategy">Product strategy</button>
-          <button class="scenario-filter" type="button" data-scenario-filter="Individual consulting">Individual help</button>
+        <div class="service-list-tools" aria-label="Service filters">
+          <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
+          <button class="service-list-filter" type="button" data-service-list-filter="Website and app care">Websites and apps</button>
+          <button class="service-list-filter" type="button" data-service-list-filter="Automation">Automation</button>
+          <button class="service-list-filter" type="button" data-service-list-filter="AI coaching and support">AI support</button>
+          <button class="service-list-filter" type="button" data-service-list-filter="Product strategy">Product strategy</button>
+          <button class="service-list-filter" type="button" data-service-list-filter="Individual consulting">Individual help</button>
         </div>
-        <div id="scenario-grid" class="scenario-grid" data-scenarios-endpoint="/assets/scenarios.json" aria-live="polite"></div>
-        <div id="scenario-sentinel" class="scenario-sentinel" aria-hidden="true"></div>
-        <p id="scenario-status" class="scenario-status" role="status">Loading scenarios...</p>
+        <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json" aria-live="polite"></div>
+        <div id="service-list-sentinel" class="service-list-sentinel" aria-hidden="true"></div>
+        <p id="service-list-status" class="service-list-status" role="status">Loading services...</p>
         <noscript>
-          <p class="scenario-status">JavaScript is required to load the scenario grid. Search engines can still access every scenario through the sitemap.</p>
+          <p class="service-list-status">JavaScript is required to load the service grid. Search engines can still access every service through the sitemap.</p>
         </noscript>
       </div>
     </section>
@@ -1789,16 +1788,16 @@
     }());
 
     (function () {
-      var grid = document.getElementById("scenario-grid");
-      var status = document.getElementById("scenario-status");
-      var sentinel = document.getElementById("scenario-sentinel");
-      var filters = Array.prototype.slice.call(document.querySelectorAll("[data-scenario-filter]"));
+      var grid = document.getElementById("service-list-grid");
+      var status = document.getElementById("service-list-status");
+      var sentinel = document.getElementById("service-list-sentinel");
+      var filters = Array.prototype.slice.call(document.querySelectorAll("[data-service-list-filter]"));
       if (!grid) {
         return;
       }
 
-      var endpoint = grid.getAttribute("data-scenarios-endpoint") || "/assets/scenarios.json";
-      var scenarios = [];
+      var endpoint = grid.getAttribute("data-services-endpoint") || "/assets/services.json";
+      var services = [];
       var visible = [];
       var activeFilter = "All";
       var nextIndex = 0;
@@ -1811,18 +1810,18 @@
         }
       }
 
-      function createCard(scenario) {
+      function createCard(service) {
         var card = document.createElement("a");
         var headingWrap = document.createElement("div");
         var category = document.createElement("span");
         var title = document.createElement("h3");
         var summary = document.createElement("p");
 
-        card.className = "scenario-card";
-        card.href = scenario.url;
-        category.textContent = scenario.category;
-        title.textContent = scenario.title;
-        summary.textContent = scenario.summary;
+        card.className = "service-list-card";
+        card.href = service.url;
+        category.textContent = service.category;
+        title.textContent = service.title;
+        summary.textContent = service.summary;
 
         headingWrap.appendChild(category);
         headingWrap.appendChild(title);
@@ -1834,7 +1833,7 @@
       function renderNextBatch() {
         if (!visible.length) {
           grid.innerHTML = "";
-          updateStatus("No scenarios found for this filter.");
+          updateStatus("No services found for this filter.");
           return;
         }
 
@@ -1845,7 +1844,7 @@
         }
         grid.appendChild(fragment);
 
-        updateStatus("Showing " + nextIndex + " of " + visible.length + " scenarios.");
+        updateStatus("Showing " + nextIndex + " of " + visible.length + " services.");
         if (observer && nextIndex >= visible.length && sentinel) {
           observer.unobserve(sentinel);
         }
@@ -1853,13 +1852,13 @@
 
       function applyFilter(category) {
         activeFilter = category;
-        visible = category === "All" ? scenarios.slice() : scenarios.filter(function (scenario) {
-          return scenario.category === category;
+        visible = category === "All" ? services.slice() : services.filter(function (service) {
+          return service.category === category;
         });
         nextIndex = 0;
         grid.innerHTML = "";
         filters.forEach(function (button) {
-          var isActive = button.getAttribute("data-scenario-filter") === activeFilter;
+          var isActive = button.getAttribute("data-service-list-filter") === activeFilter;
           button.classList.toggle("is-active", isActive);
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
@@ -1872,20 +1871,20 @@
       filters.forEach(function (button) {
         button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
         button.addEventListener("click", function () {
-          applyFilter(button.getAttribute("data-scenario-filter") || "All");
+          applyFilter(button.getAttribute("data-service-list-filter") || "All");
         });
       });
 
       fetch(endpoint, { headers: { "Accept": "application/json" } })
         .then(function (response) {
           if (!response.ok) {
-            throw new Error("Scenario request failed");
+            throw new Error("Service request failed");
           }
           return response.json();
         })
         .then(function (payload) {
-          scenarios = Array.isArray(payload.scenarios) ? payload.scenarios : [];
-          visible = scenarios.slice();
+          services = Array.isArray(payload.services) ? payload.services : [];
+          visible = services.slice();
 
           if ("IntersectionObserver" in window && sentinel) {
             observer = new IntersectionObserver(function (entries) {
@@ -1901,7 +1900,7 @@
           renderNextBatch();
         })
         .catch(function () {
-          updateStatus("The scenario list could not load. Please refresh the page.");
+          updateStatus("The service list could not load. Please refresh the page.");
         });
     }());
 

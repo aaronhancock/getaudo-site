@@ -39,6 +39,7 @@ RECAPTCHA_ACTION = "discovery_request"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
+SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
 SERVICE_SOCIAL_CARD_CACHE: dict[str, bytes] = {}
 REMOVED_SERVICE_REDIRECTS = {
     "clean-up-hosting-dns-and-domain-confusion": "/#service-list",
@@ -694,7 +695,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         data = service_dict(service)
         h = lambda value: html.escape(str(value), quote=True)
-        social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg"
+        social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg?v={SERVICE_SOCIAL_CARD_VERSION}"
         social_image_alt = f"Audo social card for {service.title} with Aaron Hancock."
         form_context = f"Service: {service.title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(f"<li>{h(check)}</li>" for check in data["checks"])

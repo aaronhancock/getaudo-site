@@ -200,7 +200,7 @@ def make_service_social_card(service) -> bytes | None:
     while title_size > 46:
         title_font = load_card_font(title_size, bold=True)
         title_lines = wrap_card_text(draw, service.title, title_font, text_max_width, max_lines=4)
-        if len(title_lines) <= 3 or title_size <= 50:
+        if len(title_lines) <= 2 or title_size <= 50:
             break
         title_size -= 4
 

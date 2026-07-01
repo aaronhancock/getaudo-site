@@ -647,13 +647,19 @@
     }
 
     .one-off-band {
-      padding-top: 0;
+      padding: 42px 0 58px;
       background: var(--paper);
     }
 
     .one-off-band .section-head {
-      padding-top: 42px;
+      padding-top: 28px;
       border-top: 1px solid var(--line);
+      margin-bottom: 22px;
+    }
+
+    .one-off-band h2 {
+      font-size: clamp(28px, 3.4vw, 42px);
+      line-height: 1.04;
     }
 
     .one-off-grid {
@@ -664,13 +670,13 @@
 
     .one-off-card {
       display: flex;
-      min-height: 240px;
+      min-height: 200px;
       flex-direction: column;
       justify-content: space-between;
-      gap: 22px;
+      gap: 16px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 22px;
+      padding: 18px;
       background: rgba(255, 255, 255, 0.62);
     }
 
@@ -711,19 +717,19 @@
 
     .audit-request {
       display: grid;
-      grid-template-columns: minmax(0, 0.7fr) minmax(360px, 0.82fr);
-      gap: clamp(24px, 4vw, 48px);
+      grid-template-columns: minmax(220px, 0.44fr) minmax(360px, 1fr);
+      gap: clamp(18px, 3vw, 32px);
       align-items: start;
       margin-top: 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: clamp(22px, 4vw, 34px);
+      padding: clamp(18px, 3vw, 24px);
       background: var(--soft);
     }
 
     .audit-request-copy h3 {
-      font-size: clamp(26px, 3.4vw, 38px);
-      line-height: 1.05;
+      font-size: 22px;
+      line-height: 1.12;
     }
 
     .audit-request-copy .panel-label {
@@ -731,20 +737,20 @@
     }
 
     .audit-request-copy p:not(.panel-label) {
-      margin: 14px 0 0;
+      margin: 10px 0 0;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .audit-request .consultation-form {
-      padding: 22px;
+      padding: 18px;
       border-color: var(--line);
       box-shadow: none;
     }
 
     .audit-request .form-field textarea {
-      min-height: 116px;
+      min-height: 96px;
     }
 
     .why-band {
@@ -1514,116 +1520,6 @@
       </div>
     </section>
 
-    <section class="one-off-band" aria-labelledby="one-off-heading">
-      <div class="shell">
-        <div class="section-head">
-          <h2 id="one-off-heading">Focused paid services.</h2>
-          <p class="section-copy">Defined one-off services for specific concerns. Each starts at $100. These are also included with ongoing support and maintenance.</p>
-        </div>
-
-        <div class="one-off-grid">
-          <article class="one-off-card">
-            <div>
-              <h3>ADA Evaluation</h3>
-              <p>A practical review of key pages, forms, navigation, keyboard access, contrast, text alternatives, and accessibility blockers.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and complexity</p>
-            </div>
-          </article>
-
-          <article class="one-off-card">
-            <div>
-              <h3>SEO + AI SEO Scan</h3>
-              <p>Search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and content depth</p>
-            </div>
-          </article>
-
-          <article class="one-off-card">
-            <div>
-              <h3>Website Performance Scan</h3>
-              <p>Page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.</p>
-            </div>
-            <div class="one-off-meta">
-              <p class="price-note">Starting at $100</p>
-              <p class="scope-note">Scoped by page count and platform</p>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="audit-request" aria-labelledby="audit-request-heading">
-          <div class="audit-request-copy">
-            <p class="panel-label">Focused service request</p>
-            <h3 id="audit-request-heading">Request a paid service.</h3>
-            <p>Use this when you already know the kind of service you want. I will confirm scope before starting, especially when page count, tools, or access affect the work.</p>
-            <p>Already on ongoing support or maintenance? These services can be included as part of that work.</p>
-          </div>
-          <form class="consultation-form audit-form" action="/api/consultation" method="post" aria-describedby="audit-form-status audit-form-note" data-recaptcha-form>
-            <div class="form-honey" aria-hidden="true">
-              <label for="audit_website_url_confirm">Confirm website</label>
-              <input id="audit_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
-            </div>
-            <div class="form-grid">
-              <div class="form-field full">
-                <label for="audit_service">Service type</label>
-                <select id="audit_service" name="service" required>
-                  <option value="">Choose one</option>
-                  <option>ADA evaluation</option>
-                  <option>SEO / AI SEO scan</option>
-                  <option>Website performance scan</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="audit_name">Name</label>
-                <input id="audit_name" name="name" type="text" autocomplete="name" required>
-              </div>
-              <div class="form-field">
-                <label for="audit_company_name">Company / project</label>
-                <input id="audit_company_name" name="company_name" type="text" autocomplete="organization" required>
-              </div>
-              <div class="form-field">
-                <label for="audit_email">Email</label>
-                <input id="audit_email" name="email" type="email" autocomplete="email" required>
-              </div>
-              <div class="form-field">
-                <label for="audit_timeline">Timing</label>
-                <select id="audit_timeline" name="timeline" required>
-                  <option value="">Choose one</option>
-                  <option>This week</option>
-                  <option>Next few weeks</option>
-                  <option>This month</option>
-                  <option>No rush yet</option>
-                </select>
-              </div>
-              <div class="form-field full">
-                <label for="audit_website">Website</label>
-                <input id="audit_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com" required>
-              </div>
-              <div class="form-field full">
-                <label for="audit_message">Pages, tools, or concern</label>
-                <textarea id="audit_message" name="message" placeholder="Approximate page count, platform, tools, and what you want checked." required></textarea>
-              </div>
-              <div class="form-field full">
-                <label for="audit_preferred_times">Best follow-up times</label>
-                <textarea id="audit_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for a quick scope confirmation." required></textarea>
-              </div>
-            </div>
-            <input type="hidden" name="source" value="getaudo.com focused paid services form">
-            <input type="hidden" name="recaptcha_token" value="">
-            <button class="button primary" type="submit">Request paid service</button>
-            <p id="audit-form-status" class="form-status" role="status" aria-live="polite"></p>
-            <p id="audit-form-note" class="form-note">Starting at $100. Final scope is confirmed before work begins.</p>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
@@ -1702,6 +1598,99 @@
           <p>I'm Aaron Hancock. I help individuals and small businesses make progress on practical technology problems without adding a big agency process.</p>
           <p>You work directly with me: the person helping define the work, making the fix, and supporting it afterward.</p>
           <div class="work-note">Audo is intentionally small because this kind of work gets better with context. The more I understand your tools, workflows, customers, and priorities, the more useful the help becomes.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="one-off-band" aria-labelledby="one-off-heading">
+      <div class="shell">
+        <div class="section-head">
+          <h2 id="one-off-heading">Focused paid services.</h2>
+          <p class="section-copy">A few defined one-off services for specific concerns. Each starts at $100 and can be included with ongoing support.</p>
+        </div>
+
+        <div class="one-off-grid">
+          <article class="one-off-card">
+            <div>
+              <h3>ADA Evaluation</h3>
+              <p>A practical review of key pages, forms, navigation, keyboard access, contrast, text alternatives, and accessibility blockers.</p>
+            </div>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and complexity</p>
+            </div>
+          </article>
+
+          <article class="one-off-card">
+            <div>
+              <h3>SEO + AI SEO Scan</h3>
+              <p>Search basics, metadata, schema, content clarity, local/service intent, share previews, and AI answer readiness.</p>
+            </div>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and content depth</p>
+            </div>
+          </article>
+
+          <article class="one-off-card">
+            <div>
+              <h3>Website Performance Scan</h3>
+              <p>Page speed, Core Web Vitals, image weight, scripts, caching, mobile performance, and practical speed improvements.</p>
+            </div>
+            <div class="one-off-meta">
+              <p class="price-note">Starting at $100</p>
+              <p class="scope-note">Scoped by page count and platform</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="audit-request" aria-labelledby="audit-request-heading">
+          <div class="audit-request-copy">
+            <p class="panel-label">Focused service request</p>
+            <h3 id="audit-request-heading">Request a paid service.</h3>
+            <p>Pick the service, share the site, and include anything I should know before I confirm scope.</p>
+          </div>
+          <form class="consultation-form audit-form" action="/api/consultation" method="post" aria-describedby="audit-form-status audit-form-note" data-recaptcha-form>
+            <div class="form-honey" aria-hidden="true">
+              <label for="audit_website_url_confirm">Confirm website</label>
+              <input id="audit_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="audit_service">Service type</label>
+                <select id="audit_service" name="service" required>
+                  <option value="">Choose one</option>
+                  <option>ADA evaluation</option>
+                  <option>SEO / AI SEO scan</option>
+                  <option>Website performance scan</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="audit_name">Name</label>
+                <input id="audit_name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="form-field">
+                <label for="audit_email">Email</label>
+                <input id="audit_email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="form-field full">
+                <label for="audit_website">Website</label>
+                <input id="audit_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com" required>
+              </div>
+              <div class="form-field full">
+                <label for="audit_message">What should I know?</label>
+                <textarea id="audit_message" name="message" placeholder="Approximate page count, platform, tools, or what you want checked." required></textarea>
+              </div>
+            </div>
+            <input type="hidden" name="company_name" value="Focused paid service request">
+            <input type="hidden" name="timeline" value="Paid service request">
+            <input type="hidden" name="preferred_times" value="Coordinate by email">
+            <input type="hidden" name="source" value="getaudo.com focused paid services form">
+            <input type="hidden" name="recaptcha_token" value="">
+            <button class="button primary" type="submit">Request paid service</button>
+            <p id="audit-form-status" class="form-status" role="status" aria-live="polite"></p>
+            <p id="audit-form-note" class="form-note">Starting at $100. Final scope is confirmed before work begins.</p>
+          </form>
         </div>
       </div>
     </section>

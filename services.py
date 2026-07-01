@@ -904,6 +904,200 @@ CATEGORY_CHECKS = {
 }
 
 
+GERUND_PREFIXES = (
+    ("Pressure-test", "pressure-testing"),
+    ("Set up", "setting up"),
+    ("Clean up", "cleaning up"),
+    ("Simplify", "simplifying"),
+    ("Stop", "stopping"),
+    ("Make", "making"),
+    ("Fix", "fixing"),
+    ("Improve", "improving"),
+    ("Refresh", "refreshing"),
+    ("Clarify", "clarifying"),
+    ("Create", "creating"),
+    ("Migrate", "migrating"),
+    ("Repair", "repairing"),
+    ("Document", "documenting"),
+    ("Prepare", "preparing"),
+    ("Turn", "turning"),
+    ("Keep", "keeping"),
+    ("Automate", "automating"),
+    ("Send", "sending"),
+    ("Build", "building"),
+    ("Generate", "generating"),
+    ("Organize", "organizing"),
+    ("Route", "routing"),
+    ("Connect", "connecting"),
+    ("Convert", "converting"),
+    ("Reduce", "reducing"),
+    ("Replace", "replacing"),
+    ("Choose", "choosing"),
+    ("Train", "training"),
+    ("Use", "using"),
+    ("Add", "adding"),
+    ("Evaluate", "evaluating"),
+    ("Teach", "teaching"),
+    ("Decide", "deciding"),
+    ("Define", "defining"),
+    ("Review", "reviewing"),
+    ("Plan", "planning"),
+    ("Recover", "recovering"),
+    ("Get", "getting"),
+    ("Move", "moving"),
+    ("Map", "mapping"),
+)
+
+
+SERVICE_SHARE_HINTS = (
+    (
+        ("hosting", "dns", "domain", "ssl"),
+        "the domain name, registrar, hosting provider, DNS screenshots or exports, email provider, SSL or browser warnings, redirect examples, and any recent account or record changes",
+    ),
+    (
+        ("contact form", "form submissions", "website forms", "forms"),
+        "the affected page URL, form fields, expected inbox or CRM destination, test submissions, confirmation emails, spam settings, and examples of messages that did or did not arrive",
+    ),
+    (
+        ("slow", "fast", "speed", "performance"),
+        "the slow page URLs, device or browser examples, recent site changes, PageSpeed or Lighthouse reports if you have them, and the parts of the experience that feel worst",
+    ),
+    (
+        ("wordpress", "plugin", "theme"),
+        "the WordPress warnings, plugin or theme names, screenshots of update notices, hosting details, backup status, and the site features you cannot afford to break",
+    ),
+    (
+        ("lead", "crm", "follow-up", "follow up"),
+        "where the lead starts, where it should land, the CRM or spreadsheet involved, notification examples, missed follow-up examples, and the timing you expect",
+    ),
+    (
+        ("mobile", "navigation", "homepage", "service page", "landing page", "local", "blog", "resources"),
+        "the page URLs, screenshots from phone and desktop, the action visitors should take, examples of confusing copy or layout, and any search or analytics context you already have",
+    ),
+    (
+        ("email and calendar", "inbox", "email overload"),
+        "the inbox and calendar tools involved, examples of messages or appointments that get missed, current filters or labels, reminder habits, and the commitments that need to stay visible",
+    ),
+    (
+        ("booking", "calendar", "scheduling", "appointment"),
+        "the booking link, calendar tool, confirmation and reminder messages, timezone or cancellation examples, and the step where people get confused",
+    ),
+    (
+        ("checkout", "payment", "invoice"),
+        "the checkout or payment link, provider name, failed step, screenshots of errors, confirmation messages, and examples of successful and failed attempts",
+    ),
+    (
+        ("accessibility", "ada", "screen reader", "keyboard"),
+        "the key page URLs, forms or actions that matter most, any audit results, screenshots, keyboard or screen reader issues if known, and the audience that needs access",
+    ),
+    (
+        ("migration", "migrate", "redirect"),
+        "the current platform, target platform, domain details, important page list, redirect needs, forms, tracking, email dependencies, and launch timing",
+    ),
+    (
+        ("dashboard", "report", "measurement", "analytics", "metrics", "data"),
+        "the current data sources, sample spreadsheet or report, decisions the numbers should support, who needs the view, and how often it should update",
+    ),
+    (
+        ("intake", "portal", "request form", "submitted files", "files"),
+        "the current intake path, sample submissions, file examples, required fields, routing rules, and what usually causes back-and-forth",
+    ),
+    (
+        ("backlog", "roadmap", "stalled", "project"),
+        "the current list of requests or ideas, known blockers, users affected, business priority, deadlines, and any vendor or internal history",
+    ),
+    (
+        ("deadline", "reminder", "status", "alert", "priority"),
+        "the trigger, due dates, owners, notification channels, examples of missed items, and what should happen when something is urgent",
+    ),
+    (
+        ("vendor proposal", "proposal before signing"),
+        "the proposal or statement of work, estimate, timeline, assumptions, deliverables, support terms, open questions, and the business outcome the vendor is supposed to support",
+    ),
+    (
+        ("proposal", "document", "paperwork", "template", "draft"),
+        "example documents, repeated fields, templates, source data, approval steps, and what a good final draft should include",
+    ),
+    (
+        ("onboarding", "new customer", "new hire", "employee"),
+        "the current steps, forms, access needs, documents, owners, handoff points, and places where people usually wait or ask questions",
+    ),
+    (
+        ("spreadsheet", "spreadsheets"),
+        "the workbook, sample rows, formulas or tabs that matter, who edits it, what breaks, and what output or decision it needs to support",
+    ),
+    (
+        ("ai", "prompt", "voice", "content", "writing", "research", "meeting", "call", "knowledge"),
+        "the AI tools you have tried, sample inputs and outputs, examples of good and bad results, privacy concerns, source material, and the role or team that will use it",
+    ),
+    (
+        ("product", "mvp", "idea", "build", "buy", "customer", "prototype", "vendor", "requirements", "pricing", "package"),
+        "the idea or decision, target customer, current alternatives, notes or proposals, constraints, budget or timing, and what would make the next move worthwhile",
+    ),
+    (
+        ("personal", "household", "family", "task", "email", "budget", "travel", "notes", "solo", "client onboarding"),
+        "the apps, notes, calendars, files, examples, routines, preferences, privacy constraints, and recurring decisions involved",
+    ),
+)
+
+
+CATEGORY_ONGOING_CONTEXT = {
+    "Website and app care": "If the issue is isolated, it may be a focused repair. If it touches updates, hosting, forms, search visibility, analytics, or regular content changes, ongoing support usually keeps it from drifting again.",
+    "Automation": "If the workflow is stable, it may be a one-time setup. If the process changes, tools evolve, or people need help trusting the automation, ongoing support keeps the workflow useful.",
+    "AI coaching and support": "If the need is narrow, a focused coaching or setup session may be enough. If people are learning new habits, testing tools, or creating guardrails, ongoing support helps the practice stick.",
+    "Product strategy": "Some product questions need one clear decision session. Others benefit from ongoing support while the idea moves through testing, scope, vendor conversations, or early build work.",
+    "Individual consulting": "Some personal systems need one setup. Others work better with light ongoing support while the routine becomes natural and the tools get adjusted around real life.",
+}
+
+
+CATEGORY_AGENCY_CONTEXT = {
+    "Website and app care": "Website and app issues often cross content, hosting, UX, forms, email, search, and operations. Audo keeps that context with one senior person instead of splitting it across account layers.",
+    "Automation": "Automation work needs someone who understands the actual workflow, not just the tool connection. Audo helps shape, build, explain, and support the process directly.",
+    "AI coaching and support": "AI work needs practical judgment, privacy awareness, examples, training, and follow-through. Audo keeps the coaching close to the real work people do every day.",
+    "Product strategy": "Product work gets better when strategy and execution stay connected. Audo helps clarify the decision and understands what it would take to actually build or support it.",
+    "Individual consulting": "Individual and small-business systems are personal and context-heavy. Audo keeps the help direct, practical, and lightweight instead of turning it into a large process.",
+}
+
+
+def lower_first(value: str) -> str:
+    if not value:
+        return value
+    if len(value) > 1 and value[0].isupper() and value[1].isupper():
+        return value
+    return value[0].lower() + value[1:]
+
+
+def strip_period(value: str) -> str:
+    return value.strip().rstrip(".")
+
+
+def gerund_topic(title: str) -> str:
+    for prefix, replacement in GERUND_PREFIXES:
+        if title.lower().startswith(prefix.lower()):
+            suffix = title[len(prefix) :]
+            return replacement + suffix
+    return lower_first(title)
+
+
+def solution_action(service: Service) -> str:
+    action = strip_period(service.solution)
+    if action.startswith("I help "):
+        action = action[len("I help ") :]
+    elif action.startswith("I "):
+        action = action[len("I ") :]
+    return lower_first(action)
+
+
+def share_hints(service: Service) -> str:
+    haystack = " ".join(
+        [service.title, service.category, service.summary, service.pain, service.solution, service.result]
+    ).lower()
+    for keywords, hints in SERVICE_SHARE_HINTS:
+        if any(keyword in haystack for keyword in keywords):
+            return hints
+    return "the links, tools, screenshots, examples, recent changes, current workarounds, and the outcome you want"
+
+
 def get_service(slug: str) -> Service | None:
     return SERVICE_BY_SLUG.get(slug)
 
@@ -932,33 +1126,39 @@ def service_dict(service: Service) -> dict[str, object]:
 
 
 def service_faqs(service: Service) -> list[dict[str, str]]:
-    topic = service.title[0].lower() + service.title[1:]
+    topic = gerund_topic(service.title)
+    summary = lower_first(strip_period(service.summary))
+    pain = lower_first(strip_period(service.pain))
+    result = lower_first(strip_period(service.result))
+    action = solution_action(service)
+    hints = share_hints(service)
     return [
         {
-            "question": f"Can Audo help me {topic} if I do not know the technical cause?",
+            "question": f"Can Audo help with {topic} if I do not know the technical cause?",
             "answer": (
-                "Yes. You do not need to diagnose the problem before reaching out. "
-                f"Free Discovery starts with the plain-English situation, then I help identify what is causing the issue and what is worth doing next."
+                f"Yes. For {topic}, you can start with the symptoms: {pain}. "
+                f"I will help connect what you are seeing to the likely causes and the next step worth taking."
             ),
         },
         {
-            "question": "What should I share before the discovery call?",
+            "question": f"What should I share before discovery about {topic}?",
             "answer": (
-                "Share the website, tool, workflow, examples, screenshots, links, or recent situations that show the friction. "
-                "A short description is enough; I will review the context before responding."
+                f"Share anything that shows {summary}. Useful starting points include {hints}. "
+                f"That context gives me enough to {action}."
             ),
         },
         {
             "question": f"Is {topic} a one-time project or ongoing support?",
             "answer": (
-                "It can be either. Some situations need one focused fix, while others make more sense as monthly support so improvements, updates, and follow-up do not keep getting postponed."
+                f"It can be either. The goal is that {result}. "
+                f"{CATEGORY_ONGOING_CONTEXT[service.category]}"
             ),
         },
         {
-            "question": "Why work with Audo instead of a large agency?",
+            "question": f"Why work with Audo on {topic} instead of a large agency?",
             "answer": (
-                "You work directly with Aaron, a senior product, software, website, automation, and AI partner. "
-                "That means fewer handoffs, clearer context, and more of the budget going toward useful thinking and execution."
+                f"{CATEGORY_AGENCY_CONTEXT[service.category]} "
+                "You work directly with Aaron, so there are fewer handoffs, clearer context, and more of the budget goes toward useful thinking and execution."
             ),
         },
     ]

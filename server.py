@@ -151,7 +151,7 @@ def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str,
     message["To"] = CONSULTATION_TO
     message["Reply-To"] = fields["email"]
 
-    body = f"""A new Audo discovery request was stored in the database first, then emailed.
+    body = f"""A new Audo discovery request was received.
 
 Request ID: {request_id}
 Submitted: {utc_now()}
@@ -169,15 +169,6 @@ Help needed: {fields["service"]}
 
 What needs help:
 {fields["message"]}
-
-Source: {fields.get("source") or "Not provided"}
-reCAPTCHA score: {fields.get("recaptcha_score") if fields.get("recaptcha_score") is not None else "Not checked"}
-Referrer: {request_meta.get("referrer") or "Not provided"}
-IP address: {request_meta.get("ip_address") or "Not available"}
-User agent: {request_meta.get("user_agent") or "Not available"}
-
-Database path on server:
-{DATABASE_PATH}
 """
     message.set_content(body)
     return message

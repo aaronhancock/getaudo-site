@@ -31,6 +31,17 @@ RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
 RECAPTCHA_ACTION = "discovery_request"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+REMOVED_SERVICE_REDIRECTS = {
+    "clean-up-hosting-dns-and-domain-confusion": "/#service-list",
+    "clean-up-domains-email-and-online-presence": "/#service-list",
+    "create-a-client-portal-intake-flow": "/services/build-a-customer-portal-for-requests-and-files",
+    "get-personal-admin-out-of-your-head": "/#service-list",
+    "organize-household-information-with-ai": "/#service-list",
+    "use-ai-to-plan-travel-or-events": "/#service-list",
+    "build-a-knowledge-base-for-recurring-decisions": "/#service-list",
+    "create-a-better-way-to-track-family-projects": "/#service-list",
+    "move-scattered-notes-into-one-operating-system": "/#service-list",
+}
 
 mimetypes.add_type("image/webp", ".webp")
 mimetypes.add_type("image/svg+xml", ".svg")
@@ -295,9 +306,14 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         service_match = re.fullmatch(r"/services/([a-z0-9-]+)/?", path)
         if service_match:
-            service = get_service(service_match.group(1))
+            service_slug = service_match.group(1)
+            service = get_service(service_slug)
             if service:
                 self.serve_service_page(service.slug, send_body=send_body)
+                return
+            removed_redirect = REMOVED_SERVICE_REDIRECTS.get(service_slug)
+            if removed_redirect:
+                self.redirect_permanent(removed_redirect)
                 return
             self.render_error(HTTPStatus.NOT_FOUND, "That service page was not found.")
             return
@@ -459,7 +475,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         form_context = f"Service: {service.title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(f"<li>{h(check)}</li>" for check in data["checks"])
         faqs_html = "\n".join(
-            f"""<details>
+            f"""<details open>
           <summary>{h(faq["question"])}</summary>
           <p>{h(faq["answer"])}</p>
         </details>"""

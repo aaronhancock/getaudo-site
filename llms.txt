@@ -10,9 +10,9 @@ Discovery: https://getaudo.com/#discovery
 ## Services
 
 - Website and web application management: ongoing care for existing websites, apps, forms, hosting, analytics, integrations, UX cleanup, and practical improvements.
-- Website, dashboard, and internal tool creation: useful websites, dashboards, intake flows, internal tools, MVPs, prototypes, and supported launches.
-- Automation consulting: help with repeat tasks, follow-up, scheduling, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
-- AI coaching, training, and support: practical AI use cases, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
+- Website, app, dashboard, and internal tool creation: business websites, mobile apps, customer portals, internal admin tools, quote and estimate tools, dashboards, MVPs, prototypes, and supported launches.
+- Automation consulting: help with repeat tasks, follow-up, scheduling, CRM integrations, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
+- AI coaching, training, and support: practical AI use cases, AI-powered website support agents, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
 - Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps.
 
 ## Service Library

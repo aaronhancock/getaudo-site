@@ -119,12 +119,12 @@ SERVICE_SEEDS = [
         "Customers can complete payment with less friction and you can spot issues before they linger.",
     ),
     (
-        "Clean up hosting, DNS, and domain confusion",
+        "Fix business emails going to spam",
         "Website and app care",
-        "Your domain, hosting, email, redirects, or DNS records feel scattered and risky.",
-        "When ownership and settings are unclear, simple changes can break the site, email, analytics, or search visibility.",
-        "I inventory the accounts, records, redirects, certificates, email settings, and hosting dependencies before recommending changes.",
-        "You know what controls what, where risk lives, and how to make future changes with confidence.",
+        "Important business emails, form notifications, or client messages are landing in spam.",
+        "Email trust problems create missed leads and awkward follow-up because people assume messages were never sent or never answered.",
+        "I review the sending address, message path, SPF, DKIM, DMARC, form notifications, mailbox behavior, and message content to find the likely trust issues.",
+        "Your emails have a clearer path to the inbox and you know what to monitor if deliverability slips again.",
     ),
     (
         "Set up simple website measurement",
@@ -199,12 +199,12 @@ SERVICE_SEEDS = [
         "New inquiries are easier to track, assign, and follow up on without extra copy-paste work.",
     ),
     (
-        "Create a client portal intake flow",
+        "Build a customer portal for requests and files",
         "Website and app care",
-        "Clients need a cleaner way to submit requests, files, updates, or project details.",
-        "Email-only intake makes context hard to find and creates repeated clarification work.",
-        "I design a simple intake flow, route submissions, organize the information, and connect it to the tools you already use.",
-        "Client requests arrive with better context and less back-and-forth.",
+        "Customers or clients need a cleaner place to submit requests, upload files, and see what happens next.",
+        "Email-only portals create repeated clarification work because files, updates, approvals, and status details get scattered across threads.",
+        "I define the portal workflow, required fields, file handling, notifications, permissions, and support path before building the smallest useful version.",
+        "Customers get a clearer experience and your team receives better-organized requests with less back-and-forth.",
     ),
     (
         "Clean up a web app backlog",
@@ -727,20 +727,20 @@ SERVICE_SEEDS = [
         "You can get feedback, align stakeholders, and reduce risk before development.",
     ),
     (
-        "Get personal admin out of your head",
-        "Individual consulting",
-        "Important personal tasks, reminders, and decisions are scattered across memory, notes, and inboxes.",
-        "Personal admin feels heavier when nothing has a trusted place to land or return at the right time.",
-        "I help design a simple system for capture, reminders, documents, and review that fits how you actually live.",
-        "You spend less mental energy trying to remember everything.",
+        "Build an online quote or estimate tool",
+        "Website and app care",
+        "Customers need a faster way to answer a few questions and understand the likely cost, fit, or next step.",
+        "Quote requests get slow when every estimate starts with back-and-forth emails, missing details, and manual calculations.",
+        "I define the questions, rules, outputs, follow-up path, and review points, then build a practical tool that supports sales without overpromising.",
+        "Prospects get a clearer first answer and your team receives better-qualified requests.",
     ),
     (
-        "Organize household information with AI",
-        "Individual consulting",
-        "Household notes, instructions, preferences, and recurring tasks are hard to find when needed.",
-        "Useful information loses value when it is trapped in texts, screenshots, emails, and half-finished notes.",
-        "I help organize the information and create safe AI-assisted ways to search, summarize, or reuse it.",
-        "You can find recurring answers faster without rebuilding the system every time.",
+        "Build an AI-powered website support agent",
+        "AI coaching and support",
+        "Visitors need quick answers on your website without forcing every question into a manual email or phone call.",
+        "AI support agents become risky when they are trained on weak content, answer beyond what they should know, or create promises the business cannot keep.",
+        "I define the support jobs, prepare the source content, set guardrails, build the agent flow, and create a review process for quality and escalation.",
+        "Visitors get faster answers while your business keeps control of accuracy, tone, privacy, and follow-up.",
     ),
     (
         "Build a personal task and reminder system",
@@ -767,20 +767,20 @@ SERVICE_SEEDS = [
         "You get a planning tool you can actually keep using.",
     ),
     (
-        "Use AI to plan travel or events",
-        "Individual consulting",
-        "Planning a trip or event involves too many tabs, details, and decisions.",
-        "AI can help organize possibilities, but it needs constraints, preferences, verification, and a clear final plan.",
-        "I help create an AI-assisted planning workflow for options, schedules, checklists, and decisions.",
-        "You get a more organized plan with less research fatigue.",
+        "Build a new website for your business",
+        "Website and app care",
+        "Your business needs a clearer, more professional website that explains the offer and turns visitors into real inquiries.",
+        "A weak or outdated website makes people work too hard to understand what you do, why they should trust you, and how to take the next step.",
+        "I clarify the message, plan the pages, build the site, connect the contact path, and prepare it for ongoing updates and support.",
+        "You get a useful business website that is easier to understand, easier to maintain, and ready to support sales conversations.",
     ),
     (
-        "Build a knowledge base for recurring decisions",
-        "Individual consulting",
-        "You make similar decisions repeatedly and want your notes to become useful.",
-        "Knowledge gets lost when it is saved without structure or never connected to the next decision.",
-        "I help organize notes, examples, preferences, and decision criteria into a simple searchable system.",
-        "You can reuse what you already learned instead of starting over.",
+        "Build an internal admin tool to manage your business",
+        "Automation",
+        "Your team needs one practical place to manage records, requests, statuses, approvals, or daily operations.",
+        "Internal work gets messy when important details live across spreadsheets, inboxes, chat threads, and memory.",
+        "I define the workflow, data, roles, screens, and support needs, then build a focused internal tool that fits the way the business works.",
+        "Your team can manage the work in one clearer system instead of chasing information across tools.",
     ),
     (
         "Simplify email and calendar overload",
@@ -791,12 +791,12 @@ SERVICE_SEEDS = [
         "Email and calendar become easier to review and less likely to hide important commitments.",
     ),
     (
-        "Create a better way to track family projects",
-        "Individual consulting",
-        "Household projects, school tasks, purchases, repairs, or plans need a shared place to live.",
-        "Family projects get messy when decisions happen across texts, receipts, notes, and memory.",
-        "I help build a simple tracker or workflow that keeps status, owners, dates, links, and notes together.",
-        "Everyone has a clearer view of what is open and what needs attention.",
+        "Integrate your business with a CRM",
+        "Automation",
+        "Your leads, customers, forms, and follow-up need to connect to the CRM instead of living in separate places.",
+        "CRM value disappears when people still copy information by hand, miss required fields, or cannot trust where customer details land.",
+        "I map the lead and customer path, clean up the handoff, connect forms or tools, and make sure the CRM receives useful context.",
+        "Customer information becomes easier to track, follow up on, and use without extra copy-paste work.",
     ),
     (
         "Use AI for writing and research without feeling stuck",
@@ -815,20 +815,20 @@ SERVICE_SEEDS = [
         "You get a cleaner foundation without buying more software than you need.",
     ),
     (
-        "Move scattered notes into one operating system",
-        "Individual consulting",
-        "Ideas, tasks, links, and notes live everywhere and nothing feels trustworthy.",
-        "Scattered notes create friction because capture is easy but retrieval is unreliable.",
-        "I help design a simple personal or business operating system for notes, tasks, projects, and recurring reviews.",
-        "You can find and act on information more consistently.",
+        "Build a mobile app for your business",
+        "Website and app care",
+        "You have a customer, employee, or field workflow that would work better as a focused mobile app.",
+        "Mobile app projects get expensive when the problem, users, must-have features, data, and support plan are not clear before building.",
+        "I help define the app, choose the right build path, create the essential workflows, and plan the launch and support model.",
+        "You get a practical mobile app path built around real use instead of a bloated feature wish list.",
     ),
     (
-        "Clean up domains, email, and online presence",
+        "Create a simple personal website or portfolio",
         "Individual consulting",
-        "Your online basics exist, but ownership and setup are unclear.",
-        "Domains, email accounts, DNS, profiles, and website settings create risk when no one knows what controls what.",
-        "I inventory the setup, organize the accounts, document ownership, and identify cleanup opportunities.",
-        "You know where your online presence lives and how to manage it safely.",
+        "You need one clean place to explain who you are, what you do, and how people can contact you.",
+        "Scattered profiles and links make it harder for people to understand your work, trust your experience, or take the next step.",
+        "I help shape the message, page structure, contact path, and simple launch plan, then build or guide the smallest useful version.",
+        "You have a professional page you can share without turning it into a giant branding project.",
     ),
     (
         "Prepare a solo business for its first website",
@@ -929,6 +929,7 @@ GERUND_PREFIXES = (
     ("Organize", "organizing"),
     ("Route", "routing"),
     ("Connect", "connecting"),
+    ("Integrate", "integrating"),
     ("Convert", "converting"),
     ("Reduce", "reducing"),
     ("Replace", "replacing"),
@@ -951,8 +952,44 @@ GERUND_PREFIXES = (
 
 SERVICE_SHARE_HINTS = (
     (
-        ("hosting", "dns", "domain", "ssl"),
-        "the domain name, registrar, hosting provider, DNS screenshots or exports, email provider, SSL or browser warnings, redirect examples, and any recent account or record changes",
+        ("customer portal", "requests and files", "upload files"),
+        "the request types, files customers need to upload, status updates they need to see, required fields, permissions, notification rules, and examples of the back-and-forth you want to reduce",
+    ),
+    (
+        ("quote", "estimate", "cost"),
+        "the questions customers should answer, the factors that affect pricing or fit, sample estimates, rules or ranges, required follow-up details, and where the request should go after submission",
+    ),
+    (
+        ("website support agent", "support agent", "chatbot"),
+        "the questions visitors ask most, support docs or page content, topics the agent should avoid, escalation rules, contact handoff needs, tone examples, and any privacy limits",
+    ),
+    (
+        ("internal admin tool", "manage your business", "records", "approvals"),
+        "the records or requests to manage, current spreadsheets or tools, user roles, statuses, approvals, reports, permissions, and examples of the daily work the tool should replace",
+    ),
+    (
+        ("crm integration", "integrate your business with a crm", "customer information"),
+        "the CRM you use or are considering, form sources, lead stages, required fields, current copy-paste steps, follow-up rules, and examples of customer records that should be created or updated",
+    ),
+    (
+        ("mobile app", "field workflow"),
+        "the users, devices, must-have workflows, data that needs to be captured or shown, login needs, offline requirements if any, examples of similar apps, and what would make the app worth using",
+    ),
+    (
+        ("new website", "professional website", "website for your business"),
+        "your current website if you have one, examples of sites you like, the services or offers to explain, trust points, photos or brand assets, must-have pages, and the action visitors should take",
+    ),
+    (
+        ("personal website", "portfolio"),
+        "examples of sites you like, the audience you want to reach, services or work you want to highlight, bio or resume notes, photos or links, and the contact action visitors should take",
+    ),
+    (
+        ("business emails", "going to spam", "spam", "deliverability", "spf", "dkim", "dmarc"),
+        "examples of messages that landed in spam, the sending email address, form or mailbox involved, email provider, any bounce messages, and screenshots of current SPF, DKIM, or DMARC records if you have them",
+    ),
+    (
+        ("ssl", "security warnings", "mixed content", "browser warnings"),
+        "the affected page URLs, screenshots of the browser warning, recent hosting or plugin changes, certificate details if available, and examples of links or assets that trigger the warning",
     ),
     (
         ("contact form", "form submissions", "website forms", "forms"),
@@ -1089,7 +1126,7 @@ def solution_action(service: Service) -> str:
 
 
 def share_hints(service: Service) -> str:
-    haystack = " ".join(
+    haystack = " | ".join(
         [service.title, service.category, service.summary, service.pain, service.solution, service.result]
     ).lower()
     for keywords, hints in SERVICE_SHARE_HINTS:

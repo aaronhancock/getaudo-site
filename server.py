@@ -422,6 +422,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     h1 {{ margin: 0 0 14px; font-size: clamp(34px, 8vw, 58px); line-height: 1; }}
     p {{ color: #5f6b62; font-size: 18px; line-height: 1.55; }}
     a {{ min-height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 0 18px; color: #1a221c; background: #f0c66f; text-decoration: none; font-weight: 820; }}
+    a:focus-visible {{ outline: 3px solid #f4dca9; outline-offset: 3px; }}
   </style>
 </head>
 <body>

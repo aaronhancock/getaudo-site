@@ -225,6 +225,10 @@
       letter-spacing: 0;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     img {
       max-width: 100%;
       display: block;
@@ -237,6 +241,40 @@
     .shell {
       width: min(1160px, calc(100% - 36px));
       margin: 0 auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 50;
+      top: 14px;
+      left: 14px;
+      transform: translateY(-140%);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #101815;
+      background: #f0c66f;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      font-weight: 820;
+      transition: transform 160ms ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 3px solid #f4dca9;
+      outline-offset: 3px;
+    }
+
+    main:focus-visible {
+      outline: none;
     }
 
     .site-nav {
@@ -426,6 +464,13 @@
     .button:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 28px rgba(12, 18, 15, 0.18);
+    }
+
+    .button:disabled {
+      cursor: wait;
+      opacity: 0.74;
+      transform: none;
+      box-shadow: none;
     }
 
     .button.primary {
@@ -722,8 +767,17 @@
     }
 
     .about-photo {
+      margin: 0;
       min-height: 500px;
-      background: url("/assets/founder-field-portrait.webp") center 50% / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      object-fit: cover;
+      object-position: center 46%;
     }
 
     .about-copy {
@@ -867,6 +921,10 @@
       line-height: 1.4;
     }
 
+    .form-status.is-error {
+      color: #7c2d23;
+    }
+
     .form-honey {
       position: absolute;
       left: -10000px;
@@ -906,6 +964,72 @@
       color: rgba(255, 255, 255, 0.9);
       font-weight: 820;
       text-decoration: none;
+    }
+
+    .footer-preferences {
+      border: 0;
+      padding: 0;
+      color: rgba(255, 255, 255, 0.9);
+      background: transparent;
+      font: inherit;
+      font-weight: 820;
+      cursor: pointer;
+    }
+
+    .cookie-consent {
+      position: fixed;
+      z-index: 40;
+      right: 18px;
+      bottom: 18px;
+      width: min(620px, calc(100% - 36px));
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      color: var(--ink);
+      background: rgba(251, 251, 247, 0.98);
+      border: 1px solid rgba(24, 34, 29, 0.18);
+      border-radius: 8px;
+      box-shadow: 0 24px 70px rgba(12, 18, 15, 0.22);
+    }
+
+    .cookie-copy h2 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .cookie-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .cookie-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .cookie-button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: var(--white);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 820;
+      cursor: pointer;
+    }
+
+    .cookie-button.primary {
+      border-color: #f0c66f;
+      background: #f0c66f;
     }
 
     @media (max-width: 1040px) {
@@ -1051,7 +1175,11 @@
 
       .about-photo {
         min-height: 340px;
-        background-position: center 48%;
+      }
+
+      .about-photo img {
+        min-height: 340px;
+        object-position: center 45%;
       }
 
       .about-copy {
@@ -1090,10 +1218,45 @@
       .form-grid {
         grid-template-columns: 1fr;
       }
+
+      .cookie-consent {
+        right: 14px;
+        bottom: 14px;
+        width: calc(100% - 28px);
+        grid-template-columns: 1fr;
+      }
+
+      .cookie-actions {
+        justify-content: stretch;
+      }
+
+      .cookie-button {
+        flex: 1 1 150px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .button:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <nav class="site-nav" aria-label="Primary navigation">
     <div class="shell nav-inner">
       <a class="brand" href="#top" aria-label="Audo home">
@@ -1123,7 +1286,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <section id="services" class="services-band">
       <div class="shell">
         <div class="section-head">
@@ -1254,7 +1417,9 @@
 
     <section id="about" class="about-band">
       <div class="about-layout">
-        <div class="about-photo" aria-label="Portrait of Aaron Hancock outdoors"></div>
+        <figure class="about-photo">
+          <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" loading="lazy" decoding="async">
+        </figure>
         <div class="about-copy">
           <p class="eyebrow">About Aaron Hancock</p>
           <h2>Senior tech partner, without agency overhead.</h2>
@@ -1301,7 +1466,7 @@
             </div>
           </div>
         </div>
-        <form class="consultation-form" action="/api/consultation" method="post">
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note">
           <div class="form-honey" aria-hidden="true">
             <label for="website_url_confirm">Confirm website</label>
             <input id="website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
@@ -1360,8 +1525,8 @@
           <input type="hidden" name="source" value="getaudo.com discovery form">
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request Free Discovery</button>
-          <p class="form-status" role="status" aria-live="polite"></p>
-          <p class="form-note">Your request goes directly to Aaron. No polished brief or technical language needed.</p>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          <p id="form-note" class="form-note">Your request goes directly to Aaron. Spam protection may run when you submit.</p>
         </form>
       </div>
     </section>
@@ -1369,11 +1534,79 @@
 
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Book Free Discovery</a></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Book Free Discovery</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
+  <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
+    <div class="cookie-copy">
+      <h2 id="cookie-title">Cookie choices</h2>
+      <p>Audo uses essential browser storage to remember this choice and Google reCAPTCHA to protect the discovery form. No ad tracking.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
+      <button class="cookie-button" type="button" data-cookie-necessary>Necessary only</button>
+    </div>
+  </section>
   <script>
     window.AUDO_RECAPTCHA_SITE_KEY = __RECAPTCHA_SITE_KEY__;
+
+    (function () {
+      var banner = document.querySelector(".cookie-consent");
+      var preferences = document.querySelector("[data-cookie-preferences]");
+      var accept = document.querySelector("[data-cookie-accept]");
+      var necessary = document.querySelector("[data-cookie-necessary]");
+      var key = "audo_cookie_choice";
+
+      function getChoice() {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (error) {
+          return "";
+        }
+      }
+
+      function setChoice(value) {
+        try {
+          window.localStorage.setItem(key, value);
+        } catch (error) {
+          return;
+        }
+      }
+
+      function showBanner() {
+        if (banner) {
+          banner.hidden = false;
+        }
+      }
+
+      function hideBanner() {
+        if (banner) {
+          banner.hidden = true;
+        }
+      }
+
+      if (banner && !getChoice()) {
+        showBanner();
+      }
+
+      if (preferences) {
+        preferences.addEventListener("click", showBanner);
+      }
+
+      if (accept) {
+        accept.addEventListener("click", function () {
+          setChoice("accepted");
+          hideBanner();
+        });
+      }
+
+      if (necessary) {
+        necessary.addEventListener("click", function () {
+          setChoice("necessary");
+          hideBanner();
+        });
+      }
+    }());
 
     (function () {
       var form = document.querySelector(".consultation-form");
@@ -1382,10 +1615,29 @@
         return;
       }
 
-      var script = document.createElement("script");
-      script.src = "https://www.google.com/recaptcha/api.js?render=" + encodeURIComponent(siteKey);
-      script.async = true;
-      document.head.appendChild(script);
+      var recaptchaPromise = null;
+
+      function loadRecaptcha() {
+        if (window.grecaptcha && window.grecaptcha.ready) {
+          return Promise.resolve();
+        }
+
+        if (recaptchaPromise) {
+          return recaptchaPromise;
+        }
+
+        recaptchaPromise = new Promise(function (resolve, reject) {
+          var script = document.createElement("script");
+          script.src = "https://www.google.com/recaptcha/api.js?render=" + encodeURIComponent(siteKey);
+          script.async = true;
+          script.defer = true;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+
+        return recaptchaPromise;
+      }
 
       form.addEventListener("submit", function (event) {
         if (form.dataset.recaptchaSubmitted === "true") {
@@ -1400,7 +1652,10 @@
           button.disabled = true;
           button.textContent = "Checking request...";
         }
+        form.setAttribute("aria-busy", "true");
         if (status) {
+          status.setAttribute("role", "status");
+          status.classList.remove("is-error");
           status.textContent = "Running a quick spam check.";
         }
 
@@ -1409,7 +1664,10 @@
             button.disabled = false;
             button.textContent = "Request Free Discovery";
           }
+          form.removeAttribute("aria-busy");
           if (status) {
+            status.setAttribute("role", "alert");
+            status.classList.add("is-error");
             status.textContent = message;
           }
         }
@@ -1433,7 +1691,11 @@
           });
         }
 
-        runCheck();
+        loadRecaptcha()
+          .then(runCheck)
+          .catch(function () {
+            resetForm("The spam check could not load. Please try again.");
+          });
       });
     }());
   </script>

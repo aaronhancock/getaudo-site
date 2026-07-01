@@ -13,10 +13,16 @@ from datetime import datetime, timezone
 from email.message import EmailMessage
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from io import BytesIO
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from services import SERVICES, get_service, service_cards, service_dict
+
+try:
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
+except ImportError:  # pragma: no cover - Pillow is installed in the deployed image.
+    Image = ImageDraw = ImageFont = ImageOps = None
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -31,6 +37,9 @@ RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
 RECAPTCHA_ACTION = "discovery_request"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
+SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
+SERVICE_SOCIAL_CARD_CACHE: dict[str, bytes] = {}
 REMOVED_SERVICE_REDIRECTS = {
     "clean-up-hosting-dns-and-domain-confusion": "/#service-list",
     "clean-up-domains-email-and-online-presence": "/#service-list",
@@ -47,6 +56,192 @@ mimetypes.add_type("image/webp", ".webp")
 mimetypes.add_type("image/svg+xml", ".svg")
 mimetypes.add_type("application/manifest+json", ".webmanifest")
 mimetypes.add_type("application/xml", ".xml")
+
+
+def load_card_font(size: int, bold: bool = False):
+    if ImageFont is None:
+        return None
+
+    font_names = [
+        "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf",
+        "Arial Bold.ttf" if bold else "Arial.ttf",
+    ]
+    font_paths = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/Library/Fonts/Arial Bold.ttf",
+        "/Library/Fonts/Arial.ttf",
+    ]
+    for path in font_paths:
+        if (bold and "Bold" not in path) or (not bold and "Bold" in path):
+            continue
+        if Path(path).exists():
+            return ImageFont.truetype(path, size)
+    for name in font_names:
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+
+
+def text_width(draw, text: str, font) -> int:
+    bbox = draw.textbbox((0, 0), text, font=font)
+    return int(bbox[2] - bbox[0])
+
+
+def wrap_card_text(draw, text: str, font, max_width: int, max_lines: int | None = None) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        trial = f"{current} {word}".strip()
+        if not current or text_width(draw, trial, font) <= max_width:
+            current = trial
+            continue
+
+        lines.append(current)
+        current = word
+
+    if current:
+        lines.append(current)
+
+    if max_lines and len(lines) > max_lines:
+        lines = lines[:max_lines]
+        last_words = lines[-1].rstrip(".,;:").split()
+        while last_words and text_width(draw, f"{' '.join(last_words)}...", font) > max_width:
+            last_words.pop()
+        if last_words:
+            lines[-1] = f"{' '.join(last_words)}..."
+
+    return lines
+
+
+def draw_wrapped_text(draw, xy: tuple[int, int], lines: list[str], font, fill, line_gap: int) -> int:
+    x, y = xy
+    for line in lines:
+        bbox = draw.textbbox((x, y), line, font=font)
+        draw.text((x, y), line, font=font, fill=fill)
+        y += int(bbox[3] - bbox[1]) + line_gap
+    return y
+
+
+def make_service_social_card(service) -> bytes | None:
+    if not all((Image, ImageDraw, ImageFont, ImageOps)):
+        return None
+
+    width, height = SERVICE_SOCIAL_CARD_SIZE
+    card = Image.new("RGBA", (width, height), "#101815")
+
+    gradient = Image.new("RGBA", (width, height))
+    gradient_pixels = gradient.load()
+    for x in range(width):
+        t = x / max(width - 1, 1)
+        r = int(14 + 14 * t)
+        g = int(24 + 36 * t)
+        b = int(20 + 26 * t)
+        for y in range(height):
+            v = int(8 * (1 - y / height))
+            gradient_pixels[x, y] = (r + v, g + v, b + v, 255)
+    card.alpha_composite(gradient)
+
+    pattern = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+    pattern_draw = ImageDraw.Draw(pattern)
+    for x in range(-height, width, 22):
+        pattern_draw.line((x, 0, x + height, height), fill=(255, 255, 255, 9), width=1)
+    card.alpha_composite(pattern)
+
+    photo_path = BASE_DIR / "assets" / "founder-field-portrait.webp"
+    photo_width = 430
+    if photo_path.exists():
+        with Image.open(photo_path) as source:
+            photo = ImageOps.fit(source.convert("RGB"), (photo_width, height), method=Image.Resampling.LANCZOS, centering=(0.52, 0.48))
+            photo = photo.convert("RGBA")
+            card.alpha_composite(photo, (width - photo_width, 0))
+
+        photo_overlay = Image.new("RGBA", (photo_width, height), (0, 0, 0, 0))
+        overlay_pixels = photo_overlay.load()
+        for x in range(photo_width):
+            t = x / max(photo_width - 1, 1)
+            alpha = int(110 * (1 - t))
+            for y in range(height):
+                overlay_pixels[x, y] = (16, 24, 21, alpha)
+        card.alpha_composite(photo_overlay, (width - photo_width, 0))
+
+    left_overlay = Image.new("RGBA", (790, height), (16, 24, 21, 205))
+    card.alpha_composite(left_overlay, (0, 0))
+
+    draw = ImageDraw.Draw(card)
+    logo_path = BASE_DIR / "assets" / "audo-logo-white.png"
+    if logo_path.exists():
+        with Image.open(logo_path) as logo_source:
+            logo = logo_source.convert("RGBA")
+            logo_width = 142
+            logo_height = int(logo.height * (logo_width / logo.width))
+            logo = logo.resize((logo_width, logo_height), Image.Resampling.LANCZOS)
+            card.alpha_composite(logo, (64, 56))
+    else:
+        logo_font = load_card_font(44, bold=False)
+        draw.text((64, 56), "Audo", font=logo_font, fill=(255, 255, 255, 255))
+
+    text_left = 64
+    text_max_width = 645
+    category_font = load_card_font(28, bold=True)
+    draw.text(
+        (text_left, 156),
+        service.category.upper(),
+        font=category_font,
+        fill=(244, 220, 169, 255),
+    )
+
+    title_size = 66
+    while title_size > 46:
+        title_font = load_card_font(title_size, bold=True)
+        title_lines = wrap_card_text(draw, service.title, title_font, text_max_width, max_lines=4)
+        if len(title_lines) <= 3 or title_size <= 50:
+            break
+        title_size -= 4
+
+    title_y = 210
+    title_bottom = draw_wrapped_text(
+        draw,
+        (text_left, title_y),
+        title_lines,
+        title_font,
+        fill=(255, 255, 255, 255),
+        line_gap=8,
+    )
+
+    button_y = 518
+    summary_font_size = 28 if len(title_lines) >= 3 else 30
+    summary_font = load_card_font(summary_font_size, bold=False)
+    summary_y = title_bottom + 18
+    summary_bbox = draw.textbbox((0, 0), "Ag", font=summary_font)
+    summary_line_height = int(summary_bbox[3] - summary_bbox[1]) + 8
+    available_summary_height = max(button_y - summary_y - 22, summary_line_height)
+    max_summary_lines = max(1, min(3, available_summary_height // summary_line_height))
+    summary_lines = wrap_card_text(draw, service.summary, summary_font, text_max_width, max_lines=max_summary_lines)
+    draw_wrapped_text(
+        draw,
+        (text_left, summary_y),
+        summary_lines,
+        summary_font,
+        fill=(236, 241, 235, 235),
+        line_gap=8,
+    )
+
+    draw.rounded_rectangle((text_left, button_y, text_left + 270, button_y + 64), radius=9, fill=(240, 198, 111, 255))
+    button_font = load_card_font(25, bold=True)
+    draw.text((text_left + 32, button_y + 17), "Free Discovery", font=button_font, fill=(16, 24, 21, 255))
+
+    url_font = load_card_font(25, bold=True)
+    draw.text((text_left + 320, button_y + 19), "getaudo.com", font=url_font, fill=(244, 220, 169, 255))
+
+    output = BytesIO()
+    card.convert("RGB").save(output, format="JPEG", quality=92, optimize=True, progressive=True)
+    return output.getvalue()
 
 
 def utc_now() -> str:
@@ -292,6 +487,11 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.serve_services_json(send_body=send_body)
             return
 
+        service_social_match = re.fullmatch(r"/assets/service-social/([a-z0-9-]+)\.jpg", path)
+        if service_social_match:
+            self.serve_service_social_card(service_social_match.group(1), send_body=send_body)
+            return
+
         if path == "/sitemap.xml":
             self.serve_sitemap(send_body=send_body)
             return
@@ -436,6 +636,29 @@ class AudoHandler(BaseHTTPRequestHandler):
         if send_body:
             self.wfile.write(data)
 
+    def serve_service_social_card(self, slug: str, send_body: bool = True) -> None:
+        service = get_service(slug)
+        if not service:
+            self.render_error(HTTPStatus.NOT_FOUND, "That service image was not found.")
+            return
+
+        data = SERVICE_SOCIAL_CARD_CACHE.get(service.slug)
+        if data is None:
+            data = make_service_social_card(service)
+            if data is not None:
+                SERVICE_SOCIAL_CARD_CACHE[service.slug] = data
+        if data is None:
+            self.serve_file(BASE_DIR / "assets" / "audo-social-card-free-discovery.jpg", send_body=send_body)
+            return
+
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "image/jpeg")
+        self.send_header("Cache-Control", f"public, max-age={SERVICE_SOCIAL_CARD_CACHE_SECONDS}")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        if send_body:
+            self.wfile.write(data)
+
     def serve_sitemap(self, send_body: bool = True) -> None:
         urls = [
             ("https://getaudo.com/", "monthly", "1.0"),
@@ -471,7 +694,8 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         data = service_dict(service)
         h = lambda value: html.escape(str(value), quote=True)
-        social_image = f"{PUBLIC_BASE_URL}/assets/audo-social-card-free-discovery.jpg"
+        social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg"
+        social_image_alt = f"Audo social card for {service.title} with Aaron Hancock."
         form_context = f"Service: {service.title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(f"<li>{h(check)}</li>" for check in data["checks"])
         faqs_html = "\n".join(
@@ -610,12 +834,12 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Audo social card with Aaron Hancock and a Free Discovery call to action.">
+  <meta property="og:image:alt" content="{h(social_image_alt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{h(service.title)}">
   <meta name="twitter:description" content="{h(service.summary)}">
   <meta name="twitter:image" content="{h(social_image)}">
-  <meta name="twitter:image:alt" content="Audo social card with Aaron Hancock and a Free Discovery call to action.">
+  <meta name="twitter:image:alt" content="{h(social_image_alt)}">
   <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">

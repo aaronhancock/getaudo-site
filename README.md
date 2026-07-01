@@ -26,9 +26,9 @@ For direct Python preview:
 DATA_DIR=/tmp/getaudo-local PORT=8080 python3 server.py
 ```
 
-## Consultation Form
+## Discovery Form
 
-The public site posts consultation requests to `/api/consultation`.
+The public site posts discovery requests to `/api/consultation`.
 
 Each request is written to SQLite first, then emailed to `getaudo@gmail.com`.
 The default database path is `/data/audo/consultations.sqlite3`; keep
@@ -64,7 +64,7 @@ Google before storing or emailing the request.
 ## Public Routes
 
 - `/` serves the marketing site.
-- `/thank-you` confirms consultation requests.
+- `/thank-you` confirms discovery requests.
 - `/api/consultation` accepts form submissions.
 - `/health` supports container health checks.
 - `/app` and `/app.html` redirect to `/`; the old portal/product direction is

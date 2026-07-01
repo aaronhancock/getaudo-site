@@ -26,7 +26,7 @@ MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
 RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
-RECAPTCHA_ACTION = "consultation_request"
+RECAPTCHA_ACTION = "discovery_request"
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 mimetypes.add_type("image/webp", ".webp")
@@ -144,14 +144,14 @@ def mark_email_status(request_id: int, status: str, error: str | None = None) ->
 
 def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> EmailMessage:
     message = EmailMessage()
-    service = fields.get("service", "Consultation")
+    service = fields.get("service", "Discovery")
     company = fields.get("company_name") or fields["name"]
-    message["Subject"] = f"New Audo consultation: {company} - {service}"
+    message["Subject"] = f"New Audo discovery: {company} - {service}"
     message["From"] = os.environ.get("SMTP_FROM") or os.environ.get("SMTP_USER") or "Audo <no-reply@getaudo.com>"
     message["To"] = CONSULTATION_TO
     message["Reply-To"] = fields["email"]
 
-    body = f"""A new Audo consultation request was stored in the database first, then emailed.
+    body = f"""A new Audo discovery request was stored in the database first, then emailed.
 
 Request ID: {request_id}
 Submitted: {utc_now()}
@@ -162,7 +162,7 @@ Website: {fields.get("website") or "Not provided"}
 Email: {fields["email"]}
 Phone: {fields.get("phone") or "Not provided"}
 Urgency: {fields["timeline"]}
-Consultation availability:
+Discovery availability:
 {fields.get("preferred_times") or "Not provided"}
 
 Help needed: {fields["service"]}
@@ -187,7 +187,7 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
     smtp_host = os.environ.get("SMTP_HOST")
     if not smtp_host:
         mark_email_status(request_id, "not_configured", "SMTP_HOST is not configured")
-        print(f"consultation request {request_id} stored; email not configured", file=sys.stderr)
+        print(f"discovery request {request_id} stored; email not configured", file=sys.stderr)
         return
 
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
@@ -214,7 +214,7 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
         mark_email_status(request_id, "sent")
     except Exception as exc:  # pragma: no cover - depends on live SMTP.
         mark_email_status(request_id, "failed", str(exc))
-        print(f"consultation request {request_id} stored; email failed: {exc}", file=sys.stderr)
+        print(f"discovery request {request_id} stored; email failed: {exc}", file=sys.stderr)
 
 
 def verify_recaptcha(fields: dict[str, str], request_meta: dict[str, str]) -> dict[str, object]:
@@ -255,7 +255,7 @@ def verify_recaptcha(fields: dict[str, str], request_meta: dict[str, str]) -> di
 
 
 class AudoHandler(BaseHTTPRequestHandler):
-    server_version = "AudoConsultationServer/1.0"
+    server_version = "AudoDiscoveryServer/1.0"
 
     def end_headers(self) -> None:
         self.send_header("X-Content-Type-Options", "nosniff")
@@ -339,7 +339,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         except ValueError as exc:
             self.render_error(HTTPStatus.BAD_REQUEST, str(exc))
         except Exception as exc:  # pragma: no cover - defensive runtime guard.
-            print(f"consultation form error: {exc}", file=sys.stderr)
+            print(f"discovery form error: {exc}", file=sys.stderr)
             self.render_error(
                 HTTPStatus.INTERNAL_SERVER_ERROR,
                 "Something went wrong saving your request. Please try again in a moment.",
@@ -348,13 +348,13 @@ class AudoHandler(BaseHTTPRequestHandler):
     def read_form_fields(self) -> dict[str, str]:
         content_length = int(self.headers.get("Content-Length", "0"))
         if content_length <= 0:
-            raise ValueError("Please fill out the consultation form before submitting.")
+            raise ValueError("Please fill out the discovery form before submitting.")
         if content_length > MAX_BODY_BYTES:
             raise ValueError("That message is too long. Please shorten it and try again.")
 
         content_type = self.headers.get("Content-Type", "")
         if "application/x-www-form-urlencoded" not in content_type:
-            raise ValueError("Please submit the consultation form from the website.")
+            raise ValueError("Please submit the discovery form from the website.")
 
         raw_body = self.rfile.read(content_length).decode("utf-8", errors="replace")
         parsed = parse_qs(raw_body, keep_blank_values=True)
@@ -371,7 +371,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         if not payload["timeline"]:
             raise ValueError("Please choose a timing option.")
         if not payload["preferred_times"]:
-            raise ValueError("Please share a few day and time options for a consultation.")
+            raise ValueError("Please share a few day and time options for discovery.")
         if not payload["message"]:
             raise ValueError("Please describe what needs help.")
 
@@ -423,7 +423,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audo consultation request</title>
+  <title>Audo discovery request</title>
   <style>
     body {{ margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #18221d; background: #fbfbf7; }}
     main {{ min-height: 100svh; display: grid; place-items: center; padding: 32px; }}
@@ -438,7 +438,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     <section>
       <h1>One quick fix.</h1>
       <p>{html.escape(message)}</p>
-      <a href="/#consultation">Back to the form</a>
+      <a href="/#discovery">Back to the form</a>
     </section>
   </main>
 </body>

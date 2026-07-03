@@ -810,6 +810,57 @@
       line-height: 1.6;
     }
 
+    .partner-band {
+      padding: 54px 0;
+      color: var(--white);
+      background: #101815;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .partner-inner {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 70px);
+      align-items: center;
+    }
+
+    .partner-copy .eyebrow {
+      margin: 0 0 12px;
+      color: #f4dca9;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .partner-copy h2 {
+      color: var(--white);
+    }
+
+    .partner-copy p:not(.eyebrow) {
+      max-width: 620px;
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .partner-logo-link {
+      min-height: 132px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid rgba(244, 220, 169, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      text-decoration: none;
+    }
+
+    .partner-logo-link img {
+      width: min(100%, 420px);
+      height: auto;
+      display: block;
+    }
+
     .cta-process {
       display: grid;
       gap: 14px;
@@ -1466,6 +1517,20 @@
         line-height: 1.5;
       }
 
+      .partner-band {
+        padding: 42px 0;
+      }
+
+      .partner-inner {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .partner-logo-link {
+        min-height: 112px;
+        padding: 22px;
+      }
+
       .about-photo {
         min-height: 340px;
       }
@@ -1677,7 +1742,7 @@
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
-            <p>Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology and current consulting work with <strong>Boston's Pizza</strong>. Aaron began building websites in high school, then spent <strong>15+ years across Cox Automotive, Dealertrack, and Dealer.com</strong> leading globally distributed teams through M&A processes, product due diligence, acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.</p>
+            <p>Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology. Aaron began building websites in high school, then spent <strong>15+ years across Cox Automotive, Dealertrack, and Dealer.com</strong> leading globally distributed teams through M&A processes, product due diligence, acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.</p>
             <div class="ai-story">
               <h3>AI is powerful when it has the right context.</h3>
               <p>Aaron leaned into AI early because he saw how quickly it could move an idea from a conversation to something people could react to. His teams started turning concepts into working screens in hours instead of weeks, which changed how he thinks about iteration.</p>
@@ -1695,9 +1760,22 @@
               </ul>
               <p class="client-close">That is the Audo model: one experienced partner, clear next steps, and support that keeps the context.</p>
             </div>
-            <div class="story-note">Boston's Pizza is an Audo consulting client. The other company names here reflect Aaron's prior employment, OEM program work, and agency experience.</div>
+            <div class="story-note">The company names above reflect Aaron's prior employment, OEM program work, and agency experience.</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="partner-band" aria-labelledby="partnered-heading">
+      <div class="shell partner-inner">
+        <div class="partner-copy">
+          <p class="eyebrow">Current client</p>
+          <h2 id="partnered-heading">Partnered with</h2>
+          <p>Audo consulting work includes Boston's Pizza Restaurant & Sports Bar.</p>
+        </div>
+        <a class="partner-logo-link" href="https://www.bostons.com/" rel="nofollow" aria-label="Visit the Boston's Pizza Restaurant and Sports Bar website">
+          <img src="/assets/bostons-logo-dough.svg" alt="Boston's Pizza Restaurant & Sports Bar logo" loading="lazy" decoding="async">
+        </a>
       </div>
     </section>
 

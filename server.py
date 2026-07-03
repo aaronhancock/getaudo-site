@@ -261,6 +261,7 @@ def init_db() -> None:
                 name TEXT NOT NULL,
                 company_name TEXT,
                 website TEXT,
+                promo_code TEXT,
                 email TEXT NOT NULL,
                 phone TEXT,
                 service TEXT NOT NULL,
@@ -285,6 +286,7 @@ def init_db() -> None:
         migrations = {
             "company_name": "ALTER TABLE consultation_requests ADD COLUMN company_name TEXT",
             "website": "ALTER TABLE consultation_requests ADD COLUMN website TEXT",
+            "promo_code": "ALTER TABLE consultation_requests ADD COLUMN promo_code TEXT",
             "preferred_times": "ALTER TABLE consultation_requests ADD COLUMN preferred_times TEXT",
             "interest_context": "ALTER TABLE consultation_requests ADD COLUMN interest_context TEXT",
             "recaptcha_score": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_score REAL",
@@ -313,18 +315,19 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
         cursor = conn.execute(
             """
             INSERT INTO consultation_requests (
-                created_at, name, company_name, website, email, phone, service,
+                created_at, name, company_name, website, promo_code, email, phone, service,
                 timeline, preferred_times, message, source, interest_context,
                 user_agent, referrer, ip_address, recaptcha_score, recaptcha_action, recaptcha_hostname,
                 email_status
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
             """,
             (
                 utc_now(),
                 fields["name"],
                 fields.get("company_name"),
                 fields.get("website"),
+                fields.get("promo_code"),
                 fields["email"],
                 fields.get("phone"),
                 fields["service"],
@@ -373,6 +376,7 @@ Submitted: {utc_now()}
 Name: {fields["name"]}
 Company / project: {fields.get("company_name") or "Not provided"}
 Website: {fields.get("website") or "Not provided"}
+Promo code: {fields.get("promo_code") or "Not provided"}
 Interested in: {fields.get("interest_context") or "General discovery"}
 Email: {fields["email"]}
 Phone: {fields.get("phone") or "Not provided"}
@@ -566,6 +570,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                 "name": clean(fields.get("name"), 120),
                 "company_name": clean(fields.get("company_name"), 160),
                 "website": clean(fields.get("website"), 260),
+                "promo_code": clean(fields.get("promo_code"), 80),
                 "email": clean(fields.get("email"), 254),
                 "phone": clean(fields.get("phone"), 80),
                 "timeline": clean(fields.get("timeline"), 80),
@@ -1206,6 +1211,10 @@ class AudoHandler(BaseHTTPRequestHandler):
             <div class="form-field full">
               <label for="service_website">Website</label>
               <input id="service_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
+            </div>
+            <div class="form-field full">
+              <label for="service_promo_code">Promo code</label>
+              <input id="service_promo_code" name="promo_code" type="text" autocomplete="off" placeholder="Optional">
             </div>
             <div class="form-field full">
               <label for="service_preferred_times">A few good discovery times</label>

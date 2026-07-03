@@ -23,11 +23,9 @@ Service pages use clean URLs under https://getaudo.com/services/ and are listed 
 
 ## Why Audo
 
-Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is the consulting practice of Aaron Hancock, a product and engineering leader with almost 30 years of technology experience. Current Audo consulting work includes Boston's Pizza.
+Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology and current consulting work with Boston's Pizza. Aaron began building websites in high school, then spent 15+ years across Cox Automotive, Dealertrack, and Dealer.com leading globally distributed teams through acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
-Aaron began building websites in the mid-90s while still in high school. He spent 15+ years across Cox Automotive, Dealertrack, and Dealer.com leading globally distributed product and engineering teams through acquisitions, integrations, product migrations, customer transitions, and major launches. His automotive technology work included OEM programs with complex brand, compliance, and integration requirements for names like Ford, Lincoln, Toyota, Acura, Honda, and Audi.
-
-After much of his automotive career, Aaron moved into large-agency client work, delivering practical solutions for clients like John Maxwell, Hattori Hanzo, L'Oreal, and others. Boston's Pizza is an Audo consulting client; the other company names reflect Aaron's prior employment, OEM program work, and agency experience.
+Boston's Pizza is an Audo consulting client; the other company names reflect Aaron's prior employment, OEM program work, and agency experience.
 
 Aaron's AI point of view is practical and context-first. AI can speed up research, planning, prototyping, notes, prioritization, automation, and support, but it is not a silver bullet. Audo helps clients decide whether AI is the right tool, then create prompts, workflows, training, privacy guardrails, and review steps so the work feels useful, safe, and understandable.
 

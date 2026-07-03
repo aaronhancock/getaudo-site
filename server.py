@@ -787,6 +787,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "jobTitle": "Senior product, software, website, automation, and AI partner",
                         "url": "https://getaudo.com/",
                         "image": "https://getaudo.com/assets/founder-field-portrait.webp",
+                        "description": "Aaron Hancock brings almost 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, large-agency client work, context-first AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
                         "knowsAbout": [
                             "Product strategy",
                             "Software engineering",
@@ -794,6 +795,10 @@ class AudoHandler(BaseHTTPRequestHandler):
                             "Website operations",
                             "Business automation",
                             "Small business technology",
+                            "Automotive retail technology",
+                            "Dealership platforms",
+                            "Global product and engineering teams",
+                            "Large-agency delivery",
                         ],
                     },
                     {
@@ -804,7 +809,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "logo": "https://getaudo.com/assets/audo-logo-white.png",
                         "image": social_image,
                         "founder": {"@id": "https://getaudo.com/#aaron-hancock"},
-                        "description": "Audo provides senior technology consulting for websites, web applications, automation, AI coaching, product strategy, and ongoing support.",
+                        "description": "Audo provides senior technology consulting backed by product and engineering leadership, agency delivery experience, context-first AI support, and direct consulting for websites, apps, automation, and product strategy.",
                     },
                 ],
             },

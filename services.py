@@ -1205,11 +1205,11 @@ CATEGORY_ONGOING_CONTEXT = {
 
 
 CATEGORY_AGENCY_CONTEXT = {
-    "Website and app care": "Website and app issues often cross content, hosting, UX, forms, email, search, and operations. Audo keeps that context with one senior person instead of splitting it across account layers.",
-    "Automation": "Automation work needs someone who understands the actual workflow, not just the tool connection. Audo helps shape, build, explain, and support the process directly.",
-    "AI coaching and support": "AI work needs practical judgment, privacy awareness, examples, training, and follow-through. Audo keeps the coaching close to the real work people do every day.",
-    "Product strategy": "Product work gets better when strategy and execution stay connected. Audo helps clarify the decision and understands what it would take to actually build or support it.",
-    "Individual consulting": "Individual and small-business systems are personal and context-heavy. Audo keeps the help direct, practical, and lightweight instead of turning it into a large process.",
+    "Website and app care": "Website and app issues often cross content, hosting, UX, forms, email, search, and operations. Audo brings senior product, engineering, and agency delivery experience without splitting that context across account layers.",
+    "Automation": "Automation work needs someone who understands the actual workflow, not just the tool connection. Audo brings senior product and engineering judgment to shape, build, explain, and support the process directly.",
+    "AI coaching and support": "AI work needs practical judgment, privacy awareness, examples, training, and follow-through. Audo brings broad technology and product experience while keeping the coaching close to the real work people do every day.",
+    "Product strategy": "Product work gets better when strategy and execution stay connected. Audo brings product and engineering leadership experience, so the recommendation stays grounded in what it would take to actually build or support it.",
+    "Individual consulting": "Individual and small-business systems are personal and context-heavy. Audo brings senior technology experience in a direct, practical, lightweight model instead of turning the work into a large process.",
 }
 
 

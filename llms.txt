@@ -23,14 +23,14 @@ Service pages use clean URLs under https://getaudo.com/services/ and are listed 
 
 ## Why Audo
 
-Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology. Aaron began building websites in high school, then spent 15+ years across Cox Automotive, Dealertrack, and Dealer.com leading globally distributed teams through M&A processes, product due diligence, acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Clients work directly with Aaron Hancock instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is Aaron's independent consulting practice. His experience includes nearly 30 years in technology, 15+ years of product and engineering leadership across Cox Automotive, Dealertrack, and Dealer.com, complex M&A and product due diligence work, OEM launches, and agency work for clients including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
-The company names above reflect Aaron's prior employment, OEM program work, and agency experience.
+Company names reflect Aaron's prior roles, OEM programs, and agency work.
 
 ## Partnered with
 
 Audo consulting work includes Boston's Pizza Restaurant & Sports Bar. The public site links to the Boston's Pizza website with a nofollow logo link.
 
-Aaron's AI point of view is practical and context-first. AI can speed up research, planning, prototyping, notes, prioritization, automation, and support, but it is not a silver bullet. Audo helps clients decide whether AI is the right tool, then create prompts, workflows, training, privacy guardrails, and review steps so the work feels useful, safe, and understandable.
+Aaron's AI point of view is practical and context-first. AI can save real time, but only when it understands the business context. Audo helps clients decide where AI fits, where it does not, and how to use it with privacy, review, and common sense.
 
-For clients, that background means senior judgment without an agency handoff chain. Audo can evaluate a problem from business, product, software, UX, automation, and AI angles; define the work; build or guide the fix; explain the tradeoffs; and continue supporting the work as the client's tools, priorities, and business evolve.
+For clients, that background means senior product, software, UX, automation, and AI judgment without account layers. The same person can diagnose, build, explain, and support the work.

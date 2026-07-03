@@ -711,17 +711,17 @@
 
     .founder-story {
       display: grid;
-      gap: 22px;
+      gap: 18px;
       padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     .founder-story p {
-      max-width: 1040px;
+      max-width: 980px;
       margin: 0;
       color: rgba(255, 255, 255, 0.78);
-      font-size: clamp(17px, 2vw, 24px);
-      line-height: 1.5;
+      font-size: clamp(16px, 1.7vw, 20px);
+      line-height: 1.48;
     }
 
     .founder-story strong {
@@ -729,8 +729,40 @@
       font-weight: 820;
     }
 
-    .ai-story {
+    .proof-strip {
       max-width: 1040px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .proof-item {
+      min-height: 112px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .proof-item span {
+      display: block;
+      margin-bottom: 8px;
+      color: #f4dca9;
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .proof-item strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .ai-story {
+      max-width: 980px;
       display: grid;
       gap: 12px;
       margin-top: 4px;
@@ -743,18 +775,18 @@
     .ai-story h3 {
       margin: 0;
       color: var(--white);
-      font-size: clamp(22px, 3vw, 32px);
+      font-size: clamp(21px, 2.6vw, 28px);
       line-height: 1.14;
     }
 
     .ai-story p {
       max-width: none;
-      font-size: clamp(16px, 1.7vw, 20px);
-      line-height: 1.55;
+      font-size: clamp(16px, 1.5vw, 18px);
+      line-height: 1.5;
     }
 
     .client-meaning {
-      max-width: 1040px;
+      max-width: 980px;
       display: grid;
       gap: 14px;
       margin-top: 4px;
@@ -772,7 +804,7 @@
     .client-meaning ul {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px 18px;
+      gap: 10px 18px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -781,7 +813,7 @@
     .client-meaning li {
       color: rgba(255, 255, 255, 0.78);
       font-size: 16px;
-      line-height: 1.55;
+      line-height: 1.45;
     }
 
     .client-meaning li::before {
@@ -797,8 +829,8 @@
     .client-meaning .client-close {
       max-width: 820px;
       margin-top: 4px;
-      font-size: 17px;
-      line-height: 1.55;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .story-note {
@@ -1159,11 +1191,11 @@
     }
 
     .service-list-card {
-      min-height: 192px;
+      min-height: 132px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
+      justify-content: flex-start;
+      gap: 12px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 18px;
@@ -1191,8 +1223,8 @@
 
     .service-list-card h3 {
       margin-top: 8px;
-      font-size: 19px;
-      line-height: 1.14;
+      font-size: 20px;
+      line-height: 1.12;
     }
 
     .service-list-card p {
@@ -1213,6 +1245,16 @@
 
     .service-list-sentinel {
       height: 1px;
+    }
+
+    .service-list-more {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
+    .service-list-more[hidden] {
+      display: none;
     }
 
     footer {
@@ -1474,6 +1516,10 @@
         line-height: 1.45;
       }
 
+      .proof-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .ai-story {
         gap: 10px;
         padding: 16px;
@@ -1596,6 +1642,14 @@
       }
 
       .service-list-card {
+        min-height: auto;
+      }
+
+      .proof-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-item {
         min-height: auto;
       }
 
@@ -1737,30 +1791,44 @@
       <div class="shell">
         <div class="section-head">
           <h2>Why Audo.</h2>
-          <p class="section-copy">A senior technology partner with real consulting, product, engineering, agency, and AI experience.</p>
+          <p class="section-copy">Work directly with Aaron. No agency layers.</p>
         </div>
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
-            <p>Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology. Aaron began building websites in high school, then spent <strong>15+ years across Cox Automotive, Dealertrack, and Dealer.com</strong> leading globally distributed teams through M&A processes, product due diligence, acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.</p>
+            <div class="proof-strip" aria-label="Aaron Hancock experience highlights">
+              <div class="proof-item">
+                <span>Nearly 30 years</span>
+                <strong>Websites, software, product, and technology problem solving.</strong>
+              </div>
+              <div class="proof-item">
+                <span>15+ years</span>
+                <strong>Cox Automotive, Dealertrack, and Dealer.com leadership.</strong>
+              </div>
+              <div class="proof-item">
+                <span>Complex work</span>
+                <strong>M&A, product due diligence, integrations, migrations, and OEM launches.</strong>
+              </div>
+              <div class="proof-item">
+                <span>Agency experience</span>
+                <strong>John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and more.</strong>
+              </div>
+            </div>
             <div class="ai-story">
-              <h3>AI is powerful when it has the right context.</h3>
-              <p>Aaron leaned into AI early because he saw how quickly it could move an idea from a conversation to something people could react to. His teams started turning concepts into working screens in hours instead of weeks, which changed how he thinks about iteration.</p>
-              <p>But AI is not a silver bullet. The hard part is the business context: customers, priorities, constraints, what happened yesterday, and what needs to happen next. Audo helps clients decide when AI is the right tool, how to use it safely, and how to build prompts, workflows, training, and guardrails that make the work feel clearer instead of riskier.</p>
+              <h3>Practical AI, not AI theater.</h3>
+              <p>AI can save real time, but only when it understands the business context. Audo helps you decide where AI fits, where it does not, and how to use it with privacy, review, and common sense.</p>
             </div>
             <div class="client-meaning">
               <h3>What that means for you.</h3>
               <ul>
-                <li>You get senior judgment without an agency handoff chain.</li>
-                <li>Your problem is evaluated from business, product, software, UX, automation, and AI angles.</li>
-                <li>The same person who helps define the work can also build, explain, and support it.</li>
-                <li>Your budget goes toward useful thinking and execution instead of layers of process.</li>
-                <li>You get practical recommendations, including when not to use AI or build something custom.</li>
-                <li>You work with someone who keeps the context as your tools, priorities, and business evolve.</li>
+                <li>One senior partner who can diagnose, build, explain, and support.</li>
+                <li>Product, software, UX, automation, and AI judgment in one conversation.</li>
+                <li>Your budget goes toward useful work, not account layers.</li>
+                <li>You get clear next steps before spending money on the wrong fix.</li>
               </ul>
-              <p class="client-close">That is the Audo model: one experienced partner, clear next steps, and support that keeps the context.</p>
+              <p class="client-close">Audo is Aaron's independent practice: direct help from the person doing the work.</p>
             </div>
-            <div class="story-note">The company names above reflect Aaron's prior employment, OEM program work, and agency experience.</div>
+            <div class="story-note">Company names reflect prior roles, OEM programs, and agency work.</div>
           </div>
         </div>
       </div>
@@ -1934,8 +2002,8 @@
     <section id="service-list" class="service-list-band" aria-labelledby="service-list-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="service-list-heading">Problems we can solve together.</h2>
-          <p class="section-copy">These are starting points, not fixed packages. Pick the closest issue, then schedule Free Discovery so we can talk through what is happening and decide the right next step.</p>
+          <h2 id="service-list-heading">Ways I can help.</h2>
+          <p class="section-copy">Find the closest issue. If you are not sure, Free Discovery is the place to start.</p>
         </div>
         <div class="service-list-tools" aria-label="Service filters">
           <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
@@ -1947,7 +2015,10 @@
         </div>
         <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json" aria-live="polite"></div>
         <div id="service-list-sentinel" class="service-list-sentinel" aria-hidden="true"></div>
-        <p id="service-list-status" class="service-list-status" role="status">Loading services...</p>
+        <div class="service-list-more" id="service-list-more-wrap" hidden>
+          <button id="service-list-more" class="button" type="button">Show more ways I can help</button>
+        </div>
+        <p id="service-list-status" class="service-list-status" role="status">Loading ways I can help...</p>
         <noscript>
           <p class="service-list-status">JavaScript is required to load the service grid. Search engines can still access every service through the sitemap.</p>
         </noscript>
@@ -2032,9 +2103,12 @@
     }());
 
     (function () {
+      var section = document.getElementById("service-list");
       var grid = document.getElementById("service-list-grid");
       var status = document.getElementById("service-list-status");
       var sentinel = document.getElementById("service-list-sentinel");
+      var moreWrap = document.getElementById("service-list-more-wrap");
+      var moreButton = document.getElementById("service-list-more");
       var filters = Array.prototype.slice.call(document.querySelectorAll("[data-service-list-filter]"));
       if (!grid) {
         return;
@@ -2045,8 +2119,12 @@
       var visible = [];
       var activeFilter = "All";
       var nextIndex = 0;
-      var batchSize = 16;
-      var observer = null;
+      var batchSize = 10;
+      var batchObserver = null;
+      var sectionObserver = null;
+      var hasLoaded = false;
+      var lastAutoLoadScrollY = window.scrollY;
+      var scrollTicking = false;
 
       function updateStatus(message) {
         if (status) {
@@ -2054,30 +2132,40 @@
         }
       }
 
+      function updateMoreButton() {
+        if (!moreWrap) {
+          return;
+        }
+        moreWrap.hidden = nextIndex >= visible.length;
+      }
+
       function createCard(service) {
         var card = document.createElement("a");
         var headingWrap = document.createElement("div");
         var category = document.createElement("span");
         var title = document.createElement("h3");
-        var summary = document.createElement("p");
 
         card.className = "service-list-card";
         card.href = service.url;
+        card.setAttribute("aria-label", service.title + " - " + service.category);
         category.textContent = service.category;
         title.textContent = service.title;
-        summary.textContent = service.summary;
 
         headingWrap.appendChild(category);
         headingWrap.appendChild(title);
         card.appendChild(headingWrap);
-        card.appendChild(summary);
         return card;
       }
 
       function renderNextBatch() {
+        if (batchObserver && sentinel) {
+          batchObserver.unobserve(sentinel);
+        }
+
         if (!visible.length) {
           grid.innerHTML = "";
-          updateStatus("No examples found for this filter.");
+          updateStatus("No services found for this filter.");
+          updateMoreButton();
           return;
         }
 
@@ -2088,10 +2176,39 @@
         }
         grid.appendChild(fragment);
 
-        updateStatus("Showing " + nextIndex + " of " + visible.length + " examples.");
-        if (observer && nextIndex >= visible.length && sentinel) {
-          observer.unobserve(sentinel);
+        updateStatus("Showing " + nextIndex + " of " + visible.length + " ways I can help.");
+        updateMoreButton();
+
+        if (batchObserver && sentinel && nextIndex < visible.length) {
+          lastAutoLoadScrollY = window.scrollY;
+          batchObserver.observe(sentinel);
         }
+      }
+
+      function sentinelIsNearViewport() {
+        if (!sentinel) {
+          return false;
+        }
+        var rect = sentinel.getBoundingClientRect();
+        return rect.top <= window.innerHeight + 260 && rect.bottom >= -260;
+      }
+
+      function maybeRenderScrolledBatch() {
+        var hasScrolled = Math.abs(window.scrollY - lastAutoLoadScrollY) > 8;
+        if (hasScrolled && nextIndex < visible.length && sentinelIsNearViewport()) {
+          renderNextBatch();
+        }
+      }
+
+      function handleScroll() {
+        if (!hasLoaded || scrollTicking) {
+          return;
+        }
+        scrollTicking = true;
+        window.requestAnimationFrame(function () {
+          scrollTicking = false;
+          maybeRenderScrolledBatch();
+        });
       }
 
       function applyFilter(category) {
@@ -2107,45 +2224,77 @@
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
         renderNextBatch();
-        if (observer && sentinel && nextIndex < visible.length) {
-          observer.observe(sentinel);
-        }
       }
 
       filters.forEach(function (button) {
         button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
         button.addEventListener("click", function () {
+          if (!hasLoaded) {
+            return;
+          }
           applyFilter(button.getAttribute("data-service-list-filter") || "All");
         });
       });
 
-      fetch(endpoint, { headers: { "Accept": "application/json" } })
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error("Service request failed");
-          }
-          return response.json();
-        })
-        .then(function (payload) {
-          services = Array.isArray(payload.services) ? payload.services : [];
-          visible = services.slice();
-
-          if ("IntersectionObserver" in window && sentinel) {
-            observer = new IntersectionObserver(function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting && nextIndex < visible.length) {
-                  renderNextBatch();
-                }
-              });
-            }, { rootMargin: "320px 0px" });
-            observer.observe(sentinel);
-          }
-
+      if (moreButton) {
+        moreButton.addEventListener("click", function () {
           renderNextBatch();
-        })
-        .catch(function () {
-          updateStatus("The examples could not load. Please refresh the page.");
         });
+      }
+
+      function setupBatchObserver() {
+        if (!("IntersectionObserver" in window) || !sentinel) {
+          return;
+        }
+
+        batchObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              maybeRenderScrolledBatch();
+            }
+          });
+        }, { rootMargin: "260px 0px" });
+      }
+
+      function loadServices() {
+        if (hasLoaded) {
+          return;
+        }
+        hasLoaded = true;
+        setupBatchObserver();
+
+        fetch(endpoint, { headers: { "Accept": "application/json" } })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("Service request failed");
+            }
+            return response.json();
+          })
+          .then(function (payload) {
+            services = Array.isArray(payload.services) ? payload.services : [];
+            visible = services.slice();
+            renderNextBatch();
+          })
+          .catch(function () {
+            updateStatus("The services could not load. Please refresh the page.");
+          });
+      }
+
+      if ("IntersectionObserver" in window && section) {
+        sectionObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              sectionObserver.disconnect();
+              loadServices();
+            }
+          });
+        }, { rootMargin: "700px 0px" });
+        sectionObserver.observe(section);
+      } else {
+        loadServices();
+      }
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
     }());
 
     (function () {

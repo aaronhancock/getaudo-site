@@ -17,7 +17,7 @@ Discovery: https://getaudo.com/#discovery
 
 ## Service Library
 
-The site includes 100 specific service pages covering website and app care, automation, AI support, product strategy, and individual consulting. Each service page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the service in the request.
+The site includes a focused library of 48 service examples covering website and app care, automation, AI support, product strategy, and individual consulting. Each service page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the service in the request.
 
 Service pages use clean URLs under https://getaudo.com/services/ and are listed in the dynamic sitemap.
 

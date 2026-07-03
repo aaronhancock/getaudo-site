@@ -849,10 +849,75 @@ SERVICE_SEEDS = [
 ]
 
 
+ACTIVE_SERVICE_TITLES = {
+    "Fix a broken contact form",
+    "Make a slow website feel fast",
+    "Clean up WordPress plugin warnings",
+    "Stop website leads from going missing",
+    "Improve a confusing mobile website",
+    "Refresh an outdated homepage",
+    "Create a landing page for one offer",
+    "Migrate a website without losing momentum",
+    "Fix accessibility blockers on key pages",
+    "Fix SSL and website security warnings",
+    "Improve website navigation",
+    "Connect website forms to your CRM or spreadsheet",
+    "Build a customer portal for requests and files",
+    "Keep monthly website updates moving",
+    "Build an online quote or estimate tool",
+    "Build a new website for your business",
+    "Build a mobile app for your business",
+    "Automate lead follow-up",
+    "Turn intake forms into organized tasks",
+    "Build a simple reporting dashboard",
+    "Generate proposals from repeat inputs",
+    "Connect scheduling and confirmation emails",
+    "Clean up CRM fields and duplicate records",
+    "Build a new customer onboarding workflow",
+    "Convert spreadsheet work into a simple app",
+    "Reduce copy and paste between tools",
+    "Replace a messy spreadsheet with a cleaner process",
+    "Build an internal admin tool to manage your business",
+    "Integrate your business with a CRM",
+    "Choose AI tools for your business",
+    "Create safe AI rules for client data",
+    "Build a prompt library for daily work",
+    "Train your team to use AI confidently",
+    "Use AI to improve customer support replies",
+    "Create a custom AI assistant for procedures",
+    "Build an AI-powered website support agent",
+    "Decide what to build first",
+    "Pressure-test a new product idea",
+    "Choose build vs buy for a tool",
+    "Define an MVP without overbuilding",
+    "Simplify a confusing workflow before software",
+    "Create requirements for a developer or vendor",
+    "Review a vendor proposal before signing",
+    "Recover a project that stalled",
+    "Simplify email and calendar overload",
+    "Set up a small business tech stack from scratch",
+    "Create a simple personal website or portfolio",
+    "Create a simple client onboarding path",
+}
+
+
+ARCHIVED_SERVICE_REDIRECTS = {
+    slugify(title): "/#service-list"
+    for title, *_ in SERVICE_SEEDS
+    if title not in ACTIVE_SERVICE_TITLES
+}
+
+
 def _build_services() -> list[Service]:
     services: list[Service] = []
     seen: set[str] = set()
+    missing = ACTIVE_SERVICE_TITLES - {title for title, *_ in SERVICE_SEEDS}
+    if missing:
+        raise ValueError(f"Active service title not found: {sorted(missing)}")
+
     for title, category, summary, pain, solution, result in SERVICE_SEEDS:
+        if title not in ACTIVE_SERVICE_TITLES:
+            continue
         slug = slugify(title)
         if slug in seen:
             raise ValueError(f"Duplicate service slug: {slug}")

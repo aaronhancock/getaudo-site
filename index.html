@@ -1431,10 +1431,10 @@
       <div class="hero-content">
         <p class="eyebrow">Personal technology partner</p>
         <h1>Get tech off your plate.</h1>
-        <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the tech work that needs a capable owner.</p>
+        <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the tech work they keep putting off.</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book Free Discovery</a>
-          <a class="button ghost" href="#service-list">Browse 100 services</a>
+          <a class="button ghost" href="#service-list">Ways I can help</a>
         </div>
         <p class="hero-note">No polished project brief needed. Share what needs attention; I will help sort the next step.</p>
       </div>
@@ -1502,8 +1502,8 @@
         </div>
 
         <div class="services-next">
-          <p>Want something more specific? Browse the service list and see how I would approach the work.</p>
-          <a class="button" href="#service-list">See the service list</a>
+          <p>Looking for something specific? Use the examples below to find the closest kind of help.</p>
+          <a class="button" href="#service-list">Ways I can help</a>
         </div>
       </div>
     </section>
@@ -1687,7 +1687,7 @@
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request Free Discovery</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="form-note" class="form-note">Your request goes directly to Aaron. Spam protection may run when you submit.</p>
+          <p id="form-note" class="form-note">Your request goes directly to Aaron. I review every request before replying.</p>
         </form>
       </div>
     </section>
@@ -1695,8 +1695,8 @@
     <section id="service-list" class="service-list-band" aria-labelledby="service-list-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="service-list-heading">Specific services I can help with.</h2>
-          <p class="section-copy">Browse specific services if you are trying to name the problem. Each page explains the pain, the fix, the likely result, and how Free Discovery works.</p>
+          <h2 id="service-list-heading">Focused ways I can help.</h2>
+          <p class="section-copy">Use these examples to find the closest match. If your issue is not listed, Free Discovery is still the right next step.</p>
         </div>
         <div class="service-list-tools" aria-label="Service filters">
           <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
@@ -1838,7 +1838,7 @@
       function renderNextBatch() {
         if (!visible.length) {
           grid.innerHTML = "";
-          updateStatus("No services found for this filter.");
+          updateStatus("No examples found for this filter.");
           return;
         }
 
@@ -1849,7 +1849,7 @@
         }
         grid.appendChild(fragment);
 
-        updateStatus("Showing " + nextIndex + " of " + visible.length + " services.");
+        updateStatus("Showing " + nextIndex + " of " + visible.length + " examples.");
         if (observer && nextIndex >= visible.length && sentinel) {
           observer.unobserve(sentinel);
         }
@@ -1905,7 +1905,7 @@
           renderNextBatch();
         })
         .catch(function () {
-          updateStatus("The service list could not load. Please refresh the page.");
+          updateStatus("The examples could not load. Please refresh the page.");
         });
     }());
 

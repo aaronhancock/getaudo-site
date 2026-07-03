@@ -17,7 +17,7 @@ from io import BytesIO
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlparse
 
-from services import SERVICES, get_service, service_cards, service_dict
+from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, get_service, service_cards, service_dict
 
 try:
     from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -30,7 +30,7 @@ DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
 CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "matthewaaron@gmail.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
-SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-01")
+SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-03")
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
 RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
@@ -42,6 +42,7 @@ SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
 SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
 SERVICE_SOCIAL_CARD_CACHE: dict[str, bytes] = {}
 REMOVED_SERVICE_REDIRECTS = {
+    **ARCHIVED_SERVICE_REDIRECTS,
     "clean-up-hosting-dns-and-domain-confusion": "/#service-list",
     "clean-up-domains-email-and-online-presence": "/#service-list",
     "create-a-client-portal-intake-flow": "/services/build-a-customer-portal-for-requests-and-files",
@@ -1128,7 +1129,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <p class="hero-lead">{h(service.summary)}</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Request Free Discovery</a>
-          <a class="button" href="/#service-list">Browse services</a>
+          <a class="button" href="/#service-list">Ways I can help</a>
         </div>
       </div>
     </div>

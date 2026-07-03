@@ -639,6 +639,14 @@ SERVICE_SEEDS = [
         "You can choose the path that solves the problem without creating unnecessary future burden.",
     ),
     (
+        "A software acquisition needs product due diligence",
+        "Product strategy",
+        "You are buying, selling, investing in, or merging a product and need a clearer read on the technology risk.",
+        "Product and M&A decisions get risky when product health, technical debt, roadmap reality, integrations, team dependencies, support burden, and customer migration issues are not understood.",
+        "I review the product, platform, user flows, architecture signals, integrations, data, operations, support model, and team context to identify risks, questions, and practical next steps.",
+        "You get a clearer diligence read: what looks strong, what needs deeper review, what could affect value or transition, and what to ask before moving forward.",
+    ),
+    (
         "MVP scope is starting to sprawl",
         "Product strategy",
         "You want to launch something useful without turning it into a giant project.",
@@ -889,6 +897,7 @@ ACTIVE_SERVICE_TITLES = {
     "Too many product ideas are competing",
     "A product idea needs a reality check",
     "A build-vs-buy decision is unclear",
+    "A software acquisition needs product due diligence",
     "MVP scope is starting to sprawl",
     "The workflow is confusing before software",
     "The vendor or developer request is too vague",
@@ -941,6 +950,7 @@ SERVICE_SLUG_OVERRIDES = {
     "Too many product ideas are competing": "decide-what-to-build-first",
     "A product idea needs a reality check": "pressure-test-a-new-product-idea",
     "A build-vs-buy decision is unclear": "choose-build-vs-buy-for-a-tool",
+    "A software acquisition needs product due diligence": "product-due-diligence-before-an-acquisition",
     "MVP scope is starting to sprawl": "define-an-mvp-without-overbuilding",
     "The workflow is confusing before software": "simplify-a-confusing-workflow-before-software",
     "The vendor or developer request is too vague": "create-requirements-for-a-developer-or-vendor",
@@ -1145,6 +1155,10 @@ SERVICE_SHARE_HINTS = (
         "the key page URLs, forms or actions that matter most, any audit results, screenshots, keyboard or screen reader issues if known, and the audience that needs access",
     ),
     (
+        ("acquisition", "m&a", "due diligence", "diligence", "investing", "merging"),
+        "the product or company being evaluated, deal stage, business goals, available product docs, technical docs, roadmap, known risks, customer migration concerns, vendor notes, and questions you need answered before moving forward",
+    ),
+    (
         ("migration", "migrate", "redirect"),
         "the current platform, target platform, domain details, important page list, redirect needs, forms, tracking, email dependencies, and launch timing",
     ),
@@ -1298,7 +1312,7 @@ def service_faqs(service: Service) -> list[dict[str, str]]:
     hints = share_hints(service)
     return [
         {
-            "question": f"Can Audo help when {topic} and I do not know the technical cause?",
+            "question": f"Can Audo help when {topic} and the next step is unclear?",
             "answer": (
                 f"Yes. You can start with the symptoms: {pain}. "
                 f"I will help connect what you are seeing to the likely causes and the next step worth taking."

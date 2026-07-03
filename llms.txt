@@ -13,17 +13,17 @@ Discovery: https://getaudo.com/#discovery
 - Website, app, dashboard, and internal tool creation: business websites, mobile apps, customer portals, internal admin tools, quote and estimate tools, dashboards, MVPs, prototypes, and supported launches.
 - Automation consulting: help with repeat tasks, follow-up, scheduling, CRM integrations, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
 - AI coaching, training, and support: practical AI use cases, AI-powered website support agents, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
-- Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, and next steps.
+- Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, product due diligence, M&A technology review, and next steps.
 
 ## Service Library
 
-The site includes a focused library of 48 service examples covering website and app care, automation, AI support, product strategy, and individual consulting. Each service page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the service in the request.
+The site includes a focused library of 49 service examples covering website and app care, automation, AI support, product strategy, and individual consulting. Each service page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the service in the request.
 
 Service pages use clean URLs under https://getaudo.com/services/ and are listed in the dynamic sitemap.
 
 ## Why Audo
 
-Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology and current consulting work with Boston's Pizza. Aaron began building websites in high school, then spent 15+ years across Cox Automotive, Dealertrack, and Dealer.com leading globally distributed teams through acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Clients work directly with one senior technology partner instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is the consulting practice of Aaron Hancock, a product and engineering leader with nearly 30 years in technology and current consulting work with Boston's Pizza. Aaron began building websites in high school, then spent 15+ years across Cox Automotive, Dealertrack, and Dealer.com leading globally distributed teams through M&A processes, product due diligence, acquisitions, integrations, migrations, customer transitions, and major launches, including OEM program work tied to Ford, Lincoln, Toyota, Acura, Honda, and Audi. After much of his automotive career, he moved into large-agency client work, delivering innovative solutions for clients like John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
 Boston's Pizza is an Audo consulting client; the other company names reflect Aaron's prior employment, OEM program work, and agency experience.
 

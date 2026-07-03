@@ -711,7 +711,7 @@
 
     .founder-story {
       display: grid;
-      gap: 18px;
+      gap: 16px;
       padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
@@ -730,15 +730,15 @@
     }
 
     .proof-strip {
-      max-width: 1040px;
+      max-width: none;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      gap: 12px;
     }
 
     .proof-item {
-      min-height: 112px;
-      padding: 16px;
+      min-height: 96px;
+      padding: 15px;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.045);
@@ -757,47 +757,26 @@
 
     .proof-item strong {
       display: block;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.25;
     }
 
-    .ai-story {
-      max-width: 980px;
-      display: grid;
-      gap: 12px;
-      margin-top: 4px;
-      padding: 22px;
-      border: 1px solid rgba(244, 220, 169, 0.22);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .ai-story h3 {
-      margin: 0;
-      color: var(--white);
-      font-size: clamp(21px, 2.6vw, 28px);
-      line-height: 1.14;
-    }
-
-    .ai-story p {
-      max-width: none;
-      font-size: clamp(16px, 1.5vw, 18px);
-      line-height: 1.5;
-    }
-
     .client-meaning {
-      max-width: 980px;
+      max-width: none;
       display: grid;
-      gap: 14px;
-      margin-top: 4px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid rgba(244, 220, 169, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
     }
 
     .client-meaning h3 {
       margin: 0;
       color: var(--white);
-      font-size: clamp(24px, 3vw, 34px);
+      font-size: clamp(22px, 2.6vw, 30px);
       line-height: 1.12;
     }
 
@@ -826,16 +805,9 @@
       background: #f4dca9;
     }
 
-    .client-meaning .client-close {
-      max-width: 820px;
-      margin-top: 4px;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
     .story-note {
-      max-width: 920px;
-      padding-top: 20px;
+      max-width: none;
+      padding-top: 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.14);
       color: rgba(255, 255, 255, 0.7);
       font-size: 15px;
@@ -1520,23 +1492,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .ai-story {
-        gap: 10px;
-        padding: 16px;
-      }
-
-      .ai-story h3 {
-        font-size: 22px;
-      }
-
-      .ai-story p {
-        font-size: 15px;
-        line-height: 1.5;
-      }
-
       .client-meaning {
-        gap: 12px;
-        padding-top: 18px;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 18px;
       }
 
       .client-meaning h3 {
@@ -1549,11 +1508,6 @@
       }
 
       .client-meaning li {
-        font-size: 15px;
-        line-height: 1.5;
-      }
-
-      .client-meaning .client-close {
         font-size: 15px;
         line-height: 1.5;
       }
@@ -1791,42 +1745,37 @@
       <div class="shell">
         <div class="section-head">
           <h2>Why Audo.</h2>
-          <p class="section-copy">Work directly with Aaron. No agency layers.</p>
+          <p class="section-copy">Audo is Aaron Hancock's consulting practice.</p>
         </div>
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
             <div class="proof-strip" aria-label="Aaron Hancock experience highlights">
               <div class="proof-item">
-                <span>Nearly 30 years</span>
-                <strong>Websites, software, product, and technology problem solving.</strong>
+                <span>30 years</span>
+                <strong>Technology, product, software, websites, and problem solving.</strong>
               </div>
               <div class="proof-item">
                 <span>15+ years</span>
-                <strong>Cox Automotive, Dealertrack, and Dealer.com leadership.</strong>
+                <strong>Product and engineering leadership across Cox Automotive, Dealertrack, and Dealer.com.</strong>
               </div>
               <div class="proof-item">
-                <span>Complex work</span>
-                <strong>M&A, product due diligence, integrations, migrations, and OEM launches.</strong>
+                <span>Complex change</span>
+                <strong>M&A, due diligence, integrations, migrations, and OEM launches.</strong>
               </div>
               <div class="proof-item">
-                <span>Agency experience</span>
-                <strong>John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and more.</strong>
+                <span>Client delivery</span>
+                <strong>Agency work for John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and more.</strong>
               </div>
-            </div>
-            <div class="ai-story">
-              <h3>Practical AI, not AI theater.</h3>
-              <p>AI can save real time, but only when it understands the business context. Audo helps you decide where AI fits, where it does not, and how to use it with privacy, review, and common sense.</p>
             </div>
             <div class="client-meaning">
-              <h3>What that means for you.</h3>
+              <h3>What you get.</h3>
               <ul>
-                <li>One senior partner who can diagnose, build, explain, and support.</li>
+                <li>Direct access to the person doing the work.</li>
+                <li>A clear diagnosis before you spend money on the fix.</li>
                 <li>Product, software, UX, automation, and AI judgment in one conversation.</li>
-                <li>Your budget goes toward useful work, not account layers.</li>
-                <li>You get clear next steps before spending money on the wrong fix.</li>
+                <li>Practical execution without agency overhead.</li>
               </ul>
-              <p class="client-close">Audo is Aaron's independent practice: direct help from the person doing the work.</p>
             </div>
             <div class="story-note">Company names reflect prior roles, OEM programs, and agency work.</div>
           </div>

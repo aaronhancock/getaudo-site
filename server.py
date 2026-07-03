@@ -1213,16 +1213,16 @@ class AudoHandler(BaseHTTPRequestHandler):
               <input id="service_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
             </div>
             <div class="form-field full">
-              <label for="service_promo_code">Promo code</label>
-              <input id="service_promo_code" name="promo_code" type="text" autocomplete="off" placeholder="Optional">
-            </div>
-            <div class="form-field full">
               <label for="service_preferred_times">A few good discovery times</label>
               <textarea id="service_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
             </div>
             <div class="form-field full">
               <label for="service_message">What should I know?</label>
               <textarea id="service_message" name="message" placeholder="A few plain-English sentences are perfect. Include any useful context I should review first." required></textarea>
+            </div>
+            <div class="form-field full">
+              <label for="service_promo_code">Promo code</label>
+              <input id="service_promo_code" name="promo_code" type="text" autocomplete="off" placeholder="Optional">
             </div>
           </div>
           <input type="hidden" name="service" value="{h(service.title)}">

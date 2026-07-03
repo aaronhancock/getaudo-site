@@ -751,6 +751,54 @@
       line-height: 1.55;
     }
 
+    .client-meaning {
+      max-width: 1040px;
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .client-meaning h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.12;
+    }
+
+    .client-meaning ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .client-meaning li {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .client-meaning li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+      margin: 0 10px 2px 0;
+      border-radius: 50%;
+      background: #f4dca9;
+    }
+
+    .client-meaning .client-close {
+      max-width: 820px;
+      margin-top: 4px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
     .story-note {
       max-width: 920px;
       padding-top: 20px;
@@ -1387,6 +1435,30 @@
         line-height: 1.5;
       }
 
+      .client-meaning {
+        gap: 12px;
+        padding-top: 18px;
+      }
+
+      .client-meaning h3 {
+        font-size: 23px;
+      }
+
+      .client-meaning ul {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .client-meaning li {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .client-meaning .client-close {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
       .story-note {
         font-size: 13px;
         line-height: 1.5;
@@ -1598,21 +1670,33 @@
       <div class="shell">
         <div class="section-head">
           <h2>Why Audo.</h2>
-          <p class="section-copy">Almost 30 years of technology experience, focused into one direct working relationship.</p>
+          <p class="section-copy">A senior technology partner with real consulting, product, engineering, agency, and AI experience.</p>
         </div>
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
-            <p>I have been building websites and software since the mid-90s, starting in high school. I was self-taught, always tinkering, and focused on the same thing Audo is built around now: solving practical problems with technology.</p>
-            <p>That became almost 30 years across software, design, product strategy, startups, agencies, owner-led businesses, and enterprise technology. I spent <strong>15+ years across Cox Automotive, Dealertrack, and Dealer.com</strong>, leading globally distributed product and engineering teams through acquisitions, integrations, migrations, customer transitions, and major launches.</p>
-            <p>Most of that career was in automotive technology, including OEM programs with brand, compliance, and integration needs for names like Ford, Lincoln, Toyota, Acura, Honda, and Audi. Later agency work taught me to move fast, communicate clearly, and deliver practical solutions for clients like John Maxwell, Hattori Hanzo, L'Oreal, and others.</p>
+            <p>Audo is the consulting practice of Aaron Hancock, a product and engineering leader who has spent nearly three decades building, shaping, and supporting technology. Current Audo consulting work includes <strong>Boston's Pizza</strong>, where Aaron brings the same direct senior-partner model the business is built around: understand the problem, make the work practical, and stay close enough to support what comes next.</p>
+            <p>Aaron began building websites in the mid-90s while still in high school. What started as self-taught tinkering became a career across software, design, product strategy, startups, agencies, owner-led businesses, and enterprise technology.</p>
+            <p>He spent <strong>15+ years across Cox Automotive, Dealertrack, and Dealer.com</strong>, leading globally distributed product and engineering teams through acquisitions, integrations, migrations, customer transitions, and major launches. Much of that work centered on automotive technology, including OEM programs with brand, compliance, and integration needs for names like Ford, Lincoln, Toyota, Acura, Honda, and Audi.</p>
+            <p>After much of his automotive career, Aaron moved into large-agency client work, where he learned to move quickly, communicate clearly, and deliver practical solutions for clients like John Maxwell, Hattori Hanzo, L'Oreal, and others.</p>
             <div class="ai-story">
               <h3>AI is powerful when it has the right context.</h3>
-              <p>I leaned into AI early because I saw how quickly it could move an idea from a conversation to something people could react to. My teams started turning concepts into working screens in hours instead of weeks, which changed how I think about iteration.</p>
-              <p>But AI is not a silver bullet. The hard part is the business context: customers, priorities, constraints, what happened yesterday, and what needs to happen next. I help clients decide when AI is the right tool, how to use it safely, and how to build prompts, workflows, training, and guardrails that make the work feel clearer instead of riskier.</p>
+              <p>Aaron leaned into AI early because he saw how quickly it could move an idea from a conversation to something people could react to. His teams started turning concepts into working screens in hours instead of weeks, which changed how he thinks about iteration.</p>
+              <p>But AI is not a silver bullet. The hard part is the business context: customers, priorities, constraints, what happened yesterday, and what needs to happen next. Audo helps clients decide when AI is the right tool, how to use it safely, and how to build prompts, workflows, training, and guardrails that make the work feel clearer instead of riskier.</p>
             </div>
-            <p>Audo is that experience in a smaller model. You work directly with me: the person helping understand the problem, make the fix, explain the tradeoffs, and support what comes next.</p>
-            <div class="story-note">Boston's Pizza is an Audo consulting client. The other company names here reflect my prior employment and agency work, and they explain the kind of judgment I bring to the handful of clients I support directly.</div>
+            <div class="client-meaning">
+              <h3>What that means for you.</h3>
+              <ul>
+                <li>You get senior judgment without an agency handoff chain.</li>
+                <li>Your problem is evaluated from business, product, software, UX, automation, and AI angles.</li>
+                <li>The same person who helps define the work can also build, explain, and support it.</li>
+                <li>Your budget goes toward useful thinking and execution instead of layers of process.</li>
+                <li>You get practical recommendations, including when not to use AI or build something custom.</li>
+                <li>You work with someone who keeps the context as your tools, priorities, and business evolve.</li>
+              </ul>
+              <p class="client-close">That is the Audo model: one experienced partner, clear next steps, and support that keeps the context.</p>
+            </div>
+            <div class="story-note">Boston's Pizza is an Audo consulting client. The other company names here reflect Aaron's prior employment, OEM program work, and agency experience.</div>
           </div>
         </div>
       </div>

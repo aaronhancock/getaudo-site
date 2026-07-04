@@ -711,7 +711,7 @@
 
     .founder-story {
       display: grid;
-      gap: 16px;
+      gap: 18px;
       padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
@@ -732,7 +732,7 @@
     .why-story-panel {
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.58fr);
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.62fr);
       gap: 28px;
       align-items: start;
       padding: 24px;
@@ -817,9 +817,9 @@
     .client-meaning {
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
       padding: 22px;
       border: 1px solid rgba(244, 220, 169, 0.18);
       border-radius: 8px;
@@ -829,33 +829,15 @@
     .client-meaning h3 {
       margin: 0;
       color: var(--white);
-      font-size: clamp(22px, 2.6vw, 30px);
+      font-size: clamp(20px, 2.2vw, 26px);
       line-height: 1.12;
     }
 
-    .client-meaning ul {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px 18px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .client-meaning li {
+    .client-meaning p {
+      margin: 7px 0 0;
       color: rgba(255, 255, 255, 0.78);
       font-size: 16px;
       line-height: 1.45;
-    }
-
-    .client-meaning li::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      display: inline-block;
-      margin: 0 10px 2px 0;
-      border-radius: 50%;
-      background: #f4dca9;
     }
 
     .story-note {
@@ -1791,8 +1773,8 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Why Audo.</h2>
-          <p class="section-copy">One senior partner. No agency layers.</p>
+          <h2>Senior tech help without the agency runaround.</h2>
+          <p class="section-copy">Most small businesses do not need a big agency process just to fix a website, clean up a workflow, make better use of AI, or build a practical tool. They need someone experienced enough to understand the problem, explain the options clearly, and help get it handled.</p>
         </div>
 
         <div class="why-grid">
@@ -1801,10 +1783,10 @@
               <div class="why-story-main">
                 <h3>A personal note from Aaron.</h3>
                 <div class="founder-letter">
-                  <p>Hi, I'm Aaron Hancock. Audo is my independent consulting practice, built for people who need a trusted technology partner instead of another vendor to manage.</p>
+                  <p>Hi, I'm Aaron Hancock. Audo is my independent consulting practice, built for individuals and small businesses that want practical technology help from the person actually doing the work.</p>
                   <p>I have spent nearly 30 years solving technology problems: building websites since high school, leading product and engineering teams across <strong>Cox Automotive, Dealertrack, and Dealer.com</strong>, guiding M&A, product due diligence, integrations, migrations, and OEM launches, then bringing that same discipline into agency work for clients including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.</p>
-                  <p>I started Audo because individuals and small businesses can now use technology, automation, and AI in ways that used to require much larger teams. What still matters most is context, judgment, and someone who will stay close enough to understand the real problem.</p>
-                  <p>If you bring me the website, app, workflow, AI question, or product decision that keeps getting pushed aside, I will help you make sense of it, choose the right next move, and either solve it or support it with care.</p>
+                  <p>I started Audo because the best technology help should feel clear, personal, and useful. You should not have to translate your problem into technical language, manage a handoff chain, or wonder whether anyone understands the context.</p>
+                  <p>Bring me the messy version: the website that needs attention, the workflow that keeps wasting time, the AI idea you are unsure about, or the product question that needs a next step. I will help you make sense of it and move forward with care.</p>
                   <div class="founder-signature" aria-label="Signed by Aaron Hancock, Founder and CEO of Audo">
                     <img class="signature-mark" src="/assets/aaron-hancock-signature.svg" alt="Aaron Hancock signature" decoding="async">
                     <small>Founder &amp; CEO, Audo</small>
@@ -1812,20 +1794,18 @@
                 </div>
               </div>
               <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
-                <li><span>I listen first</span>We start with the real situation, not a prepackaged scope.</li>
-                <li><span>I can think and build</span>Strategy, product, software, automation, AI, and support connect in one conversation.</li>
-                <li><span>I keep it practical</span>If AI or a custom build is not the right answer, I will say so.</li>
-                <li><span>I stay close</span>You work with the same person after the first diagnosis, fix, or launch.</li>
+                <li><span>You work directly with the person doing the work</span>No account manager filter, no long handoff chain, and no repeating the same context over and over.</li>
+                <li><span>Strategy and execution stay together</span>Some problems need a quick fix. Others need better planning before anyone builds anything.</li>
+                <li><span>You do not have to talk in tech language</span>Bring the broken form, confusing workflow, stale website, AI question, or product decision in plain English.</li>
+                <li><span>Your budget goes toward useful work</span>Audo is intentionally small, so the effort goes into clear thinking, capable execution, and support that keeps the context.</li>
               </ul>
             </div>
             <div class="client-meaning">
-              <h3>What you get.</h3>
-              <ul>
-                <li>Direct access to senior judgment without account layers.</li>
-                <li>A clear diagnosis before spending money on the wrong fix.</li>
-                <li>Product, software, UX, automation, and AI judgment in one conversation.</li>
-                <li>Someone who can stay with the context after the first repair or build.</li>
-              </ul>
+              <div>
+                <h3>Not sure what kind of help you need?</h3>
+                <p>Start with the issue that keeps getting pushed aside. I will help you sort the next step.</p>
+              </div>
+              <a class="button" href="#discovery">Request Free Discovery</a>
             </div>
             <div class="story-note">Company names reflect prior roles, OEM programs, and agency work.</div>
           </div>

@@ -782,6 +782,21 @@
       text-transform: uppercase;
     }
 
+    .why-difference {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0 0 0 24px;
+      border-left: 1px solid rgba(244, 220, 169, 0.2);
+    }
+
+    .why-difference h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(21px, 2.4vw, 28px);
+      line-height: 1.12;
+    }
+
     .why-highlights {
       display: grid;
       gap: 0;
@@ -796,11 +811,6 @@
       color: rgba(255, 255, 255, 0.8);
       font-size: 15.5px;
       line-height: 1.45;
-    }
-
-    .why-highlights li:first-child {
-      border-top: 0;
-      padding-top: 0;
     }
 
     .why-highlights span {
@@ -1520,6 +1530,13 @@
         padding: 18px;
       }
 
+      .why-difference {
+        margin-top: 4px;
+        padding: 22px 0 0;
+        border-top: 1px solid rgba(244, 220, 169, 0.24);
+        border-left: 0;
+      }
+
       .client-meaning {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1769,12 +1786,15 @@
                   </div>
                 </div>
               </div>
-              <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
-                <li><span>You work directly with the person doing the work.</span>No account manager filter, no long handoff chain, and no repeating the same context over and over.</li>
-                <li><span>Strategy and execution stay together.</span>Some problems need a quick fix. Others need better planning before anyone builds anything.</li>
-                <li><span>You do not have to talk in tech language.</span>Bring the broken form, confusing workflow, stale website, AI question, or product decision in plain English.</li>
-                <li><span>Your budget goes toward useful work.</span>Audo is intentionally small, so the effort goes into clear thinking, capable execution, and support that keeps the context.</li>
-              </ul>
+              <div class="why-difference" aria-labelledby="why-difference-title">
+                <h3 id="why-difference-title">Why Audo is different.</h3>
+                <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
+                  <li><span>You work directly with the person doing the work.</span>No account manager filter, no long handoff chain, and no repeating the same context over and over.</li>
+                  <li><span>Strategy and execution stay together.</span>Some problems need a quick fix. Others need better planning before anyone builds anything.</li>
+                  <li><span>You do not have to talk in tech language.</span>Bring the broken form, confusing workflow, stale website, AI question, or product decision in plain English.</li>
+                  <li><span>Your budget goes toward useful work.</span>Audo is intentionally small, so the effort goes into clear thinking, capable execution, and support that keeps the context.</li>
+                </ul>
+              </div>
             </div>
             <div class="client-meaning">
               <div>

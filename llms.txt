@@ -23,7 +23,7 @@ Service pages use clean URLs under https://getaudo.com/services/ and are listed 
 
 ## Why Audo
 
-Clients work directly with Aaron Hancock instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is Aaron Hancock's consulting practice for individuals and small businesses that need senior technology help they can trust. His experience includes nearly 30 years in technology, 15+ years of product and engineering leadership across Cox Automotive, Dealertrack, and Dealer.com, complex M&A and product due diligence work, OEM launches, and agency work for clients including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Clients work directly with Aaron Hancock instead of managing a large agency process, juggling multiple vendors, or carrying the problem alone. Audo is Aaron Hancock's independent consulting practice, built for individuals and small businesses that need a trusted technology partner. Aaron's background includes nearly 30 years in technology, 15+ years of product and engineering leadership across Cox Automotive, Dealertrack, and Dealer.com, complex M&A and product due diligence work, OEM launches, and agency work for clients including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
 Company names reflect Aaron's prior roles, OEM programs, and agency work.
 

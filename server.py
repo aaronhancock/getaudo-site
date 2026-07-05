@@ -792,7 +792,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "jobTitle": "Founder and Senior Tech Partner",
                         "url": "https://getaudo.com/",
                         "image": "https://getaudo.com/assets/founder-field-portrait.webp",
-                        "description": "Aaron Hancock brings almost 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, context-first AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
+                        "description": "Aaron Hancock brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, context-first AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
                         "knowsAbout": [
                             "Product strategy",
                             "Software engineering",

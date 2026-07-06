@@ -1218,7 +1218,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             </div>
             <div class="form-field full">
               <label for="service_message">What should I know?</label>
-              <textarea id="service_message" name="message" placeholder="A few plain-English sentences are perfect. Include any useful context I should review first." required></textarea>
+              <textarea id="service_message" name="message" placeholder="A few plain-English sentences are perfect. Include any context I should review first." required></textarea>
             </div>
             <div class="form-field full">
               <label for="service_promo_code">Promo code</label>

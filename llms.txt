@@ -27,7 +27,7 @@ Audo gives individuals and small businesses senior tech help without the agency 
 
 ## Client Work
 
-- Boston's Pizza Restaurant & Sports Bar: ADA compliance, marketing site and CMS management, and ongoing support.
+- Boston's Pizza Restaurant & Sports Bar: ADA compliance, marketing site and CMS management, database and server management, and ongoing support.
 - Carnac AI Trading: full platform build, creation of proprietary technical analysis tools, crypto exchange integrations, and AI market analysis system.
 
 Aaron's AI point of view is practical and context-first. AI can save real time, but only when it understands the business context. Audo helps clients decide where AI fits, where it does not, and how to use it with privacy, review, and common sense.

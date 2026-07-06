@@ -51,7 +51,7 @@ SERVICE_SEEDS = [
         "Website and app care",
         "Visitors try to reach you, but form submissions are not reliably arriving.",
         "A broken form quietly costs leads because the site looks available while the messages disappear, bounce, or land in the wrong inbox.",
-        "I trace the form path, validation, notifications, spam settings, CRM handoff, and confirmation experience so the real failure is clear.",
+        "I trace the form setup, validation, notifications, spam settings, CRM connection, and confirmation experience so the real failure is clear.",
         "Leads submit with confidence, messages land where they should, and you know how the form is being monitored.",
     ),
     (
@@ -60,30 +60,30 @@ SERVICE_SEEDS = [
         "A slow website is making visitors wait, bounce, or lose confidence.",
         "Speed problems usually come from images, scripts, hosting, caching, layout shifts, or too many small decisions that accumulated over time.",
         "I review the real pages people use, identify the biggest speed drains, and prioritize fixes that improve the experience without rebuilding everything.",
-        "Visitors get a faster first impression, mobile pages feel smoother, and you have a clear path for continued performance care.",
+        "Visitors get a faster first impression, mobile pages feel smoother, and you have a clear plan for continued performance care.",
     ),
     (
         "WordPress warnings are piling up",
         "Website and app care",
         "WordPress updates, plugin notices, and warnings are piling up without a clear owner.",
         "Plugin clutter creates risk because it is hard to know what can be updated, removed, replaced, or left alone without breaking the site.",
-        "I review the theme, plugins, hosting, backups, update path, and critical features before changing anything that affects production.",
-        "The site has fewer unknowns, safer updates, and a practical maintenance rhythm instead of a dashboard full of anxiety.",
+        "I review the theme, plugins, hosting, backups, update plan, and critical features before changing anything that affects production.",
+        "The site has fewer unknowns, safer updates, and a simple maintenance routine instead of a dashboard full of anxiety.",
     ),
     (
         "Website leads are going missing",
         "Website and app care",
-        "People submit forms, but the follow-up path is unclear or unreliable.",
+        "People submit forms, but the follow-up process is unclear or unreliable.",
         "Lead loss can happen across the form, email deliverability, CRM rules, notifications, spam filters, and manual follow-up habits.",
-        "I map the full lead path from submit button to human response and fix the weak links that cause delay or confusion.",
+        "I map the full lead journey from submit button to human response and fix the weak links that cause delay or confusion.",
         "New inquiries are easier to see, assign, respond to, and trust.",
     ),
     (
         "The mobile website is confusing",
         "Website and app care",
         "Your site technically works on phones, but visitors struggle to understand or act.",
-        "Mobile friction often hides in navigation, long text, tiny tap targets, slow sections, confusing forms, and calls to action that get buried.",
-        "I review the site like a real mobile visitor and simplify the path to the action that matters most.",
+        "Mobile problems often hide in navigation, long text, tiny tap targets, slow sections, confusing forms, and calls to action that get buried.",
+        "I review the site like a real mobile visitor and make the action that matters easier to find.",
         "The mobile experience becomes easier to scan, easier to use, and more likely to create a real inquiry.",
     ),
     (
@@ -103,11 +103,11 @@ SERVICE_SEEDS = [
         "Each service page becomes easier to understand, easier to trust, and easier to act on.",
     ),
     (
-        "Fix booking calendar friction",
+        "Fix booking calendar confusion",
         "Website and app care",
         "People are interested, but scheduling creates confusion, dead ends, or unnecessary back-and-forth.",
-        "Booking friction can come from too many options, poor mobile UX, missing confirmations, timezone confusion, or disconnected follow-up.",
-        "I review the booking path, simplify the options, connect confirmations, and make sure the next step is obvious.",
+        "Booking problems can come from too many options, poor mobile UX, missing confirmations, timezone confusion, or disconnected follow-up.",
+        "I review the booking flow, simplify the options, connect confirmations, and make sure the next step is obvious.",
         "Prospects can book faster, show up better prepared, and receive a cleaner first impression.",
     ),
     (
@@ -115,22 +115,22 @@ SERVICE_SEEDS = [
         "Website and app care",
         "Payment links, checkout steps, or purchase paths are failing at the moment trust matters most.",
         "Checkout problems can hide in expired links, redirects, embeds, scripts, payment settings, mobile layouts, or unclear confirmation steps.",
-        "I test the purchase path, isolate the failure, and make the buying process clearer and more reliable.",
-        "Customers can complete payment with less friction and you can spot issues before they linger.",
+        "I test the checkout flow, isolate the failure, and make the buying process clearer and more reliable.",
+        "Customers can complete payment with fewer problems and you can spot issues before they linger.",
     ),
     (
         "Fix business emails going to spam",
         "Website and app care",
         "Important business emails, form notifications, or client messages are landing in spam.",
         "Email trust problems create missed leads and awkward follow-up because people assume messages were never sent or never answered.",
-        "I review the sending address, message path, SPF, DKIM, DMARC, form notifications, mailbox behavior, and message content to find the likely trust issues.",
-        "Your emails have a clearer path to the inbox and you know what to monitor if deliverability slips again.",
+        "I review the sending address, message route, SPF, DKIM, DMARC, form notifications, mailbox behavior, and message content to find the likely trust issues.",
+        "Your emails have a better chance of reaching the inbox and you know what to monitor if deliverability slips again.",
     ),
     (
         "Set up simple website measurement",
         "Website and app care",
         "You want to know what is happening on the site without drowning in reports.",
-        "Many small businesses either have no measurement or have disconnected tools that do not answer practical questions.",
+        "Many small businesses either have no measurement or have disconnected tools that do not answer basic questions.",
         "I connect the basics, define the few actions worth watching, and make the data easier to interpret.",
         "You can see whether people are finding, using, and contacting you through the site.",
     ),
@@ -143,10 +143,10 @@ SERVICE_SEEDS = [
         "Your local pages become clearer, more relevant, and better aligned with real search intent.",
     ),
     (
-        "One offer needs a focused page",
+        "One offer needs its own page",
         "Website and app care",
-        "You have a specific offer that needs a focused page instead of sending everyone to the homepage.",
-        "A general site page can dilute the message when a campaign, referral, or sales conversation needs one clear path.",
+        "You have a specific offer that deserves its own page instead of sending everyone to the homepage.",
+        "A general site page can dilute the message when a campaign, referral, or sales conversation needs one clear next step.",
         "I shape the page around the offer, audience, pain, proof, objections, and conversion action.",
         "Prospects land on a page that matches their intent and makes the next step easier.",
     ),
@@ -155,7 +155,7 @@ SERVICE_SEEDS = [
         "Website and app care",
         "You need to move platforms, hosts, pages, or domains without creating a mess.",
         "Migrations create risk when redirects, content, forms, tracking, email, DNS, and launch timing are treated separately.",
-        "I plan the migration path, map dependencies, preserve the important pages, and verify the launch details.",
+        "I plan the move, map dependencies, preserve the important pages, and verify the launch details.",
         "The move is calmer, cleaner, and less likely to create broken links or missed leads.",
     ),
     (
@@ -163,8 +163,8 @@ SERVICE_SEEDS = [
         "Website and app care",
         "Important pages or forms may be difficult for people using keyboards, screen readers, or assistive tools.",
         "Accessibility problems often hide in contrast, labels, headings, focus states, alt text, navigation, and form errors.",
-        "I review the high-value pages, identify practical barriers, and help prioritize fixes that make the experience more usable.",
-        "More visitors can use the site with confidence, and your team has a clearer accessibility improvement path.",
+        "I review the high-value pages, identify access barriers, and help prioritize fixes that make the experience more usable.",
+        "More visitors can use the site with confidence, and your team has a clearer accessibility improvement plan.",
     ),
     (
         "Repair a stale blog or resources section",
@@ -186,7 +186,7 @@ SERVICE_SEEDS = [
         "Visitors cannot find the right next step",
         "Website and app care",
         "Visitors can get to the site, but they cannot quickly find the right next step.",
-        "Navigation grows messy when pages, offers, audiences, and internal language accumulate without a clear decision path.",
+        "Navigation grows messy when pages, offers, audiences, and internal language pile up without a clear way to choose.",
         "I simplify the menu, page hierarchy, labels, and calls to action around what visitors are actually trying to do.",
         "People understand where to go faster, and important pages stop being buried.",
     ),
@@ -195,15 +195,15 @@ SERVICE_SEEDS = [
         "Website and app care",
         "Website inquiries need to land where your team can act instead of sitting in an inbox.",
         "Manual copying from forms to CRMs or spreadsheets wastes time and creates missed follow-up risk.",
-        "I connect the form output to the right destination, add the right fields, and keep the handoff simple enough to trust.",
+        "I connect the form output to the right destination, add the right fields, and keep the transfer easy to trust.",
         "New inquiries are easier to track, assign, and follow up on without extra copy-paste work.",
     ),
     (
-        "Customers need a clearer request and file handoff",
+        "Give customers a cleaner way to send requests and files",
         "Website and app care",
         "Customers or clients need a cleaner place to submit requests, upload files, and see what happens next.",
         "Email-only portals create repeated clarification work because files, updates, approvals, and status details get scattered across threads.",
-        "I define the portal workflow, required fields, file handling, notifications, permissions, and support path before building the smallest working version.",
+        "I define the portal workflow, required fields, file handling, notifications, permissions, and support plan before building the smallest working version.",
         "Customers get a clearer experience and your team receives better-organized requests with less back-and-forth.",
     ),
     (
@@ -218,8 +218,8 @@ SERVICE_SEEDS = [
         "Document how your website works",
         "Website and app care",
         "Only one person knows how the site, tools, logins, forms, and updates actually work.",
-        "Undocumented systems make every change slower and every handoff riskier.",
-        "I inventory the setup, clarify ownership, write practical notes, and identify the areas that need cleanup or support.",
+        "Undocumented systems make every change slower and every transfer of responsibility riskier.",
+        "I inventory the setup, clarify ownership, write plain notes, and identify the areas that need cleanup or support.",
         "You have a clearer operating guide and fewer single points of failure.",
     ),
     (
@@ -243,7 +243,7 @@ SERVICE_SEEDS = [
         "Website and app care",
         "Small website changes keep getting postponed because no one owns them.",
         "Minor edits, updates, content changes, and cleanup work can pile up until the site no longer reflects the business.",
-        "I create a simple monthly rhythm for updates, review, fixes, and practical improvements.",
+        "I create a simple monthly rhythm for updates, review, fixes, and small improvements.",
         "Your site keeps moving forward without needing a big project every time something changes.",
     ),
     (
@@ -255,11 +255,11 @@ SERVICE_SEEDS = [
         "Leads receive a faster response and fewer opportunities fall through the cracks.",
     ),
     (
-        "Intake submissions become loose work",
+        "Turn form submissions into tracked tasks",
         "Automation",
         "Form submissions need to become trackable work automatically.",
         "Intake loses value when every submission has to be read, copied, renamed, assigned, and remembered manually.",
-        "I route form details into tasks, spreadsheets, project boards, or notifications with the right context included.",
+        "I route form details into tasks, spreadsheets, project boards, or notifications with the right details included.",
         "New requests arrive as organized work instead of another loose email.",
     ),
     (
@@ -284,7 +284,7 @@ SERVICE_SEEDS = [
         "Proposals take too long because the same information is rewritten every time.",
         "Proposal work slows down when pricing, scope, client details, terms, and repeated language live in separate places.",
         "I design a repeatable input flow and generate clean proposal drafts that still leave room for human review.",
-        "You produce proposals faster while keeping quality and context in your control.",
+        "You produce proposals faster while keeping quality and details in your control.",
     ),
     (
         "Organize files after form submissions",
@@ -299,7 +299,7 @@ SERVICE_SEEDS = [
         "Automation",
         "New inquiries need to go to the right owner based on service, location, urgency, or account.",
         "Bad routing delays response times and creates awkward internal forwarding.",
-        "I define routing rules, connect the source form or inbox, and make sure the handoff includes the context needed to respond.",
+        "I define routing rules, connect the source form or inbox, and make sure the transfer includes the details needed to respond.",
         "Leads reach the right person faster with less manual sorting.",
     ),
     (
@@ -307,7 +307,7 @@ SERVICE_SEEDS = [
         "Automation",
         "Happy customers should be asked for reviews at the right moment.",
         "Review requests often get skipped because they depend on someone remembering after the work is done.",
-        "I create a simple trigger, message, and follow-up path that asks at a natural point in the customer journey.",
+        "I create a simple trigger, message, and follow-up process that asks at a natural point in the customer journey.",
         "You earn more consistent reviews without making the process feel forced.",
     ),
     (
@@ -330,8 +330,8 @@ SERVICE_SEEDS = [
         "CRM data is hard to trust",
         "Automation",
         "Your CRM has good information, but duplicates and messy fields make it hard to trust.",
-        "A messy CRM creates friction because people stop believing the data and return to spreadsheets or memory.",
-        "I review fields, duplicates, required data, lead stages, and cleanup rules before recommending a practical structure.",
+        "A messy CRM creates problems because people stop believing the data and return to spreadsheets or memory.",
+        "I review fields, duplicates, required data, lead stages, and cleanup rules before recommending a simple structure.",
         "The CRM becomes easier to use, easier to report from, and less frustrating for the people who touch it.",
     ),
     (
@@ -379,7 +379,7 @@ SERVICE_SEEDS = [
         "Automation",
         "Your website collects data that should be available in a spreadsheet or working file.",
         "Manual exports and copy-paste steps make data stale and create room for mistakes.",
-        "I connect the form, database, spreadsheet, or API path so the information moves in a predictable way.",
+        "I connect the form, database, spreadsheet, or API so the information moves in a predictable way.",
         "The spreadsheet stays more current and the website data becomes easier to act on.",
     ),
     (
@@ -396,7 +396,7 @@ SERVICE_SEEDS = [
         "You need one place to see open work, blockers, owners, and next steps.",
         "Operations feel heavier when status is spread across meetings, messages, spreadsheets, and memory.",
         "I define the simplest view people need and connect or collect the data needed to keep it current.",
-        "You gain a practical command center without buying a huge system.",
+        "You get one clear place to see the work without buying a huge system.",
     ),
     (
         "Turn repeated emails into templates and prompts",
@@ -411,7 +411,7 @@ SERVICE_SEEDS = [
         "Automation",
         "Work is slowed down by moving the same information from one system to another.",
         "Copy-paste work looks small until it becomes a daily tax on attention and accuracy.",
-        "I map the repeated handoff, identify the safest connection point, and automate the parts that should not require judgment.",
+        "I map the repeated transfer, identify the safest connection point, and automate the parts that should not require judgment.",
         "The work moves with fewer manual steps and fewer avoidable mistakes.",
     ),
     (
@@ -419,7 +419,7 @@ SERVICE_SEEDS = [
         "Automation",
         "Your team needs a cleaner way to ask for help, changes, approvals, or resources.",
         "Ad hoc requests in chat or email are easy to lose and hard to prioritize.",
-        "I create a simple internal form with the right fields, routing, notifications, and follow-up path.",
+        "I create a simple internal form with the right fields, routing, notifications, and follow-up steps.",
         "Requests arrive with better context and can be tracked without another meeting.",
     ),
     (
@@ -444,14 +444,14 @@ SERVICE_SEEDS = [
         "You want to use AI, but the tool choices are noisy and hard to compare.",
         "AI adoption gets risky when tools are chosen because they are popular instead of because they solve a real workflow problem.",
         "I help define the jobs AI should do, compare tools against those jobs, and avoid unnecessary complexity.",
-        "You get a practical shortlist and a clearer reason for what to try first.",
+        "You get a shortlist and a clearer reason for what to try first.",
     ),
     (
         "The team needs safer rules for AI and client data",
         "AI coaching and support",
         "Your team needs AI guidance that protects customer, employee, and business information.",
         "Without clear rules, people either avoid AI entirely or paste sensitive information into tools without thinking through risk.",
-        "I help define plain-English guardrails, review points, approved use cases, and safer habits for everyday work.",
+        "I help define plain-English rules, review points, approved use cases, and safer habits for everyday work.",
         "Your team can use AI with more confidence and less guesswork.",
     ),
     (
@@ -467,14 +467,14 @@ SERVICE_SEEDS = [
         "AI coaching and support",
         "Your team is curious about AI but unsure how it applies to real work.",
         "Generic AI training rarely sticks because it does not match the team's tools, roles, risks, or daily decisions.",
-        "I teach practical use cases, safe habits, review steps, and examples tied to the work your team already does.",
+        "I teach real use cases, safe habits, review steps, and examples tied to the work your team already does.",
         "People leave with concrete ways to start instead of vague excitement or fear.",
     ),
     (
         "Use AI for proposal first drafts",
         "AI coaching and support",
         "Proposal writing takes too long, but you still need accuracy and judgment.",
-        "AI proposal drafts can sound generic or risky when they are not grounded in your real scope, customer context, and standards.",
+        "AI proposal drafts can sound generic or risky when they are not based on your real scope, customer details, and standards.",
         "I design a proposal workflow with structured inputs, reusable prompts, and human review built in.",
         "You create better first drafts faster without outsourcing the final judgment to AI.",
     ),
@@ -491,14 +491,14 @@ SERVICE_SEEDS = [
         "AI coaching and support",
         "You want better prep before calls without spending too much time researching manually.",
         "AI research can be shallow or inaccurate unless the sources, prompts, and review habits are designed carefully.",
-        "I create a repeatable prep workflow that gathers the right context and flags what still needs human verification.",
+        "I create a repeatable prep workflow that gathers the right background and flags what still needs human verification.",
         "You show up better prepared with less last-minute searching.",
     ),
     (
         "Support replies need to be faster without getting sloppy",
         "AI coaching and support",
         "Support responses need to be faster without becoming careless or robotic.",
-        "AI can help draft replies, but bad guardrails can create tone problems, wrong promises, or privacy mistakes.",
+        "AI can help draft replies, but weak rules can create tone problems, wrong promises, or privacy mistakes.",
         "I build prompts, review rules, example replies, and escalation guidance around your real customer situations.",
         "Customers get clearer responses and your team spends less time starting from a blank screen.",
     ),
@@ -523,7 +523,7 @@ SERVICE_SEEDS = [
         "AI coaching and support",
         "You have data in spreadsheets, but turning it into answers you can act on takes too much effort.",
         "AI can help explain, clean, or analyze data, but it needs the right structure and verification habits.",
-        "I help prepare the spreadsheet, define the questions, create prompts, and check the outputs for practical use.",
+        "I help prepare the spreadsheet, define the questions, create prompts, and check the outputs for day-to-day use.",
         "Reports become easier to understand and use in decisions.",
     ),
     (
@@ -548,7 +548,7 @@ SERVICE_SEEDS = [
         "People tried AI a few times, but it has not become a regular part of work.",
         "AI adoption fades when experiments are not tied to specific tasks, time savings, or repeatable routines.",
         "I help choose a few high-value use cases, build the prompts, document the workflow, and support the habit while it sticks.",
-        "AI becomes a practical tool instead of another abandoned experiment.",
+        "AI becomes a regular tool instead of another abandoned experiment.",
     ),
     (
         "Use AI to improve job descriptions and hiring",
@@ -595,7 +595,7 @@ SERVICE_SEEDS = [
         "AI coaching and support",
         "One person or role could benefit from AI, but they need targeted help.",
         "Role-specific coaching works better than broad training because it focuses on the tasks, risks, and judgment calls that matter every week.",
-        "I identify the right tasks, build prompts, set guardrails, and support the person while they practice.",
+        "I identify the right tasks, build prompts, set rules, and support the person while they practice.",
         "AI becomes easier to use in the flow of that role's real work.",
     ),
     (
@@ -603,7 +603,7 @@ SERVICE_SEEDS = [
         "Product strategy",
         "You have too many product ideas and need a clear first move.",
         "Good ideas compete for attention when user pain, business value, effort, risk, and timing are not compared clearly.",
-        "I help sort ideas by customer job, expected outcome, constraints, and the smallest working version.",
+        "I help sort ideas by customer need, expected outcome, constraints, and the smallest working version.",
         "You leave with a sharper priority and less pressure to build everything at once.",
     ),
     (
@@ -611,7 +611,7 @@ SERVICE_SEEDS = [
         "Product strategy",
         "An idea sounds promising, but you need to know what could make it fail.",
         "Ideas feel safer in brainstorming than they do in front of real users, budgets, timelines, and technical constraints.",
-        "I examine the audience, problem, alternatives, adoption friction, business model, and build path.",
+        "I examine the audience, problem, alternatives, adoption problems, business model, and build path.",
         "You understand the strongest case, the biggest risks, and the smartest next test.",
     ),
     (
@@ -619,14 +619,14 @@ SERVICE_SEEDS = [
         "Product strategy",
         "Customers are giving feedback, but it is hard to translate complaints into action.",
         "Complaints can lead to scattered fixes when no one separates symptoms from root causes.",
-        "I group the feedback, identify repeated jobs and friction points, and connect them to product or workflow priorities.",
+        "I group the feedback, identify repeated needs and pain points, and connect them to product or workflow priorities.",
         "The feedback becomes a decision tool instead of a pile of frustration.",
     ),
     (
-        "Map the customer job before building",
+        "Understand the customer need before building",
         "Product strategy",
         "You need to understand what customers are trying to accomplish before choosing features.",
-        "Building around features too early can miss the actual job, context, constraints, and success criteria.",
+        "Building around features too early can miss the actual need, constraints, and success criteria.",
         "I help map the customer situation, progress they want, alternatives they use, and signals that the solution is working.",
         "You get a clearer product direction before spending money on development.",
     ),
@@ -643,8 +643,8 @@ SERVICE_SEEDS = [
         "Product strategy",
         "You are buying, selling, investing in, or merging a product and need a clearer read on the technology risk.",
         "Product and M&A decisions get risky when product health, technical debt, roadmap reality, integrations, team dependencies, support burden, and customer migration issues are not understood.",
-        "I review the product, platform, user flows, architecture signals, integrations, data, operations, support model, and team context to identify risks, questions, and practical next steps.",
-        "You get a clearer diligence read: what looks strong, what needs deeper review, what could affect value or transition, and what to ask before moving forward.",
+        "I review the product, platform, user flows, architecture signals, integrations, data, operations, support model, and team setup to identify risks, questions, and next steps.",
+        "You get a clearer diligence view: what looks strong, what needs deeper review, what could affect value or transition, and what to ask before moving forward.",
     ),
     (
         "MVP scope is starting to sprawl",
@@ -663,7 +663,7 @@ SERVICE_SEEDS = [
         "Users understand what to do next and are more likely to keep going.",
     ),
     (
-        "The workflow is confusing before software",
+        "Simplify the process before you buy or build software",
         "Product strategy",
         "A workflow feels broken, but software may not be the first fix.",
         "Automating a confusing process can make the confusion faster instead of better.",
@@ -732,14 +732,14 @@ SERVICE_SEEDS = [
         "You need people to understand an idea before committing to a build.",
         "Words alone can hide assumptions about flow, screens, data, and user decisions.",
         "I turn the idea into a lightweight prototype or flow that makes the concept easier to discuss and test.",
-        "You can get feedback, align stakeholders, and reduce risk before development.",
+        "You can get feedback, align the right people, and reduce risk before development.",
     ),
     (
         "Prospects need quicker quote or fit answers",
         "Website and app care",
         "Customers need a faster way to answer a few questions and understand the likely cost, fit, or next step.",
         "Quote requests get slow when every estimate starts with back-and-forth emails, missing details, and manual calculations.",
-        "I define the questions, rules, outputs, follow-up path, and review points, then build a practical tool that supports sales without overpromising.",
+        "I define the questions, rules, outputs, follow-up steps, and review points, then build a sales tool that helps without overpromising.",
         "Prospects get a clearer first answer and your team receives better-qualified requests.",
     ),
     (
@@ -747,7 +747,7 @@ SERVICE_SEEDS = [
         "AI coaching and support",
         "Visitors need quick answers on your website without forcing every question into a manual email or phone call.",
         "AI support agents become risky when they are trained on weak content, answer beyond what they should know, or create promises the business cannot keep.",
-        "I define the support jobs, prepare the source content, set guardrails, build the agent flow, and create a review process for quality and escalation.",
+        "I define the support questions, prepare the source content, set rules, build the agent flow, and create a review process for quality and escalation.",
         "Visitors get faster answers while your business keeps control of accuracy, tone, privacy, and follow-up.",
     ),
     (
@@ -769,7 +769,7 @@ SERVICE_SEEDS = [
     (
         "Create a simple budget or planning spreadsheet",
         "Individual consulting",
-        "You need a practical spreadsheet, not a complicated financial system.",
+        "You need a simple spreadsheet, not a complicated financial system.",
         "Planning gets harder when the spreadsheet is overbuilt, unclear, or disconnected from how you make decisions.",
         "I help design a simple sheet around the few categories, questions, and review habits that matter.",
         "You get a planning tool you can actually keep using.",
@@ -785,7 +785,7 @@ SERVICE_SEEDS = [
     (
         "Operations are scattered across too many places",
         "Automation",
-        "Your team needs one practical place to manage records, requests, statuses, approvals, or daily operations.",
+        "Your team needs one place to manage records, requests, statuses, approvals, or daily operations.",
         "Internal work gets messy when important details live across spreadsheets, inboxes, chat threads, and memory.",
         "I define the workflow, data, roles, screens, and support needs, then build a focused internal tool that fits the way the business works.",
         "Your team can manage the work in one clearer system instead of chasing information across tools.",
@@ -803,7 +803,7 @@ SERVICE_SEEDS = [
         "Automation",
         "Your leads, customers, forms, and follow-up need to connect to the CRM instead of living in separate places.",
         "CRM value disappears when people still copy information by hand, miss required fields, or cannot trust where customer details land.",
-        "I map the lead and customer path, clean up the handoff, connect forms or tools, and make sure the CRM receives the context needed for follow-up.",
+        "I map the lead and customer journey, clean up the transfer, connect forms or tools, and make sure the CRM receives the details needed for follow-up.",
         "Customer information becomes easier to track, follow up on, and use without extra copy-paste work.",
     ),
     (
@@ -811,11 +811,11 @@ SERVICE_SEEDS = [
         "Individual consulting",
         "You want AI help for writing, research, or decisions, but do not know how to start.",
         "AI can feel overwhelming when the first prompt is unclear and the output needs too much cleanup.",
-        "I coach you through practical prompts, source checking, revision habits, and ways to keep your voice intact.",
+        "I coach you through prompts, source checking, revision habits, and ways to keep your voice intact.",
         "AI becomes a helpful thinking partner instead of a confusing blank box.",
     ),
     (
-        "A small business tech stack is starting from zero",
+        "Set up the basics for a new small business",
         "Individual consulting",
         "You need the basics in place: domain, email, site, forms, scheduling, payments, and simple records.",
         "Starting from scratch is hard because every tool choice affects future work and support.",
@@ -823,19 +823,19 @@ SERVICE_SEEDS = [
         "You get a cleaner foundation without buying more software than you need.",
     ),
     (
-        "A workflow may need a focused mobile app",
+        "Build a mobile app for a specific workflow",
         "Website and app care",
         "You have a customer, employee, or field workflow that would work better as a focused mobile app.",
         "Mobile app projects get expensive when the problem, users, must-have features, data, and support plan are not clear before building.",
-        "I help define the app, choose the right build path, create the essential workflows, and plan the launch and support model.",
-        "You get a practical mobile app path built around real use instead of a bloated feature wish list.",
+        "I help define the app, choose the right way to build it, create the essential workflows, and plan the launch and support model.",
+        "You get a mobile app plan built around real use instead of a bloated feature wish list.",
     ),
     (
         "You need one clear online home",
         "Individual consulting",
         "You need one clean place to explain who you are, what you do, and how people can contact you.",
         "Scattered profiles and links make it harder for people to understand your work, trust your experience, or take the next step.",
-        "I help shape the message, page structure, contact path, and simple launch plan, then build or guide the smallest working version.",
+        "I help shape the message, page structure, contact flow, and simple launch plan, then build or guide the smallest working version.",
         "You have a professional page you can share without turning it into a giant branding project.",
     ),
     (
@@ -843,8 +843,8 @@ SERVICE_SEEDS = [
         "Individual consulting",
         "You need a first website, but you are not sure what it should say or include.",
         "First websites stall when offers, audience, trust points, tools, and next steps are still fuzzy.",
-        "I help clarify the message, page structure, must-have tools, and simplest path to launch.",
-        "You get a practical website plan that can be built without overcomplicating the business.",
+        "I help clarify the message, page structure, must-have tools, and simplest way to launch.",
+        "You get a website plan that can be built without overcomplicating the business.",
     ),
     (
         "Client onboarding feels awkward or inconsistent",
@@ -864,19 +864,19 @@ ACTIVE_SERVICE_TITLES = {
     "Website leads are going missing",
     "The mobile website is confusing",
     "The homepage no longer matches the business",
-    "One offer needs a focused page",
+    "One offer needs its own page",
     "A website move feels risky",
     "Key pages have accessibility barriers",
     "Visitors are seeing security warnings",
     "Visitors cannot find the right next step",
     "Website inquiries are stuck in inboxes or spreadsheets",
-    "Customers need a clearer request and file handoff",
+    "Give customers a cleaner way to send requests and files",
     "Website updates keep getting postponed",
     "Prospects need quicker quote or fit answers",
     "The business needs a clearer website",
-    "A workflow may need a focused mobile app",
+    "Build a mobile app for a specific workflow",
     "Leads need follow-up you can trust",
-    "Intake submissions become loose work",
+    "Turn form submissions into tracked tasks",
     "Important numbers take too long to see",
     "Proposals take too long to prepare",
     "Appointment confirmations are confusing",
@@ -899,12 +899,12 @@ ACTIVE_SERVICE_TITLES = {
     "A build-vs-buy decision is unclear",
     "A software acquisition needs product due diligence",
     "MVP scope is starting to sprawl",
-    "The workflow is confusing before software",
+    "Simplify the process before you buy or build software",
     "The vendor or developer request is too vague",
     "A vendor proposal is hard to evaluate",
     "A project has stalled",
     "Inbox and calendar are overloaded",
-    "A small business tech stack is starting from zero",
+    "Set up the basics for a new small business",
     "You need one clear online home",
     "Client onboarding feels awkward or inconsistent",
 }
@@ -917,19 +917,19 @@ SERVICE_SLUG_OVERRIDES = {
     "Website leads are going missing": "stop-website-leads-from-going-missing",
     "The mobile website is confusing": "improve-a-confusing-mobile-website",
     "The homepage no longer matches the business": "refresh-an-outdated-homepage",
-    "One offer needs a focused page": "create-a-landing-page-for-one-offer",
+    "One offer needs its own page": "create-a-landing-page-for-one-offer",
     "A website move feels risky": "migrate-a-website-without-losing-momentum",
     "Key pages have accessibility barriers": "fix-accessibility-blockers-on-key-pages",
     "Visitors are seeing security warnings": "fix-ssl-and-website-security-warnings",
     "Visitors cannot find the right next step": "improve-website-navigation",
     "Website inquiries are stuck in inboxes or spreadsheets": "connect-website-forms-to-your-crm-or-spreadsheet",
-    "Customers need a clearer request and file handoff": "build-a-customer-portal-for-requests-and-files",
+    "Give customers a cleaner way to send requests and files": "build-a-customer-portal-for-requests-and-files",
     "Website updates keep getting postponed": "keep-monthly-website-updates-moving",
     "Prospects need quicker quote or fit answers": "build-an-online-quote-or-estimate-tool",
     "The business needs a clearer website": "build-a-new-website-for-your-business",
-    "A workflow may need a focused mobile app": "build-a-mobile-app-for-your-business",
+    "Build a mobile app for a specific workflow": "build-a-mobile-app-for-your-business",
     "Leads need follow-up you can trust": "automate-lead-follow-up",
-    "Intake submissions become loose work": "turn-intake-forms-into-organized-tasks",
+    "Turn form submissions into tracked tasks": "turn-intake-forms-into-organized-tasks",
     "Important numbers take too long to see": "build-a-simple-reporting-dashboard",
     "Proposals take too long to prepare": "generate-proposals-from-repeat-inputs",
     "Appointment confirmations are confusing": "connect-scheduling-and-confirmation-emails",
@@ -952,12 +952,12 @@ SERVICE_SLUG_OVERRIDES = {
     "A build-vs-buy decision is unclear": "choose-build-vs-buy-for-a-tool",
     "A software acquisition needs product due diligence": "product-due-diligence-before-an-acquisition",
     "MVP scope is starting to sprawl": "define-an-mvp-without-overbuilding",
-    "The workflow is confusing before software": "simplify-a-confusing-workflow-before-software",
+    "Simplify the process before you buy or build software": "simplify-a-confusing-workflow-before-software",
     "The vendor or developer request is too vague": "create-requirements-for-a-developer-or-vendor",
     "A vendor proposal is hard to evaluate": "review-a-vendor-proposal-before-signing",
     "A project has stalled": "recover-a-project-that-stalled",
     "Inbox and calendar are overloaded": "simplify-email-and-calendar-overload",
-    "A small business tech stack is starting from zero": "set-up-a-small-business-tech-stack-from-scratch",
+    "Set up the basics for a new small business": "set-up-a-small-business-tech-stack-from-scratch",
     "You need one clear online home": "create-a-simple-personal-website-or-portfolio",
     "Client onboarding feels awkward or inconsistent": "create-a-simple-client-onboarding-path",
 }
@@ -1010,21 +1010,21 @@ CATEGORY_CHECKS = {
     ],
     "Automation": [
         "Map the repeated task from trigger to final human decision.",
-        "Find the handoffs, manual copying, missing reminders, and places where data gets stale.",
+        "Find the manual copying, missing reminders, repeated transfers, and places where data gets stale.",
         "Automate the parts that should be consistent while keeping judgment where it belongs.",
     ],
     "AI coaching and support": [
-        "Identify the real work AI should help with before choosing tools or prompts.",
-        "Define privacy guardrails, review points, examples, and quality standards.",
+        "Identify the actual work AI should help with before choosing tools or prompts.",
+        "Define privacy rules, review points, examples, and quality standards.",
         "Turn early experiments into repeatable workflows people can actually use.",
     ],
     "Product strategy": [
-        "Clarify the customer job, business goal, constraints, and decision that needs to be made.",
+        "Clarify the customer need, business goal, constraints, and decision that needs to be made.",
         "Sort ideas by value, risk, effort, timing, and what can be learned fastest.",
-        "Create a practical next step before committing to a bigger build or vendor path.",
+        "Create a next step before committing to a bigger build or vendor.",
     ],
     "Individual consulting": [
-        "Understand the recurring friction and the way you already prefer to work.",
+        "Understand what keeps slowing things down and the way you already prefer to work.",
         "Simplify the tools, routines, reminders, notes, or AI prompts around the real habit.",
         "Create a system light enough to keep using after the first setup.",
     ],
@@ -1136,7 +1136,7 @@ SERVICE_SHARE_HINTS = (
     ),
     (
         ("mobile", "navigation", "homepage", "service page", "landing page", "local", "blog", "resources"),
-        "the page URLs, screenshots from phone and desktop, the action visitors should take, examples of confusing copy or layout, and any search or analytics context you already have",
+        "the page URLs, screenshots from phone and desktop, the action visitors should take, examples of confusing copy or layout, and any search or analytics details you already have",
     ),
     (
         ("email and calendar", "inbox", "email overload"),
@@ -1210,20 +1210,20 @@ SERVICE_SHARE_HINTS = (
 
 
 CATEGORY_ONGOING_CONTEXT = {
-    "Website and app care": "If the issue is isolated, it may be a focused repair. If it touches updates, hosting, forms, search visibility, analytics, or regular content changes, ongoing support usually keeps it from drifting again.",
+    "Website and app care": "If the issue is isolated, it may be a one-time fix. If it touches updates, hosting, forms, search visibility, analytics, or regular content changes, ongoing support usually keeps it from getting messy again.",
     "Automation": "If the workflow is stable, it may be a one-time setup. If the process changes, tools evolve, or people need help trusting the automation, ongoing support keeps the workflow stable.",
-    "AI coaching and support": "If the need is narrow, a focused coaching or setup session may be enough. If people are learning new habits, testing tools, or creating guardrails, ongoing support helps the practice stick.",
+    "AI coaching and support": "If the need is narrow, a single coaching or setup session may be enough. If people are learning new habits, testing tools, or creating safety rules, ongoing support helps the practice stick.",
     "Product strategy": "Some product questions need one clear decision session. Others benefit from ongoing support while the idea moves through testing, scope, vendor conversations, or early build work.",
     "Individual consulting": "Some personal systems need one setup. Others work better with light ongoing support while the routine becomes natural and the tools get adjusted around real life.",
 }
 
 
 CATEGORY_AGENCY_CONTEXT = {
-    "Website and app care": "Website and app issues often cross content, hosting, UX, forms, email, search, and operations. Audo brings senior product, engineering, and agency delivery experience without splitting that context across account layers.",
+    "Website and app care": "Website and app issues often cross content, hosting, UX, forms, email, search, and operations. Audo brings senior product, engineering, and agency delivery experience without making you repeat the story to multiple people.",
     "Automation": "Automation work needs someone who understands the actual workflow, not just the tool connection. Audo brings senior product and engineering judgment to shape, build, explain, and support the process directly.",
-    "AI coaching and support": "AI work needs practical judgment, privacy awareness, examples, training, and follow-through. Audo brings broad technology and product experience while keeping the coaching close to the real work people do every day.",
-    "Product strategy": "Product work gets better when strategy and execution stay connected. Audo brings product and engineering leadership experience, so the recommendation stays grounded in what it would take to actually build or support it.",
-    "Individual consulting": "Individual and small-business systems are personal and context-heavy. Audo brings senior technology experience in a direct, practical, lightweight model instead of turning the work into a large process.",
+    "AI coaching and support": "AI work needs judgment, privacy awareness, examples, training, and follow-through. Audo brings broad technology and product experience while keeping the coaching close to the real work people do every day.",
+    "Product strategy": "Product work gets better when strategy and execution stay connected. Audo brings product and engineering leadership experience, so the recommendation is based on what it would take to actually build or support it.",
+    "Individual consulting": "Small-business and personal systems depend on the details: people, habits, tools, and timing. Audo brings senior technology experience without turning the work into a large process.",
 }
 
 
@@ -1304,29 +1304,27 @@ def service_dict(service: Service) -> dict[str, object]:
 
 
 def service_faqs(service: Service) -> list[dict[str, str]]:
-    topic = problem_topic(service.title)
     summary = lower_first(strip_period(service.summary))
     pain = lower_first(strip_period(service.pain))
     result = lower_first(strip_period(service.result))
-    action = solution_action(service)
     hints = share_hints(service)
     return [
         {
-            "question": f"Can Audo help when {topic} and the next step is unclear?",
+            "question": "Can you help if I don't know what's causing this?",
             "answer": (
-                f"Yes. You can start with the symptoms: {pain}. "
-                f"I will help connect what you are seeing to the likely causes and the next step worth taking."
+                f"Yes. Start with what you're seeing: {pain}. "
+                "I will help work back to the likely causes and a next step."
             ),
         },
         {
-            "question": f"What should I share before discovery when {topic}?",
+            "question": "What should I send before we talk about this?",
             "answer": (
-                f"Share anything that shows {summary}. Good starting points include {hints}. "
-                f"That context gives me enough to {action}."
+                f"Send anything that shows {summary}. Good starting points include {hints}. "
+                "That gives me enough to start."
             ),
         },
         {
-            "question": "Is solving this a one-time project or ongoing support?",
+            "question": "Is this a one-time project or ongoing support?",
             "answer": (
                 f"It can be either. The goal is that {result}. "
                 f"{CATEGORY_ONGOING_CONTEXT[service.category]}"
@@ -1336,7 +1334,7 @@ def service_faqs(service: Service) -> list[dict[str, str]]:
             "question": "Why work with Audo on this problem instead of a large agency?",
             "answer": (
                 f"{CATEGORY_AGENCY_CONTEXT[service.category]} "
-                "You work directly with Aaron, so there are fewer handoffs, clearer context, and more of the budget goes toward focused thinking and execution."
+                "You work directly with Aaron, so there are fewer handoffs, less repeated explanation, and more of the budget goes toward thinking and execution."
             ),
         },
     ]

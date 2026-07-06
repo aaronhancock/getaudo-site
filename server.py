@@ -792,7 +792,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "jobTitle": "Founder and Senior Tech Partner",
                         "url": "https://getaudo.com/",
                         "image": "https://getaudo.com/assets/founder-field-portrait.webp",
-                        "description": "Aaron Hancock brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, context-first AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
+                        "description": "Aaron Hancock brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
                         "knowsAbout": [
                             "Product strategy",
                             "Software engineering",
@@ -816,7 +816,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "logo": "https://getaudo.com/assets/audo-logo-white.png",
                         "image": social_image,
                         "founder": {"@id": "https://getaudo.com/#aaron-hancock"},
-                        "description": "Audo provides senior technology consulting backed by product and engineering leadership, M&A and product due diligence experience, agency delivery experience, context-first AI support, and direct consulting for websites, apps, automation, and product strategy.",
+                        "description": "Audo provides senior technology consulting backed by product and engineering leadership, M&A and product due diligence experience, agency delivery experience, direct AI support, and consulting for websites, apps, automation, and product strategy.",
                     },
                 ],
             },
@@ -1163,7 +1163,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         </section>
         <section aria-labelledby="look-heading">
           <p class="eyebrow" id="look-heading">What I look at first</p>
-          <h2>A practical review before a bigger commitment.</h2>
+          <h2>A quick look before you commit to a bigger project.</h2>
           <ul class="check-list">
             {checks_html}
           </ul>
@@ -1179,7 +1179,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <aside id="discovery" class="form-panel" aria-labelledby="service-form-heading">
         <p class="eyebrow">Free Discovery</p>
         <h2 id="service-form-heading">Start with this service.</h2>
-        <p>Share what is happening in plain English. I will review the context and respond with the best next step.</p>
+        <p>Share what is happening in plain English. I will look it over and respond with the best next step.</p>
         <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form>
           <div class="form-honey" aria-hidden="true">
             <label for="service_website_url_confirm">Confirm website</label>
@@ -1218,7 +1218,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             </div>
             <div class="form-field full">
               <label for="service_message">What should I know?</label>
-              <textarea id="service_message" name="message" placeholder="A few plain-English sentences are perfect. Include any context I should review first." required></textarea>
+              <textarea id="service_message" name="message" placeholder="A few sentences is enough. Include anything I should review first." required></textarea>
             </div>
             <div class="form-field full">
               <label for="service_promo_code">Promo code</label>
@@ -1231,7 +1231,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Request Free Discovery</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="service-form-note" class="form-note">Your request goes directly to Aaron with this service attached.</p>
+          <p id="service-form-note" class="form-note">I will know which service page you came from.</p>
         </form>
       </aside>
     </div>

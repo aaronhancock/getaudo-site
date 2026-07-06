@@ -162,44 +162,6 @@
             "Product due diligence",
             "M&A technology review"
           ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://getaudo.com/#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "What kind of work can I bring to Audo?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Bring a website, app, workflow, AI question, automation idea, or product decision that needs a next step."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Do I need a technical project plan?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No. A few plain-English sentences are enough to start. Audo helps clarify the problem and choose the right first move."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Why choose Audo instead of a large agency?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "You work directly with one senior partner who has led product and engineering teams, worked in large-agency client environments, and keeps Audo intentionally small so more of the budget goes into thinking and execution."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can Audo provide ongoing support?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. Audo can help with one specific issue, a build plus support, or ongoing care for websites, apps, automation, AI, and product work."
-              }
-            }
-          ]
         }
       ]
     }
@@ -608,8 +570,7 @@
       margin-top: 3px;
     }
 
-    .service-card p,
-    .about-copy p {
+    .service-card p {
       margin: 13px 0 0;
       color: var(--muted);
       line-height: 1.6;
@@ -949,72 +910,54 @@
       line-height: 1.5;
     }
 
-    .faq-band {
-      background: var(--paper);
-    }
-
-    .faq-list {
+    .why-about {
       display: grid;
-      border-top: 1px solid var(--line);
+      grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+      gap: clamp(22px, 4vw, 42px);
+      align-items: center;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
     }
 
-    .faq-item {
-      display: grid;
-      grid-template-columns: minmax(240px, 0.56fr) minmax(0, 1fr);
-      gap: clamp(22px, 4vw, 56px);
-      padding: 24px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .faq-item h3 {
-      margin-top: 3px;
-      font-size: 20px;
-    }
-
-    .faq-item p {
+    .why-photo {
       margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.65;
-    }
-
-    .about-band {
-      padding: 0;
-      background: var(--soft);
-    }
-
-    .about-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 0.76fr) minmax(0, 1fr);
-      min-height: 580px;
-    }
-
-    .about-photo {
-      margin: 0;
-      min-height: 500px;
+      height: 270px;
       overflow: hidden;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .about-photo img {
+    .why-photo img {
+      display: block;
       width: 100%;
       height: 100%;
-      min-height: 500px;
       object-fit: cover;
-      object-position: center 46%;
+      object-position: center 58%;
     }
 
-    .about-copy {
-      align-self: center;
-      padding: clamp(44px, 7vw, 82px);
+    .why-about-copy h3 {
+      margin: 0;
+      color: var(--white);
+      font-size: clamp(22px, 2.8vw, 32px);
+      line-height: 1.12;
+    }
+
+    .why-about-copy p {
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 16px;
+      line-height: 1.58;
     }
 
     .work-note {
-      margin-top: 24px;
-      padding: 18px 0 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
+      margin-top: 18px;
+      padding: 16px 0 0;
+      border-top: 1px solid rgba(244, 220, 169, 0.18);
+      color: rgba(255, 255, 255, 0.74);
       font-size: 15px;
-      line-height: 1.65;
+      line-height: 1.58;
     }
 
     .cta-band {
@@ -1446,7 +1389,7 @@
 
       .section-head,
       .why-grid,
-      .about-layout {
+      .why-about {
         grid-template-columns: 1fr;
       }
 
@@ -1481,7 +1424,7 @@
       }
 
       .service-card p,
-      .about-copy p {
+      .why-about-copy p {
         font-size: 14px;
         line-height: 1.55;
       }
@@ -1490,21 +1433,6 @@
         align-items: stretch;
         flex-direction: column;
         gap: 14px;
-      }
-
-      .faq-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        padding: 20px 0;
-      }
-
-      .faq-item h3 {
-        font-size: 18px;
-      }
-
-      .faq-item p {
-        font-size: 15px;
-        line-height: 1.55;
       }
 
       .issue-list li {
@@ -1555,6 +1483,10 @@
         font-size: 23px;
       }
 
+      .why-photo {
+        height: 320px;
+      }
+
       .partner-band {
         padding: 42px 0;
       }
@@ -1567,19 +1499,6 @@
       .partner-logo-link {
         min-height: 112px;
         padding: 22px;
-      }
-
-      .about-photo {
-        min-height: 340px;
-      }
-
-      .about-photo img {
-        min-height: 340px;
-        object-position: center 45%;
-      }
-
-      .about-copy {
-        padding: 38px 18px 48px;
       }
 
       .cta-inner {
@@ -1804,6 +1723,16 @@
                 </ul>
               </div>
             </div>
+            <div class="why-about">
+              <figure class="why-photo">
+                <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" decoding="async">
+              </figure>
+              <div class="why-about-copy">
+                <h3>Audo stays intentionally small.</h3>
+                <p>I work with a small number of clients so I can learn your tools, workflows, customers, and priorities. The more I understand, the better I can help.</p>
+                <div class="work-note">The goal is simple: take good care of the work, bring senior judgment to the decisions, and solve the problems that keep costing time, attention, and opportunity.</div>
+              </div>
+            </div>
             <div class="client-meaning">
               <div>
                 <h3>Not sure what needs help yet?</h3>
@@ -1826,52 +1755,6 @@
         <a class="partner-logo-link" href="https://www.bostons.com/" rel="nofollow" aria-label="Visit the Boston's Pizza Restaurant and Sports Bar website">
           <img src="/assets/bostons-logo-dough.svg" alt="Boston's Pizza Restaurant & Sports Bar logo" loading="lazy" decoding="async">
         </a>
-      </div>
-    </section>
-
-    <section id="faq" class="faq-band">
-      <div class="shell">
-        <div class="section-head">
-          <h2>Quick answers.</h2>
-          <p class="section-copy">Audo is built for people who know something needs attention, even if the best way to fix it is not clear yet.</p>
-        </div>
-
-        <div class="faq-list">
-          <article class="faq-item">
-            <h3>What can I bring?</h3>
-            <p>A website, app, workflow, AI question, automation idea, or product decision that needs a next step.</p>
-          </article>
-
-          <article class="faq-item">
-            <h3>Do I need a technical plan?</h3>
-            <p>No. A few plain-English sentences are enough. I will help clarify the problem and choose the right first move.</p>
-          </article>
-
-          <article class="faq-item">
-            <h3>Why not a big agency?</h3>
-            <p>You work directly with one senior partner who has led product and engineering teams, worked in large-agency client environments, and keeps Audo intentionally small so more of the budget goes into thinking and execution.</p>
-          </article>
-
-          <article class="faq-item">
-            <h3>Can this become ongoing support?</h3>
-            <p>Yes. Start with one specific issue, then continue with care for the website, app, automation, AI, or product work that matters.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="about-band">
-      <div class="about-layout">
-        <figure class="about-photo">
-          <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" loading="lazy" decoding="async">
-        </figure>
-        <div class="about-copy">
-          <p class="eyebrow">About Aaron Hancock</p>
-          <h2>Senior tech partner, without agency overhead.</h2>
-          <p>I'm Aaron Hancock. I help individuals and small businesses make progress on technology problems without adding a big agency process.</p>
-          <p>I keep Audo intentionally small because this kind of work gets better as I learn your tools, workflows, customers, and priorities. The more I understand, the better I can help.</p>
-          <div class="work-note">The goal is simple: take good care of a small number of clients, bring senior judgment to the work, and solve the problems that keep costing time, attention, and opportunity.</div>
-        </div>
       </div>
     </section>
 

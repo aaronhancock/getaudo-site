@@ -9,11 +9,11 @@ Discovery: https://getaudo.com/#discovery
 
 ## Services
 
-- Website and web application management: ongoing care for existing websites, apps, forms, hosting, analytics, integrations, UX cleanup, and practical improvements.
+- Website and web application management: ongoing care for existing websites, apps, forms, hosting, analytics, integrations, UX cleanup, and steady improvements.
 - Website, app, dashboard, and internal tool creation: business websites, mobile apps, customer portals, internal admin tools, quote and estimate tools, dashboards, MVPs, prototypes, and supported launches.
 - Automation consulting: help with repeat tasks, follow-up, scheduling, CRM integrations, reminders, reports, documents, spreadsheets, SOPs, and tool handoffs.
-- AI coaching, training, and support: practical AI use cases, AI-powered website support agents, prompt coaching, team training, privacy guardrails, tool selection, and AI-assisted workflows.
-- Product consulting and strategy: customer jobs, product priorities, MVP scope, feasibility, build-vs-buy decisions, product due diligence, M&A technology review, and next steps.
+- AI coaching, training, and support: AI use cases, AI-powered website support agents, prompt coaching, team training, privacy rules, tool selection, and AI-assisted workflows.
+- Product consulting and strategy: customer needs, product priorities, MVP scope, feasibility, build-vs-buy decisions, product due diligence, M&A technology review, and next steps.
 
 ## Service Library
 
@@ -23,11 +23,12 @@ Service pages use clean URLs under https://getaudo.com/services/ and are listed 
 
 ## Why Audo
 
-Audo gives individuals and small businesses senior tech help without the agency runaround. Clients do not need to know the exact problem before reaching out; Aaron can help discover the friction, explain the options clearly, and get the work handled without account layers, handoff chains, multiple vendors, or technical translation. Audo is Aaron Hancock's independent consulting practice, built for people who need a trusted technology partner. Aaron has spent nearly 30 years solving technology problems, from building websites in high school to leading product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com. Through prior roles, OEM programs, and agency work, he has also supported M&A, product due diligence, integrations, migrations, launches, and client work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Audo gives individuals and small businesses senior tech help without the agency runaround. Clients do not need to know the exact problem before reaching out; Aaron can help discover what is slowing things down, explain the options clearly, and get the work handled without account layers, handoff chains, multiple vendors, or technical translation. Audo is Aaron Hancock's independent consulting practice, built for people who need a trusted technology partner. Aaron has spent 30 years solving technology problems, from building websites in high school to leading product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com. Through prior roles, OEM programs, and agency work, he has also supported M&A, product due diligence, integrations, migrations, launches, and client work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
-## Partnered with
+## Client Work
 
-Audo consulting work includes Boston's Pizza Restaurant & Sports Bar. The public site links to the Boston's Pizza website with a nofollow logo link.
+- Boston's Pizza Restaurant & Sports Bar: ADA compliance, marketing site and CMS management, and ongoing support.
+- Carnac AI Trading: full platform build, creation of proprietary technical analysis tools, crypto exchange integrations, and AI market analysis system.
 
 Aaron's AI point of view is practical and context-first. AI can save real time, but only when it understands the business context. Audo helps clients decide where AI fits, where it does not, and how to use it with privacy, review, and common sense.
 

@@ -812,7 +812,7 @@
     }
 
     .partner-band {
-      padding: clamp(54px, 7vw, 82px) 0;
+      padding: clamp(44px, 6vw, 64px) 0;
       color: var(--ink);
       background: var(--paper);
       border-top: 1px solid var(--line);
@@ -821,14 +821,14 @@
 
     .partner-inner {
       display: grid;
-      grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
-      gap: clamp(24px, 5vw, 70px);
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.52fr);
+      gap: clamp(22px, 4vw, 48px);
       align-items: center;
-      padding: clamp(24px, 4vw, 36px);
+      padding: clamp(22px, 3.6vw, 32px);
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--white);
-      box-shadow: 0 18px 54px rgba(12, 18, 15, 0.08);
+      box-shadow: 0 14px 42px rgba(12, 18, 15, 0.07);
     }
 
     .partner-copy .eyebrow {
@@ -840,10 +840,13 @@
 
     .partner-copy h2 {
       color: var(--ink);
+      max-width: 740px;
+      font-size: clamp(28px, 3.4vw, 48px);
+      line-height: 1.04;
     }
 
     .partner-copy p:not(.eyebrow) {
-      max-width: 620px;
+      max-width: 680px;
       margin: 12px 0 0;
       color: var(--muted);
       font-size: 16px;
@@ -851,11 +854,11 @@
     }
 
     .partner-logo-link {
-      min-height: 132px;
+      min-height: 104px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(22px, 4vw, 34px);
+      padding: clamp(18px, 3vw, 26px);
       border: 1px solid rgba(24, 34, 29, 0.14);
       border-radius: 8px;
       background: #101815;
@@ -863,7 +866,7 @@
     }
 
     .partner-logo-link img {
-      width: min(100%, 420px);
+      width: min(100%, 340px);
       height: auto;
       display: block;
     }
@@ -1503,8 +1506,8 @@
       }
 
       .partner-logo-link {
-        min-height: 112px;
-        padding: 22px;
+        min-height: 98px;
+        padding: 20px;
       }
 
       .cta-inner {
@@ -1755,8 +1758,8 @@
       <div class="shell partner-inner">
         <div class="partner-copy">
           <p class="eyebrow">Current client</p>
-          <h2 id="partnered-heading">Partnered with</h2>
-          <p>Audo consulting work includes Boston's Pizza Restaurant & Sports Bar.</p>
+          <h2 id="partnered-heading">Currently partnered with Boston's Pizza.</h2>
+          <p>Audo consulting work includes ongoing technology support for Boston's Pizza Restaurant & Sports Bar.</p>
         </div>
         <a class="partner-logo-link" href="https://www.bostons.com/" rel="nofollow" aria-label="Visit the Boston's Pizza Restaurant and Sports Bar website">
           <img src="/assets/bostons-logo-dough.svg" alt="Boston's Pizza Restaurant & Sports Bar logo" loading="lazy" decoding="async">

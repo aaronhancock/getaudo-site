@@ -1266,7 +1266,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .service-list-filter {
@@ -1290,19 +1290,19 @@
 
     .service-list-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .service-list-card {
-      min-height: 132px;
+      min-height: 210px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
       gap: 12px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 18px;
+      padding: 20px;
       color: var(--ink);
       background: rgba(255, 255, 255, 0.72);
       text-decoration: none;
@@ -1338,23 +1338,30 @@
       line-height: 1.5;
     }
 
+    .service-list-card em {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 4px;
+      color: #725119;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 820;
+      line-height: 1.35;
+    }
+
     .service-list-status {
       min-height: 22px;
-      margin: 18px 0 0;
+      margin: 16px 0 0;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
       text-align: center;
     }
 
-    .service-list-sentinel {
-      height: 1px;
-    }
-
     .service-list-more {
       display: flex;
       justify-content: center;
-      margin-top: 22px;
+      margin: 0 0 20px;
     }
 
     .service-list-more[hidden] {
@@ -1722,7 +1729,7 @@
       }
 
       .service-list-card {
-        min-height: auto;
+        min-height: 190px;
       }
 
       .cookie-consent {
@@ -2068,7 +2075,7 @@
       <div class="shell">
         <div class="section-head">
           <h2 id="service-list-heading">Ways I can help.</h2>
-          <p class="section-copy">Find the closest issue. If you are not sure, Free Discovery is the place to start.</p>
+          <p class="section-copy">Shuffle through common problems I help with. Pick the closest one, or start Free Discovery if you are not sure.</p>
         </div>
         <div class="service-list-tools" aria-label="Service filters">
           <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
@@ -2078,14 +2085,13 @@
           <button class="service-list-filter" type="button" data-service-list-filter="Product strategy">Product strategy</button>
           <button class="service-list-filter" type="button" data-service-list-filter="Individual consulting">Individual help</button>
         </div>
-        <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json" aria-live="polite"></div>
-        <div id="service-list-sentinel" class="service-list-sentinel" aria-hidden="true"></div>
         <div class="service-list-more" id="service-list-more-wrap" hidden>
-          <button id="service-list-more" class="button" type="button">Show more ways I can help</button>
+          <button id="service-list-more" class="button" type="button">Shuffle examples</button>
         </div>
-        <p id="service-list-status" class="service-list-status" role="status">Loading ways I can help...</p>
+        <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json" aria-live="polite"></div>
+        <p id="service-list-status" class="service-list-status" role="status">Loading examples...</p>
         <noscript>
-          <p class="service-list-status">JavaScript is required to load the service grid. Search engines can still access every service through the sitemap.</p>
+          <p class="service-list-status">JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
         </noscript>
       </div>
     </section>
@@ -2248,7 +2254,6 @@
       var section = document.getElementById("service-list");
       var grid = document.getElementById("service-list-grid");
       var status = document.getElementById("service-list-status");
-      var sentinel = document.getElementById("service-list-sentinel");
       var moreWrap = document.getElementById("service-list-more-wrap");
       var moreButton = document.getElementById("service-list-more");
       var filters = Array.prototype.slice.call(document.querySelectorAll("[data-service-list-filter]"));
@@ -2260,13 +2265,10 @@
       var services = [];
       var visible = [];
       var activeFilter = "All";
-      var nextIndex = 0;
-      var batchSize = 10;
-      var batchObserver = null;
       var sectionObserver = null;
       var hasLoaded = false;
-      var lastAutoLoadScrollY = window.scrollY;
-      var scrollTicking = false;
+      var displayCount = 3;
+      var previousUrls = [];
 
       function updateStatus(message) {
         if (status) {
@@ -2274,11 +2276,11 @@
         }
       }
 
-      function updateMoreButton() {
+      function updateShuffleButton() {
         if (!moreWrap) {
           return;
         }
-        moreWrap.hidden = nextIndex >= visible.length;
+        moreWrap.hidden = visible.length <= displayCount;
       }
 
       function createCard(service) {
@@ -2286,71 +2288,71 @@
         var headingWrap = document.createElement("div");
         var category = document.createElement("span");
         var title = document.createElement("h3");
+        var summary = document.createElement("p");
+        var action = document.createElement("em");
 
         card.className = "service-list-card";
         card.href = service.url;
         card.setAttribute("aria-label", service.title + " - " + service.category);
         category.textContent = service.category;
         title.textContent = service.title;
+        summary.textContent = service.summary || "";
+        action.textContent = "See how this works";
 
         headingWrap.appendChild(category);
         headingWrap.appendChild(title);
+        headingWrap.appendChild(summary);
         card.appendChild(headingWrap);
+        card.appendChild(action);
         return card;
       }
 
-      function renderNextBatch() {
-        if (batchObserver && sentinel) {
-          batchObserver.unobserve(sentinel);
+      function shuffled(list) {
+        var copy = list.slice();
+        var index = copy.length;
+        while (index > 1) {
+          index -= 1;
+          var randomIndex = Math.floor(Math.random() * (index + 1));
+          var item = copy[index];
+          copy[index] = copy[randomIndex];
+          copy[randomIndex] = item;
         }
+        return copy;
+      }
 
+      function pickServices() {
+        var count = Math.min(displayCount, visible.length);
+        var pool = shuffled(visible);
+        var fresh = pool.filter(function (service) {
+          return previousUrls.indexOf(service.url) === -1;
+        });
+        var selected = fresh.length >= count ? fresh.slice(0, count) : pool.slice(0, count);
+        previousUrls = selected.map(function (service) {
+          return service.url;
+        });
+        return selected;
+      }
+
+      function renderShuffle() {
         if (!visible.length) {
           grid.innerHTML = "";
           updateStatus("No services found for this filter.");
-          updateMoreButton();
+          updateShuffleButton();
           return;
         }
 
         var fragment = document.createDocumentFragment();
-        var end = Math.min(nextIndex + batchSize, visible.length);
-        for (; nextIndex < end; nextIndex += 1) {
-          fragment.appendChild(createCard(visible[nextIndex]));
-        }
+        var selected = pickServices();
+
+        selected.forEach(function (service) {
+          fragment.appendChild(createCard(service));
+        });
+
+        grid.innerHTML = "";
         grid.appendChild(fragment);
 
-        updateStatus("Showing " + nextIndex + " of " + visible.length + " ways I can help.");
-        updateMoreButton();
-
-        if (batchObserver && sentinel && nextIndex < visible.length) {
-          lastAutoLoadScrollY = window.scrollY;
-          batchObserver.observe(sentinel);
-        }
-      }
-
-      function sentinelIsNearViewport() {
-        if (!sentinel) {
-          return false;
-        }
-        var rect = sentinel.getBoundingClientRect();
-        return rect.top <= window.innerHeight + 260 && rect.bottom >= -260;
-      }
-
-      function maybeRenderScrolledBatch() {
-        var hasScrolled = Math.abs(window.scrollY - lastAutoLoadScrollY) > 8;
-        if (hasScrolled && nextIndex < visible.length && sentinelIsNearViewport()) {
-          renderNextBatch();
-        }
-      }
-
-      function handleScroll() {
-        if (!hasLoaded || scrollTicking) {
-          return;
-        }
-        scrollTicking = true;
-        window.requestAnimationFrame(function () {
-          scrollTicking = false;
-          maybeRenderScrolledBatch();
-        });
+        updateStatus("Showing " + selected.length + " of " + visible.length + " ways I can help. Shuffle for another set.");
+        updateShuffleButton();
       }
 
       function applyFilter(category) {
@@ -2358,14 +2360,14 @@
         visible = category === "All" ? services.slice() : services.filter(function (service) {
           return service.category === category;
         });
-        nextIndex = 0;
+        previousUrls = [];
         grid.innerHTML = "";
         filters.forEach(function (button) {
           var isActive = button.getAttribute("data-service-list-filter") === activeFilter;
           button.classList.toggle("is-active", isActive);
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
-        renderNextBatch();
+        renderShuffle();
       }
 
       filters.forEach(function (button) {
@@ -2380,22 +2382,8 @@
 
       if (moreButton) {
         moreButton.addEventListener("click", function () {
-          renderNextBatch();
+          renderShuffle();
         });
-      }
-
-      function setupBatchObserver() {
-        if (!("IntersectionObserver" in window) || !sentinel) {
-          return;
-        }
-
-        batchObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              maybeRenderScrolledBatch();
-            }
-          });
-        }, { rootMargin: "260px 0px" });
       }
 
       function loadServices() {
@@ -2403,7 +2391,6 @@
           return;
         }
         hasLoaded = true;
-        setupBatchObserver();
 
         fetch(endpoint, { headers: { "Accept": "application/json" } })
           .then(function (response) {
@@ -2414,8 +2401,7 @@
           })
           .then(function (payload) {
             services = Array.isArray(payload.services) ? payload.services : [];
-            visible = services.slice();
-            renderNextBatch();
+            applyFilter(activeFilter);
           })
           .catch(function () {
             updateStatus("The services could not load. Please refresh the page.");
@@ -2435,8 +2421,6 @@
       } else {
         loadServices();
       }
-
-      window.addEventListener("scroll", handleScroll, { passive: true });
     }());
 
     (function () {

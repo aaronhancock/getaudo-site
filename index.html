@@ -2145,7 +2145,7 @@
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
       <h2 id="cookie-title">Cookie choices</h2>
-      <p>Audo uses essential browser storage to remember this choice and Google reCAPTCHA to protect the discovery form. No ad tracking.</p>
+      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept.</p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
@@ -2154,6 +2154,7 @@
   </section>
   <script>
     window.AUDO_RECAPTCHA_SITE_KEY = __RECAPTCHA_SITE_KEY__;
+    window.AUDO_GA_MEASUREMENT_ID = "G-YP5ME1JR6Q";
 
     (function () {
       var banner = document.querySelector(".cookie-consent");
@@ -2161,6 +2162,39 @@
       var accept = document.querySelector("[data-cookie-accept]");
       var necessary = document.querySelector("[data-cookie-necessary]");
       var key = "audo_cookie_choice";
+      var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
+      var analyticsLoaded = false;
+
+      function analyticsDisableKey(id) {
+        return "ga-disable-" + id;
+      }
+
+      function disableAnalytics() {
+        if (analyticsId) {
+          window[analyticsDisableKey(analyticsId)] = true;
+        }
+      }
+
+      function loadAnalytics() {
+        if (!analyticsId || analyticsLoaded) {
+          return;
+        }
+
+        window[analyticsDisableKey(analyticsId)] = false;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () {
+          window.dataLayer.push(arguments);
+        };
+
+        window.gtag("js", new Date());
+        window.gtag("config", analyticsId);
+
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(analyticsId);
+        document.head.appendChild(script);
+        analyticsLoaded = true;
+      }
 
       function getChoice() {
         try {
@@ -2190,7 +2224,14 @@
         }
       }
 
-      if (banner && !getChoice()) {
+      var savedChoice = getChoice();
+      if (savedChoice === "accepted") {
+        loadAnalytics();
+      } else {
+        disableAnalytics();
+      }
+
+      if (banner && !savedChoice) {
         showBanner();
       }
 
@@ -2201,6 +2242,7 @@
       if (accept) {
         accept.addEventListener("click", function () {
           setChoice("accepted");
+          loadAnalytics();
           hideBanner();
         });
       }
@@ -2208,6 +2250,7 @@
       if (necessary) {
         necessary.addEventListener("click", function () {
           setChoice("necessary");
+          disableAnalytics();
           hideBanner();
         });
       }

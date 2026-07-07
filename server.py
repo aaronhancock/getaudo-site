@@ -36,6 +36,7 @@ RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
 RECAPTCHA_ACTION = "discovery_request"
+GOOGLE_ANALYTICS_ID = os.environ.get("GOOGLE_ANALYTICS_ID", "G-YP5ME1JR6Q")
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
@@ -805,6 +806,8 @@ class AudoHandler(BaseHTTPRequestHandler):
             separators=(",", ":"),
         )
 
+        analytics_js = self.analytics_consent_script()
+
         body = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -838,6 +841,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
   <script type="application/ld+json">{json_ld}</script>
+  {analytics_js}
   <style>
     :root {{
       color-scheme: light;
@@ -1704,7 +1708,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
       <h2 id="cookie-title">Cookie choices</h2>
-      <p>Audo uses essential browser storage to remember this choice and Google reCAPTCHA to protect the discovery form. No ad tracking.</p>
+      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept.</p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
@@ -1723,10 +1727,56 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.wfile.write(encoded)
 
     @staticmethod
+    def analytics_consent_script() -> str:
+        ga_id = json.dumps(GOOGLE_ANALYTICS_ID)
+        return f"""<script>
+    window.AUDO_GA_MEASUREMENT_ID = {ga_id};
+
+    (function () {{
+      var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
+      if (!analyticsId) {{
+        return;
+      }}
+
+      function analyticsDisableKey(id) {{
+        return "ga-disable-" + id;
+      }}
+
+      function getChoice() {{
+        try {{
+          return window.localStorage.getItem("audo_cookie_choice");
+        }} catch (error) {{
+          return "";
+        }}
+      }}
+
+      if (getChoice() !== "accepted") {{
+        window[analyticsDisableKey(analyticsId)] = true;
+        return;
+      }}
+
+      window[analyticsDisableKey(analyticsId)] = false;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () {{
+        window.dataLayer.push(arguments);
+      }};
+      window.gtag("js", new Date());
+      window.gtag("config", analyticsId);
+
+      var script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(analyticsId);
+      document.head.appendChild(script);
+    }}());
+  </script>"""
+
+    @staticmethod
     def recaptcha_script() -> str:
         site_key = json.dumps(RECAPTCHA_SITE_KEY)
+        ga_id = json.dumps(GOOGLE_ANALYTICS_ID)
         return f"""<script>
     window.AUDO_RECAPTCHA_SITE_KEY = {site_key};
+    window.AUDO_GA_MEASUREMENT_ID = {ga_id};
 
     (function () {{
       var banner = document.querySelector(".cookie-consent");
@@ -1734,6 +1784,39 @@ class AudoHandler(BaseHTTPRequestHandler):
       var accept = document.querySelector("[data-cookie-accept]");
       var necessary = document.querySelector("[data-cookie-necessary]");
       var key = "audo_cookie_choice";
+      var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
+      var analyticsLoaded = false;
+
+      function analyticsDisableKey(id) {{
+        return "ga-disable-" + id;
+      }}
+
+      function disableAnalytics() {{
+        if (analyticsId) {{
+          window[analyticsDisableKey(analyticsId)] = true;
+        }}
+      }}
+
+      function loadAnalytics() {{
+        if (!analyticsId || analyticsLoaded) {{
+          return;
+        }}
+
+        window[analyticsDisableKey(analyticsId)] = false;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () {{
+          window.dataLayer.push(arguments);
+        }};
+
+        window.gtag("js", new Date());
+        window.gtag("config", analyticsId);
+
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(analyticsId);
+        document.head.appendChild(script);
+        analyticsLoaded = true;
+      }}
 
       function getChoice() {{
         try {{
@@ -1763,7 +1846,14 @@ class AudoHandler(BaseHTTPRequestHandler):
         }}
       }}
 
-      if (banner && !getChoice()) {{
+      var savedChoice = getChoice();
+      if (savedChoice === "accepted") {{
+        loadAnalytics();
+      }} else {{
+        disableAnalytics();
+      }}
+
+      if (banner && !savedChoice) {{
         showBanner();
       }}
 
@@ -1774,6 +1864,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       if (accept) {{
         accept.addEventListener("click", function () {{
           setChoice("accepted");
+          loadAnalytics();
           hideBanner();
         }});
       }}
@@ -1781,6 +1872,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       if (necessary) {{
         necessary.addEventListener("click", function () {{
           setChoice("necessary");
+          disableAnalytics();
           hideBanner();
         }});
       }}

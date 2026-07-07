@@ -6,6 +6,7 @@ Audo helps individuals and small businesses get practical technology work off th
 
 Website: https://getaudo.com/
 Discovery: https://getaudo.com/#discovery
+Human sitemap: https://getaudo.com/sitemap
 
 ## Services
 

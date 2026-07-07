@@ -502,6 +502,10 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.serve_sitemap(send_body=send_body)
             return
 
+        if path in {"/sitemap", "/sitemap/"}:
+            self.serve_user_sitemap(send_body=send_body)
+            return
+
         if path in {"/services", "/services/"}:
             self.redirect("/#service-list")
             return
@@ -668,7 +672,8 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def serve_sitemap(self, send_body: bool = True) -> None:
         urls = [
-            ("https://getaudo.com/", "monthly", "1.0"),
+            (f"{PUBLIC_BASE_URL}/", "monthly", "1.0"),
+            (f"{PUBLIC_BASE_URL}/sitemap", "monthly", "0.8"),
             *[(service.canonical_url, "monthly", "0.72") for service in SERVICES],
         ]
         entries = "\n".join(
@@ -692,6 +697,476 @@ class AudoHandler(BaseHTTPRequestHandler):
         self.end_headers()
         if send_body:
             self.wfile.write(data)
+
+    def serve_user_sitemap(self, send_body: bool = True) -> None:
+        h = lambda value: html.escape(str(value), quote=True)
+        category_order = [
+            "Website and app care",
+            "Automation",
+            "AI coaching and support",
+            "Product strategy",
+            "Individual consulting",
+        ]
+        grouped: dict[str, list] = {}
+        for service in SERVICES:
+            grouped.setdefault(service.category, []).append(service)
+
+        main_links = [
+            ("/", "Home", "The main Audo consulting page."),
+            ("/#services", "Things I can help with", "A quick overview of common website, app, automation, AI, and product needs."),
+            ("/#why", "Why Audo", "Aaron's background, approach, and why clients work directly with him."),
+            ("/#discovery", "Free Discovery", "A simple form to share what needs help and request a reply."),
+            ("/#service-list", "Service examples", "Rotating examples that point to detailed service pages."),
+        ]
+        utility_links = [
+            ("/llms.txt", "AI summary", "Plain-text site summary for AI tools."),
+            ("/sitemap.xml", "XML sitemap", "Machine-readable sitemap for search engines."),
+            ("/robots.txt", "Robots file", "Search crawler instructions."),
+        ]
+
+        def link_cards(links: list[tuple[str, str, str]]) -> str:
+            return "\n".join(
+                f"""          <li>
+            <a href="{h(url)}">{h(title)}</a>
+            <p>{h(description)}</p>
+          </li>"""
+                for url, title, description in links
+            )
+
+        category_sections = []
+        for category in category_order:
+            services = grouped.get(category, [])
+            if not services:
+                continue
+            anchor = re.sub(r"[^a-z0-9]+", "-", category.lower()).strip("-")
+            service_items = "\n".join(
+                f"""          <li>
+            <a href="{h(service.url)}">{h(service.title)}</a>
+            <p>{h(service.summary)}</p>
+          </li>"""
+                for service in services
+            )
+            category_sections.append(
+                f"""      <section class="sitemap-group" aria-labelledby="{h(anchor)}-heading">
+        <div class="group-title">
+          <h2 id="{h(anchor)}-heading">{h(category)}</h2>
+          <span>{len(services)} pages</span>
+        </div>
+        <ul class="sitemap-links">
+{service_items}
+        </ul>
+      </section>"""
+            )
+
+        item_list = [
+            {
+                "@type": "ListItem",
+                "position": index + 1,
+                "url": f"{PUBLIC_BASE_URL}{service.url}",
+                "name": service.title,
+            }
+            for index, service in enumerate(SERVICES)
+        ]
+        json_ld = json.dumps(
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "CollectionPage",
+                        "@id": f"{PUBLIC_BASE_URL}/sitemap#webpage",
+                        "url": f"{PUBLIC_BASE_URL}/sitemap",
+                        "name": "Audo Sitemap",
+                        "description": "A user-friendly sitemap for Audo consulting pages and service examples.",
+                        "isPartOf": {"@id": "https://getaudo.com/#website"},
+                        "inLanguage": "en-US",
+                    },
+                    {
+                        "@type": "ItemList",
+                        "@id": f"{PUBLIC_BASE_URL}/sitemap#service-pages",
+                        "name": "Audo service pages",
+                        "numberOfItems": len(SERVICES),
+                        "itemListElement": item_list,
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "@id": f"{PUBLIC_BASE_URL}/sitemap#breadcrumb",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Audo",
+                                "item": "https://getaudo.com/",
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Sitemap",
+                                "item": f"{PUBLIC_BASE_URL}/sitemap",
+                            },
+                        ],
+                    },
+                ],
+            },
+            separators=(",", ":"),
+        )
+
+        body = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sitemap | Audo</title>
+  <meta name="description" content="A user-friendly sitemap for Audo consulting pages, service examples, and discovery links.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="Aaron Hancock">
+  <meta name="theme-color" content="#101815">
+  <link rel="canonical" href="{h(PUBLIC_BASE_URL + "/sitemap")}">
+  <link rel="alternate" href="/llms.txt" type="text/plain" title="Audo AI summary">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:site_name" content="Audo">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="{h(PUBLIC_BASE_URL + "/sitemap")}">
+  <meta property="og:title" content="Audo Sitemap">
+  <meta property="og:description" content="Browse Audo consulting pages and service examples in one simple sitemap.">
+  <meta property="og:image" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
+  <meta property="og:image:secure_url" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Audo social card with Aaron Hancock and Free Discovery call to action.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Audo Sitemap">
+  <meta name="twitter:description" content="Browse Audo consulting pages and service examples in one simple sitemap.">
+  <meta name="twitter:image" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
+  <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
+  <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
+  <script type="application/ld+json">{json_ld}</script>
+  <style>
+    :root {{
+      color-scheme: light;
+      --ink: #18221d;
+      --muted: #5f6b62;
+      --paper: #fbfbf7;
+      --white: #ffffff;
+      --line: rgba(24, 34, 29, 0.14);
+      --evergreen: #1f4739;
+      --brass: #c89b4b;
+      --charcoal: #101815;
+      --shadow: 0 24px 70px rgba(12, 18, 15, 0.14);
+    }}
+
+    * {{ box-sizing: border-box; }}
+    html {{ scroll-behavior: smooth; }}
+    body {{
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }}
+    a {{ color: inherit; }}
+    .skip-link {{
+      position: fixed;
+      z-index: 50;
+      top: 14px;
+      left: 14px;
+      transform: translateY(-140%);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #101815;
+      background: #f0c66f;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.2);
+      text-decoration: none;
+      font-weight: 820;
+      transition: transform 160ms ease;
+    }}
+    .skip-link:focus {{ transform: translateY(0); }}
+    a:focus-visible {{
+      outline: 3px solid #f4dca9;
+      outline-offset: 3px;
+    }}
+    .shell {{
+      width: min(1160px, calc(100% - 36px));
+      margin: 0 auto;
+    }}
+    header {{
+      color: var(--white);
+      background:
+        linear-gradient(115deg, rgba(12, 18, 16, 0.94), rgba(31, 71, 57, 0.86)),
+        url("/assets/consulting-technology-hero.webp") center / cover no-repeat;
+      padding: 32px 0 70px;
+    }}
+    nav {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 78px;
+    }}
+    .logo {{
+      width: 136px;
+      height: auto;
+      display: block;
+    }}
+    nav a {{
+      color: rgba(255, 255, 255, 0.86);
+      font-weight: 820;
+      text-decoration: none;
+    }}
+    nav a:hover {{ color: #fff; }}
+    .eyebrow {{
+      margin: 0 0 14px;
+      color: #f4dca9;
+      font-size: 13px;
+      font-weight: 820;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }}
+    h1 {{
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(48px, 9vw, 92px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }}
+    .hero-copy {{
+      max-width: 700px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(18px, 2.5vw, 24px);
+      line-height: 1.45;
+    }}
+    main {{
+      padding: 64px 0 82px;
+    }}
+    .section {{
+      margin-top: 52px;
+    }}
+    .section:first-child {{
+      margin-top: 0;
+    }}
+    .section-head {{
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(280px, 0.54fr);
+      gap: 30px;
+      align-items: end;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }}
+    h2 {{
+      margin: 0;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+    }}
+    .section-head p {{
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+    }}
+    .sitemap-links {{
+      list-style: none;
+      margin: 24px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }}
+    .sitemap-links li {{
+      min-height: 150px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 16px 40px rgba(12, 18, 15, 0.05);
+    }}
+    .sitemap-links a {{
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 860;
+      line-height: 1.18;
+      text-decoration-color: rgba(200, 155, 75, 0.58);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }}
+    .sitemap-links a:hover {{
+      text-decoration-color: var(--brass);
+    }}
+    .sitemap-links p {{
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }}
+    .sitemap-group {{
+      margin-top: 46px;
+    }}
+    .group-title {{
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }}
+    .group-title h2 {{
+      font-size: clamp(28px, 4.8vw, 46px);
+    }}
+    .group-title span {{
+      color: #725119;
+      font-size: 13px;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }}
+    .cta {{
+      margin-top: 60px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      color: var(--white);
+      background: var(--charcoal);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }}
+    .cta h2 {{
+      font-size: clamp(30px, 4vw, 44px);
+    }}
+    .cta p {{
+      max-width: 720px;
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 17px;
+      line-height: 1.5;
+    }}
+    .button {{
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #f0c66f;
+      border-radius: 8px;
+      padding: 0 20px;
+      color: #101815;
+      background: #f0c66f;
+      font-weight: 860;
+      text-decoration: none;
+      white-space: nowrap;
+    }}
+    footer {{
+      padding: 24px 0;
+      color: rgba(255, 255, 255, 0.74);
+      background: #0c1210;
+      font-size: 14px;
+      text-align: center;
+    }}
+    footer a {{
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 820;
+      text-decoration: none;
+    }}
+    @media (max-width: 900px) {{
+      .section-head, .cta {{
+        grid-template-columns: 1fr;
+      }}
+      .sitemap-links {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }}
+    }}
+    @media (max-width: 620px) {{
+      header {{
+        padding-bottom: 52px;
+      }}
+      nav {{
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 54px;
+      }}
+      .sitemap-links {{
+        grid-template-columns: 1fr;
+      }}
+      .group-title {{
+        align-items: flex-start;
+        flex-direction: column;
+      }}
+      .cta {{
+        padding: 22px;
+      }}
+      .button {{
+        width: 100%;
+      }}
+    }}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to sitemap content</a>
+  <header>
+    <div class="shell">
+      <nav aria-label="Sitemap navigation">
+        <a href="/" aria-label="Audo home">
+          <img class="logo" src="/assets/audo-logo-white.png" alt="Audo">
+        </a>
+        <a href="/#discovery">Request Free Discovery</a>
+      </nav>
+      <p class="eyebrow">Sitemap</p>
+      <h1>Find the Audo page you need.</h1>
+      <p class="hero-copy">Browse the main consulting pages and {len(SERVICES)} service examples for websites, apps, automation, AI support, product strategy, and personal technology help.</p>
+    </div>
+  </header>
+  <main id="main">
+    <div class="shell">
+      <section class="section" aria-labelledby="main-pages-heading">
+        <div class="section-head">
+          <h2 id="main-pages-heading">Main pages.</h2>
+          <p>Start here if you want the big picture, want to understand how Audo works, or are ready to request Free Discovery.</p>
+        </div>
+        <ul class="sitemap-links">
+{link_cards(main_links)}
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="utility-pages-heading">
+        <div class="section-head">
+          <h2 id="utility-pages-heading">Site resources.</h2>
+          <p>Helpful files for search engines, AI tools, and anyone who wants a quick summary of the site.</p>
+        </div>
+        <ul class="sitemap-links">
+{link_cards(utility_links)}
+        </ul>
+      </section>
+
+{chr(10).join(category_sections)}
+
+      <section class="cta" aria-labelledby="sitemap-cta-heading">
+        <div>
+          <h2 id="sitemap-cta-heading">Not sure which page fits?</h2>
+          <p>You do not need to know the exact problem before reaching out. Start with what feels slow, confusing, risky, or unfinished, and I will help sort the next step.</p>
+        </div>
+        <a class="button" href="/#discovery">Request Free Discovery</a>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <div class="shell">
+      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/sitemap.xml">XML sitemap</a></p>
+    </div>
+  </footer>
+</body>
+</html>"""
+        encoded = body.encode("utf-8")
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Cache-Control", "public, max-age=3600")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        if send_body:
+            self.wfile.write(encoded)
 
     def serve_service_page(self, slug: str, send_body: bool = True) -> None:
         service = get_service(slug)
@@ -1238,7 +1713,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   </main>
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Free Discovery</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Free Discovery</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>

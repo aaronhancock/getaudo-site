@@ -1262,11 +1262,33 @@
       border-top: 1px solid var(--line);
     }
 
+    .service-list-panel {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(18px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(238, 242, 237, 0.72)),
+        repeating-linear-gradient(135deg, rgba(24, 34, 29, 0.035) 0 1px, transparent 1px 18px);
+      box-shadow: 0 18px 54px rgba(12, 18, 15, 0.08);
+    }
+
+    .service-list-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brass), var(--teal), var(--copper));
+    }
+
     .service-list-tools {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 0;
     }
 
     .service-list-filter {
@@ -1288,6 +1310,61 @@
       background: #f0c66f;
     }
 
+    .service-list-controls {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 20px 0;
+    }
+
+    .service-list-cycle {
+      width: min(100%, 360px);
+      display: grid;
+      gap: 8px;
+    }
+
+    .service-list-cycle-label {
+      color: #725119;
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: 0.07em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .service-list-progress {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(24, 34, 29, 0.12);
+    }
+
+    .service-list-progress span {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform: scaleX(0);
+      transform-origin: left center;
+      border-radius: inherit;
+      background: #c89b4b;
+    }
+
+    .service-list-panel.is-running .service-list-progress span {
+      animation: serviceProgress var(--service-cycle-ms, 7s) linear forwards;
+    }
+
+    .service-list-panel.is-paused .service-list-progress span {
+      animation-play-state: paused;
+    }
+
+    .service-list-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
     .service-list-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1306,7 +1383,21 @@
       color: var(--ink);
       background: rgba(255, 255, 255, 0.72);
       text-decoration: none;
-      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      animation: serviceCardIn 520ms ease both;
+    }
+
+    .service-list-card:nth-child(2) {
+      animation-delay: 70ms;
+    }
+
+    .service-list-card:nth-child(3) {
+      animation-delay: 140ms;
+    }
+
+    .service-list-grid.is-swapping .service-list-card {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.985);
     }
 
     .service-list-card:hover {
@@ -1361,11 +1452,33 @@
     .service-list-more {
       display: flex;
       justify-content: center;
-      margin: 0 0 20px;
+      margin: 0;
     }
 
     .service-list-more[hidden] {
       display: none;
+    }
+
+    @keyframes serviceProgress {
+      from {
+        transform: scaleX(0);
+      }
+
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes serviceCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     footer {
@@ -1720,8 +1833,30 @@
         padding-bottom: 4px;
       }
 
+      .service-list-panel {
+        padding: 16px;
+      }
+
       .service-list-filter {
         flex: 0 0 auto;
+      }
+
+      .service-list-controls {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .service-list-cycle {
+        width: 100%;
+      }
+
+      .service-list-actions {
+        justify-content: stretch;
+      }
+
+      .service-list-actions .button {
+        flex: 1 1 150px;
       }
 
       .service-list-grid {
@@ -1764,6 +1899,14 @@
 
       .button:hover {
         transform: none;
+      }
+
+      .service-list-panel.is-running .service-list-progress span {
+        animation: none;
+      }
+
+      .service-list-card {
+        animation: none;
       }
     }
   </style>
@@ -2075,24 +2218,35 @@
       <div class="shell">
         <div class="section-head">
           <h2 id="service-list-heading">Ways I can help.</h2>
-          <p class="section-copy">Shuffle through common problems I help with. Pick the closest one, or start Free Discovery if you are not sure.</p>
+          <p class="section-copy">Watch a few common problems rotate. If one sounds familiar, click through. If not, start Free Discovery and we can sort it out together.</p>
         </div>
-        <div class="service-list-tools" aria-label="Service filters">
-          <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
-          <button class="service-list-filter" type="button" data-service-list-filter="Website and app care">Websites and apps</button>
-          <button class="service-list-filter" type="button" data-service-list-filter="Automation">Automation</button>
-          <button class="service-list-filter" type="button" data-service-list-filter="AI coaching and support">AI support</button>
-          <button class="service-list-filter" type="button" data-service-list-filter="Product strategy">Product strategy</button>
-          <button class="service-list-filter" type="button" data-service-list-filter="Individual consulting">Individual help</button>
+        <div class="service-list-panel" data-service-deck>
+          <div class="service-list-tools" aria-label="Service filters">
+            <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
+            <button class="service-list-filter" type="button" data-service-list-filter="Website and app care">Websites and apps</button>
+            <button class="service-list-filter" type="button" data-service-list-filter="Automation">Automation</button>
+            <button class="service-list-filter" type="button" data-service-list-filter="AI coaching and support">AI support</button>
+            <button class="service-list-filter" type="button" data-service-list-filter="Product strategy">Product strategy</button>
+            <button class="service-list-filter" type="button" data-service-list-filter="Individual consulting">Individual help</button>
+          </div>
+          <div class="service-list-controls">
+            <div class="service-list-cycle" aria-hidden="true">
+              <span class="service-list-cycle-label">Auto-rotating examples</span>
+              <div class="service-list-progress"><span></span></div>
+            </div>
+            <div class="service-list-actions">
+              <button id="service-list-pause" class="button" type="button" aria-pressed="false">Pause rotation</button>
+              <div class="service-list-more" id="service-list-more-wrap" hidden>
+                <button id="service-list-more" class="button primary" type="button">Next set</button>
+              </div>
+            </div>
+          </div>
+          <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json"></div>
+          <p id="service-list-status" class="service-list-status" role="status">Loading examples...</p>
+          <noscript>
+            <p class="service-list-status">JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
+          </noscript>
         </div>
-        <div class="service-list-more" id="service-list-more-wrap" hidden>
-          <button id="service-list-more" class="button" type="button">Shuffle examples</button>
-        </div>
-        <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json" aria-live="polite"></div>
-        <p id="service-list-status" class="service-list-status" role="status">Loading examples...</p>
-        <noscript>
-          <p class="service-list-status">JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
-        </noscript>
       </div>
     </section>
   </main>
@@ -2252,16 +2406,20 @@
 
     (function () {
       var section = document.getElementById("service-list");
+      var panel = document.querySelector("[data-service-deck]");
       var grid = document.getElementById("service-list-grid");
       var status = document.getElementById("service-list-status");
       var moreWrap = document.getElementById("service-list-more-wrap");
       var moreButton = document.getElementById("service-list-more");
+      var pauseButton = document.getElementById("service-list-pause");
+      var cycleLabel = panel ? panel.querySelector(".service-list-cycle-label") : null;
       var filters = Array.prototype.slice.call(document.querySelectorAll("[data-service-list-filter]"));
       if (!grid) {
         return;
       }
 
       var endpoint = grid.getAttribute("data-services-endpoint") || "/assets/services.json";
+      var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var services = [];
       var visible = [];
       var activeFilter = "All";
@@ -2269,6 +2427,16 @@
       var hasLoaded = false;
       var displayCount = 3;
       var previousUrls = [];
+      var cycleMs = 7000;
+      var autoTimer = null;
+      var swapTimer = null;
+      var userPaused = false;
+      var hoverPaused = false;
+      var focusPaused = false;
+
+      if (panel) {
+        panel.style.setProperty("--service-cycle-ms", cycleMs + "ms");
+      }
 
       function updateStatus(message) {
         if (status) {
@@ -2276,35 +2444,33 @@
         }
       }
 
-      function updateShuffleButton() {
-        if (!moreWrap) {
-          return;
-        }
-        moreWrap.hidden = visible.length <= displayCount;
+      function canRotate() {
+        return !reducedMotion && !userPaused && !hoverPaused && !focusPaused && visible.length > displayCount;
       }
 
-      function createCard(service) {
-        var card = document.createElement("a");
-        var headingWrap = document.createElement("div");
-        var category = document.createElement("span");
-        var title = document.createElement("h3");
-        var summary = document.createElement("p");
-        var action = document.createElement("em");
+      function stopAuto() {
+        if (autoTimer) {
+          window.clearTimeout(autoTimer);
+          autoTimer = null;
+        }
+      }
 
-        card.className = "service-list-card";
-        card.href = service.url;
-        card.setAttribute("aria-label", service.title + " - " + service.category);
-        category.textContent = service.category;
-        title.textContent = service.title;
-        summary.textContent = service.summary || "";
-        action.textContent = "See how this works";
+      function updateControls() {
+        var canShuffle = visible.length > displayCount;
 
-        headingWrap.appendChild(category);
-        headingWrap.appendChild(title);
-        headingWrap.appendChild(summary);
-        card.appendChild(headingWrap);
-        card.appendChild(action);
-        return card;
+        if (moreWrap) {
+          moreWrap.hidden = !canShuffle;
+        }
+
+        if (pauseButton) {
+          pauseButton.hidden = reducedMotion || !canShuffle;
+          pauseButton.textContent = userPaused ? "Resume rotation" : "Pause rotation";
+          pauseButton.setAttribute("aria-pressed", userPaused ? "true" : "false");
+        }
+
+        if (cycleLabel) {
+          cycleLabel.textContent = !canShuffle || reducedMotion ? "Example set" : "Auto-rotating examples";
+        }
       }
 
       function shuffled(list) {
@@ -2333,16 +2499,62 @@
         return selected;
       }
 
-      function renderShuffle() {
-        if (!visible.length) {
-          grid.innerHTML = "";
-          updateStatus("No services found for this filter.");
-          updateShuffleButton();
+      function createCard(service) {
+        var card = document.createElement("a");
+        var headingWrap = document.createElement("div");
+        var category = document.createElement("span");
+        var title = document.createElement("h3");
+        var summary = document.createElement("p");
+        var action = document.createElement("em");
+
+        card.className = "service-list-card";
+        card.href = service.url;
+        card.setAttribute("aria-label", service.title + " - " + service.category);
+        category.textContent = service.category;
+        title.textContent = service.title;
+        summary.textContent = service.summary || "";
+        action.textContent = "See how this works";
+
+        headingWrap.appendChild(category);
+        headingWrap.appendChild(title);
+        headingWrap.appendChild(summary);
+        card.appendChild(headingWrap);
+        card.appendChild(action);
+        return card;
+      }
+
+      function setProgressState(running) {
+        if (!panel) {
           return;
         }
 
+        panel.classList.remove("is-running");
+        panel.classList.toggle("is-paused", !running && visible.length > displayCount && !reducedMotion);
+
+        if (running) {
+          // Force a reflow so the progress animation restarts with each set.
+          void panel.offsetWidth;
+          panel.classList.add("is-running");
+        }
+      }
+
+      function scheduleAuto() {
+        stopAuto();
+        updateControls();
+
+        if (!canRotate()) {
+          setProgressState(false);
+          return;
+        }
+
+        setProgressState(true);
+        autoTimer = window.setTimeout(function () {
+          renderShuffle({ automatic: true });
+        }, cycleMs);
+      }
+
+      function updateDeck(selected, automatic) {
         var fragment = document.createDocumentFragment();
-        var selected = pickServices();
 
         selected.forEach(function (service) {
           fragment.appendChild(createCard(service));
@@ -2351,8 +2563,47 @@
         grid.innerHTML = "";
         grid.appendChild(fragment);
 
-        updateStatus("Showing " + selected.length + " of " + visible.length + " ways I can help. Shuffle for another set.");
-        updateShuffleButton();
+        var rotationNote = reducedMotion ? "Use Next set for more examples." : "Examples rotate automatically.";
+        updateStatus("Showing " + selected.length + " of " + visible.length + " ways I can help. " + rotationNote);
+        updateControls();
+
+        if (automatic && panel) {
+          panel.setAttribute("data-last-auto-rotation", String(Date.now()));
+        }
+
+        scheduleAuto();
+      }
+
+      function renderShuffle(options) {
+        var automatic = !!(options && options.automatic);
+        var immediate = !!(options && options.immediate);
+
+        stopAuto();
+        if (swapTimer) {
+          window.clearTimeout(swapTimer);
+          swapTimer = null;
+        }
+
+        if (!visible.length) {
+          grid.innerHTML = "";
+          updateStatus("No services found for this filter.");
+          updateControls();
+          setProgressState(false);
+          return;
+        }
+
+        var selected = pickServices();
+
+        if (reducedMotion || immediate || !grid.children.length) {
+          updateDeck(selected, automatic);
+          return;
+        }
+
+        grid.classList.add("is-swapping");
+        swapTimer = window.setTimeout(function () {
+          grid.classList.remove("is-swapping");
+          updateDeck(selected, automatic);
+        }, 180);
       }
 
       function applyFilter(category) {
@@ -2367,7 +2618,7 @@
           button.classList.toggle("is-active", isActive);
           button.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
-        renderShuffle();
+        renderShuffle({ immediate: true });
       }
 
       filters.forEach(function (button) {
@@ -2382,7 +2633,48 @@
 
       if (moreButton) {
         moreButton.addEventListener("click", function () {
+          userPaused = false;
           renderShuffle();
+        });
+      }
+
+      if (pauseButton) {
+        pauseButton.addEventListener("click", function () {
+          userPaused = !userPaused;
+          updateControls();
+
+          if (userPaused) {
+            stopAuto();
+            setProgressState(false);
+            updateStatus("Rotation paused. Use Next set whenever you want more examples.");
+          } else {
+            updateStatus("Rotation resumed. Examples will keep changing automatically.");
+            scheduleAuto();
+          }
+        });
+      }
+
+      if (panel) {
+        panel.addEventListener("mouseenter", function () {
+          hoverPaused = true;
+          scheduleAuto();
+        });
+
+        panel.addEventListener("mouseleave", function () {
+          hoverPaused = false;
+          scheduleAuto();
+        });
+
+        panel.addEventListener("focusin", function () {
+          focusPaused = true;
+          scheduleAuto();
+        });
+
+        panel.addEventListener("focusout", function () {
+          window.setTimeout(function () {
+            focusPaused = !!(document.activeElement && panel.contains(document.activeElement));
+            scheduleAuto();
+          }, 0);
         });
       }
 

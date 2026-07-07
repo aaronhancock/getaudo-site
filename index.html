@@ -1290,8 +1290,17 @@
       gap: 16px;
     }
 
-    .service-list-card {
+    .service-list-slot {
+      position: relative;
       min-height: 210px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .service-list-card {
+      position: absolute;
+      inset: 0;
+      min-height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1306,17 +1315,22 @@
       animation: serviceCardIn 520ms ease both;
     }
 
-    .service-list-card:nth-child(2) {
+    .service-list-slot:nth-child(2) .service-list-card {
       animation-delay: 70ms;
     }
 
-    .service-list-card:nth-child(3) {
+    .service-list-slot:nth-child(3) .service-list-card {
       animation-delay: 140ms;
     }
 
-    .service-list-grid.is-swapping .service-list-card {
-      opacity: 0;
-      transform: translateY(-8px) scale(0.985);
+    .service-list-card.is-leaving {
+      pointer-events: none;
+      animation: serviceCardOut var(--service-card-transition-ms, 1100ms) cubic-bezier(0.42, 0, 0.18, 1) forwards;
+    }
+
+    .service-list-card.is-entering {
+      pointer-events: none;
+      animation: serviceCardUpIn var(--service-card-transition-ms, 1100ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .service-list-card:hover {
@@ -1363,6 +1377,30 @@
       from {
         opacity: 0;
         transform: translateY(14px) scale(0.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes serviceCardOut {
+      from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(-34px) scale(0.985);
+      }
+    }
+
+    @keyframes serviceCardUpIn {
+      from {
+        opacity: 0;
+        transform: translateY(34px) scale(0.985);
       }
 
       to {
@@ -1729,6 +1767,10 @@
         min-height: 190px;
       }
 
+      .service-list-slot {
+        min-height: 190px;
+      }
+
       .cookie-consent {
         right: 14px;
         bottom: 14px;
@@ -1764,6 +1806,11 @@
       }
 
       .service-list-card {
+        animation: none;
+      }
+
+      .service-list-card.is-entering,
+      .service-list-card.is-leaving {
         animation: none;
       }
     }
@@ -2260,10 +2307,19 @@
       var displayCount = 3;
       var previousUrls = [];
       var cycleMs = 7000;
+      var transitionMs = 1100;
+      var staggerMs = Math.round(transitionMs / 3);
       var autoTimer = null;
-      var swapTimer = null;
+      var cycleTimer = null;
+      var slotTimers = [];
+      var currentServices = [];
+      var isAnimating = false;
       var hoverPaused = false;
       var focusPaused = false;
+
+      if (panel) {
+        panel.style.setProperty("--service-card-transition-ms", transitionMs + "ms");
+      }
 
       function updateStatus(message, show) {
         if (status) {
@@ -2283,6 +2339,19 @@
         }
       }
 
+      function stopCycle() {
+        if (cycleTimer) {
+          window.clearTimeout(cycleTimer);
+          cycleTimer = null;
+        }
+
+        slotTimers.forEach(function (timer) {
+          window.clearTimeout(timer);
+        });
+        slotTimers = [];
+        isAnimating = false;
+      }
+
       function shuffled(list) {
         var copy = list.slice();
         var index = copy.length;
@@ -2299,8 +2368,11 @@
       function pickServices() {
         var count = Math.min(displayCount, visible.length);
         var pool = shuffled(visible);
+        var currentUrls = currentServices.map(function (service) {
+          return service.url;
+        });
         var fresh = pool.filter(function (service) {
-          return previousUrls.indexOf(service.url) === -1;
+          return currentUrls.indexOf(service.url) === -1 && previousUrls.indexOf(service.url) === -1;
         });
         var selected = fresh.length >= count ? fresh.slice(0, count) : pool.slice(0, count);
         previousUrls = selected.map(function (service) {
@@ -2333,10 +2405,18 @@
         return card;
       }
 
+      function createSlot(service, index) {
+        var slot = document.createElement("div");
+        slot.className = "service-list-slot";
+        slot.setAttribute("data-service-slot", String(index));
+        slot.appendChild(createCard(service));
+        return slot;
+      }
+
       function scheduleAuto() {
         stopAuto();
 
-        if (!canRotate()) {
+        if (!canRotate() || isAnimating) {
           return;
         }
 
@@ -2348,12 +2428,13 @@
       function updateDeck(selected, automatic) {
         var fragment = document.createDocumentFragment();
 
-        selected.forEach(function (service) {
-          fragment.appendChild(createCard(service));
+        selected.forEach(function (service, index) {
+          fragment.appendChild(createSlot(service, index));
         });
 
         grid.innerHTML = "";
         grid.appendChild(fragment);
+        currentServices = selected.slice();
 
         updateStatus("", false);
 
@@ -2364,18 +2445,69 @@
         scheduleAuto();
       }
 
+      function replaceSlot(slot, service, index) {
+        var outgoing = slot.querySelector(".service-list-card");
+        var incoming = createCard(service);
+
+        incoming.classList.add("is-entering");
+        incoming.setAttribute("tabindex", "-1");
+        outgoing.classList.add("is-leaving");
+        outgoing.setAttribute("aria-hidden", "true");
+        outgoing.setAttribute("tabindex", "-1");
+        slot.classList.add("is-transitioning");
+        slot.appendChild(incoming);
+
+        slotTimers.push(window.setTimeout(function () {
+          incoming.classList.remove("is-entering");
+          incoming.removeAttribute("tabindex");
+          slot.innerHTML = "";
+          slot.appendChild(incoming);
+          slot.classList.remove("is-transitioning");
+          currentServices[index] = service;
+        }, transitionMs + 40));
+      }
+
+      function animateDeck(selected, automatic) {
+        var slots = Array.prototype.slice.call(grid.querySelectorAll("[data-service-slot]"));
+        var totalMs = transitionMs + (staggerMs * Math.max(0, selected.length - 1)) + 90;
+
+        if (slots.length !== selected.length) {
+          updateDeck(selected, automatic);
+          return;
+        }
+
+        isAnimating = true;
+        slotTimers = selected.map(function (service, index) {
+          return window.setTimeout(function () {
+            replaceSlot(slots[index], service, index);
+          }, staggerMs * index);
+        });
+
+        cycleTimer = window.setTimeout(function () {
+          slotTimers = [];
+          cycleTimer = null;
+          isAnimating = false;
+          currentServices = selected.slice();
+          updateStatus("", false);
+
+          if (automatic && panel) {
+            panel.setAttribute("data-last-auto-rotation", String(Date.now()));
+          }
+
+          scheduleAuto();
+        }, totalMs);
+      }
+
       function renderDeck(options) {
         var automatic = !!(options && options.automatic);
         var immediate = !!(options && options.immediate);
 
         stopAuto();
-        if (swapTimer) {
-          window.clearTimeout(swapTimer);
-          swapTimer = null;
-        }
+        stopCycle();
 
         if (!visible.length) {
           grid.innerHTML = "";
+          currentServices = [];
           updateStatus("No services are available right now.", true);
           return;
         }
@@ -2387,11 +2519,7 @@
           return;
         }
 
-        grid.classList.add("is-swapping");
-        swapTimer = window.setTimeout(function () {
-          grid.classList.remove("is-swapping");
-          updateDeck(selected, automatic);
-        }, 180);
+        animateDeck(selected, automatic);
       }
 
       if (panel) {
@@ -2435,6 +2563,7 @@
             services = Array.isArray(payload.services) ? payload.services : [];
             visible = services.slice();
             previousUrls = [];
+            currentServices = [];
             renderDeck({ immediate: true });
           })
           .catch(function () {

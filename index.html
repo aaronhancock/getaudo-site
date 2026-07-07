@@ -1284,87 +1284,6 @@
       background: linear-gradient(90deg, var(--brass), var(--teal), var(--copper));
     }
 
-    .service-list-tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 0;
-    }
-
-    .service-list-filter {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 13px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.58);
-      font: inherit;
-      font-size: 13px;
-      font-weight: 820;
-      cursor: pointer;
-    }
-
-    .service-list-filter.is-active {
-      color: #101815;
-      border-color: #f0c66f;
-      background: #f0c66f;
-    }
-
-    .service-list-controls {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 18px;
-      margin: 20px 0;
-    }
-
-    .service-list-cycle {
-      width: min(100%, 360px);
-      display: grid;
-      gap: 8px;
-    }
-
-    .service-list-cycle-label {
-      color: #725119;
-      font-size: 12px;
-      font-weight: 820;
-      letter-spacing: 0.07em;
-      line-height: 1.35;
-      text-transform: uppercase;
-    }
-
-    .service-list-progress {
-      height: 6px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(24, 34, 29, 0.12);
-    }
-
-    .service-list-progress span {
-      width: 100%;
-      height: 100%;
-      display: block;
-      transform: scaleX(0);
-      transform-origin: left center;
-      border-radius: inherit;
-      background: #c89b4b;
-    }
-
-    .service-list-panel.is-running .service-list-progress span {
-      animation: serviceProgress var(--service-cycle-ms, 7s) linear forwards;
-    }
-
-    .service-list-panel.is-paused .service-list-progress span {
-      animation-play-state: paused;
-    }
-
-    .service-list-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
     .service-list-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1438,35 +1357,6 @@
       font-style: normal;
       font-weight: 820;
       line-height: 1.35;
-    }
-
-    .service-list-status {
-      min-height: 22px;
-      margin: 16px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .service-list-more {
-      display: flex;
-      justify-content: center;
-      margin: 0;
-    }
-
-    .service-list-more[hidden] {
-      display: none;
-    }
-
-    @keyframes serviceProgress {
-      from {
-        transform: scaleX(0);
-      }
-
-      to {
-        transform: scaleX(1);
-      }
     }
 
     @keyframes serviceCardIn {
@@ -1827,36 +1717,8 @@
         padding: 54px 0 62px;
       }
 
-      .service-list-tools {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 4px;
-      }
-
       .service-list-panel {
         padding: 16px;
-      }
-
-      .service-list-filter {
-        flex: 0 0 auto;
-      }
-
-      .service-list-controls {
-        align-items: stretch;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .service-list-cycle {
-        width: 100%;
-      }
-
-      .service-list-actions {
-        justify-content: stretch;
-      }
-
-      .service-list-actions .button {
-        flex: 1 1 150px;
       }
 
       .service-list-grid {
@@ -1899,10 +1761,6 @@
 
       .button:hover {
         transform: none;
-      }
-
-      .service-list-panel.is-running .service-list-progress span {
-        animation: none;
       }
 
       .service-list-card {
@@ -2218,33 +2076,13 @@
       <div class="shell">
         <div class="section-head">
           <h2 id="service-list-heading">Ways I can help.</h2>
-          <p class="section-copy">Watch a few common problems rotate. If one sounds familiar, click through. If not, start Free Discovery and we can sort it out together.</p>
+          <p class="section-copy">A few examples of problems I can help solve. If one sounds familiar, click through. If not, start Free Discovery and we can sort it out together.</p>
         </div>
         <div class="service-list-panel" data-service-deck>
-          <div class="service-list-tools" aria-label="Service filters">
-            <button class="service-list-filter is-active" type="button" data-service-list-filter="All">All</button>
-            <button class="service-list-filter" type="button" data-service-list-filter="Website and app care">Websites and apps</button>
-            <button class="service-list-filter" type="button" data-service-list-filter="Automation">Automation</button>
-            <button class="service-list-filter" type="button" data-service-list-filter="AI coaching and support">AI support</button>
-            <button class="service-list-filter" type="button" data-service-list-filter="Product strategy">Product strategy</button>
-            <button class="service-list-filter" type="button" data-service-list-filter="Individual consulting">Individual help</button>
-          </div>
-          <div class="service-list-controls">
-            <div class="service-list-cycle" aria-hidden="true">
-              <span class="service-list-cycle-label">Auto-rotating examples</span>
-              <div class="service-list-progress"><span></span></div>
-            </div>
-            <div class="service-list-actions">
-              <button id="service-list-pause" class="button" type="button" aria-pressed="false">Pause rotation</button>
-              <div class="service-list-more" id="service-list-more-wrap" hidden>
-                <button id="service-list-more" class="button primary" type="button">Next set</button>
-              </div>
-            </div>
-          </div>
           <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json"></div>
-          <p id="service-list-status" class="service-list-status" role="status">Loading examples...</p>
+          <p id="service-list-status" class="sr-only" role="status" hidden>Loading examples...</p>
           <noscript>
-            <p class="service-list-status">JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
+            <p>JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
           </noscript>
         </div>
       </div>
@@ -2409,11 +2247,6 @@
       var panel = document.querySelector("[data-service-deck]");
       var grid = document.getElementById("service-list-grid");
       var status = document.getElementById("service-list-status");
-      var moreWrap = document.getElementById("service-list-more-wrap");
-      var moreButton = document.getElementById("service-list-more");
-      var pauseButton = document.getElementById("service-list-pause");
-      var cycleLabel = panel ? panel.querySelector(".service-list-cycle-label") : null;
-      var filters = Array.prototype.slice.call(document.querySelectorAll("[data-service-list-filter]"));
       if (!grid) {
         return;
       }
@@ -2422,7 +2255,6 @@
       var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var services = [];
       var visible = [];
-      var activeFilter = "All";
       var sectionObserver = null;
       var hasLoaded = false;
       var displayCount = 3;
@@ -2430,46 +2262,24 @@
       var cycleMs = 7000;
       var autoTimer = null;
       var swapTimer = null;
-      var userPaused = false;
       var hoverPaused = false;
       var focusPaused = false;
 
-      if (panel) {
-        panel.style.setProperty("--service-cycle-ms", cycleMs + "ms");
-      }
-
-      function updateStatus(message) {
+      function updateStatus(message, show) {
         if (status) {
           status.textContent = message;
+          status.hidden = !show;
         }
       }
 
       function canRotate() {
-        return !reducedMotion && !userPaused && !hoverPaused && !focusPaused && visible.length > displayCount;
+        return !reducedMotion && !hoverPaused && !focusPaused && visible.length > displayCount;
       }
 
       function stopAuto() {
         if (autoTimer) {
           window.clearTimeout(autoTimer);
           autoTimer = null;
-        }
-      }
-
-      function updateControls() {
-        var canShuffle = visible.length > displayCount;
-
-        if (moreWrap) {
-          moreWrap.hidden = !canShuffle;
-        }
-
-        if (pauseButton) {
-          pauseButton.hidden = reducedMotion || !canShuffle;
-          pauseButton.textContent = userPaused ? "Resume rotation" : "Pause rotation";
-          pauseButton.setAttribute("aria-pressed", userPaused ? "true" : "false");
-        }
-
-        if (cycleLabel) {
-          cycleLabel.textContent = !canShuffle || reducedMotion ? "Example set" : "Auto-rotating examples";
         }
       }
 
@@ -2523,33 +2333,15 @@
         return card;
       }
 
-      function setProgressState(running) {
-        if (!panel) {
-          return;
-        }
-
-        panel.classList.remove("is-running");
-        panel.classList.toggle("is-paused", !running && visible.length > displayCount && !reducedMotion);
-
-        if (running) {
-          // Force a reflow so the progress animation restarts with each set.
-          void panel.offsetWidth;
-          panel.classList.add("is-running");
-        }
-      }
-
       function scheduleAuto() {
         stopAuto();
-        updateControls();
 
         if (!canRotate()) {
-          setProgressState(false);
           return;
         }
 
-        setProgressState(true);
         autoTimer = window.setTimeout(function () {
-          renderShuffle({ automatic: true });
+          renderDeck({ automatic: true });
         }, cycleMs);
       }
 
@@ -2563,9 +2355,7 @@
         grid.innerHTML = "";
         grid.appendChild(fragment);
 
-        var rotationNote = reducedMotion ? "Use Next set for more examples." : "Examples rotate automatically.";
-        updateStatus("Showing " + selected.length + " of " + visible.length + " ways I can help. " + rotationNote);
-        updateControls();
+        updateStatus("", false);
 
         if (automatic && panel) {
           panel.setAttribute("data-last-auto-rotation", String(Date.now()));
@@ -2574,7 +2364,7 @@
         scheduleAuto();
       }
 
-      function renderShuffle(options) {
+      function renderDeck(options) {
         var automatic = !!(options && options.automatic);
         var immediate = !!(options && options.immediate);
 
@@ -2586,9 +2376,7 @@
 
         if (!visible.length) {
           grid.innerHTML = "";
-          updateStatus("No services found for this filter.");
-          updateControls();
-          setProgressState(false);
+          updateStatus("No services are available right now.", true);
           return;
         }
 
@@ -2606,58 +2394,10 @@
         }, 180);
       }
 
-      function applyFilter(category) {
-        activeFilter = category;
-        visible = category === "All" ? services.slice() : services.filter(function (service) {
-          return service.category === category;
-        });
-        previousUrls = [];
-        grid.innerHTML = "";
-        filters.forEach(function (button) {
-          var isActive = button.getAttribute("data-service-list-filter") === activeFilter;
-          button.classList.toggle("is-active", isActive);
-          button.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-        renderShuffle({ immediate: true });
-      }
-
-      filters.forEach(function (button) {
-        button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
-        button.addEventListener("click", function () {
-          if (!hasLoaded) {
-            return;
-          }
-          applyFilter(button.getAttribute("data-service-list-filter") || "All");
-        });
-      });
-
-      if (moreButton) {
-        moreButton.addEventListener("click", function () {
-          userPaused = false;
-          renderShuffle();
-        });
-      }
-
-      if (pauseButton) {
-        pauseButton.addEventListener("click", function () {
-          userPaused = !userPaused;
-          updateControls();
-
-          if (userPaused) {
-            stopAuto();
-            setProgressState(false);
-            updateStatus("Rotation paused. Use Next set whenever you want more examples.");
-          } else {
-            updateStatus("Rotation resumed. Examples will keep changing automatically.");
-            scheduleAuto();
-          }
-        });
-      }
-
       if (panel) {
         panel.addEventListener("mouseenter", function () {
           hoverPaused = true;
-          scheduleAuto();
+          stopAuto();
         });
 
         panel.addEventListener("mouseleave", function () {
@@ -2667,7 +2407,7 @@
 
         panel.addEventListener("focusin", function () {
           focusPaused = true;
-          scheduleAuto();
+          stopAuto();
         });
 
         panel.addEventListener("focusout", function () {
@@ -2693,10 +2433,12 @@
           })
           .then(function (payload) {
             services = Array.isArray(payload.services) ? payload.services : [];
-            applyFilter(activeFilter);
+            visible = services.slice();
+            previousUrls = [];
+            renderDeck({ immediate: true });
           })
           .catch(function () {
-            updateStatus("The services could not load. Please refresh the page.");
+            updateStatus("The service examples could not load. Please refresh the page.", true);
           });
       }
 

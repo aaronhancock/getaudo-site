@@ -712,16 +712,11 @@ class AudoHandler(BaseHTTPRequestHandler):
             grouped.setdefault(service.category, []).append(service)
 
         main_links = [
-            ("/", "Home", "The main Audo consulting page."),
-            ("/#services", "Things I can help with", "A quick overview of common website, app, automation, AI, and product needs."),
-            ("/#why", "Why Audo", "Aaron's background, approach, and why clients work directly with him."),
-            ("/#discovery", "Free Discovery", "A simple form to share what needs help and request a reply."),
-            ("/#service-list", "Service examples", "Rotating examples that point to detailed service pages."),
-        ]
-        utility_links = [
-            ("/llms.txt", "AI summary", "Plain-text site summary for AI tools."),
-            ("/sitemap.xml", "XML sitemap", "Machine-readable sitemap for search engines."),
-            ("/robots.txt", "Robots file", "Search crawler instructions."),
+            ("/", "Home", "See what Audo does and how I work with individuals and small businesses."),
+            ("/#services", "Things I can help with", "Scan the main kinds of work I can help take off your plate."),
+            ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
+            ("/#discovery", "Free Discovery", "Share what you are dealing with and I will review it personally."),
+            ("/#service-list", "Specific examples", "Browse common situations that may look like yours."),
         ]
 
         def link_cards(links: list[tuple[str, str, str]]) -> str:
@@ -750,7 +745,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                 f"""      <section class="sitemap-group" aria-labelledby="{h(anchor)}-heading">
         <div class="group-title">
           <h2 id="{h(anchor)}-heading">{h(category)}</h2>
-          <span>{len(services)} pages</span>
+          <span>{len(services)} common situations</span>
         </div>
         <ul class="sitemap-links">
 {service_items}
@@ -816,7 +811,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sitemap | Audo</title>
-  <meta name="description" content="A user-friendly sitemap for Audo consulting pages, service examples, and discovery links.">
+  <meta name="description" content="Find the Audo consulting page or service example that matches your website, app, automation, AI, or product problem.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron Hancock">
   <meta name="theme-color" content="#101815">
@@ -828,7 +823,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="{h(PUBLIC_BASE_URL + "/sitemap")}">
   <meta property="og:title" content="Audo Sitemap">
-  <meta property="og:description" content="Browse Audo consulting pages and service examples in one simple sitemap.">
+  <meta property="og:description" content="Find the Audo page that matches the problem you want help with.">
   <meta property="og:image" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
   <meta property="og:image:secure_url" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
   <meta property="og:image:width" content="1200">
@@ -836,7 +831,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta property="og:image:alt" content="Audo social card with Aaron Hancock and Free Discovery call to action.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Audo Sitemap">
-  <meta name="twitter:description" content="Browse Audo consulting pages and service examples in one simple sitemap.">
+  <meta name="twitter:description" content="Find the Audo page that matches the problem you want help with.">
   <meta name="twitter:image" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
   <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
@@ -1115,29 +1110,19 @@ class AudoHandler(BaseHTTPRequestHandler):
         <a href="/#discovery">Request Free Discovery</a>
       </nav>
       <p class="eyebrow">Sitemap</p>
-      <h1>Find the Audo page you need.</h1>
-      <p class="hero-copy">Browse the main consulting pages and {len(SERVICES)} service examples for websites, apps, automation, AI support, product strategy, and personal technology help.</p>
+      <h1>Find help for what needs attention.</h1>
+      <p class="hero-copy">Use this page to jump to the kind of website, app, automation, AI, or product help that sounds closest to what you are dealing with.</p>
     </div>
   </header>
   <main id="main">
     <div class="shell">
       <section class="section" aria-labelledby="main-pages-heading">
         <div class="section-head">
-          <h2 id="main-pages-heading">Main pages.</h2>
-          <p>Start here if you want the big picture, want to understand how Audo works, or are ready to request Free Discovery.</p>
+          <h2 id="main-pages-heading">Start here.</h2>
+          <p>If you want the big picture or are ready to reach out, these are the best places to begin.</p>
         </div>
         <ul class="sitemap-links">
 {link_cards(main_links)}
-        </ul>
-      </section>
-
-      <section class="section" aria-labelledby="utility-pages-heading">
-        <div class="section-head">
-          <h2 id="utility-pages-heading">Site resources.</h2>
-          <p>Helpful files for search engines, AI tools, and anyone who wants a quick summary of the site.</p>
-        </div>
-        <ul class="sitemap-links">
-{link_cards(utility_links)}
         </ul>
       </section>
 
@@ -1154,7 +1139,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   </main>
   <footer>
     <div class="shell">
-      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/sitemap.xml">XML sitemap</a></p>
+      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Free Discovery</a></p>
     </div>
   </footer>
 </body>

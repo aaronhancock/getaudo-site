@@ -1139,7 +1139,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   </main>
   <footer>
     <div class="shell">
-      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Free Discovery</a></p>
+      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Free Discovery</a> · <a href="/sitemap">Sitemap</a></p>
     </div>
   </footer>
 </body>

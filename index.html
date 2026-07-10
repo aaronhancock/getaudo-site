@@ -1961,25 +1961,23 @@
 
     .problem-explorer-toolbar {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: 1fr;
       align-items: center;
-      gap: 18px;
       border: 1px solid rgba(24, 34, 29, 0.09);
       border-radius: 22px;
-      padding: 12px;
+      padding: 10px;
       background: rgba(255, 255, 255, 0.82);
       box-shadow: 0 12px 30px rgba(12, 18, 15, 0.05);
     }
 
     .problem-tabs {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
       min-width: 0;
     }
 
     .problem-tab,
-    .problem-shuffle,
     .problem-choice {
       font: inherit;
       cursor: pointer;
@@ -1994,7 +1992,8 @@
       background: transparent;
       font-size: 13px;
       font-weight: 780;
-      white-space: nowrap;
+      line-height: 1.2;
+      text-align: center;
       transition: color 180ms ease, background 180ms ease, transform 180ms ease;
     }
 
@@ -2009,55 +2008,18 @@
       box-shadow: 0 8px 20px color-mix(in srgb, var(--explorer-accent) 25%, transparent);
     }
 
-    .problem-shuffle {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid rgba(24, 34, 29, 0.11);
-      border-radius: 13px;
-      padding: 0 14px;
-      color: var(--ink);
-      background: var(--white);
-      font-size: 13px;
-      font-weight: 820;
-      white-space: nowrap;
-      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
-    }
-
-    .problem-shuffle:hover {
-      border-color: color-mix(in srgb, var(--explorer-accent) 46%, transparent);
-      box-shadow: 0 10px 22px rgba(12, 18, 15, 0.08);
-      transform: translateY(-2px);
-    }
-
-    .problem-shuffle-icon {
-      width: 27px;
-      height: 27px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--white);
-      background: var(--explorer-accent);
-      font-size: 15px;
-      transition: transform 360ms ease;
-    }
-
-    .problem-shuffle:hover .problem-shuffle-icon {
-      transform: rotate(120deg);
-    }
-
     .problem-stage {
       display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(310px, 0.75fr);
+      grid-template-columns: 1fr;
       gap: 18px;
-      min-height: 610px;
+      min-height: 0;
     }
 
     .problem-spotlight {
       min-width: 0;
       display: grid;
-      grid-template-rows: 270px minmax(0, 1fr);
+      grid-template-columns: minmax(380px, 0.88fr) minmax(0, 1.12fr);
+      grid-template-rows: minmax(480px, 1fr);
       overflow: hidden;
       border: 1px solid rgba(24, 34, 29, 0.09);
       border-radius: 28px;
@@ -2107,6 +2069,11 @@
         linear-gradient(90deg, rgba(24, 34, 29, 0.045) 1px, transparent 1px),
         linear-gradient(145deg, #f7faf7, var(--explorer-accent-soft));
       background-size: 34px 34px, 34px 34px, auto;
+    }
+
+    .problem-spotlight > .problem-visual {
+      border-right: 1px solid rgba(24, 34, 29, 0.08);
+      border-bottom: 0;
     }
 
     .problem-visual::before,
@@ -2496,52 +2463,89 @@
       transform: translateY(-2px);
     }
 
+    .problem-more-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin: 12px 4px 0;
+    }
+
+    .problem-more-head > div {
+      display: grid;
+      gap: 5px;
+    }
+
+    .problem-more-head p {
+      margin: 0;
+      color: var(--explorer-accent);
+      font-size: 10px;
+      font-weight: 840;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .problem-more-head h3 {
+      font-size: clamp(25px, 2.6vw, 34px);
+      line-height: 1.08;
+    }
+
+    .problem-more-head > span {
+      max-width: 340px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align: right;
+    }
+
     .problem-choices {
       display: grid;
-      grid-template-rows: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 14px;
     }
 
     .problem-choice {
       --choice-delay: 0ms;
       position: relative;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 15px;
+      min-height: 198px;
+      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 13px;
       overflow: hidden;
       border: 1px solid rgba(24, 34, 29, 0.09);
       border-radius: 22px;
-      padding: 20px;
+      padding: 22px;
       color: var(--ink);
-      background: rgba(255, 255, 255, 0.88);
+      background:
+        radial-gradient(circle at 100% 0, color-mix(in srgb, var(--explorer-accent-soft) 72%, transparent), transparent 42%),
+        rgba(255, 255, 255, 0.92);
       box-shadow: 0 12px 28px rgba(12, 18, 15, 0.055);
       text-align: left;
       animation: explorerChoiceIn 440ms var(--choice-delay) cubic-bezier(0.22, 1, 0.36, 1) both;
       transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
     }
 
-    .problem-choice::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      background: var(--explorer-accent);
-      opacity: 0.72;
+    .problem-choice:nth-child(n + 4) {
+      min-height: 178px;
+      grid-column: span 3;
     }
 
     .problem-choice:hover {
       border-color: color-mix(in srgb, var(--explorer-accent) 42%, transparent);
       box-shadow: 0 18px 36px rgba(12, 18, 15, 0.1);
-      transform: translateX(-5px);
+      transform: translateY(-5px);
     }
 
     .problem-choice-number {
-      width: 34px;
-      height: 34px;
+      width: max-content;
+      min-width: 42px;
+      height: 30px;
       display: grid;
       place-items: center;
-      border-radius: 50%;
+      border-radius: 9px;
+      padding: 0 9px;
       color: var(--explorer-ink);
       background: var(--explorer-accent-soft);
       font-size: 11px;
@@ -2550,7 +2554,7 @@
 
     .problem-choice-copy {
       display: grid;
-      gap: 6px;
+      gap: 8px;
     }
 
     .problem-choice-copy small {
@@ -2562,23 +2566,38 @@
     }
 
     .problem-choice-copy strong {
-      font-size: clamp(17px, 1.7vw, 20px);
+      font-size: clamp(19px, 1.8vw, 23px);
       line-height: 1.12;
     }
 
-    .problem-choice-arrow {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--white);
-      background: var(--explorer-accent);
+    .problem-choice-summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .problem-choice-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      width: max-content;
+      margin-top: auto;
+      color: var(--explorer-accent);
+      font-size: 12px;
+      font-weight: 820;
+      line-height: 1.2;
+    }
+
+    .problem-choice-action span {
+      display: inline-block;
+      font-size: 17px;
+      line-height: 1;
       transition: transform 180ms ease;
     }
 
-    .problem-choice:hover .problem-choice-arrow {
-      transform: translateX(3px);
+    .problem-choice:hover .problem-choice-action span {
+      transform: translateX(4px);
     }
 
     .problem-spotlight.is-changing .problem-visual {
@@ -2839,13 +2858,15 @@
       }
 
       .problem-tabs {
-        overflow-x: auto;
-        padding-bottom: 2px;
-        scrollbar-width: thin;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
       }
 
-      .problem-shuffle {
-        width: 100%;
+      .problem-tab {
+        grid-column: span 2;
+      }
+
+      .problem-tab:nth-child(n + 4) {
+        grid-column: span 3;
       }
 
       .problem-stage {
@@ -2853,19 +2874,28 @@
         min-height: 0;
       }
 
+      .problem-spotlight {
+        grid-template-columns: 1fr;
+        grid-template-rows: 270px auto;
+      }
+
+      .problem-spotlight > .problem-visual {
+        border-right: 0;
+        border-bottom: 1px solid rgba(24, 34, 29, 0.08);
+      }
+
       .problem-choices {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .problem-choice {
-        min-height: 176px;
-        grid-template-columns: 1fr auto;
-        align-content: space-between;
+      .problem-choice,
+      .problem-choice:nth-child(n + 4) {
+        min-height: 188px;
+        grid-column: auto;
       }
 
-      .problem-choice-number {
-        display: none;
+      .problem-choice:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
       }
 
     }
@@ -3232,12 +3262,23 @@
       }
 
       .problem-tabs {
-        margin: 0 -2px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        margin: 0;
       }
 
       .problem-tab {
+        grid-column: auto;
         min-height: 42px;
-        padding: 0 13px;
+        padding: 8px 10px;
+      }
+
+      .problem-tab:nth-child(n + 4) {
+        grid-column: auto;
+      }
+
+      .problem-tab:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
       }
 
       .problem-stage {
@@ -3245,8 +3286,14 @@
       }
 
       .problem-spotlight {
+        grid-template-columns: 1fr;
         grid-template-rows: 218px auto;
         border-radius: 22px;
+      }
+
+      .problem-spotlight > .problem-visual {
+        border-right: 0;
+        border-bottom: 1px solid rgba(24, 34, 29, 0.08);
       }
 
       .explorer-scene {
@@ -3340,15 +3387,28 @@
         width: 100%;
       }
 
+      .problem-more-head {
+        align-items: start;
+        flex-direction: column;
+        gap: 9px;
+        margin: 14px 4px 2px;
+      }
+
+      .problem-more-head > span {
+        max-width: none;
+        text-align: left;
+      }
+
       .problem-choices {
         grid-template-columns: 1fr;
         gap: 10px;
       }
 
-      .problem-choice {
-        min-height: 0;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-content: center;
+      .problem-choice,
+      .problem-choice:nth-child(n + 4),
+      .problem-choice:last-child:nth-child(odd) {
+        min-height: 176px;
+        grid-column: 1;
         border-radius: 18px;
         padding: 18px;
       }
@@ -3728,10 +3788,6 @@
         <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-explorer">
           <div class="problem-explorer-toolbar">
             <div class="problem-tabs" role="tablist" aria-label="Problem areas" data-explorer-tabs></div>
-            <button class="problem-shuffle" type="button" data-explorer-shuffle>
-              Show different examples
-              <span class="problem-shuffle-icon" aria-hidden="true">↻</span>
-            </button>
           </div>
 
           <div id="problem-explorer-stage" class="problem-stage">
@@ -3752,6 +3808,13 @@
               </div>
             </article>
 
+            <div class="problem-more-head">
+              <div>
+                <p>Keep exploring</p>
+                <h3 data-explorer-more-label>More website problems</h3>
+              </div>
+              <span>Choose any card to bring it into focus.</span>
+            </div>
             <div class="problem-choices" data-explorer-choices aria-label="More situations in this area"></div>
           </div>
 
@@ -4030,13 +4093,13 @@
 
       var endpoint = explorer.getAttribute("data-services-endpoint") || "/assets/services.json";
       var tabs = explorer.querySelector("[data-explorer-tabs]");
-      var shuffle = explorer.querySelector("[data-explorer-shuffle]");
       var spotlight = explorer.querySelector("[data-explorer-spotlight]");
       var visual = explorer.querySelector("[data-explorer-visual]");
       var groupLabel = explorer.querySelector("[data-explorer-group]");
       var title = explorer.querySelector("[data-explorer-title]");
       var summary = explorer.querySelector("[data-explorer-summary]");
       var result = explorer.querySelector("[data-explorer-result]");
+      var moreLabel = explorer.querySelector("[data-explorer-more-label]");
       var choices = explorer.querySelector("[data-explorer-choices]");
       var choose = explorer.querySelector("[data-explorer-choose]");
       var details = explorer.querySelector("[data-explorer-details]");
@@ -4044,19 +4107,17 @@
       var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var services = [];
       var currentGroup = "website";
-      var pageStart = 0;
-      var currentPage = [];
       var selectedService = null;
       var hasLoaded = false;
       var sectionObserver = null;
       var animationTimer = null;
 
       var groups = [
-        { id: "website", label: "Your website", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
-        { id: "customers", label: "Customers and leads", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
-        { id: "work", label: "Daily work", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
-        { id: "ai", label: "AI at work", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
-        { id: "decisions", label: "Decisions and projects", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
+        { id: "website", label: "Your website", moreLabel: "More website problems", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
+        { id: "customers", label: "Customers and leads", moreLabel: "More customer and lead problems", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
+        { id: "work", label: "Daily work", moreLabel: "More daily-work problems", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
+        { id: "ai", label: "AI at work", moreLabel: "More AI questions", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
+        { id: "decisions", label: "Decisions and projects", moreLabel: "More decisions and projects", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
       ];
 
       var scenes = {
@@ -4136,17 +4197,6 @@
         });
       }
 
-      function pageForGroup(groupId) {
-        var groupServices = servicesForGroup(groupId);
-        var count = Math.min(4, groupServices.length);
-        var page = [];
-        var index;
-        for (index = 0; index < count; index += 1) {
-          page.push(groupServices[(pageStart + index) % groupServices.length]);
-        }
-        return page;
-      }
-
       function renderTabs() {
         tabs.innerHTML = "";
         groups.forEach(function (group) {
@@ -4162,7 +4212,6 @@
               return;
             }
             currentGroup = group.id;
-            pageStart = 0;
             renderTabs();
             renderPage(true);
             announce("Showing " + group.label.toLowerCase() + " examples.");
@@ -4192,6 +4241,7 @@
         title.textContent = service.title;
         summary.textContent = service.summary || "";
         result.textContent = service.result || "";
+        moreLabel.textContent = groupConfig(service.group).moreLabel;
         details.href = service.url;
         choose.setAttribute("aria-label", "Tell me about this: " + service.title);
         if (animate) {
@@ -4201,7 +4251,7 @@
 
       function renderChoices() {
         choices.innerHTML = "";
-        currentPage.filter(function (service) {
+        servicesForGroup(currentGroup).filter(function (service) {
           return service.url !== selectedService.url;
         }).forEach(function (service, index) {
           var button = document.createElement("button");
@@ -4209,6 +4259,8 @@
           var copy = document.createElement("span");
           var label = document.createElement("small");
           var heading = document.createElement("strong");
+          var description = document.createElement("p");
+          var action = document.createElement("span");
           var arrow = document.createElement("span");
 
           button.className = "problem-choice";
@@ -4218,17 +4270,22 @@
           number.className = "problem-choice-number";
           number.textContent = String(index + 1).padStart(2, "0");
           copy.className = "problem-choice-copy";
-          label.textContent = "Another familiar problem";
+          label.textContent = service.group_label;
           heading.textContent = service.title;
-          arrow.className = "problem-choice-arrow";
+          description.className = "problem-choice-summary";
+          description.textContent = service.summary || "";
+          action.className = "problem-choice-action";
+          action.textContent = "Bring into focus";
           arrow.setAttribute("aria-hidden", "true");
           arrow.textContent = "→";
 
           copy.appendChild(label);
           copy.appendChild(heading);
+          action.appendChild(arrow);
           button.appendChild(number);
           button.appendChild(copy);
-          button.appendChild(arrow);
+          button.appendChild(description);
+          button.appendChild(action);
           button.addEventListener("click", function () {
             renderSpotlight(service, true);
             renderChoices();
@@ -4239,24 +4296,14 @@
       }
 
       function renderPage(animate) {
-        currentPage = pageForGroup(currentGroup);
-        if (!currentPage.length) {
+        var groupServices = servicesForGroup(currentGroup);
+        if (!groupServices.length) {
           announce("No examples are available in this area right now.");
           return;
         }
-        renderSpotlight(currentPage[0], animate);
+        renderSpotlight(groupServices[0], animate);
         renderChoices();
       }
-
-      shuffle.addEventListener("click", function () {
-        var groupServices = servicesForGroup(currentGroup);
-        if (!groupServices.length) {
-          return;
-        }
-        pageStart = (pageStart + 4) % groupServices.length;
-        renderPage(true);
-        announce("Showing different " + groupConfig(currentGroup).label.toLowerCase() + " examples.");
-      });
 
       choose.addEventListener("click", function () {
         if (!selectedService || typeof window.AUDO_SELECT_SERVICE !== "function") {

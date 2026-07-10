@@ -24,7 +24,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, urlencode, urlparse
 from zoneinfo import ZoneInfo
 
-from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, get_service, service_cards, service_dict
+from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, get_service, service_cards
 
 try:
     from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -1933,7 +1933,6 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.render_error(HTTPStatus.NOT_FOUND, "That service page was not found.")
             return
 
-        data = service_dict(service)
         h = lambda value: html.escape(str(value), quote=True)
         explorer_card = next(
             (card for card in service_cards() if card["source_title"] == service.title),
@@ -1971,19 +1970,36 @@ class AudoHandler(BaseHTTPRequestHandler):
             "decisions": """<div class="scene-compare"><div><strong>Option A</strong><span>Faster start</span><span>More compromise</span></div><b>or</b><div class="is-best"><small>BETTER FIT</small><strong>Option B</strong><span>Built around the business</span></div></div>""",
         }
         scene_html = scenes[group]
+        detail_copy = explorer_card or {
+            "problem_heading": service.title,
+            "goal_heading": service.result,
+            "approach_heading": service.solution,
+            "form_heading": f"Tell me what is happening with {service.title.lower()}.",
+            "form_prompt": service.summary,
+            "faq_heading": f"Questions about {service.title.lower()}.",
+            "steps": (service.pain, service.solution, service.result),
+            "faq_questions": (
+                f"What usually causes {service.title.lower()}?",
+                f"How would you approach {service.title.lower()}?",
+                f"What should improve after {service.title.lower()}?",
+            ),
+        }
+        detail_steps = tuple(str(step) for step in detail_copy["steps"])
+        detail_questions = tuple(str(question) for question in detail_copy["faq_questions"])
+        detail_answers = (service.pain, " ".join(detail_steps), service.result)
         social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg?v={SERVICE_SOCIAL_CARD_VERSION}"
         social_image_alt = f"Audo social card for {display_title} with Aaron Hancock."
         form_context = f"Example: {display_title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(
             f'<li><span>{index:02d}</span><p>{h(check)}</p></li>'
-            for index, check in enumerate(data["checks"], start=1)
+            for index, check in enumerate(detail_steps, start=1)
         )
         faqs_html = "\n".join(
-            f"""<details>
-          <summary>{h(faq["question"])}</summary>
-          <p>{h(faq["answer"])}</p>
+            f"""<details open>
+          <summary>{h(question)}</summary>
+          <p>{h(answer)}</p>
         </details>"""
-            for faq in data["faqs"]
+            for question, answer in zip(detail_questions, detail_answers)
         )
         json_ld = json.dumps(
             {
@@ -2025,13 +2041,13 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "mainEntity": [
                             {
                                 "@type": "Question",
-                                "name": faq["question"],
+                                "name": question,
                                 "acceptedAnswer": {
                                     "@type": "Answer",
-                                    "text": faq["answer"],
+                                    "text": answer,
                                 },
                             }
-                            for faq in data["faqs"]
+                            for question, answer in zip(detail_questions, detail_answers)
                         ],
                     },
                     {
@@ -2181,7 +2197,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       outline: 3px solid #f4dca9;
       outline-offset: 3px;
     }}
-    .shell {{ width: min(1160px, calc(100% - 36px)); margin: 0 auto; }}
+    .shell {{ width: min(1280px, calc(100% - 36px)); margin: 0 auto; }}
     .site-nav {{
       position: relative;
       z-index: 5;
@@ -2241,9 +2257,9 @@ class AudoHandler(BaseHTTPRequestHandler):
       text-transform: uppercase;
     }}
     .detail-hero .eyebrow {{ color: var(--theme-accent); }}
-    h1, h2, h3 {{ overflow-wrap: break-word; text-wrap: balance; }}
+    h1, h2, h3 {{ overflow-wrap: normal; word-break: normal; text-wrap: pretty; }}
     p {{ overflow-wrap: break-word; }}
-    h1 {{ margin: 0; max-width: 840px; font-size: clamp(40px, 5vw, 62px); line-height: 0.96; letter-spacing: -0.045em; }}
+    h1 {{ margin: 0; max-width: 840px; font-size: clamp(38px, 4.2vw, 56px); line-height: 0.98; letter-spacing: -0.04em; }}
     h2 {{ margin: 0; font-size: clamp(30px, 4vw, 48px); line-height: 1.04; letter-spacing: 0; }}
     h3 {{ margin: 0; font-size: 22px; line-height: 1.18; letter-spacing: 0; }}
     .hero-lead {{ max-width: 680px; margin: 20px 0 0; color: var(--muted); font-size: clamp(18px, 2.1vw, 22px); line-height: 1.5; }}
@@ -2303,7 +2319,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       align-content: center;
       padding: clamp(36px, 5vw, 68px);
     }}
-    .hero-copy h1 {{ max-width: 13ch; }}
+    .hero-copy h1 {{ max-width: 15ch; }}
     .hero-result {{
       max-width: 620px;
       margin-top: 26px;
@@ -2354,20 +2370,20 @@ class AudoHandler(BaseHTTPRequestHandler):
     .detail-layout {{
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
-      gap: clamp(34px, 5vw, 70px);
+      gap: clamp(30px, 4vw, 48px);
       align-items: start;
     }}
     .detail-content {{ display: grid; gap: 34px; }}
     .story-grid {{
       display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(260px, 0.88fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }}
     .story-card {{
       min-height: 250px;
       display: grid;
-      align-content: end;
-      padding: clamp(24px, 3.4vw, 38px);
+      align-content: start;
+      padding: clamp(26px, 3vw, 34px);
       border: 1px solid var(--line);
       border-radius: 24px;
       background: var(--white);
@@ -2379,16 +2395,17 @@ class AudoHandler(BaseHTTPRequestHandler):
       background: color-mix(in srgb, var(--theme-soft) 66%, white);
     }}
     .story-card .eyebrow {{ margin-bottom: 12px; color: var(--theme-accent); }}
-    .story-card h2 {{ max-width: 14ch; font-size: clamp(28px, 3.6vw, 44px); }}
+    .story-card h2 {{ max-width: none; font-size: clamp(27px, 2.6vw, 34px); line-height: 1.08; }}
     .story-card p {{ margin: 14px 0 0; color: var(--muted); font-size: 17px; line-height: 1.6; text-wrap: pretty; }}
     .story-card.is-result p {{ color: var(--theme-ink); font-size: 19px; line-height: 1.55; }}
     .steps-panel {{
-      padding: clamp(26px, 4vw, 42px);
+      padding: clamp(28px, 3.5vw, 38px);
       border: 1px solid var(--line);
       border-radius: 24px;
       background: var(--white);
     }}
     .steps-panel > p:not(.eyebrow) {{ max-width: 650px; margin: 14px 0 0; color: var(--muted); font-size: 17px; line-height: 1.6; }}
+    .steps-panel h2 {{ max-width: 780px; font-size: clamp(31px, 3.3vw, 44px); line-height: 1.06; }}
     .story-block {{
       display: grid;
       grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
@@ -2407,11 +2424,11 @@ class AudoHandler(BaseHTTPRequestHandler):
       gap: 12px;
     }}
     .check-list li {{
-      min-height: 170px;
+      min-height: 164px;
       display: grid;
-      align-content: space-between;
-      gap: 24px;
-      padding: 18px;
+      align-content: start;
+      gap: 22px;
+      padding: 20px;
       border: 1px solid rgba(24,34,29,0.1);
       border-radius: 18px;
       color: var(--muted);
@@ -2421,6 +2438,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     .check-list li span {{ width: 38px; height: 32px; display: grid; place-items: center; border-radius: 10px; color: var(--theme-ink); background: var(--theme-soft); font-size: 12px; font-weight: 850; }}
     .check-list li p {{ margin: 0; }}
     .faq-list {{ display: grid; gap: 12px; margin-top: clamp(22px, 3vw, 34px); }}
+    #faq h2 {{ max-width: 780px; font-size: clamp(30px, 3.5vw, 42px); line-height: 1.08; }}
     details {{
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -2449,13 +2467,13 @@ class AudoHandler(BaseHTTPRequestHandler):
       background: var(--white);
       box-shadow: var(--shadow);
     }}
-    .form-context {{ padding: 20px 22px; color: var(--theme-ink); background: color-mix(in srgb, var(--theme-soft) 72%, white); border-bottom: 1px solid color-mix(in srgb, var(--theme-accent) 16%, transparent); }}
+    .form-context {{ padding: 24px 28px; color: var(--theme-ink); background: color-mix(in srgb, var(--theme-soft) 72%, white); border-bottom: 1px solid color-mix(in srgb, var(--theme-accent) 16%, transparent); }}
     .form-context span {{ display: block; margin-bottom: 7px; color: var(--theme-accent); font-size: 11px; font-weight: 850; letter-spacing: 0.09em; text-transform: uppercase; }}
     .form-context strong {{ display: block; font-size: 19px; line-height: 1.3; text-wrap: balance; }}
-    .form-intro {{ padding: 24px 24px 0; }}
+    .form-intro {{ padding: 28px 28px 0; }}
     .form-panel h2 {{ font-size: 28px; }}
     .form-intro > p {{ margin: 10px 0 0; color: var(--muted); line-height: 1.55; }}
-    .consultation-form {{ display: grid; gap: 14px; padding: 22px 24px 24px; }}
+    .consultation-form {{ display: grid; gap: 14px; padding: 24px 28px 28px; }}
     .form-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }}
     .form-field {{ display: grid; gap: 7px; }}
     .form-field.full {{ grid-column: 1 / -1; }}
@@ -2525,10 +2543,11 @@ class AudoHandler(BaseHTTPRequestHandler):
       .hero-card {{ min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }}
       .hero-visual {{ min-height: 280px; padding: 22px; }}
       .hero-copy {{ padding: 28px 24px 30px; }}
-      h1 {{ font-size: clamp(38px, 11.2vw, 46px); }}
+      h1 {{ font-size: clamp(36px, 9.8vw, 42px); }}
       .hero-lead {{ font-size: 17px; line-height: 1.5; }}
       .detail-layout, .story-grid, .form-grid, .check-list {{ grid-template-columns: 1fr; }}
       .story-card {{ min-height: 220px; }}
+      .steps-panel h2 {{ font-size: 29px; }}
       .check-list li {{ min-height: 140px; }}
       .form-panel {{ position: static; order: -1; padding: 0; box-shadow: none; }}
       .form-intro {{ padding: 22px 20px 0; }}
@@ -2585,27 +2604,26 @@ class AudoHandler(BaseHTTPRequestHandler):
       <article class="detail-content">
         <section class="story-grid" aria-label="What this example means for your business">
           <article class="story-card" aria-labelledby="problem-heading">
-            <p class="eyebrow">What you're dealing with</p>
-            <h2 id="problem-heading">This is a real, fixable problem.</h2>
-            <p>{h(display_summary)}</p>
+            <p class="eyebrow">What's happening</p>
+            <h2 id="problem-heading">{h(detail_copy["problem_heading"])}</h2>
+            <p>{h(service.pain)}</p>
           </article>
           <article class="story-card is-result" aria-labelledby="result-heading">
-            <p class="eyebrow">The goal</p>
-            <h2 id="result-heading">Make it easier.</h2>
+            <p class="eyebrow">What we are aiming for</p>
+            <h2 id="result-heading">{h(detail_copy["goal_heading"])}</h2>
             <p>{h(display_result)}</p>
           </article>
         </section>
         <section class="steps-panel" aria-labelledby="look-heading">
-          <p class="eyebrow">How we'll work through it</p>
-          <h2 id="look-heading">Start with what you know.</h2>
-          <p>You do not need to diagnose the problem or know the right technical words. Show me what is happening, and I will help sort out the next steps.</p>
+          <p class="eyebrow">How I would help</p>
+          <h2 id="look-heading">{h(detail_copy["approach_heading"])}</h2>
           <ul class="check-list">
             {checks_html}
           </ul>
         </section>
         <section id="faq" aria-labelledby="faq-heading">
-          <p class="eyebrow">Common questions</p>
-          <h2 id="faq-heading">A few questions you may have.</h2>
+          <p class="eyebrow">Questions about this example</p>
+          <h2 id="faq-heading">{h(detail_copy["faq_heading"])}</h2>
           <div class="faq-list">
             {faqs_html}
           </div>
@@ -2618,8 +2636,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         </div>
         <div class="form-intro">
           <p class="eyebrow">Free 30-minute call</p>
-          <h2 id="service-form-heading">Tell me what's happening.</h2>
-          <p>A few sentences is enough. Next, you'll choose a time from my calendar.</p>
+          <h2 id="service-form-heading">{h(detail_copy["form_heading"])}</h2>
+          <p>{h(detail_copy["form_prompt"])}</p>
         </div>
         <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
@@ -2641,7 +2659,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             </div>
             <div class="form-field full">
               <label for="service_message">What's going on?</label>
-              <textarea id="service_message" name="message" placeholder="What have you noticed? What would you like to be easier?" required></textarea>
+              <textarea id="service_message" name="message" placeholder="{h(detail_copy["form_prompt"])}" required></textarea>
             </div>
             <details class="promo-details">
               <summary>Have a promo code?</summary>

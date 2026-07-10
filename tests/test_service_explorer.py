@@ -22,6 +22,14 @@ class ServiceExplorerTests(unittest.TestCase):
         )
         self.assertEqual(len({card["title"] for card in cards}), len(cards))
         self.assertEqual(len({card["url"] for card in cards}), len(cards))
+        for field in (
+            "problem_heading",
+            "goal_heading",
+            "approach_heading",
+            "form_heading",
+            "faq_heading",
+        ):
+            self.assertEqual(len({card[field] for card in cards}), len(cards))
 
         for card in cards:
             with self.subTest(title=card["title"]):
@@ -60,6 +68,24 @@ class ServiceExplorerTests(unittest.TestCase):
                 ):
                     self.assertNotIn(industry_phrase, owner_copy)
 
+                self.assertEqual(len(card["steps"]), 3)
+                self.assertEqual(len(card["faq_questions"]), 3)
+
+        self.assertEqual(
+            len({step for card in cards for step in card["steps"]}),
+            len(cards) * 3,
+        )
+        self.assertEqual(
+            len(
+                {
+                    question
+                    for card in cards
+                    for question in card["faq_questions"]
+                }
+            ),
+            len(cards) * 3,
+        )
+
     def test_example_choice_keeps_the_message_field_open_ended(self) -> None:
         index_html = (Path(__file__).resolve().parents[1] / "index.html").read_text()
 
@@ -72,6 +98,13 @@ class ServiceExplorerTests(unittest.TestCase):
             "What have you noticed? What would you like to be easier?",
             index_html,
         )
+
+    def test_detail_page_faqs_are_expanded_by_default(self) -> None:
+        server_source = (Path(__file__).resolve().parents[1] / "server.py").read_text()
+
+        self.assertIn('f"""<details open>', server_source)
+        self.assertNotIn("This is a real, fixable problem.", server_source)
+        self.assertNotIn("A few questions you may have.", server_source)
 
 
 if __name__ == "__main__":

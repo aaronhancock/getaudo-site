@@ -33,6 +33,7 @@
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260710-1">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,7 +50,7 @@
           },
           "potentialAction": {
             "@type": "CommunicateAction",
-            "name": "Request a Free Discovery Call",
+            "name": "Book free discovery",
             "target": "https://getaudo.com/#discovery"
           }
         },
@@ -1889,7 +1890,7 @@
       <div class="nav-links">
         <a href="#services">How I can help</a>
         <a href="#why">Why Audo</a>
-        <a class="nav-cta" href="#discovery">Request a Free Discovery Call</a>
+        <a class="nav-cta" href="#discovery">Book free discovery</a>
       </div>
     </div>
   </nav>
@@ -1901,7 +1902,7 @@
         <h1>Get tech off your plate.</h1>
         <p class="hero-lead">One experienced partner to fix your website, automate busywork, use AI wisely, and build practical tools—without agency overhead.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#discovery">Request a Free Discovery Call</a>
+          <a class="button primary" href="#discovery">Book free discovery</a>
           <a class="button ghost" href="#service-list">See Common Problems I Solve</a>
         </div>
         <p class="hero-note">You don't need a plan before you reach out. Share what needs attention; I will help sort the next step.</p>
@@ -2024,7 +2025,7 @@
                 <h3>Not sure what needs help yet?</h3>
                 <p>Start with what feels slow, unclear, or harder than it should. I will help you find what's slowing things down and sort the next step.</p>
               </div>
-              <a class="button" href="#discovery">Request a Free Discovery Call</a>
+              <a class="button" href="#discovery">Book free discovery</a>
             </div>
           </div>
         </div>
@@ -2111,7 +2112,7 @@
             </div>
           </div>
         </div>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note" data-recaptcha-form>
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
             <label for="website_url_confirm">Confirm website</label>
             <input id="website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
@@ -2146,7 +2147,7 @@
           <input type="hidden" name="timeline" value="Schedule after request">
           <input type="hidden" name="interest_context" value="Small business technology discovery request">
           <input type="hidden" name="recaptcha_token" value="">
-          <button class="button primary" type="submit">Continue to Scheduling</button>
+          <button class="button primary" type="submit">Book free discovery</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="form-note" class="form-note">Step 1 of 2. After submitting, choose a live time from Aaron's Google Calendar. If you do not book immediately, Aaron usually replies within one business day.</p>
         </form>
@@ -2172,7 +2173,7 @@
 
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Request a Free Discovery Call</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Book free discovery</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
@@ -2187,6 +2188,7 @@
   </section>
   <script>
     window.AUDO_RECAPTCHA_SITE_KEY = __RECAPTCHA_SITE_KEY__;
+    window.AUDO_GOOGLE_CALENDAR_BOOKING_URL = __GOOGLE_CALENDAR_BOOKING_URL__;
     window.AUDO_GA_MEASUREMENT_ID = "G-YP5ME1JR6Q";
 
     (function () {
@@ -2758,5 +2760,6 @@
       });
     }());
   </script>
+  <script src="/assets/booking.js?v=20260710-1" defer></script>
 </body>
 </html>

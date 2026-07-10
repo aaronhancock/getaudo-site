@@ -1,21 +1,28 @@
 from __future__ import annotations
 
 import html
+import hashlib
+import hmac
 import json
 import mimetypes
 import os
 import re
+import secrets
 import smtplib
 import sqlite3
 import sys
+import threading
+import time as time_module
+import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from email.message import EmailMessage
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from io import BytesIO
 from pathlib import Path
-from urllib.parse import parse_qs, urlencode, urlparse
+from urllib.parse import parse_qs, quote, urlencode, urlparse
+from zoneinfo import ZoneInfo
 
 from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, get_service, service_cards, service_dict
 
@@ -30,7 +37,7 @@ DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
 CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "getaudo@gmail.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
-SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-09")
+SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-10")
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
 RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
@@ -61,6 +68,23 @@ def normalize_google_calendar_booking_url(value: str) -> str:
 GOOGLE_CALENDAR_BOOKING_URL = normalize_google_calendar_booking_url(
     os.environ.get("GOOGLE_CALENDAR_BOOKING_URL", DEFAULT_GOOGLE_CALENDAR_BOOKING_URL)
 )
+GOOGLE_CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary").strip() or "primary"
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "").strip()
+GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET", "").strip()
+GOOGLE_OAUTH_REFRESH_TOKEN = os.environ.get("GOOGLE_OAUTH_REFRESH_TOKEN", "").strip()
+BOOKING_TIMEZONE = os.environ.get("BOOKING_TIMEZONE", "America/Chicago").strip() or "America/Chicago"
+BOOKING_ZONE = ZoneInfo(BOOKING_TIMEZONE)
+BOOKING_WINDOW_DAYS = max(1, min(int(os.environ.get("BOOKING_WINDOW_DAYS", "30")), 60))
+BOOKING_MIN_NOTICE_HOURS = max(1, int(os.environ.get("BOOKING_MIN_NOTICE_HOURS", "24")))
+BOOKING_DURATION_MINUTES = max(15, int(os.environ.get("BOOKING_DURATION_MINUTES", "30")))
+BOOKING_BUFFER_MINUTES = max(0, int(os.environ.get("BOOKING_BUFFER_MINUTES", "15")))
+BOOKING_MAX_PER_DAY = max(1, int(os.environ.get("BOOKING_MAX_PER_DAY", "4")))
+BOOKING_START_HOUR = max(0, min(int(os.environ.get("BOOKING_START_HOUR", "8")), 23))
+BOOKING_END_HOUR = max(1, min(int(os.environ.get("BOOKING_END_HOUR", "21")), 24))
+BOOKING_TOKEN_HOURS = max(1, int(os.environ.get("BOOKING_TOKEN_HOURS", "72")))
+BOOKING_INTERNAL_ATTENDEE = os.environ.get("BOOKING_INTERNAL_ATTENDEE", "matthewaaron@gmail.com").strip()
+GOOGLE_TOKEN_CACHE: dict[str, object] = {"access_token": "", "expires_at": 0.0}
+GOOGLE_TOKEN_LOCK = threading.Lock()
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
 SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
@@ -316,6 +340,8 @@ def init_db() -> None:
             "recaptcha_score": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_score REAL",
             "recaptcha_action": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_action TEXT",
             "recaptcha_hostname": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_hostname TEXT",
+            "booking_token_hash": "ALTER TABLE consultation_requests ADD COLUMN booking_token_hash TEXT",
+            "booking_token_expires_at": "ALTER TABLE consultation_requests ADD COLUMN booking_token_expires_at TEXT",
         }
         for column, statement in migrations.items():
             if column not in columns:
@@ -326,11 +352,526 @@ def init_db() -> None:
             ON consultation_requests(created_at)
             """
         )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS consultation_bookings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                request_id INTEGER NOT NULL,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                start_utc TEXT NOT NULL,
+                end_utc TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending',
+                pending_expires_at TEXT,
+                google_event_id TEXT,
+                google_event_url TEXT,
+                meet_url TEXT,
+                error TEXT,
+                FOREIGN KEY (request_id) REFERENCES consultation_requests(id)
+            )
+            """
+        )
+        conn.execute(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_consultation_bookings_active_start
+            ON consultation_bookings(start_utc)
+            WHERE status IN ('pending', 'confirmed')
+            """
+        )
+        conn.execute(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_consultation_bookings_active_request
+            ON consultation_bookings(request_id)
+            WHERE status IN ('pending', 'confirmed')
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_consultation_bookings_status_start
+            ON consultation_bookings(status, start_utc)
+            """
+        )
 
 
 def clean(value: str | None, max_length: int) -> str:
     value = (value or "").replace("\x00", "").strip()
     return value[:max_length]
+
+
+class GoogleCalendarError(RuntimeError):
+    def __init__(self, message: str, status: int = 502):
+        super().__init__(message)
+        self.status = status
+
+
+class BookingUnavailable(ValueError):
+    pass
+
+
+def utc_now_datetime() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def parse_iso_datetime(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def calendar_configured() -> bool:
+    return bool(GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_REFRESH_TOKEN)
+
+
+def issue_booking_token(request_id: int) -> str:
+    token = secrets.token_urlsafe(32)
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    expires_at = (utc_now_datetime() + timedelta(hours=BOOKING_TOKEN_HOURS)).isoformat(timespec="seconds")
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET booking_token_hash = ?, booking_token_expires_at = ?
+            WHERE id = ?
+            """,
+            (token_hash, expires_at, request_id),
+        )
+    return token
+
+
+def get_consultation_for_booking(request_id: int, token: str) -> dict[str, object]:
+    init_db()
+    supplied_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            """
+            SELECT id, name, company_name, website, promo_code, email, phone, service, message,
+                   booking_token_hash, booking_token_expires_at
+            FROM consultation_requests
+            WHERE id = ?
+            """,
+            (request_id,),
+        ).fetchone()
+
+    if not row or not row["booking_token_hash"] or not hmac.compare_digest(row["booking_token_hash"], supplied_hash):
+        raise ValueError("This scheduling link is not valid. Please submit the discovery form again.")
+
+    expires_at = row["booking_token_expires_at"]
+    if not expires_at or parse_iso_datetime(expires_at) <= utc_now_datetime():
+        raise ValueError("This scheduling link has expired. Please submit the discovery form again.")
+    return dict(row)
+
+
+def expire_stale_pending_bookings(conn: sqlite3.Connection) -> None:
+    conn.execute(
+        """
+        UPDATE consultation_bookings
+        SET status = 'failed', updated_at = ?, error = 'Booking reservation expired before confirmation'
+        WHERE status = 'pending' AND pending_expires_at IS NOT NULL AND pending_expires_at <= ?
+        """,
+        (utc_now(), utc_now()),
+    )
+
+
+def get_active_booking(request_id: int) -> dict[str, object] | None:
+    init_db()
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        expire_stale_pending_bookings(conn)
+        row = conn.execute(
+            """
+            SELECT * FROM consultation_bookings
+            WHERE request_id = ? AND status IN ('pending', 'confirmed')
+            ORDER BY id DESC LIMIT 1
+            """,
+            (request_id,),
+        ).fetchone()
+    return dict(row) if row else None
+
+
+def business_window(day: date) -> tuple[datetime, datetime]:
+    start = datetime.combine(day, time(BOOKING_START_HOUR, 0), tzinfo=BOOKING_ZONE)
+    if BOOKING_END_HOUR == 24:
+        end = datetime.combine(day + timedelta(days=1), time(0, 0), tzinfo=BOOKING_ZONE)
+    else:
+        end = datetime.combine(day, time(BOOKING_END_HOUR, 0), tzinfo=BOOKING_ZONE)
+    return start, end
+
+
+def candidate_slots(now: datetime | None = None) -> list[tuple[datetime, datetime]]:
+    current = (now or utc_now_datetime()).astimezone(timezone.utc)
+    earliest = current + timedelta(hours=BOOKING_MIN_NOTICE_HOURS)
+    local_today = current.astimezone(BOOKING_ZONE).date()
+    duration = timedelta(minutes=BOOKING_DURATION_MINUTES)
+    cadence = timedelta(minutes=BOOKING_DURATION_MINUTES + BOOKING_BUFFER_MINUTES)
+    slots: list[tuple[datetime, datetime]] = []
+
+    for offset in range(BOOKING_WINDOW_DAYS):
+        day = local_today + timedelta(days=offset)
+        if day.weekday() == 6:
+            continue
+        cursor, day_end = business_window(day)
+        while cursor + duration <= day_end:
+            start_utc = cursor.astimezone(timezone.utc)
+            end_utc = (cursor + duration).astimezone(timezone.utc)
+            if start_utc >= earliest:
+                slots.append((start_utc, end_utc))
+            cursor += cadence
+    return slots
+
+
+def intervals_overlap(start_a: datetime, end_a: datetime, start_b: datetime, end_b: datetime) -> bool:
+    return start_a < end_b and end_a > start_b
+
+
+def google_access_token(force_refresh: bool = False) -> str:
+    if not calendar_configured():
+        raise GoogleCalendarError("Live scheduling is not configured yet.", status=503)
+
+    with GOOGLE_TOKEN_LOCK:
+        cached_token = str(GOOGLE_TOKEN_CACHE.get("access_token") or "")
+        expires_at = float(GOOGLE_TOKEN_CACHE.get("expires_at") or 0)
+        if not force_refresh and cached_token and expires_at > time_module.time() + 60:
+            return cached_token
+
+        token_fields = {
+            "client_id": GOOGLE_OAUTH_CLIENT_ID,
+            "refresh_token": GOOGLE_OAUTH_REFRESH_TOKEN,
+            "grant_type": "refresh_token",
+        }
+        if GOOGLE_OAUTH_CLIENT_SECRET:
+            token_fields["client_secret"] = GOOGLE_OAUTH_CLIENT_SECRET
+        data = urlencode(token_fields).encode("utf-8")
+        request = urllib.request.Request(
+            "https://oauth2.googleapis.com/token",
+            data=data,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=10) as response:
+                result = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            raise GoogleCalendarError("Google Calendar authorization is temporarily unavailable.", status=503) from exc
+
+        access_token = clean(result.get("access_token"), 4096)
+        if not access_token:
+            raise GoogleCalendarError("Google Calendar authorization did not return an access token.", status=503)
+        GOOGLE_TOKEN_CACHE["access_token"] = access_token
+        GOOGLE_TOKEN_CACHE["expires_at"] = time_module.time() + int(result.get("expires_in", 3600))
+        return access_token
+
+
+def google_calendar_request(
+    method: str,
+    endpoint: str,
+    *,
+    query: dict[str, object] | None = None,
+    payload: dict[str, object] | None = None,
+    retry_auth: bool = True,
+) -> dict[str, object]:
+    url = f"https://www.googleapis.com/calendar/v3{endpoint}"
+    if query:
+        url = f"{url}?{urlencode(query)}"
+    body = json.dumps(payload).encode("utf-8") if payload is not None else None
+    request = urllib.request.Request(
+        url,
+        data=body,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {google_access_token()}",
+            "Accept": "application/json",
+            **({"Content-Type": "application/json"} if body is not None else {}),
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=12) as response:
+            raw = response.read()
+            return json.loads(raw.decode("utf-8")) if raw else {}
+    except urllib.error.HTTPError as exc:
+        if exc.code == 401 and retry_auth:
+            google_access_token(force_refresh=True)
+            return google_calendar_request(method, endpoint, query=query, payload=payload, retry_auth=False)
+        if exc.code == 409:
+            raise GoogleCalendarError("That Calendar event already exists.", status=409) from exc
+        if exc.code in {403, 429, 500, 502, 503, 504}:
+            raise GoogleCalendarError("Google Calendar is temporarily unavailable.", status=503) from exc
+        raise GoogleCalendarError("Google Calendar could not complete the request.") from exc
+    except (urllib.error.URLError, TimeoutError) as exc:
+        raise GoogleCalendarError("Google Calendar is temporarily unavailable.", status=503) from exc
+
+
+def google_busy_periods(start_utc: datetime, end_utc: datetime) -> list[tuple[datetime, datetime]]:
+    response = google_calendar_request(
+        "POST",
+        "/freeBusy",
+        payload={
+            "timeMin": start_utc.isoformat().replace("+00:00", "Z"),
+            "timeMax": end_utc.isoformat().replace("+00:00", "Z"),
+            "timeZone": BOOKING_TIMEZONE,
+            "items": [{"id": GOOGLE_CALENDAR_ID}],
+        },
+    )
+    calendars = response.get("calendars") or {}
+    calendar_result = calendars.get(GOOGLE_CALENDAR_ID)
+    if calendar_result is None and calendars:
+        calendar_result = next(iter(calendars.values()))
+    if not isinstance(calendar_result, dict) or calendar_result.get("errors"):
+        raise GoogleCalendarError("Google Calendar availability could not be read.", status=503)
+
+    busy: list[tuple[datetime, datetime]] = []
+    for period in calendar_result.get("busy", []):
+        if period.get("start") and period.get("end"):
+            busy.append((parse_iso_datetime(period["start"]), parse_iso_datetime(period["end"])))
+    return busy
+
+
+def database_booking_periods() -> tuple[list[tuple[datetime, datetime]], dict[date, int]]:
+    init_db()
+    periods: list[tuple[datetime, datetime]] = []
+    daily_counts: dict[date, int] = {}
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        expire_stale_pending_bookings(conn)
+        rows = conn.execute(
+            """
+            SELECT start_utc, end_utc FROM consultation_bookings
+            WHERE status IN ('pending', 'confirmed')
+            """
+        ).fetchall()
+    for row in rows:
+        start = parse_iso_datetime(row["start_utc"])
+        end = parse_iso_datetime(row["end_utc"])
+        periods.append((start, end))
+        local_day = start.astimezone(BOOKING_ZONE).date()
+        daily_counts[local_day] = daily_counts.get(local_day, 0) + 1
+    return periods, daily_counts
+
+
+def format_clock(value: datetime) -> str:
+    local = value.astimezone(BOOKING_ZONE)
+    hour = local.hour % 12 or 12
+    return f"{hour}:{local.minute:02d} {'AM' if local.hour < 12 else 'PM'}"
+
+
+def booking_json(booking: dict[str, object]) -> dict[str, object]:
+    start = parse_iso_datetime(str(booking["start_utc"]))
+    end = parse_iso_datetime(str(booking["end_utc"]))
+    local = start.astimezone(BOOKING_ZONE)
+    return {
+        "status": booking.get("status"),
+        "start": start.isoformat().replace("+00:00", "Z"),
+        "end": end.isoformat().replace("+00:00", "Z"),
+        "date_label": local.strftime("%A, %B %d, %Y").replace(" 0", " "),
+        "time_label": f"{format_clock(start)}–{format_clock(end)}",
+        "timezone": BOOKING_TIMEZONE,
+        "timezone_label": "Central Time",
+        "meet_url": booking.get("meet_url") or "",
+        "event_url": booking.get("google_event_url") or "",
+    }
+
+
+def build_availability(now: datetime | None = None) -> list[dict[str, object]]:
+    slots = candidate_slots(now)
+    if not slots:
+        return []
+
+    buffer = timedelta(minutes=BOOKING_BUFFER_MINUTES)
+    query_start = slots[0][0] - buffer
+    query_end = slots[-1][1] + buffer
+    busy = google_busy_periods(query_start, query_end)
+    db_periods, daily_counts = database_booking_periods()
+    busy.extend(db_periods)
+
+    days: dict[date, dict[str, object]] = {}
+    for start, end in slots:
+        local_day = start.astimezone(BOOKING_ZONE).date()
+        if daily_counts.get(local_day, 0) >= BOOKING_MAX_PER_DAY:
+            continue
+        protected_start = start - buffer
+        protected_end = end + buffer
+        if any(intervals_overlap(protected_start, protected_end, busy_start, busy_end) for busy_start, busy_end in busy):
+            continue
+
+        day_entry = days.setdefault(
+            local_day,
+            {
+                "date": local_day.isoformat(),
+                "weekday": start.astimezone(BOOKING_ZONE).strftime("%a"),
+                "day": str(local_day.day),
+                "label": start.astimezone(BOOKING_ZONE).strftime("%A, %B %d").replace(" 0", " "),
+                "slots": [],
+            },
+        )
+        day_entry["slots"].append(
+            {
+                "start": start.isoformat().replace("+00:00", "Z"),
+                "end": end.isoformat().replace("+00:00", "Z"),
+                "label": format_clock(start),
+            }
+        )
+    return list(days.values())
+
+
+def reserve_booking(request_id: int, start: datetime, end: datetime) -> tuple[dict[str, object], bool]:
+    init_db()
+    now = utc_now_datetime()
+    local_day = start.astimezone(BOOKING_ZONE).date()
+    day_start, day_end = business_window(local_day)
+    day_start_utc = day_start.astimezone(timezone.utc).isoformat(timespec="seconds")
+    day_end_utc = day_end.astimezone(timezone.utc).isoformat(timespec="seconds")
+    created_at = now.isoformat(timespec="seconds")
+    pending_expires_at = (now + timedelta(minutes=10)).isoformat(timespec="seconds")
+    start_text = start.isoformat(timespec="seconds")
+    end_text = end.isoformat(timespec="seconds")
+
+    with sqlite3.connect(DATABASE_PATH, timeout=10) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute("BEGIN IMMEDIATE")
+        expire_stale_pending_bookings(conn)
+        existing = conn.execute(
+            """
+            SELECT * FROM consultation_bookings
+            WHERE request_id = ? AND status IN ('pending', 'confirmed')
+            ORDER BY id DESC LIMIT 1
+            """,
+            (request_id,),
+        ).fetchone()
+        if existing:
+            return dict(existing), False
+
+        daily_count = conn.execute(
+            """
+            SELECT COUNT(*) FROM consultation_bookings
+            WHERE status IN ('pending', 'confirmed') AND start_utc >= ? AND start_utc < ?
+            """,
+            (day_start_utc, day_end_utc),
+        ).fetchone()[0]
+        if daily_count >= BOOKING_MAX_PER_DAY:
+            raise BookingUnavailable("That day just filled up. Please choose another available day.")
+
+        try:
+            cursor = conn.execute(
+                """
+                INSERT INTO consultation_bookings (
+                    request_id, created_at, updated_at, start_utc, end_utc, status, pending_expires_at
+                ) VALUES (?, ?, ?, ?, ?, 'pending', ?)
+                """,
+                (request_id, created_at, created_at, start_text, end_text, pending_expires_at),
+            )
+        except sqlite3.IntegrityError as exc:
+            raise BookingUnavailable("That time was just reserved. Please choose another available time.") from exc
+        row = conn.execute("SELECT * FROM consultation_bookings WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        return dict(row), True
+
+
+def deterministic_event_id(request_id: int, start: datetime) -> str:
+    fingerprint = hashlib.sha256(f"{request_id}:{start.isoformat()}".encode("utf-8")).hexdigest()
+    return f"audo{fingerprint[:48]}"
+
+
+def extract_meet_url(event: dict[str, object]) -> str:
+    if event.get("hangoutLink"):
+        return str(event["hangoutLink"])
+    conference_data = event.get("conferenceData") or {}
+    for entry in conference_data.get("entryPoints", []):
+        if entry.get("entryPointType") == "video" and entry.get("uri"):
+            return str(entry["uri"])
+    return ""
+
+
+def create_calendar_event(
+    consultation: dict[str, object],
+    start: datetime,
+    end: datetime,
+    event_id: str,
+) -> dict[str, object]:
+    description_lines = [
+        f"Audo discovery request #{consultation['id']}",
+        "",
+        f"Name: {consultation['name']}",
+        f"Email: {consultation['email']}",
+        f"Phone: {consultation.get('phone') or 'Not provided'}",
+        f"Business / project: {consultation.get('company_name') or 'Not provided'}",
+        f"Website: {consultation.get('website') or 'Not provided'}",
+        f"Promo code: {consultation.get('promo_code') or 'Not provided'}",
+        f"Service: {consultation.get('service') or 'Small business technology help'}",
+        "",
+        "What needs help:",
+        str(consultation.get("message") or "Not provided"),
+    ]
+    attendees = [{"email": consultation["email"], "displayName": consultation["name"]}]
+    if BOOKING_INTERNAL_ATTENDEE and BOOKING_INTERNAL_ATTENDEE.lower() != str(consultation["email"]).lower():
+        attendees.append({"email": BOOKING_INTERNAL_ATTENDEE, "displayName": "Matthew Aaron Hancock"})
+
+    payload = {
+        "id": event_id,
+        "summary": f"Audo Discovery Call — {consultation['name']}",
+        "description": "\n".join(description_lines),
+        "start": {"dateTime": start.isoformat().replace("+00:00", "Z"), "timeZone": BOOKING_TIMEZONE},
+        "end": {"dateTime": end.isoformat().replace("+00:00", "Z"), "timeZone": BOOKING_TIMEZONE},
+        "attendees": attendees,
+        "guestsCanInviteOthers": False,
+        "guestsCanModify": False,
+        "transparency": "opaque",
+        "conferenceData": {
+            "createRequest": {
+                "requestId": hashlib.sha256(f"meet:{event_id}".encode("utf-8")).hexdigest()[:32],
+                "conferenceSolutionKey": {"type": "hangoutsMeet"},
+            }
+        },
+        "extendedProperties": {
+            "private": {"audoBooking": "true", "consultationRequestId": str(consultation["id"])}
+        },
+        "reminders": {"useDefault": True},
+    }
+    endpoint = f"/calendars/{quote(GOOGLE_CALENDAR_ID, safe='')}/events"
+    try:
+        return google_calendar_request(
+            "POST",
+            endpoint,
+            query={"conferenceDataVersion": 1, "sendUpdates": "all"},
+            payload=payload,
+        )
+    except GoogleCalendarError as exc:
+        if exc.status != 409:
+            raise
+        return google_calendar_request("GET", f"{endpoint}/{quote(event_id, safe='')}")
+
+
+def finalize_booking(booking_id: int, event: dict[str, object]) -> dict[str, object]:
+    meet_url = extract_meet_url(event)
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute(
+            """
+            UPDATE consultation_bookings
+            SET status = 'confirmed', updated_at = ?, pending_expires_at = NULL,
+                google_event_id = ?, google_event_url = ?, meet_url = ?, error = NULL
+            WHERE id = ?
+            """,
+            (
+                utc_now(),
+                clean(event.get("id"), 1024),
+                clean(event.get("htmlLink"), 2000),
+                clean(meet_url, 2000),
+                booking_id,
+            ),
+        )
+        row = conn.execute("SELECT * FROM consultation_bookings WHERE id = ?", (booking_id,)).fetchone()
+    return dict(row)
+
+
+def fail_booking(booking_id: int, error: str) -> None:
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_bookings
+            SET status = 'failed', updated_at = ?, pending_expires_at = NULL, error = ?
+            WHERE id = ? AND status = 'pending'
+            """,
+            (utc_now(), clean(error, 2000), booking_id),
+        )
 
 
 def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
@@ -579,14 +1120,30 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:
         path = urlparse(self.path).path
-        if path != "/api/consultation":
-            self.send_error(HTTPStatus.NOT_FOUND)
+        if path == "/api/consultation":
+            self.handle_consultation_post()
             return
+        if path == "/api/availability":
+            self.handle_availability_post()
+            return
+        if path == "/api/book":
+            self.handle_booking_post()
+            return
+        self.send_error(HTTPStatus.NOT_FOUND)
+
+    def handle_consultation_post(self) -> None:
+        wants_json = self.wants_json_response()
 
         try:
             fields = self.read_form_fields()
             if clean(fields.get("website_url_confirm"), 255):
-                self.redirect("/thank-you")
+                if wants_json:
+                    self.send_json(
+                        HTTPStatus.OK,
+                        {"ok": True, "calendar_ready": False, "fallback_url": "/thank-you"},
+                    )
+                else:
+                    self.redirect("/thank-you")
                 return
 
             request_meta = {
@@ -616,15 +1173,155 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.validate_payload(payload)
 
             request_id = store_request(payload, request_meta)
+            booking_token = issue_booking_token(request_id)
             send_email(request_id, payload, request_meta)
-            self.redirect("/thank-you")
+            if wants_json:
+                self.send_json(
+                    HTTPStatus.CREATED,
+                    {
+                        "ok": True,
+                        "request_id": request_id,
+                        "booking_token": booking_token,
+                        "calendar_ready": calendar_configured(),
+                        "fallback_url": GOOGLE_CALENDAR_BOOKING_URL or "/thank-you",
+                    },
+                )
+            else:
+                self.redirect("/thank-you")
         except ValueError as exc:
-            self.render_error(HTTPStatus.BAD_REQUEST, str(exc))
+            if wants_json:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": str(exc)})
+            else:
+                self.render_error(HTTPStatus.BAD_REQUEST, str(exc))
         except Exception as exc:  # pragma: no cover - defensive runtime guard.
             print(f"discovery form error: {exc}", file=sys.stderr)
-            self.render_error(
+            message = "Something went wrong saving your request. Please try again in a moment."
+            if wants_json:
+                self.send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"ok": False, "error": message})
+            else:
+                self.render_error(HTTPStatus.INTERNAL_SERVER_ERROR, message)
+
+    def handle_availability_post(self) -> None:
+        try:
+            self.validate_request_origin()
+            fields = self.read_json_fields()
+            request_id = self.parse_request_id(fields.get("request_id"))
+            token = clean(fields.get("booking_token"), 512)
+            get_consultation_for_booking(request_id, token)
+
+            existing = get_active_booking(request_id)
+            if existing and existing.get("status") == "confirmed":
+                self.send_json(
+                    HTTPStatus.OK,
+                    {"ok": True, "booked": True, "booking": booking_json(existing)},
+                )
+                return
+            if not calendar_configured():
+                raise GoogleCalendarError("Live scheduling is not configured yet.", status=503)
+
+            days = build_availability()
+            self.send_json(
+                HTTPStatus.OK,
+                {
+                    "ok": True,
+                    "booked": False,
+                    "timezone": BOOKING_TIMEZONE,
+                    "timezone_label": "Central Time",
+                    "duration_minutes": BOOKING_DURATION_MINUTES,
+                    "minimum_notice_hours": BOOKING_MIN_NOTICE_HOURS,
+                    "days": days,
+                    "fallback_url": GOOGLE_CALENDAR_BOOKING_URL,
+                },
+            )
+        except ValueError as exc:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": str(exc)})
+        except GoogleCalendarError as exc:
+            self.send_json(
+                HTTPStatus(exc.status),
+                {
+                    "ok": False,
+                    "error": str(exc),
+                    "fallback_url": GOOGLE_CALENDAR_BOOKING_URL,
+                },
+            )
+        except Exception as exc:  # pragma: no cover - defensive runtime guard.
+            print(f"availability error: {exc}", file=sys.stderr)
+            self.send_json(
                 HTTPStatus.INTERNAL_SERVER_ERROR,
-                "Something went wrong saving your request. Please try again in a moment.",
+                {"ok": False, "error": "Available times could not be loaded right now."},
+            )
+
+    def handle_booking_post(self) -> None:
+        booking: dict[str, object] | None = None
+        try:
+            self.validate_request_origin()
+            fields = self.read_json_fields()
+            request_id = self.parse_request_id(fields.get("request_id"))
+            token = clean(fields.get("booking_token"), 512)
+            consultation = get_consultation_for_booking(request_id, token)
+
+            requested_start = parse_iso_datetime(clean(fields.get("start"), 80))
+            slot_map = {start.isoformat(timespec="seconds"): (start, end) for start, end in candidate_slots()}
+            selected = slot_map.get(requested_start.isoformat(timespec="seconds"))
+            if not selected:
+                raise BookingUnavailable(
+                    "That time is outside the current booking window. Please refresh the available times."
+                )
+            start, end = selected
+
+            existing = get_active_booking(request_id)
+            if existing and existing.get("status") == "confirmed":
+                self.send_json(
+                    HTTPStatus.OK,
+                    {"ok": True, "already_booked": True, "booking": booking_json(existing)},
+                )
+                return
+            if existing:
+                existing_start = parse_iso_datetime(str(existing["start_utc"]))
+                if existing_start != start:
+                    raise BookingUnavailable("A different time is already being confirmed for this request.")
+                booking = existing
+                start = existing_start
+                end = parse_iso_datetime(str(existing["end_utc"]))
+            else:
+                buffer = timedelta(minutes=BOOKING_BUFFER_MINUTES)
+                busy = google_busy_periods(start - buffer, end + buffer)
+                if any(intervals_overlap(start - buffer, end + buffer, busy_start, busy_end) for busy_start, busy_end in busy):
+                    raise BookingUnavailable("That time was just taken. Please choose another available time.")
+                booking, _ = reserve_booking(request_id, start, end)
+
+            event_id = deterministic_event_id(request_id, start)
+            event = create_calendar_event(consultation, start, end, event_id)
+            confirmed = finalize_booking(int(booking["id"]), event)
+            self.send_json(
+                HTTPStatus.CREATED,
+                {"ok": True, "already_booked": False, "booking": booking_json(confirmed)},
+            )
+        except BookingUnavailable as exc:
+            self.send_json(
+                HTTPStatus.CONFLICT,
+                {"ok": False, "error": str(exc), "refresh_availability": True},
+            )
+        except (ValueError, KeyError) as exc:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": str(exc)})
+        except GoogleCalendarError as exc:
+            if booking:
+                fail_booking(int(booking["id"]), str(exc))
+            self.send_json(
+                HTTPStatus(exc.status),
+                {
+                    "ok": False,
+                    "error": "The time could not be confirmed with Google Calendar. Please try again.",
+                    "fallback_url": GOOGLE_CALENDAR_BOOKING_URL,
+                },
+            )
+        except Exception as exc:  # pragma: no cover - defensive runtime guard.
+            if booking:
+                fail_booking(int(booking["id"]), str(exc))
+            print(f"booking error: {exc}", file=sys.stderr)
+            self.send_json(
+                HTTPStatus.INTERNAL_SERVER_ERROR,
+                {"ok": False, "error": "The appointment could not be booked right now."},
             )
 
     def read_form_fields(self) -> dict[str, str]:
@@ -641,6 +1338,56 @@ class AudoHandler(BaseHTTPRequestHandler):
         raw_body = self.rfile.read(content_length).decode("utf-8", errors="replace")
         parsed = parse_qs(raw_body, keep_blank_values=True)
         return {key: values[-1] if values else "" for key, values in parsed.items()}
+
+    def read_json_fields(self) -> dict[str, object]:
+        content_length = int(self.headers.get("Content-Length", "0"))
+        if content_length <= 0:
+            raise ValueError("The scheduling request was empty.")
+        if content_length > MAX_BODY_BYTES:
+            raise ValueError("The scheduling request was too large.")
+        if "application/json" not in self.headers.get("Content-Type", ""):
+            raise ValueError("Please use the scheduling form on this website.")
+        try:
+            payload = json.loads(self.rfile.read(content_length).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise ValueError("The scheduling request was not valid.") from exc
+        if not isinstance(payload, dict):
+            raise ValueError("The scheduling request was not valid.")
+        return payload
+
+    def wants_json_response(self) -> bool:
+        return "application/json" in self.headers.get("Accept", "")
+
+    @staticmethod
+    def parse_request_id(value: object) -> int:
+        try:
+            request_id = int(value)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("The discovery request could not be found.") from exc
+        if request_id <= 0:
+            raise ValueError("The discovery request could not be found.")
+        return request_id
+
+    def validate_request_origin(self) -> None:
+        origin = self.headers.get("Origin")
+        if not origin:
+            return
+        origin_host = urlparse(origin).netloc.lower()
+        allowed_hosts = {
+            urlparse(PUBLIC_BASE_URL).netloc.lower(),
+            clean(self.headers.get("Host"), 255).lower(),
+        }
+        if origin_host not in allowed_hosts:
+            raise ValueError("Please use the scheduling form on this website.")
+
+    def send_json(self, status: HTTPStatus, payload: dict[str, object]) -> None:
+        encoded = json.dumps(payload, separators=(",", ":")).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
 
     @staticmethod
     def validate_payload(payload: dict[str, str]) -> None:
@@ -736,7 +1483,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             ("/", "Home", "See how Audo helps small businesses get practical technology work handled."),
             ("/#services", "Things I can help with", "Scan the main kinds of work I can help take off your plate."),
             ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
-            ("/#discovery", "Request a Free Discovery Call", "Share what you are dealing with and I will review it personally."),
+            ("/#discovery", "Book free discovery", "Share what you are dealing with and I will review it personally."),
             ("/#service-list", "Specific examples", "Browse common situations that may look like yours."),
             ("/privacy", "Privacy Policy", "See what information Audo collects and how it is used and protected."),
         ]
@@ -861,6 +1608,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260710-1">
   <script type="application/ld+json">{json_ld}</script>
   {analytics_js}
   <style>
@@ -1132,7 +1880,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <a href="/" aria-label="Audo home">
           <img class="logo" src="/assets/audo-logo-white.png" alt="Audo">
         </a>
-        <a href="/#discovery">Request a Free Discovery Call</a>
+        <a href="/#discovery">Book free discovery</a>
       </nav>
       <p class="eyebrow">Sitemap</p>
       <h1>Find small-business technology help.</h1>
@@ -1158,13 +1906,13 @@ class AudoHandler(BaseHTTPRequestHandler):
           <h2 id="sitemap-cta-heading">Not sure which page fits?</h2>
           <p>You do not need to know the exact problem before reaching out. Start with what feels slow, confusing, risky, or unfinished, and I will help sort the next step.</p>
         </div>
-        <a class="button" href="/#discovery">Request a Free Discovery Call</a>
+        <a class="button" href="/#discovery">Book free discovery</a>
       </section>
     </div>
   </main>
   <footer>
     <div class="shell">
-      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Request a Free Discovery Call</a> · <a href="/privacy">Privacy</a> · <a href="/sitemap">Sitemap</a></p>
+      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Book free discovery</a> · <a href="/privacy">Privacy</a> · <a href="/sitemap">Sitemap</a></p>
     </div>
   </footer>
 </body>
@@ -1624,7 +2372,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <div class="nav-links">
         <a href="/#services">How I can help</a>
         <a href="/#why">Why Audo</a>
-        <a class="nav-cta" href="#discovery">Request a Free Discovery Call</a>
+        <a class="nav-cta" href="#discovery">Book free discovery</a>
       </div>
     </div>
   </nav>
@@ -1635,7 +2383,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <h1>{h(service.title)}.</h1>
         <p class="hero-lead">{h(service.summary)}</p>
         <div class="hero-actions">
-          <a class="button primary" href="#discovery">Request a Free Discovery Call</a>
+          <a class="button primary" href="#discovery">Book free discovery</a>
           <a class="button" href="/#service-list">See Common Problems I Solve</a>
         </div>
       </div>
@@ -1675,7 +2423,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <p class="eyebrow">Free Discovery</p>
         <h2 id="service-form-heading">Start with this service.</h2>
         <p>Share what is happening in plain English. After submitting, choose a live time from my Google Calendar. The 30-minute call is free and has no obligation.</p>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form>
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
             <label for="service_website_url_confirm">Confirm website</label>
             <input id="service_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
@@ -1710,7 +2458,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
           <input type="hidden" name="recaptcha_token" value="">
-          <button class="button primary" type="submit">Continue to Scheduling</button>
+          <button class="button primary" type="submit">Book free discovery</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="service-form-note" class="form-note">Step 1 of 2. I will know which service page you came from; next, choose a live time from my Google Calendar.</p>
         </form>
@@ -1719,7 +2467,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   </main>
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Request a Free Discovery Call</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Book free discovery</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
@@ -1733,6 +2481,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
   </section>
   {recaptcha_js}
+  <script src="/assets/booking.js?v=20260710-1" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")
@@ -1791,9 +2540,11 @@ class AudoHandler(BaseHTTPRequestHandler):
     def recaptcha_script() -> str:
         site_key = json.dumps(RECAPTCHA_SITE_KEY)
         ga_id = json.dumps(GOOGLE_ANALYTICS_ID)
+        booking_url = json.dumps(GOOGLE_CALENDAR_BOOKING_URL)
         return f"""<script>
     window.AUDO_RECAPTCHA_SITE_KEY = {site_key};
     window.AUDO_GA_MEASUREMENT_ID = {ga_id};
+    window.AUDO_GOOGLE_CALENDAR_BOOKING_URL = {booking_url};
 
     (function () {{
       var banner = document.querySelector(".cookie-consent");
@@ -2005,6 +2756,10 @@ class AudoHandler(BaseHTTPRequestHandler):
     def serve_index(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
         data = data.replace("__RECAPTCHA_SITE_KEY__", json.dumps(RECAPTCHA_SITE_KEY))
+        data = data.replace(
+            "__GOOGLE_CALENDAR_BOOKING_URL__",
+            json.dumps(GOOGLE_CALENDAR_BOOKING_URL),
+        )
         encoded = data.encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "text/html; charset=utf-8")

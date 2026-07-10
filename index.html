@@ -651,8 +651,26 @@
         var(--charcoal);
     }
 
+    .why-band .section-head {
+      grid-template-columns: minmax(0, 0.78fr) minmax(400px, 0.72fr);
+      gap: clamp(40px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .why-band .section-head h2 {
+      max-width: 620px;
+      font-size: clamp(40px, 4.2vw, 54px);
+    }
+
+    .why-heading-line {
+      display: block;
+    }
+
     .why-band .section-copy {
+      max-width: 540px;
       color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(18px, 1.65vw, 20px);
+      line-height: 1.55;
     }
 
     .why-grid {
@@ -1652,6 +1670,25 @@
         line-height: 1.55;
       }
 
+      .why-band .section-head {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .why-band .section-head h2 {
+        max-width: none;
+        font-size: clamp(31px, 9.5vw, 42px);
+      }
+
+      .why-heading-line {
+        display: inline;
+      }
+
+      .why-band .section-copy {
+        max-width: none;
+        font-size: 16px;
+      }
+
       .service-card {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -1974,7 +2011,7 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Senior help, without the agency layers.</h2>
+          <h2><span class="why-heading-line">Senior help, without</span> <span class="why-heading-line">the agency layers.</span></h2>
           <p class="section-copy">Work directly with Aaron to fix what is broken, plan what comes next, and make technology easier to manage.</p>
         </div>
 

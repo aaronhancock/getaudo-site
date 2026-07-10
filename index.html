@@ -2017,6 +2017,7 @@
 
     .problem-spotlight {
       min-width: 0;
+      scroll-margin-top: 18px;
       display: grid;
       grid-template-columns: minmax(380px, 0.88fr) minmax(0, 1.12fr);
       grid-template-rows: minmax(480px, 1fr);
@@ -2387,6 +2388,10 @@
       max-width: 620px;
       font-size: clamp(28px, 3vw, 38px);
       line-height: 1.02;
+    }
+
+    .problem-spotlight-copy h3:focus-visible {
+      outline: none;
     }
 
     .problem-summary {
@@ -3785,7 +3790,7 @@
           </div>
           <p class="section-copy">Choose the part of the business that feels stuck. Then explore situations that small teams run into every day.</p>
         </div>
-        <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-explorer">
+        <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-owner-copy">
           <div class="problem-explorer-toolbar">
             <div class="problem-tabs" role="tablist" aria-label="Problem areas" data-explorer-tabs></div>
           </div>
@@ -3795,7 +3800,7 @@
               <div class="problem-visual" data-explorer-visual aria-hidden="true"></div>
               <div class="problem-spotlight-copy">
                 <p class="problem-group-label" data-explorer-group></p>
-                <h3 data-explorer-title>Loading examples...</h3>
+                <h3 data-explorer-title tabindex="-1">Loading examples...</h3>
                 <p class="problem-summary" data-explorer-summary></p>
                 <div class="problem-result">
                   <span>What gets better</span>
@@ -3813,7 +3818,7 @@
                 <p>Keep exploring</p>
                 <h3 data-explorer-more-label>More website problems</h3>
               </div>
-              <span>Choose any card to bring it into focus.</span>
+              <span>Choose any example to see the full details above.</span>
             </div>
             <div class="problem-choices" data-explorer-choices aria-label="More situations in this area"></div>
           </div>
@@ -4113,11 +4118,11 @@
       var animationTimer = null;
 
       var groups = [
-        { id: "website", label: "Your website", moreLabel: "More website problems", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
-        { id: "customers", label: "Customers and leads", moreLabel: "More customer and lead problems", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
-        { id: "work", label: "Daily work", moreLabel: "More daily-work problems", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
-        { id: "ai", label: "AI at work", moreLabel: "More AI questions", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
-        { id: "decisions", label: "Decisions and projects", moreLabel: "More decisions and projects", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
+        { id: "website", label: "My website", moreLabel: "More website problems", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
+        { id: "customers", label: "My customers", moreLabel: "More customer problems", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
+        { id: "work", label: "How we work", moreLabel: "More day-to-day problems", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
+        { id: "ai", label: "Using AI", moreLabel: "More ways AI could help", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
+        { id: "decisions", label: "I need help deciding", moreLabel: "More things to figure out", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
       ];
 
       var scenes = {
@@ -4249,6 +4254,16 @@
         }
       }
 
+      function moveToSpotlight() {
+        spotlight.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "start"
+        });
+        window.setTimeout(function () {
+          title.focus({ preventScroll: true });
+        }, reducedMotion ? 0 : 520);
+      }
+
       function renderChoices() {
         choices.innerHTML = "";
         servicesForGroup(currentGroup).filter(function (service) {
@@ -4275,7 +4290,7 @@
           description.className = "problem-choice-summary";
           description.textContent = service.summary || "";
           action.className = "problem-choice-action";
-          action.textContent = "Bring into focus";
+          action.textContent = "Show this example";
           arrow.setAttribute("aria-hidden", "true");
           arrow.textContent = "→";
 
@@ -4290,6 +4305,7 @@
             renderSpotlight(service, true);
             renderChoices();
             announce("Selected " + service.title + ".");
+            moveToSpotlight();
           });
           choices.appendChild(button);
         });

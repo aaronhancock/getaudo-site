@@ -28,6 +28,36 @@ class ServiceExplorerTests(unittest.TestCase):
                 self.assertTrue(card["summary"])
                 self.assertTrue(card["result"])
                 self.assertTrue(card["url"].startswith("/services/"))
+                self.assertTrue(
+                    card["title"].startswith(
+                        (
+                            "My ",
+                            "I ",
+                            "Every ",
+                            "Customers ",
+                            "Customer ",
+                            "Writing ",
+                            "One ",
+                            "We ",
+                            "It ",
+                        )
+                    )
+                )
+
+                owner_copy = " ".join(
+                    (card["title"], card["summary"], card["result"])
+                ).lower()
+                for industry_phrase in (
+                    "workflow",
+                    "crm",
+                    "off-the-shelf",
+                    "scope",
+                    "technology basics",
+                    "technology priorities",
+                    "technical problems",
+                    "client data",
+                ):
+                    self.assertNotIn(industry_phrase, owner_copy)
 
 
 if __name__ == "__main__":

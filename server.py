@@ -28,9 +28,9 @@ except ImportError:  # pragma: no cover - Pillow is installed in the deployed im
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
-CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "matthewaaron@gmail.com")
+CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "getaudo@gmail.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
-SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-03")
+SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-09")
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
 RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
@@ -38,6 +38,29 @@ RECAPTCHA_MIN_SCORE = float(os.environ.get("RECAPTCHA_MIN_SCORE", "0.5"))
 RECAPTCHA_ACTION = "discovery_request"
 GOOGLE_ANALYTICS_ID = os.environ.get("GOOGLE_ANALYTICS_ID", "G-YP5ME1JR6Q")
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+DEFAULT_GOOGLE_CALENDAR_BOOKING_URL = (
+    "https://calendar.google.com/calendar/appointments/schedules/"
+    "AcZssZ1Fgfoyrn4ccNy5-oTsC9BjSgQ9gIbRbjwACTqckN2P6Z6AIDs0kj5hDnYCVQ6qq27M4wwDE1MA"
+)
+
+
+def normalize_google_calendar_booking_url(value: str) -> str:
+    candidate = value.strip()
+    if not candidate:
+        return ""
+    parsed = urlparse(candidate)
+    if parsed.scheme != "https":
+        return ""
+    if parsed.netloc == "calendar.app.google":
+        return candidate
+    if parsed.netloc == "calendar.google.com" and parsed.path.startswith("/calendar/appointments/schedules/"):
+        return candidate
+    return ""
+
+
+GOOGLE_CALENDAR_BOOKING_URL = normalize_google_calendar_booking_url(
+    os.environ.get("GOOGLE_CALENDAR_BOOKING_URL", DEFAULT_GOOGLE_CALENDAR_BOOKING_URL)
+)
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
 SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
@@ -381,9 +404,7 @@ Promo code: {fields.get("promo_code") or "Not provided"}
 Interested in: {fields.get("interest_context") or "General discovery"}
 Email: {fields["email"]}
 Phone: {fields.get("phone") or "Not provided"}
-Urgency: {fields["timeline"]}
-Discovery availability:
-{fields.get("preferred_times") or "Not provided"}
+Scheduling: {fields.get("timeline") or "Choose from Google Calendar after submission"}
 
 Help needed: {fields["service"]}
 
@@ -536,6 +557,8 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         route_files = {
             "/": "index.html",
+            "/privacy": "privacy.html",
+            "/privacy/": "privacy.html",
             "/thank-you": "thank-you.html",
             "/thank-you/": "thank-you.html",
         }
@@ -546,6 +569,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         if path in route_files:
             if route_files[path] == "index.html":
                 self.serve_index(send_body=send_body)
+            elif route_files[path] == "thank-you.html":
+                self.serve_thank_you(send_body=send_body)
             else:
                 self.serve_file(BASE_DIR / route_files[path], send_body=send_body)
             return
@@ -578,7 +603,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                 "promo_code": clean(fields.get("promo_code"), 80),
                 "email": clean(fields.get("email"), 254),
                 "phone": clean(fields.get("phone"), 80),
-                "timeline": clean(fields.get("timeline"), 80),
+                "timeline": clean(fields.get("timeline"), 80) or "Schedule after request",
                 "preferred_times": clean(fields.get("preferred_times"), 1000),
                 "service": clean(fields.get("service"), 120) or "Not sure yet",
                 "message": clean(fields.get("message"), 5000),
@@ -621,14 +646,8 @@ class AudoHandler(BaseHTTPRequestHandler):
     def validate_payload(payload: dict[str, str]) -> None:
         if not payload["name"]:
             raise ValueError("Please include your name.")
-        if not payload["company_name"]:
-            raise ValueError("Please include your company or project name.")
         if not payload["email"] or not EMAIL_RE.match(payload["email"]):
             raise ValueError("Please include a valid email address.")
-        if not payload["timeline"]:
-            raise ValueError("Please choose a timing option.")
-        if not payload["preferred_times"]:
-            raise ValueError("Please share a few day and time options for discovery.")
         if not payload["message"]:
             raise ValueError("Please describe what needs help.")
 
@@ -674,6 +693,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     def serve_sitemap(self, send_body: bool = True) -> None:
         urls = [
             (f"{PUBLIC_BASE_URL}/", "monthly", "1.0"),
+            (f"{PUBLIC_BASE_URL}/privacy", "yearly", "0.5"),
             (f"{PUBLIC_BASE_URL}/sitemap", "monthly", "0.8"),
             *[(service.canonical_url, "monthly", "0.72") for service in SERVICES],
         ]
@@ -706,18 +726,19 @@ class AudoHandler(BaseHTTPRequestHandler):
             "Automation",
             "AI coaching and support",
             "Product strategy",
-            "Individual consulting",
+            "Small business setup and operations",
         ]
         grouped: dict[str, list] = {}
         for service in SERVICES:
             grouped.setdefault(service.category, []).append(service)
 
         main_links = [
-            ("/", "Home", "See what Audo does and how I work with individuals and small businesses."),
+            ("/", "Home", "See how Audo helps small businesses get practical technology work handled."),
             ("/#services", "Things I can help with", "Scan the main kinds of work I can help take off your plate."),
             ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
-            ("/#discovery", "Free Discovery", "Share what you are dealing with and I will review it personally."),
+            ("/#discovery", "Request a Free Discovery Call", "Share what you are dealing with and I will review it personally."),
             ("/#service-list", "Specific examples", "Browse common situations that may look like yours."),
+            ("/privacy", "Privacy Policy", "See what information Audo collects and how it is used and protected."),
         ]
 
         def link_cards(links: list[tuple[str, str, str]]) -> str:
@@ -814,7 +835,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sitemap | Audo</title>
-  <meta name="description" content="Find the Audo consulting page or service example that matches your website, app, automation, AI, or product problem.">
+  <meta name="description" content="Find Audo small-business technology help for a website, workflow, automation, practical AI, internal tool, or technology decision.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron Hancock">
   <meta name="theme-color" content="#101815">
@@ -1111,11 +1132,11 @@ class AudoHandler(BaseHTTPRequestHandler):
         <a href="/" aria-label="Audo home">
           <img class="logo" src="/assets/audo-logo-white.png" alt="Audo">
         </a>
-        <a href="/#discovery">Request Free Discovery</a>
+        <a href="/#discovery">Request a Free Discovery Call</a>
       </nav>
       <p class="eyebrow">Sitemap</p>
-      <h1>Find help for what needs attention.</h1>
-      <p class="hero-copy">Use this page to jump to the kind of website, app, automation, AI, or product help that sounds closest to what you are dealing with.</p>
+      <h1>Find small-business technology help.</h1>
+      <p class="hero-copy">Jump to the website, automation, practical AI, internal-tool, or technology-decision problem that sounds closest to what your business is dealing with.</p>
     </div>
   </header>
   <main id="main">
@@ -1137,13 +1158,13 @@ class AudoHandler(BaseHTTPRequestHandler):
           <h2 id="sitemap-cta-heading">Not sure which page fits?</h2>
           <p>You do not need to know the exact problem before reaching out. Start with what feels slow, confusing, risky, or unfinished, and I will help sort the next step.</p>
         </div>
-        <a class="button" href="/#discovery">Request Free Discovery</a>
+        <a class="button" href="/#discovery">Request a Free Discovery Call</a>
       </section>
     </div>
   </main>
   <footer>
     <div class="shell">
-      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Free Discovery</a> · <a href="/sitemap">Sitemap</a></p>
+      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Request a Free Discovery Call</a> · <a href="/privacy">Privacy</a> · <a href="/sitemap">Sitemap</a></p>
     </div>
   </footer>
 </body>
@@ -1280,7 +1301,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "logo": "https://getaudo.com/assets/audo-logo-white.png",
                         "image": social_image,
                         "founder": {"@id": "https://getaudo.com/#aaron-hancock"},
-                        "description": "Audo provides senior technology consulting backed by product and engineering leadership, M&A and product due diligence experience, agency delivery experience, direct AI support, and consulting for websites, apps, automation, and product strategy.",
+                        "description": "Audo gives small businesses one senior technology partner for websites, automation, practical AI, internal tools, technology decisions, and ongoing support.",
                     },
                 ],
             },
@@ -1512,6 +1533,13 @@ class AudoHandler(BaseHTTPRequestHandler):
     .form-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }}
     .form-field {{ display: grid; gap: 7px; }}
     .form-field.full {{ grid-column: 1 / -1; }}
+    .promo-details {{ grid-column: 1 / -1; border: 1px solid rgba(24,34,29,0.14); border-radius: 8px; background: rgba(24,34,29,0.035); }}
+    .promo-details summary {{ min-height: 44px; padding: 10px 12px; color: var(--muted); font-size: 13px; font-weight: 760; line-height: 1.4; list-style: none; }}
+    .promo-details summary::-webkit-details-marker {{ display: none; }}
+    .promo-details summary::after {{ content: "+"; margin-left: auto; color: var(--ink); font-size: 18px; font-weight: 500; }}
+    .promo-details[open] summary::after {{ content: "−"; }}
+    .promo-details[open] summary {{ border-bottom: 1px solid rgba(24,34,29,0.12); }}
+    .promo-details .form-field {{ padding: 13px; }}
     .form-field label {{ color: var(--ink); font-size: 12px; font-weight: 820; letter-spacing: 0.06em; text-transform: uppercase; }}
     .form-field input, .form-field select, .form-field textarea {{
       width: 100%;
@@ -1559,11 +1587,14 @@ class AudoHandler(BaseHTTPRequestHandler):
     }}
     .cookie-copy h2 {{ margin: 0 0 6px; font-size: 17px; line-height: 1.2; }}
     .cookie-copy p {{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }}
+    .cookie-copy a {{ color: var(--ink); font-weight: 760; }}
     .cookie-actions {{ display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }}
     .cookie-button {{ min-height: 42px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; color: var(--ink); background: var(--white); font: inherit; font-size: 13px; font-weight: 820; cursor: pointer; }}
     .cookie-button.primary {{ border-color: #f0c66f; background: #f0c66f; }}
     @media (max-width: 860px) {{
       .nav-links a:not(.nav-cta) {{ display: none; }}
+      .nav-links {{ gap: 10px; font-size: 13px; }}
+      .nav-cta {{ padding: 0 11px; }}
       .detail-hero {{ min-height: auto; }}
       .hero-content {{ padding: 104px 0 48px; }}
       h1 {{ font-size: clamp(40px, 13vw, 58px); }}
@@ -1593,7 +1624,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <div class="nav-links">
         <a href="/#services">How I can help</a>
         <a href="/#why">Why Audo</a>
-        <a class="nav-cta" href="#discovery">Free Discovery</a>
+        <a class="nav-cta" href="#discovery">Request a Free Discovery Call</a>
       </div>
     </div>
   </nav>
@@ -1604,8 +1635,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         <h1>{h(service.title)}.</h1>
         <p class="hero-lead">{h(service.summary)}</p>
         <div class="hero-actions">
-          <a class="button primary" href="#discovery">Request Free Discovery</a>
-          <a class="button" href="/#service-list">Ways I can help</a>
+          <a class="button primary" href="#discovery">Request a Free Discovery Call</a>
+          <a class="button" href="/#service-list">See Common Problems I Solve</a>
         </div>
       </div>
     </div>
@@ -1643,7 +1674,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <aside id="discovery" class="form-panel" aria-labelledby="service-form-heading">
         <p class="eyebrow">Free Discovery</p>
         <h2 id="service-form-heading">Start with this service.</h2>
-        <p>Share what is happening in plain English. I will look it over and respond with the best next step.</p>
+        <p>Share what is happening in plain English. After submitting, choose a live time from my Google Calendar. The 30-minute call is free and has no obligation.</p>
         <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form>
           <div class="form-honey" aria-hidden="true">
             <label for="service_website_url_confirm">Confirm website</label>
@@ -1655,60 +1686,46 @@ class AudoHandler(BaseHTTPRequestHandler):
               <input id="service_name" name="name" type="text" autocomplete="name" required>
             </div>
             <div class="form-field">
-              <label for="service_company_name">Company / project</label>
-              <input id="service_company_name" name="company_name" type="text" autocomplete="organization" required>
-            </div>
-            <div class="form-field">
               <label for="service_email">Email</label>
               <input id="service_email" name="email" type="email" autocomplete="email" required>
             </div>
-            <div class="form-field">
-              <label for="service_timeline">Urgency</label>
-              <select id="service_timeline" name="timeline" required>
-                <option value="">Choose one</option>
-                <option>This week</option>
-                <option>Next few weeks</option>
-                <option>This month</option>
-                <option>No rush yet</option>
-              </select>
-            </div>
             <div class="form-field full">
-              <label for="service_website">Website</label>
+              <label for="service_website">Business website or useful link (optional)</label>
               <input id="service_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
-            </div>
-            <div class="form-field full">
-              <label for="service_preferred_times">A few good discovery times</label>
-              <textarea id="service_preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
             </div>
             <div class="form-field full">
               <label for="service_message">What should I know?</label>
               <textarea id="service_message" name="message" placeholder="A few sentences is enough. Include anything I should review first." required></textarea>
             </div>
-            <div class="form-field full">
-              <label for="service_promo_code">Promo code</label>
-              <input id="service_promo_code" name="promo_code" type="text" autocomplete="off" placeholder="Optional">
-            </div>
+            <details class="promo-details">
+              <summary>Have a promo code?</summary>
+              <div class="form-field">
+                <label for="service_promo_code">Promo code</label>
+                <input id="service_promo_code" name="promo_code" type="text" autocomplete="off">
+              </div>
+            </details>
           </div>
           <input type="hidden" name="service" value="{h(service.title)}">
+          <input type="hidden" name="timeline" value="Schedule after request">
           <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
           <input type="hidden" name="recaptcha_token" value="">
-          <button class="button primary" type="submit">Request Free Discovery</button>
+          <button class="button primary" type="submit">Continue to Scheduling</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="service-form-note" class="form-note">I will know which service page you came from.</p>
+          <p id="service-form-note" class="form-note">Step 1 of 2. I will know which service page you came from; next, choose a live time from my Google Calendar.</p>
         </form>
       </aside>
     </div>
   </main>
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Free Discovery</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Request a Free Discovery Call</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
       <h2 id="cookie-title">Cookie choices</h2>
-      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept.</p>
+      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept. <a href="/privacy">Read the Privacy Policy.</a></p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
@@ -1988,6 +2005,20 @@ class AudoHandler(BaseHTTPRequestHandler):
     def serve_index(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
         data = data.replace("__RECAPTCHA_SITE_KEY__", json.dumps(RECAPTCHA_SITE_KEY))
+        encoded = data.encode("utf-8")
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        if send_body:
+            self.wfile.write(encoded)
+
+    def serve_thank_you(self, send_body: bool = True) -> None:
+        data = (BASE_DIR / "thank-you.html").read_text(encoding="utf-8")
+        data = data.replace(
+            "__GOOGLE_CALENDAR_BOOKING_URL__",
+            json.dumps(GOOGLE_CALENDAR_BOOKING_URL),
+        )
         encoded = data.encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "text/html; charset=utf-8")

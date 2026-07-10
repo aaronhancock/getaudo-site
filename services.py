@@ -34,7 +34,7 @@ class Service:
         description = f"{self.summary} Audo helps find the issue, fix the right thing, and make the next step clear."
         if len(description) <= 158:
             return description
-        shorter = f"{self.summary} Request Free Discovery with Audo."
+        shorter = f"{self.summary} Request a free discovery call with Audo."
         if len(shorter) <= 158:
             return shorter
         return self.summary[:155].rstrip(" ,.;") + "..."
@@ -752,7 +752,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Build a personal task and reminder system",
-        "Individual consulting",
+        "Small business setup and operations",
         "Tasks keep slipping because reminders are spread across too many apps or habits.",
         "A task system fails when it is too complex, too easy to ignore, or disconnected from real routines.",
         "I help choose a simple structure, capture method, reminder rhythm, and review habit.",
@@ -760,7 +760,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Automate personal paperwork and forms",
-        "Individual consulting",
+        "Small business setup and operations",
         "Repeated personal paperwork takes more time than it should.",
         "Forms, applications, PDFs, and repeated information become frustrating when every request starts from scratch.",
         "I help create templates, organized source information, and AI-assisted drafts where appropriate.",
@@ -768,7 +768,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Create a simple budget or planning spreadsheet",
-        "Individual consulting",
+        "Small business setup and operations",
         "You need a simple spreadsheet, not a complicated financial system.",
         "Planning gets harder when the spreadsheet is overbuilt, unclear, or disconnected from how you make decisions.",
         "I help design a simple sheet around the few categories, questions, and review habits that matter.",
@@ -792,7 +792,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Inbox and calendar are overloaded",
-        "Individual consulting",
+        "Small business setup and operations",
         "Your inbox and calendar are carrying too much of your life or work.",
         "Overload grows when messages, appointments, reminders, and decisions all compete in the same places.",
         "I help define filters, routines, reminders, labels, scheduling habits, and AI-assisted summaries where they help.",
@@ -808,7 +808,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Use AI for writing and research without feeling stuck",
-        "Individual consulting",
+        "Small business setup and operations",
         "You want AI help for writing, research, or decisions, but do not know how to start.",
         "AI can feel overwhelming when the first prompt is unclear and the output needs too much cleanup.",
         "I coach you through prompts, source checking, revision habits, and ways to keep your voice intact.",
@@ -816,7 +816,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Set up the basics for a new small business",
-        "Individual consulting",
+        "Small business setup and operations",
         "You need the basics in place: domain, email, site, forms, scheduling, payments, and simple records.",
         "Starting from scratch is hard because every tool choice affects future work and support.",
         "I help choose the simplest workable stack, connect the pieces, and document how it fits together.",
@@ -832,7 +832,7 @@ SERVICE_SEEDS = [
     ),
     (
         "You need one clear online home",
-        "Individual consulting",
+        "Small business setup and operations",
         "You need one clean place to explain who you are, what you do, and how people can contact you.",
         "Scattered profiles and links make it harder for people to understand your work, trust your experience, or take the next step.",
         "I help shape the message, page structure, contact flow, and simple launch plan, then build or guide the smallest working version.",
@@ -840,7 +840,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Prepare a solo business for its first website",
-        "Individual consulting",
+        "Small business setup and operations",
         "You need a first website, but you are not sure what it should say or include.",
         "First websites stall when offers, audience, trust points, tools, and next steps are still fuzzy.",
         "I help clarify the message, page structure, must-have tools, and simplest way to launch.",
@@ -848,7 +848,7 @@ SERVICE_SEEDS = [
     ),
     (
         "Client onboarding feels awkward or inconsistent",
-        "Individual consulting",
+        "Small business setup and operations",
         "You want new clients to know exactly what happens after they say yes.",
         "Onboarding feels awkward when documents, payments, forms, expectations, and first tasks are handled differently every time.",
         "I help design the onboarding steps, messages, forms, and reminders that fit your service.",
@@ -1023,10 +1023,10 @@ CATEGORY_CHECKS = {
         "Sort ideas by value, risk, effort, timing, and what can be learned fastest.",
         "Create a next step before committing to a bigger build or vendor.",
     ],
-    "Individual consulting": [
-        "Understand what keeps slowing things down and the way you already prefer to work.",
-        "Simplify the tools, routines, reminders, notes, or AI prompts around the real habit.",
-        "Create a system light enough to keep using after the first setup.",
+    "Small business setup and operations": [
+        "Understand what keeps slowing the business down and the way the work already gets done.",
+        "Simplify the tools, routines, reminders, records, and handoffs around the real workflow.",
+        "Create a system light enough for an owner or small team to keep using after the first setup.",
     ],
 }
 
@@ -1214,7 +1214,7 @@ CATEGORY_ONGOING_CONTEXT = {
     "Automation": "If the workflow is stable, it may be a one-time setup. If the process changes, tools evolve, or people need help trusting the automation, ongoing support keeps the workflow stable.",
     "AI coaching and support": "If the need is narrow, a single coaching or setup session may be enough. If people are learning new habits, testing tools, or creating safety rules, ongoing support helps the practice stick.",
     "Product strategy": "Some product questions need one clear decision session. Others benefit from ongoing support while the idea moves through testing, scope, vendor conversations, or early build work.",
-    "Individual consulting": "Some personal systems need one setup. Others work better with light ongoing support while the routine becomes natural and the tools get adjusted around real life.",
+    "Small business setup and operations": "Some small-business systems need one setup. Others work better with light ongoing support while the routine becomes natural and the tools adjust around real operations.",
 }
 
 
@@ -1223,7 +1223,7 @@ CATEGORY_AGENCY_CONTEXT = {
     "Automation": "Automation work needs someone who understands the actual workflow, not just the tool connection. Audo brings senior product and engineering judgment to shape, build, explain, and support the process directly.",
     "AI coaching and support": "AI work needs judgment, privacy awareness, examples, training, and follow-through. Audo brings broad technology and product experience while keeping the coaching close to the real work people do every day.",
     "Product strategy": "Product work gets better when strategy and execution stay connected. Audo brings product and engineering leadership experience, so the recommendation is based on what it would take to actually build or support it.",
-    "Individual consulting": "Small-business and personal systems depend on the details: people, habits, tools, and timing. Audo brings senior technology experience without turning the work into a large process.",
+    "Small business setup and operations": "Small-business systems depend on the details: people, habits, tools, customers, and timing. Audo brings senior technology experience without turning the work into a large process.",
 }
 
 

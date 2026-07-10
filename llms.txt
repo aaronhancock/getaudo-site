@@ -1,12 +1,13 @@
 # Audo
 
-> Senior technology partner for websites, web applications, automation, AI coaching, and product strategy.
+> Senior technology partner for small-business websites, automation, practical AI, internal tools, and ongoing support.
 
-Audo helps individuals and small businesses get practical technology work off their plate. Audo is Aaron Hancock's independent consulting practice, intentionally small so clients can work directly with one senior partner who understands the context, makes the fix, and can continue supporting the work without large-agency overhead.
+Audo helps small businesses get practical technology work off their plate. Audo is Aaron Hancock's independent consulting practice, intentionally small so owners and teams can work directly with one senior partner who understands the context, makes the fix, and can continue supporting the work without large-agency overhead.
 
 Website: https://getaudo.com/
 Discovery: https://getaudo.com/#discovery
 Human sitemap: https://getaudo.com/sitemap
+Privacy: https://getaudo.com/privacy
 
 ## Services
 
@@ -18,13 +19,13 @@ Human sitemap: https://getaudo.com/sitemap
 
 ## Service Library
 
-The site includes a focused library of 49 service examples covering website and app care, automation, AI support, product strategy, and individual consulting. The homepage presents three animated, auto-rotating examples at a time, and each service page explains the problem, how Audo helps, the expected result, common questions, and includes a Free Discovery form that identifies the service in the request.
+The site includes a focused library of 49 service examples covering website and app care, automation, AI support, technology decisions, and small business setup and operations. The homepage presents three animated, auto-rotating examples at a time, and each service page explains the problem, how Audo helps, the expected result, common questions, and includes a short discovery form followed by live Google Calendar scheduling.
 
 Service pages use clean URLs under https://getaudo.com/services/ and are listed in the dynamic sitemap.
 
 ## Why Audo
 
-Audo gives individuals and small businesses senior tech help without the agency runaround. Clients do not need to know the exact problem before reaching out; Aaron can help discover what is slowing things down, explain the options clearly, and get the work handled without account layers, handoff chains, multiple vendors, or technical translation. Audo is Aaron Hancock's independent consulting practice, built for people who need a trusted technology partner. Aaron has spent 30 years solving technology problems, from building websites in high school to leading product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com. Through prior roles, OEM programs, and agency work, he has also supported M&A, product due diligence, integrations, migrations, launches, and client work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Audo gives small businesses senior technology help without the agency runaround. Owners and teams do not need to know the exact problem before reaching out; Aaron can help discover what is slowing things down, explain the options clearly, and get the work handled without account layers, handoff chains, multiple vendors, or technical translation. Audo is Aaron Hancock's independent consulting practice, built for small businesses that need a trusted technology partner. Aaron has spent 30 years solving technology problems, from building websites in high school to leading product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com. Through prior roles, OEM programs, and agency work, he has also supported M&A, product due diligence, integrations, migrations, launches, and client work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
 ## Client Work
 

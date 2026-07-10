@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Discovery Request Sent | Audo</title>
-  <meta name="description" content="Your Audo discovery request has been received.">
+  <title>Choose a Discovery Time | Audo</title>
+  <meta name="description" content="Your Audo discovery request has been received. Choose an available time for a free 30-minute Google Meet call.">
   <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#101815">
   <link rel="canonical" href="https://getaudo.com/thank-you">
@@ -61,6 +61,7 @@
       --brass: #f0c66f;
       --charcoal: #101815;
       --line: rgba(24, 34, 29, 0.14);
+      --shadow: 0 24px 70px rgba(12, 18, 15, 0.16);
     }
 
     * {
@@ -70,121 +71,364 @@
     body {
       min-height: 100svh;
       margin: 0;
-      display: grid;
-      place-items: center;
-      padding: 28px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    iframe:focus-visible {
+      outline: 3px solid #f4dca9;
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 22px 0 clamp(46px, 7vw, 76px);
       color: var(--white);
       background:
-        linear-gradient(90deg, rgba(11, 16, 14, 0.88), rgba(11, 16, 14, 0.5)),
+        linear-gradient(90deg, rgba(11, 16, 14, 0.94), rgba(23, 40, 31, 0.82)),
         url("/assets/consulting-technology-hero.webp") center / cover no-repeat;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      letter-spacing: 0;
     }
 
-    main {
-      width: min(720px, 100%);
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: clamp(54px, 8vw, 88px);
     }
 
-    img {
+    .brand img {
       width: 142px;
       height: auto;
-      margin-bottom: 46px;
+      display: block;
       filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.22));
     }
 
-    p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.82);
-      font-size: 19px;
-      line-height: 1.6;
+    .nav-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      padding: 0 14px;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
     }
 
     .eyebrow {
-      margin-bottom: 16px;
-      color: #f4dca9;
+      margin: 0 0 14px;
+      color: var(--brass);
       font-size: 13px;
       font-weight: 820;
       letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0 0 22px;
-      font-size: clamp(46px, 9vw, 84px);
-      line-height: 0.96;
-      letter-spacing: 0;
+    h1,
+    h2 {
+      margin: 0;
+      letter-spacing: -0.04em;
     }
 
-    .actions {
+    h1 {
+      max-width: 760px;
+      font-size: clamp(48px, 8vw, 82px);
+      line-height: 0.98;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(18px, 2.2vw, 21px);
+      line-height: 1.55;
+    }
+
+    main {
+      padding: clamp(46px, 7vw, 78px) 0;
+    }
+
+    .booking-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(290px, 0.48fr);
+      gap: clamp(30px, 5vw, 64px);
+      align-items: start;
+    }
+
+    .booking-intro h2 {
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.02;
+    }
+
+    .booking-intro p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .call-details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .call-details strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+
+    .call-details ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 19px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .booking-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 32px;
+      margin-top: 26px;
     }
 
-    a {
+    .button {
       min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.44);
+      border: 1px solid var(--line);
       border-radius: 8px;
       padding: 0 18px;
-      color: var(--white);
-      background: rgba(255, 255, 255, 0.12);
+      color: var(--ink);
+      background: var(--white);
       text-decoration: none;
       font-size: 15px;
       font-weight: 820;
-      backdrop-filter: blur(10px);
+      cursor: pointer;
     }
 
-    a.primary {
+    .button.primary {
       border-color: var(--brass);
-      color: var(--ink);
       background: var(--brass);
     }
 
-    a:focus-visible {
-      outline: 3px solid #f4dca9;
-      outline-offset: 3px;
+    .calendar-panel {
+      margin-top: 34px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      background: var(--white);
+      box-shadow: var(--shadow);
     }
 
-    @media (max-width: 620px) {
-      body {
-        align-items: start;
-        padding-top: 32px;
+    .calendar-panel iframe {
+      width: 100%;
+      min-height: 760px;
+      display: block;
+      border: 0;
+      border-radius: 6px;
+      background: var(--white);
+    }
+
+    .calendar-note,
+    .booking-fallback {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .booking-fallback {
+      border-left: 4px solid var(--brass);
+      padding: 14px 16px;
+      background: rgba(240, 198, 111, 0.13);
+    }
+
+    footer {
+      padding: 24px 0;
+      color: rgba(255, 255, 255, 0.72);
+      background: #0c1210;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 14px;
+    }
+
+    .footer-line {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    footer strong {
+      color: var(--white);
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        align-items: flex-start;
       }
 
-      img {
+      .brand img {
         width: 126px;
-        margin-bottom: 82px;
       }
 
-      h1 {
-        font-size: clamp(40px, 14vw, 58px);
+      .booking-intro {
+        grid-template-columns: 1fr;
       }
 
-      p {
-        font-size: 17px;
-      }
-
-      a {
+      .button {
         width: 100%;
+      }
+
+      .calendar-panel {
+        margin-inline: -8px;
+        padding: 4px;
+      }
+
+      .calendar-panel iframe {
+        min-height: 700px;
       }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="shell">
+      <nav aria-label="Confirmation page navigation">
+        <a class="brand" href="/" aria-label="Audo home">
+          <img src="/assets/audo-logo-white.png" alt="Audo">
+        </a>
+        <a class="nav-link" href="/">Back to Audo</a>
+      </nav>
+      <p class="eyebrow">Step 2 of 2 · Request received</p>
+      <h1>Choose a time that works.</h1>
+      <p class="hero-copy">Your details went directly to Aaron. Use the live calendar below to book a free 30-minute Google Meet conversation.</p>
+    </div>
+  </header>
+
   <main>
-    <img src="/assets/audo-logo-white.png" alt="Audo">
-    <p class="eyebrow">Request received</p>
-    <h1>Your request is in.</h1>
-    <p>I received your request and will review it personally. I will reply with the next step and, if it makes sense, a time to talk.</p>
-    <div class="actions">
-      <a class="primary" href="/">Back to Audo</a>
-      <a href="/#services">Review services</a>
-      <a href="/sitemap">Sitemap</a>
+    <div class="shell">
+      <section class="booking-intro" aria-labelledby="booking-title">
+        <div>
+          <h2 id="booking-title">A practical conversation about the first move.</h2>
+          <p>I will review what you sent before we talk. We will use the call to clarify the issue, identify what matters now, and decide whether the right next step is a fix, a project, ongoing support, or simply a better plan.</p>
+          <div class="booking-actions" data-booking-actions hidden>
+            <button class="button primary" type="button" data-load-calendar>Show Available Times</button>
+            <a class="button" href="#" target="_blank" rel="noopener noreferrer" data-open-booking>Open Google Booking Page</a>
+          </div>
+          <p class="calendar-note" data-booking-note hidden>Google Calendar will ask you to confirm your name and email when you reserve the appointment. Loading the calendar connects your browser to Google.</p>
+          <div class="booking-fallback" data-booking-fallback hidden>Your request is complete, but the live booking link is still being finalized. Aaron usually replies within one business day with the next step and a time to talk.</div>
+        </div>
+        <aside class="call-details" aria-label="Discovery call details">
+          <strong>Free discovery call</strong>
+          <ul>
+            <li>30 minutes</li>
+            <li>Google Meet</li>
+            <li>No charge or obligation</li>
+            <li>Focused on one useful first move</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="calendar-panel" aria-label="Google Calendar appointment schedule" data-calendar-panel hidden>
+        <iframe title="Book an Audo discovery call with Google Calendar" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" data-calendar-frame></iframe>
+      </section>
     </div>
   </main>
+
+  <footer>
+    <div class="shell">
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a></p>
+    </div>
+  </footer>
+
+  <script>
+    window.AUDO_GOOGLE_CALENDAR_BOOKING_URL = __GOOGLE_CALENDAR_BOOKING_URL__;
+
+    (function () {
+      var bookingUrl = window.AUDO_GOOGLE_CALENDAR_BOOKING_URL || "";
+      var actions = document.querySelector("[data-booking-actions]");
+      var loadButton = document.querySelector("[data-load-calendar]");
+      var openLink = document.querySelector("[data-open-booking]");
+      var note = document.querySelector("[data-booking-note]");
+      var fallback = document.querySelector("[data-booking-fallback]");
+      var panel = document.querySelector("[data-calendar-panel]");
+      var frame = document.querySelector("[data-calendar-frame]");
+      var isInlineUrl = bookingUrl.indexOf("https://calendar.google.com/calendar/appointments/schedules/") === 0;
+
+      if (!bookingUrl) {
+        if (fallback) {
+          fallback.hidden = false;
+        }
+        return;
+      }
+
+      if (actions) {
+        actions.hidden = false;
+      }
+      if (openLink) {
+        openLink.href = bookingUrl;
+      }
+      if (note) {
+        note.hidden = false;
+      }
+
+      if (!isInlineUrl && loadButton) {
+        loadButton.hidden = true;
+      }
+
+      if (loadButton && isInlineUrl) {
+        loadButton.addEventListener("click", function () {
+          if (frame && !frame.src) {
+            frame.src = bookingUrl;
+          }
+          if (panel) {
+            panel.hidden = false;
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+          loadButton.hidden = true;
+        });
+      }
+    }());
+  </script>
 </body>
 </html>

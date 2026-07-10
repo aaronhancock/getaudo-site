@@ -2,8 +2,8 @@
 
 Public consulting marketing site for `getaudo.com`.
 
-Audo is positioned as a personal technology consulting company for individuals
-and small businesses that need help with:
+Audo is positioned as a senior technology partner for small businesses that
+need help with:
 
 - Website and web application care
 - New websites, dashboards, internal tools, and supported launches
@@ -29,7 +29,7 @@ For direct Python preview:
 DATA_DIR=/tmp/getaudo-local PORT=8080 python3 server.py
 ```
 
-## Discovery Form
+## Discovery and Calendar Booking
 
 The public site posts discovery requests to `/api/consultation`.
 
@@ -53,6 +53,20 @@ SMTP_STARTTLS=true
 If SMTP is not configured, the request is still stored and marked
 `not_configured` in the database.
 
+After a request is stored, `/thank-you` offers the live Audo Google Calendar
+booking page. The deployed default points to the 30-minute Small Business
+Technology Discovery Call owned by `getaudo@gmail.com`. To replace that
+schedule, use Google Calendar's **Sharing options → Website embed → Inline
+booking page** flow and set the iframe `src` URL in:
+
+```bash
+GOOGLE_CALENDAR_BOOKING_URL=https://calendar.google.com/calendar/appointments/schedules/...
+```
+
+The booking iframe is not loaded until the visitor clicks **Show Available
+Times**. A `https://calendar.app.google/...` sharing link is also accepted, but
+it opens the Google booking page instead of rendering inline.
+
 Spam protection uses Google reCAPTCHA v3. Configure these runtime variables:
 
 ```bash
@@ -67,6 +81,7 @@ Google before storing or emailing the request.
 ## Public Routes
 
 - `/` serves the marketing site.
+- `/privacy` explains Audo's data collection, service providers, retention, and visitor choices.
 - `/thank-you` confirms discovery requests.
 - `/api/consultation` accepts form submissions.
 - `/health` supports container health checks.

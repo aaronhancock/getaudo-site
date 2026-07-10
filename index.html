@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audo | Senior Tech Partner for Websites, AI, Automation, and Apps</title>
-  <meta name="description" content="Senior tech partner for websites, apps, automation, AI, and product decisions, backed by 30 years in technology without agency overhead.">
+  <title>Small Business Technology Help | Audo</title>
+  <meta name="description" content="One senior technology partner for small-business websites, automation, practical AI, internal tools, and ongoing support without agency overhead.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron Hancock">
   <meta name="theme-color" content="#101815">
@@ -17,7 +17,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://getaudo.com/">
   <meta property="og:title" content="Get tech off your plate.">
-  <meta property="og:description" content="One senior technology partner backed by 30 years in tech. Websites, apps, automation, AI coaching, and product strategy.">
+  <meta property="og:description" content="Senior technology help for small businesses: websites, automation, practical AI, internal tools, and ongoing support without agency overhead.">
   <meta property="og:image" content="https://getaudo.com/assets/audo-social-card-free-discovery.jpg?v=20260702-spacing">
   <meta property="og:image:secure_url" content="https://getaudo.com/assets/audo-social-card-free-discovery.jpg?v=20260702-spacing">
   <meta property="og:image:type" content="image/jpeg">
@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="Audo social card with Aaron Hancock, the message Get tech off your plate, and a Book Free Discovery call to action.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Get tech off your plate.">
-  <meta name="twitter:description" content="One senior technology partner backed by 30 years in tech. Websites, apps, automation, AI coaching, and product strategy.">
+  <meta name="twitter:description" content="Senior technology help for small businesses: websites, automation, practical AI, internal tools, and ongoing support without agency overhead.">
   <meta name="twitter:image" content="https://getaudo.com/assets/audo-social-card-free-discovery.jpg?v=20260702-spacing">
   <meta name="twitter:image:alt" content="Audo social card with Aaron Hancock, the message Get tech off your plate, and a Book Free Discovery call to action.">
   <link rel="icon" href="/favicon.ico?v=20260630-logo-white-a">
@@ -42,14 +42,14 @@
           "@id": "https://getaudo.com/#website",
           "url": "https://getaudo.com/",
           "name": "Audo",
-          "description": "Audo helps individuals and small businesses fix websites, automate repeat work, use AI wisely, and get senior technology support without agency overhead.",
+          "description": "Audo helps small businesses fix websites, automate repeat work, use AI wisely, build practical tools, and get senior technology support without agency overhead.",
           "inLanguage": "en-US",
           "publisher": {
             "@id": "https://getaudo.com/#business"
           },
           "potentialAction": {
             "@type": "CommunicateAction",
-            "name": "Request Free Discovery",
+            "name": "Request a Free Discovery Call",
             "target": "https://getaudo.com/#discovery"
           }
         },
@@ -60,7 +60,11 @@
           "url": "https://getaudo.com/",
           "image": "https://getaudo.com/assets/audo-social-card-free-discovery.jpg?v=20260702-spacing",
           "logo": "https://getaudo.com/assets/audo-logo-white.png",
-          "description": "Audo provides senior technology consulting backed by product and engineering leadership, M&A and product due diligence experience, agency delivery experience, direct AI support, and consulting for websites, apps, automation, and product strategy.",
+          "description": "Audo gives small businesses one senior technology partner for websites, automation, practical AI, internal tools, technology decisions, and ongoing support.",
+          "audience": {
+            "@type": "BusinessAudience",
+            "audienceType": "Small business owners and teams"
+          },
           "founder": {
             "@id": "https://getaudo.com/#aaron-hancock"
           },
@@ -133,8 +137,8 @@
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Product consulting and strategy",
-                  "description": "Clarify customer needs, product priorities, MVP scope, feasibility, build-vs-buy decisions, product due diligence, M&A technology review, and next steps."
+                  "name": "Technology planning and decision support",
+                  "description": "Clarify technology priorities, evaluate vendors, pressure-test ideas, make build-vs-buy decisions, and choose a practical next step."
                 }
               }
             ]
@@ -1181,6 +1185,50 @@
       grid-column: 1 / -1;
     }
 
+    .promo-details {
+      grid-column: 1 / -1;
+      border: 1px solid rgba(24, 34, 29, 0.14);
+      border-radius: 8px;
+      background: rgba(24, 34, 29, 0.035);
+    }
+
+    .promo-details summary {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 760;
+      list-style: none;
+      line-height: 1.4;
+    }
+
+    .promo-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .promo-details summary::after {
+      content: "+";
+      margin-left: auto;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .promo-details[open] summary::after {
+      content: "−";
+    }
+
+    .promo-details[open] summary {
+      border-bottom: 1px solid rgba(24, 34, 29, 0.12);
+    }
+
+    .promo-details .form-field {
+      padding: 13px;
+    }
+
     .form-field label {
       color: var(--ink);
       font-size: 12px;
@@ -1484,6 +1532,11 @@
       line-height: 1.45;
     }
 
+    .cookie-copy a {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
     .cookie-actions {
       display: flex;
       gap: 10px;
@@ -1533,6 +1586,15 @@
 
       .nav-links a:not(.nav-cta) {
         display: none;
+      }
+
+      .nav-links {
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .nav-links .nav-cta {
+        padding: 0 11px;
       }
 
       .brand {
@@ -1827,8 +1889,7 @@
       <div class="nav-links">
         <a href="#services">How I can help</a>
         <a href="#why">Why Audo</a>
-        <a href="#about">About</a>
-        <a class="nav-cta" href="#discovery">Book Free Discovery</a>
+        <a class="nav-cta" href="#discovery">Request a Free Discovery Call</a>
       </div>
     </div>
   </nav>
@@ -1836,12 +1897,12 @@
   <header id="top" class="hero">
     <div class="shell">
       <div class="hero-content">
-        <p class="eyebrow">Personal technology partner</p>
+        <p class="eyebrow">Small business technology partner</p>
         <h1>Get tech off your plate.</h1>
-        <p class="hero-lead">Audo helps individuals and small businesses fix, build, automate, and manage the tech work they keep putting off.</p>
+        <p class="hero-lead">One experienced partner to fix your website, automate busywork, use AI wisely, and build practical tools—without agency overhead.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#discovery">Book Free Discovery</a>
-          <a class="button ghost" href="#service-list">Ways I can help</a>
+          <a class="button primary" href="#discovery">Request a Free Discovery Call</a>
+          <a class="button ghost" href="#service-list">See Common Problems I Solve</a>
         </div>
         <p class="hero-note">You don't need a plan before you reach out. Share what needs attention; I will help sort the next step.</p>
       </div>
@@ -1902,15 +1963,15 @@
               <svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l3-4 3 2 5-7"></path></svg>
             </div>
             <div class="service-main">
-              <h3>A product idea you want to think through</h3>
-              <p>Customer needs, priorities, MVP scope, feasibility, build-vs-buy decisions, due diligence, or avoiding overbuild.</p>
+              <h3>A technology decision that needs a clear answer</h3>
+              <p>Vendor choices, build-vs-buy decisions, app ideas, feasibility, priorities, or avoiding an expensive wrong turn.</p>
             </div>
           </article>
         </div>
 
         <div class="services-next">
           <p>Looking for something specific? Use the examples below to find the closest kind of help.</p>
-          <a class="button" href="#service-list">Ways I can help</a>
+          <a class="button" href="#service-list">See Common Problems I Solve</a>
         </div>
       </div>
     </section>
@@ -1918,7 +1979,7 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Senior tech help without the agency runaround.</h2>
+          <h2>Senior technology help for small businesses—without the agency runaround.</h2>
           <p class="section-copy">Most small businesses do not need a big agency process just to fix a website, clean up a workflow, make better use of AI, or build a simple tool. You may not even know what the real problem is yet. That's okay. We can find it together, sort through the options, and help get it handled.</p>
         </div>
 
@@ -1929,7 +1990,7 @@
                 <h3>Why I started Audo.</h3>
                 <div class="founder-letter">
                   <p>Hi, I'm Aaron. Audo is my independent consulting practice. When you work with Audo, you work directly with me: the person who listens, asks the right questions, explains the options, and does the work.</p>
-                  <p>I bring 30 years of hands-on technology experience, from building websites in high school to leading product and engineering teams across <strong>Cox Automotive, Dealertrack, and Dealer.com</strong>. I have worked through M&amp;A, product due diligence, integrations, migrations, OEM launches, and agency projects for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others. That background helps me spot the real issue, protect your time and budget, and choose the kind of fix that actually fits.</p>
+                  <p>I bring 30 years of hands-on technology experience, from building websites in high school to leading product and engineering teams across <strong>Cox Automotive, Dealertrack, and Dealer.com</strong>. I have worked through M&amp;A, product due diligence, integrations, migrations, OEM launches, and agency projects for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others. Now I bring that experience directly to small businesses that need senior help without hiring a full technology department or a large agency.</p>
                   <p>I started Audo because the best technology help should feel clear, personal, and based on how your business actually works. You should not have to translate your problem into technical language, repeat yourself to a chain of people, or wonder whether anyone understands what is going on.</p>
                   <p>Start with whatever you know: the website that needs attention, the workflow that keeps wasting time, the AI idea you are unsure about, or the feeling that something could work better. You do not have to diagnose it first. I will help you make sense of it and move forward with care.</p>
                   <div class="founder-signature" aria-label="Signed by Aaron Hancock, Founder and Senior Tech Partner of Audo">
@@ -1963,7 +2024,7 @@
                 <h3>Not sure what needs help yet?</h3>
                 <p>Start with what feels slow, unclear, or harder than it should. I will help you find what's slowing things down and sort the next step.</p>
               </div>
-              <a class="button" href="#discovery">Request Free Discovery</a>
+              <a class="button" href="#discovery">Request a Free Discovery Call</a>
             </div>
           </div>
         </div>
@@ -2019,32 +2080,32 @@
       <div class="shell cta-inner">
         <div class="cta-copy">
           <p class="eyebrow">Free Discovery</p>
-          <h2>Start with one issue.</h2>
-          <p>Tell me what keeps getting pushed off. Your request goes directly to Aaron, and you don't need a polished plan or technical language.</p>
+          <h2>Tell me what needs attention, then choose a time.</h2>
+          <p>Start with the website, workflow, AI question, or technology decision that keeps getting pushed off. The call is 30 minutes, free, and has no obligation.</p>
           <div class="cta-process" aria-label="What happens next">
             <p class="panel-label">What happens next</p>
             <div class="process-grid">
               <article class="process-card">
                 <span class="process-number">1</span>
                 <div>
-                  <h3>I look over the details.</h3>
-                  <p>I look over your website, workflow, app, AI question, or product idea before we talk.</p>
+                  <h3>Share the issue.</h3>
+                  <p>A few sentences and a useful link give me enough context to prepare.</p>
                 </div>
               </article>
 
               <article class="process-card">
                 <span class="process-number">2</span>
                 <div>
-                  <h3>We find the best first move.</h3>
-                  <p>We decide whether to fix, automate, build, coach, simplify, support, or wait.</p>
+                  <h3>Choose a live time.</h3>
+                  <p>After submitting, pick an available time directly from my Google Calendar.</p>
                 </div>
               </article>
 
               <article class="process-card">
                 <span class="process-number">3</span>
                 <div>
-                  <h3>You know what to do next.</h3>
-                  <p>You will know what matters, what can wait, and what kind of help makes sense.</p>
+                  <h3>Leave with a clear first move.</h3>
+                  <p>We sort what matters, what can wait, and whether Audo is the right fit.</p>
                 </div>
               </article>
             </div>
@@ -2061,61 +2122,33 @@
               <input id="name" name="name" type="text" autocomplete="name" required>
             </div>
             <div class="form-field">
-              <label for="company_name">Company / project</label>
-              <input id="company_name" name="company_name" type="text" autocomplete="organization" required>
-            </div>
-            <div class="form-field">
               <label for="email">Email</label>
               <input id="email" name="email" type="email" autocomplete="email" required>
             </div>
-            <div class="form-field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel">
-            </div>
             <div class="form-field full">
-              <label for="website">Website</label>
+              <label for="website">Business website or useful link (optional)</label>
               <input id="website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
-            </div>
-            <div class="form-field">
-              <label for="timeline">Urgency</label>
-              <select id="timeline" name="timeline" required>
-                <option value="">Choose one</option>
-                <option>This week</option>
-                <option>Next few weeks</option>
-                <option>This month</option>
-                <option>No rush yet</option>
-              </select>
-            </div>
-            <div class="form-field full">
-              <label for="service">Type of help (optional)</label>
-              <select id="service" name="service">
-                <option>Not sure yet</option>
-                <option>Website or app management</option>
-                <option>New website, app, or internal tool</option>
-                <option>Automation</option>
-                <option>AI coaching or support</option>
-                <option>Product consulting or strategy</option>
-              </select>
-            </div>
-            <div class="form-field full">
-              <label for="preferred_times">A few good discovery times</label>
-              <textarea id="preferred_times" name="preferred_times" placeholder="Share 2-3 days and time windows that usually work for you." required></textarea>
             </div>
             <div class="form-field full">
               <label for="message">What needs help?</label>
               <textarea id="message" name="message" placeholder="A few sentences is enough. Include anything I should research before we talk." required></textarea>
             </div>
-            <div class="form-field full">
-              <label for="promo_code">Promo code</label>
-              <input id="promo_code" name="promo_code" type="text" autocomplete="off" placeholder="Optional">
-            </div>
+            <details class="promo-details">
+              <summary>Have a promo code?</summary>
+              <div class="form-field">
+                <label for="promo_code">Promo code</label>
+                <input id="promo_code" name="promo_code" type="text" autocomplete="off">
+              </div>
+            </details>
           </div>
           <input type="hidden" name="source" value="getaudo.com discovery form">
-          <input type="hidden" name="interest_context" value="General Free Discovery request">
+          <input type="hidden" name="service" value="Small business technology help">
+          <input type="hidden" name="timeline" value="Schedule after request">
+          <input type="hidden" name="interest_context" value="Small business technology discovery request">
           <input type="hidden" name="recaptcha_token" value="">
-          <button class="button primary" type="submit">Request Free Discovery</button>
+          <button class="button primary" type="submit">Continue to Scheduling</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="form-note" class="form-note">Your request goes directly to Aaron. I review every request before replying.</p>
+          <p id="form-note" class="form-note">Step 1 of 2. After submitting, choose a live time from Aaron's Google Calendar. If you do not book immediately, Aaron usually replies within one business day.</p>
         </form>
       </div>
     </section>
@@ -2124,7 +2157,7 @@
       <div class="shell">
         <div class="section-head">
           <h2 id="service-list-heading">Ways I can help.</h2>
-          <p class="section-copy">A few examples of problems I can help solve. If one sounds familiar, click through. If not, start Free Discovery and we can sort it out together.</p>
+          <p class="section-copy">A few examples of problems I can help solve. If one sounds familiar, click through. If not, request a free discovery call and we can sort it out together.</p>
         </div>
         <div class="service-list-panel" data-service-deck>
           <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json"></div>
@@ -2139,13 +2172,13 @@
 
   <footer>
     <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior tech partner for websites, AI, automation, apps, and product strategy</span><span>·</span><a href="#discovery">Book Free Discovery</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Request a Free Discovery Call</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
       <h2 id="cookie-title">Cookie choices</h2>
-      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept.</p>
+      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept. <a href="/privacy">Read the Privacy Policy.</a></p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>

@@ -1280,16 +1280,220 @@ def get_service(slug: str) -> Service | None:
     return SERVICE_BY_SLUG.get(slug)
 
 
+EXPLORER_GROUP_LABELS = {
+    "website": "Your website",
+    "customers": "Customers and leads",
+    "work": "Daily work",
+    "ai": "AI at work",
+    "decisions": "Decisions and projects",
+}
+
+
+EXPLORER_SERVICES = [
+    (
+        "Contact form submissions are not arriving",
+        "website",
+        "People submit the form, but nothing arrives",
+        "A customer reaches out through the website, but the message never reaches the right inbox.",
+    ),
+    (
+        "The website feels slow",
+        "website",
+        "The website feels painfully slow",
+        "Pages take too long to load, especially on phones, and people leave before they act.",
+    ),
+    (
+        "WordPress warnings are piling up",
+        "website",
+        "WordPress warnings keep piling up",
+        "Updates, plugins, and warnings are stacking up, and no one knows what is safe to change.",
+    ),
+    (
+        "The mobile website is confusing",
+        "website",
+        "The website is hard to use on a phone",
+        "Visitors can open the site, but the menu, forms, or next step are frustrating on a small screen.",
+    ),
+    (
+        "The homepage no longer matches the business",
+        "website",
+        "The homepage no longer matches the business",
+        "The company has changed, but the homepage still tells the old story or buries the main offer.",
+    ),
+    (
+        "The business needs a better website",
+        "website",
+        "The business has outgrown its website",
+        "The current site no longer looks credible, explains the work clearly, or turns visits into inquiries.",
+    ),
+    (
+        "Leads need follow-up you can trust",
+        "customers",
+        "New leads are not getting consistent follow-up",
+        "Responses depend on someone noticing an email, remembering the next step, and following up on time.",
+    ),
+    (
+        "Appointment confirmations are confusing",
+        "customers",
+        "Appointment confirmations cause confusion",
+        "Customers are unsure when to show up, where to go, or how to change an appointment.",
+    ),
+    (
+        "New customer onboarding feels inconsistent",
+        "customers",
+        "New customer onboarding feels inconsistent",
+        "Every new customer gets a slightly different mix of forms, emails, files, and instructions.",
+    ),
+    (
+        "Prospects need quicker quote or fit answers",
+        "customers",
+        "Customers wait too long for a quote or fit answer",
+        "People need a faster way to understand likely cost, availability, or whether the service is right for them.",
+    ),
+    (
+        "Give customers a cleaner way to send requests and files",
+        "customers",
+        "Requests and files arrive in too many places",
+        "Customer questions, documents, approvals, and updates are scattered across email threads and text messages.",
+    ),
+    (
+        "Customer details are disconnected from the CRM",
+        "customers",
+        "Customer details are scattered between systems",
+        "Forms, inboxes, spreadsheets, and the CRM each hold a different piece of the customer story.",
+    ),
+    (
+        "Turn form submissions into tracked tasks",
+        "work",
+        "Form submissions still have to be turned into tasks",
+        "Someone has to read every submission, copy the details, assign it, and remember what happens next.",
+    ),
+    (
+        "Important numbers take too long to see",
+        "work",
+        "Important numbers take too long to see",
+        "The same report has to be rebuilt by hand before anyone can understand what is happening.",
+    ),
+    (
+        "Proposals take too long to prepare",
+        "work",
+        "Proposals take too long to prepare",
+        "The same services, prices, terms, and client details are rewritten for every new proposal.",
+    ),
+    (
+        "CRM data is hard to trust",
+        "work",
+        "The CRM is hard to trust",
+        "Duplicate records, missing fields, and inconsistent updates make the customer list unreliable.",
+    ),
+    (
+        "A spreadsheet is carrying too much responsibility",
+        "work",
+        "A spreadsheet is running too much of the business",
+        "A workbook has become the system for important work, but it is fragile, slow, and difficult to share.",
+    ),
+    (
+        "Copy-paste is slowing the work down",
+        "work",
+        "The same information gets copied between tools",
+        "People keep moving names, dates, files, and status updates from one system to another by hand.",
+    ),
+    (
+        "There are too many AI tools to choose from",
+        "ai",
+        "There are too many AI tools to choose from",
+        "Every tool promises something different, and it is hard to tell what is useful enough to pay for.",
+    ),
+    (
+        "The team needs safer rules for AI and client data",
+        "ai",
+        "The team needs clear rules for AI and client data",
+        "People are experimenting, but no one is sure what can be shared, saved, or trusted.",
+    ),
+    (
+        "The team does not know where AI fits",
+        "ai",
+        "The team does not know where AI would actually help",
+        "There is interest in AI, but no clear connection to the work people repeat every day.",
+    ),
+    (
+        "Support replies need to be faster without getting sloppy",
+        "ai",
+        "Customer replies take too long to write",
+        "The team answers the same kinds of questions repeatedly but still needs every reply to sound accurate and human.",
+    ),
+    (
+        "Procedures are hard for the team to find",
+        "ai",
+        "People cannot find the procedure they need",
+        "Instructions exist, but they are spread across documents, folders, and old conversations.",
+    ),
+    (
+        "Website visitors need quick answers",
+        "ai",
+        "Website visitors keep asking the same questions",
+        "Simple questions become phone calls or emails because the answers are difficult to find on the site.",
+    ),
+    (
+        "Set up the basics for a new small business",
+        "decisions",
+        "A new business needs the technology basics",
+        "Domain, email, website, scheduling, payments, and records all need to work together without becoming a giant project.",
+    ),
+    (
+        "A build-vs-buy decision is unclear",
+        "decisions",
+        "You are not sure whether to buy software or build something",
+        "An off-the-shelf tool is close but not perfect, and a custom build could cost more than it is worth.",
+    ),
+    (
+        "Simplify the process before you buy or build software",
+        "decisions",
+        "The process may need fixing before you add software",
+        "The workflow feels broken, but another tool could add cost without solving the real problem.",
+    ),
+    (
+        "A vendor proposal is hard to evaluate",
+        "decisions",
+        "A technology proposal is hard to judge",
+        "The price, scope, assumptions, and ongoing support are difficult to compare or verify.",
+    ),
+    (
+        "A project has stalled",
+        "decisions",
+        "A technology project has stalled",
+        "The work started, but unclear decisions, technical problems, or a missing owner have stopped progress.",
+    ),
+    (
+        "You have too many product ideas",
+        "decisions",
+        "There are too many technology priorities",
+        "Several fixes and ideas all seem important, but the business needs a sensible place to start.",
+    ),
+]
+
+
 def service_cards() -> list[dict[str, str]]:
-    return [
-        {
-            "title": service.title,
-            "category": service.category,
-            "summary": service.summary,
-            "url": service.url,
-        }
-        for service in SERVICES
-    ]
+    services_by_title = {service.title: service for service in SERVICES}
+    cards: list[dict[str, str]] = []
+    for source_title, group, title, summary in EXPLORER_SERVICES:
+        service = services_by_title.get(source_title)
+        if not service:
+            raise ValueError(f"Explorer service title not found: {source_title}")
+        cards.append(
+            {
+                "title": title,
+                "source_title": service.title,
+                "category": service.category,
+                "group": group,
+                "group_label": EXPLORER_GROUP_LABELS[group],
+                "summary": summary,
+                "pain": service.pain,
+                "result": service.result,
+                "url": service.url,
+            }
+        )
+    return cards
 
 
 def service_dict(service: Service) -> dict[str, object]:

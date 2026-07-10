@@ -1937,162 +1937,748 @@
     }
 
     .service-list-band {
-      padding: 70px 0 82px;
-      background: var(--paper);
+      padding: 92px 0 88px;
+      background: #e7edeb;
     }
 
     .service-list-band .section-head {
+      align-items: end;
+      margin-bottom: 32px;
       padding-top: 0;
     }
 
-    .service-list-panel {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(18px, 3vw, 28px);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(238, 242, 237, 0.72)),
-        repeating-linear-gradient(135deg, rgba(24, 34, 29, 0.035) 0 1px, transparent 1px 18px);
-      box-shadow: 0 18px 54px rgba(12, 18, 15, 0.08);
+    .service-list-band .section-head h2 {
+      max-width: 650px;
     }
 
-    .service-list-panel::before {
+    .problem-explorer {
+      --explorer-accent: var(--evergreen);
+      --explorer-accent-soft: #dce9e2;
+      --explorer-ink: #173128;
+      display: grid;
+      gap: 18px;
+    }
+
+    .problem-explorer-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid rgba(24, 34, 29, 0.09);
+      border-radius: 22px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 12px 30px rgba(12, 18, 15, 0.05);
+    }
+
+    .problem-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .problem-tab,
+    .problem-shuffle,
+    .problem-choice {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .problem-tab {
+      min-height: 44px;
+      border: 0;
+      border-radius: 13px;
+      padding: 0 15px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 780;
+      white-space: nowrap;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .problem-tab:hover {
+      color: var(--ink);
+      background: rgba(24, 34, 29, 0.05);
+    }
+
+    .problem-tab[aria-selected="true"] {
+      color: var(--white);
+      background: var(--explorer-accent);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--explorer-accent) 25%, transparent);
+    }
+
+    .problem-shuffle {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(24, 34, 29, 0.11);
+      border-radius: 13px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 13px;
+      font-weight: 820;
+      white-space: nowrap;
+      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .problem-shuffle:hover {
+      border-color: color-mix(in srgb, var(--explorer-accent) 46%, transparent);
+      box-shadow: 0 10px 22px rgba(12, 18, 15, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .problem-shuffle-icon {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--explorer-accent);
+      font-size: 15px;
+      transition: transform 360ms ease;
+    }
+
+    .problem-shuffle:hover .problem-shuffle-icon {
+      transform: rotate(120deg);
+    }
+
+    .problem-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(310px, 0.75fr);
+      gap: 18px;
+      min-height: 610px;
+    }
+
+    .problem-spotlight {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: 270px minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(24, 34, 29, 0.09);
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: 0 20px 46px rgba(12, 18, 15, 0.09);
+    }
+
+    .problem-spotlight[data-theme="website"] {
+      --explorer-accent: #1f624d;
+      --explorer-accent-soft: #d9ebe2;
+      --explorer-ink: #173e31;
+    }
+
+    .problem-spotlight[data-theme="customers"] {
+      --explorer-accent: #b56a3e;
+      --explorer-accent-soft: #f2ddd0;
+      --explorer-ink: #63371f;
+    }
+
+    .problem-spotlight[data-theme="work"] {
+      --explorer-accent: #a77925;
+      --explorer-accent-soft: #f3e3b8;
+      --explorer-ink: #594011;
+    }
+
+    .problem-spotlight[data-theme="ai"] {
+      --explorer-accent: #77629b;
+      --explorer-accent-soft: #e5dff0;
+      --explorer-ink: #45365f;
+    }
+
+    .problem-spotlight[data-theme="decisions"] {
+      --explorer-accent: #4f7887;
+      --explorer-accent-soft: #dbe8ed;
+      --explorer-ink: #2c5260;
+    }
+
+    .problem-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      border-bottom: 1px solid rgba(24, 34, 29, 0.08);
+      background:
+        linear-gradient(rgba(24, 34, 29, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 34, 29, 0.045) 1px, transparent 1px),
+        linear-gradient(145deg, #f7faf7, var(--explorer-accent-soft));
+      background-size: 34px 34px, 34px 34px, auto;
+    }
+
+    .problem-visual::before,
+    .problem-visual::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--brass), var(--teal), var(--copper));
+      z-index: 0;
+      border-radius: 50%;
+      pointer-events: none;
     }
 
-    .service-list-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+    .problem-visual::before {
+      top: -160px;
+      right: -70px;
+      width: 330px;
+      height: 330px;
+      background: color-mix(in srgb, var(--explorer-accent) 18%, transparent);
     }
 
-    .service-list-slot {
+    .problem-visual::after {
+      left: -80px;
+      bottom: -115px;
+      width: 240px;
+      height: 240px;
+      border: 36px solid color-mix(in srgb, var(--explorer-accent) 10%, transparent);
+    }
+
+    .explorer-scene {
       position: relative;
-      min-height: 210px;
-      overflow: hidden;
-      border-radius: 8px;
+      z-index: 1;
+      width: min(82%, 560px);
+      height: 190px;
     }
 
-    .service-list-card {
+    .explorer-window,
+    .explorer-message,
+    .explorer-step,
+    .explorer-option,
+    .explorer-status {
+      border: 1px solid rgba(24, 34, 29, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 42px rgba(12, 18, 15, 0.12);
+    }
+
+    .explorer-window {
       position: absolute;
-      inset: 0;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 20px;
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.72);
-      text-decoration: none;
-      transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
-      animation: serviceCardIn 520ms ease both;
+      inset: 8px 48px 4px;
+      overflow: hidden;
+      border-radius: 20px;
+      transform: rotate(-1.4deg);
+      animation: explorerFloat 5s ease-in-out infinite;
     }
 
-    .service-list-slot:nth-child(2) .service-list-card {
-      animation-delay: 70ms;
+    .explorer-window-bar {
+      height: 34px;
+      border-bottom: 1px solid rgba(24, 34, 29, 0.08);
+      background: rgba(24, 34, 29, 0.045);
     }
 
-    .service-list-slot:nth-child(3) .service-list-card {
-      animation-delay: 140ms;
+    .explorer-window-bar::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--explorer-accent);
+      box-shadow: 13px 0 rgba(24, 34, 29, 0.14), 26px 0 rgba(24, 34, 29, 0.09);
     }
 
-    .service-list-card.is-settled {
-      animation: none;
+    .explorer-window-body {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      height: calc(100% - 34px);
+      padding: 18px;
     }
 
-    .service-list-card.is-leaving {
-      pointer-events: none;
-      animation: serviceCardOut var(--service-card-transition-ms, 1100ms) cubic-bezier(0.42, 0, 0.18, 1) forwards;
+    .explorer-window-copy,
+    .explorer-window-panel {
+      border-radius: 12px;
     }
 
-    .service-list-card.is-entering {
-      pointer-events: none;
-      animation: serviceCardUpIn var(--service-card-transition-ms, 1100ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    .explorer-window-copy {
+      background:
+        linear-gradient(rgba(24, 34, 29, 0.12), rgba(24, 34, 29, 0.12)) 0 0 / 68% 12px no-repeat,
+        linear-gradient(rgba(24, 34, 29, 0.08), rgba(24, 34, 29, 0.08)) 0 32px / 94% 8px no-repeat,
+        linear-gradient(rgba(24, 34, 29, 0.08), rgba(24, 34, 29, 0.08)) 0 54px / 78% 8px no-repeat;
     }
 
-    .service-list-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(200, 155, 75, 0.56);
-      box-shadow: 0 18px 42px rgba(12, 18, 15, 0.1);
+    .explorer-window-panel {
+      background: color-mix(in srgb, var(--explorer-accent) 18%, white);
     }
 
-    .service-list-card span {
-      display: block;
-      color: #725119;
-      font-size: 11px;
+    .explorer-status {
+      position: absolute;
+      right: 8px;
+      bottom: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 12px;
+      color: var(--explorer-ink);
+      font-size: 12px;
       font-weight: 820;
-      letter-spacing: 0.07em;
+      animation: explorerPulse 3.6s ease-in-out infinite;
+    }
+
+    .explorer-status::before {
+      content: "\2713";
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--explorer-accent);
+    }
+
+    .explorer-conversation {
+      position: absolute;
+      inset: 12px 34px;
+    }
+
+    .explorer-message {
+      position: absolute;
+      width: 72%;
+      border-radius: 18px;
+      padding: 17px 19px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 720;
       line-height: 1.35;
+    }
+
+    .explorer-message:first-child {
+      top: 8px;
+      left: 0;
+      animation: explorerFloat 4.8s ease-in-out infinite;
+    }
+
+    .explorer-message:last-child {
+      right: 0;
+      bottom: 8px;
+      color: var(--explorer-ink);
+      background: color-mix(in srgb, var(--explorer-accent-soft) 54%, white);
+      animation: explorerFloat 4.8s 0.7s ease-in-out infinite reverse;
+    }
+
+    .explorer-message strong {
+      display: block;
+      margin-top: 4px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .explorer-workflow {
+      position: absolute;
+      inset: 48px 4px;
+      display: grid;
+      grid-template-columns: 1fr 38px 1fr 38px 1fr;
+      align-items: center;
+    }
+
+    .explorer-step {
+      min-height: 84px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 820;
+      text-align: center;
+      animation: explorerStepIn 520ms both;
+    }
+
+    .explorer-step.is-middle {
+      animation-delay: 90ms;
+    }
+
+    .explorer-step.is-done {
+      color: var(--white);
+      background: var(--explorer-accent);
+      animation-delay: 180ms;
+    }
+
+    .explorer-connector {
+      position: relative;
+      height: 2px;
+      background: color-mix(in srgb, var(--explorer-accent) 48%, transparent);
+    }
+
+    .explorer-connector::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      right: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 7px solid var(--explorer-accent);
+    }
+
+    .explorer-ai-orb {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 96px;
+      height: 96px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--explorer-accent) 32%, transparent);
+      border-radius: 50%;
+      color: var(--white);
+      background: radial-gradient(circle at 35% 30%, #b7a6d3, var(--explorer-accent) 62%, #46355f);
+      box-shadow: 0 22px 55px color-mix(in srgb, var(--explorer-accent) 36%, transparent);
+      font-size: 32px;
+      transform: translate(-50%, -50%);
+      animation: explorerOrb 4s ease-in-out infinite;
+    }
+
+    .explorer-ai-note {
+      position: absolute;
+      width: 185px;
+      border: 1px solid rgba(24, 34, 29, 0.1);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 16px 34px rgba(12, 18, 15, 0.1);
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .explorer-ai-note:first-of-type {
+      top: 18px;
+      left: 2px;
+      transform: rotate(-3deg);
+    }
+
+    .explorer-ai-note:last-of-type {
+      right: 2px;
+      bottom: 16px;
+      transform: rotate(2deg);
+    }
+
+    .explorer-compare {
+      position: absolute;
+      inset: 22px 12px;
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      align-items: center;
+    }
+
+    .explorer-option {
+      min-height: 132px;
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      border-radius: 18px;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .explorer-option strong {
+      color: var(--ink);
+      font-size: 19px;
+    }
+
+    .explorer-option:last-child {
+      border-color: color-mix(in srgb, var(--explorer-accent) 48%, transparent);
+      transform: translateY(-8px);
+    }
+
+    .explorer-versus {
+      color: color-mix(in srgb, var(--explorer-accent) 72%, var(--ink));
+      font-size: 12px;
+      font-weight: 840;
+      text-align: center;
+    }
+
+    .problem-spotlight-copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(210px, 0.62fr);
+      grid-template-areas:
+        "group result"
+        "title result"
+        "summary result"
+        "actions result";
+      column-gap: 32px;
+      align-content: center;
+      padding: 30px 32px 32px;
+    }
+
+    .problem-group-label {
+      grid-area: group;
+      margin: 0 0 9px;
+      color: var(--explorer-accent);
+      font-size: 11px;
+      font-weight: 840;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
       text-transform: uppercase;
     }
 
-    .service-list-card h3 {
-      margin-top: 8px;
-      font-size: 20px;
-      line-height: 1.12;
+    .problem-spotlight-copy h3 {
+      grid-area: title;
+      max-width: 620px;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.02;
     }
 
-    .service-list-card p {
-      margin: 0;
+    .problem-summary {
+      grid-area: summary;
+      max-width: 620px;
+      margin: 13px 0 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.5;
     }
 
-    .service-list-card em {
-      display: inline-flex;
-      width: fit-content;
-      margin-top: 4px;
-      color: #725119;
+    .problem-result {
+      grid-area: result;
+      align-self: stretch;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      border: 1px solid color-mix(in srgb, var(--explorer-accent) 18%, transparent);
+      border-radius: 18px;
+      padding: 18px;
+      color: var(--explorer-ink);
+      background: color-mix(in srgb, var(--explorer-accent-soft) 52%, white);
+    }
+
+    .problem-result span {
+      font-size: 10px;
+      font-weight: 840;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .problem-result p {
+      margin: 0;
       font-size: 13px;
-      font-style: normal;
+      line-height: 1.5;
+    }
+
+    .problem-actions {
+      grid-area: actions;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .problem-primary,
+    .problem-secondary {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      padding: 0 15px;
+      font-size: 13px;
       font-weight: 820;
-      line-height: 1.35;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
     }
 
-    @keyframes serviceCardIn {
+    .problem-primary {
+      color: var(--white);
+      background: var(--explorer-accent);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--explorer-accent) 26%, transparent);
+    }
+
+    .problem-secondary {
+      border: 1px solid rgba(24, 34, 29, 0.12);
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    .problem-primary:hover,
+    .problem-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .problem-choices {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .problem-choice {
+      --choice-delay: 0ms;
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(24, 34, 29, 0.09);
+      border-radius: 22px;
+      padding: 20px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 12px 28px rgba(12, 18, 15, 0.055);
+      text-align: left;
+      animation: explorerChoiceIn 440ms var(--choice-delay) cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .problem-choice::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--explorer-accent);
+      opacity: 0.72;
+    }
+
+    .problem-choice:hover {
+      border-color: color-mix(in srgb, var(--explorer-accent) 42%, transparent);
+      box-shadow: 0 18px 36px rgba(12, 18, 15, 0.1);
+      transform: translateX(-5px);
+    }
+
+    .problem-choice-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--explorer-ink);
+      background: var(--explorer-accent-soft);
+      font-size: 11px;
+      font-weight: 840;
+    }
+
+    .problem-choice-copy {
+      display: grid;
+      gap: 6px;
+    }
+
+    .problem-choice-copy small {
+      color: var(--explorer-accent);
+      font-size: 10px;
+      font-weight: 840;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .problem-choice-copy strong {
+      font-size: clamp(17px, 1.7vw, 20px);
+      line-height: 1.12;
+    }
+
+    .problem-choice-arrow {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--explorer-accent);
+      transition: transform 180ms ease;
+    }
+
+    .problem-choice:hover .problem-choice-arrow {
+      transform: translateX(3px);
+    }
+
+    .problem-spotlight.is-changing .problem-visual {
+      animation: explorerVisualSwitch 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .problem-spotlight.is-changing .problem-spotlight-copy > * {
+      animation: explorerCopySwitch 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .problem-spotlight.is-changing .problem-spotlight-copy > :nth-child(2) {
+      animation-delay: 35ms;
+    }
+
+    .problem-spotlight.is-changing .problem-spotlight-copy > :nth-child(3) {
+      animation-delay: 70ms;
+    }
+
+    .problem-spotlight.is-changing .problem-spotlight-copy > :nth-child(4) {
+      animation-delay: 105ms;
+    }
+
+    @keyframes explorerChoiceIn {
       from {
         opacity: 0;
-        transform: translateY(14px) scale(0.985);
+        transform: translateX(18px) scale(0.985);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateX(0) scale(1);
       }
     }
 
-    @keyframes serviceCardOut {
-      from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+    @keyframes explorerVisualSwitch {
+      0% {
+        opacity: 0.35;
+        transform: scale(0.975);
       }
 
-      to {
-        opacity: 0;
-        transform: translateY(-115%) scale(0.985);
+      100% {
+        opacity: 1;
+        transform: scale(1);
       }
     }
 
-    @keyframes serviceCardUpIn {
+    @keyframes explorerCopySwitch {
       from {
         opacity: 0;
-        transform: translateY(115%) scale(0.985);
+        transform: translateY(12px);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes explorerFloat {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-1.4deg);
+      }
+
+      50% {
+        transform: translateY(-7px) rotate(0deg);
+      }
+    }
+
+    @keyframes explorerPulse {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes explorerStepIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes explorerOrb {
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translate(-50%, -54%) scale(1.04) rotate(8deg);
       }
     }
 
@@ -2248,8 +2834,38 @@
         min-height: 280px;
       }
 
-      .service-list-grid {
+      .problem-explorer-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-tabs {
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: thin;
+      }
+
+      .problem-shuffle {
+        width: 100%;
+      }
+
+      .problem-stage {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .problem-choices {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto;
+      }
+
+      .problem-choice {
+        min-height: 176px;
+        grid-template-columns: 1fr auto;
+        align-content: space-between;
+      }
+
+      .problem-choice-number {
+        display: none;
       }
 
     }
@@ -2598,23 +3214,143 @@
       }
 
       .service-list-band {
-        padding: 54px 0 62px;
+        padding: 58px 0 62px;
       }
 
-      .service-list-panel {
+      .service-list-band .section-head {
+        margin-bottom: 24px;
+      }
+
+      .problem-explorer {
+        gap: 12px;
+      }
+
+      .problem-explorer-toolbar {
+        gap: 10px;
+        border-radius: 18px;
+        padding: 10px;
+      }
+
+      .problem-tabs {
+        margin: 0 -2px;
+      }
+
+      .problem-tab {
+        min-height: 42px;
+        padding: 0 13px;
+      }
+
+      .problem-stage {
+        gap: 12px;
+      }
+
+      .problem-spotlight {
+        grid-template-rows: 218px auto;
+        border-radius: 22px;
+      }
+
+      .explorer-scene {
+        width: calc(100% - 28px);
+        height: 160px;
+      }
+
+      .explorer-window {
+        inset: 4px 20px 2px;
+      }
+
+      .explorer-conversation {
+        inset: 4px 2px;
+      }
+
+      .explorer-message {
+        width: 82%;
+        padding: 13px 14px;
+        font-size: 11px;
+      }
+
+      .explorer-message strong {
+        font-size: 14px;
+      }
+
+      .explorer-workflow {
+        inset: 34px 0;
+        grid-template-columns: 1fr 16px 1fr 16px 1fr;
+      }
+
+      .explorer-step {
+        min-height: 70px;
+        padding: 7px;
+        font-size: 10px;
+      }
+
+      .explorer-ai-note {
+        width: 135px;
+        padding: 10px;
+        font-size: 10px;
+      }
+
+      .explorer-ai-orb {
+        width: 78px;
+        height: 78px;
+      }
+
+      .explorer-compare {
+        inset: 12px 0;
+        grid-template-columns: 1fr 28px 1fr;
+      }
+
+      .explorer-option {
+        min-height: 112px;
+        padding: 14px;
+      }
+
+      .problem-spotlight-copy {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "group"
+          "title"
+          "summary"
+          "result"
+          "actions";
+        gap: 0;
+        padding: 24px 22px 22px;
+      }
+
+      .problem-spotlight-copy h3 {
+        font-size: 28px;
+      }
+
+      .problem-summary {
+        font-size: 15px;
+      }
+
+      .problem-result {
+        margin-top: 18px;
         padding: 16px;
       }
 
-      .service-list-grid {
+      .problem-actions {
+        align-items: stretch;
+        flex-direction: column;
+        margin-top: 16px;
+      }
+
+      .problem-primary,
+      .problem-secondary {
+        width: 100%;
+      }
+
+      .problem-choices {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
 
-      .service-list-card {
-        min-height: 190px;
-      }
-
-      .service-list-slot {
-        min-height: 190px;
+      .problem-choice {
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-content: center;
+        border-radius: 18px;
+        padding: 18px;
       }
 
       .cookie-consent {
@@ -2651,12 +3387,14 @@
         transform: none;
       }
 
-      .service-list-card {
-        animation: none;
-      }
-
-      .service-list-card.is-entering,
-      .service-list-card.is-leaving {
+      .problem-choice,
+      .problem-spotlight.is-changing .problem-visual,
+      .problem-spotlight.is-changing .problem-spotlight-copy > *,
+      .explorer-window,
+      .explorer-status,
+      .explorer-message,
+      .explorer-step,
+      .explorer-ai-orb {
         animation: none;
       }
     }
@@ -2981,14 +3719,45 @@
     <section id="service-list" class="service-list-band" aria-labelledby="service-list-heading">
       <div class="shell">
         <div class="section-head">
-          <h2 id="service-list-heading">More examples.</h2>
-          <p class="section-copy">These are common problems I've worked on. Pick one that sounds familiar, or book a call and tell me about yours.</p>
+          <div>
+            <p class="services-kicker">Explore real problems</p>
+            <h2 id="service-list-heading">What keeps getting pushed off?</h2>
+          </div>
+          <p class="section-copy">Choose the part of the business that feels stuck. Then explore situations that small teams run into every day.</p>
         </div>
-        <div class="service-list-panel" data-service-deck>
-          <div id="service-list-grid" class="service-list-grid" data-services-endpoint="/assets/services.json"></div>
-          <p id="service-list-status" class="sr-only" role="status" hidden>Loading examples...</p>
+        <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-explorer">
+          <div class="problem-explorer-toolbar">
+            <div class="problem-tabs" role="tablist" aria-label="Problem areas" data-explorer-tabs></div>
+            <button class="problem-shuffle" type="button" data-explorer-shuffle>
+              Show different examples
+              <span class="problem-shuffle-icon" aria-hidden="true">↻</span>
+            </button>
+          </div>
+
+          <div id="problem-explorer-stage" class="problem-stage">
+            <article class="problem-spotlight" data-explorer-spotlight data-theme="website" aria-live="polite">
+              <div class="problem-visual" data-explorer-visual aria-hidden="true"></div>
+              <div class="problem-spotlight-copy">
+                <p class="problem-group-label" data-explorer-group></p>
+                <h3 data-explorer-title>Loading examples...</h3>
+                <p class="problem-summary" data-explorer-summary></p>
+                <div class="problem-result">
+                  <span>What gets better</span>
+                  <p data-explorer-result></p>
+                </div>
+                <div class="problem-actions">
+                  <a class="problem-primary" href="#discovery" data-explorer-choose>This sounds familiar</a>
+                  <a class="problem-secondary" href="#" data-explorer-details>See how I can help</a>
+                </div>
+              </div>
+            </article>
+
+            <div class="problem-choices" data-explorer-choices aria-label="More situations in this area"></div>
+          </div>
+
+          <p id="service-list-status" class="sr-only" role="status" aria-live="polite">Loading examples...</p>
           <noscript>
-            <p>JavaScript is required to load the service examples. Search engines can still access every service through the sitemap.</p>
+            <p>JavaScript is required to explore these examples. You can still find every service through the sitemap.</p>
           </noscript>
         </div>
       </div>
@@ -3128,34 +3897,49 @@
       var selection = form.querySelector("[data-service-selection]");
       var selectionLabel = form.querySelector("[data-service-selection-label]");
 
+      function applyServiceChoice(options) {
+        var settings = options || {};
+        var label = settings.label || "Small business technology help";
+        var nextPrefill = settings.prefill || "I need help with small business technology.\n\n";
+        var selectedCard = settings.card || null;
+        var previousPrefill = message ? message.getAttribute("data-service-prefill-value") || "" : "";
+
+        cards.forEach(function (otherCard) {
+          otherCard.classList.remove("is-selected");
+          otherCard.removeAttribute("aria-current");
+        });
+        if (selectedCard) {
+          selectedCard.classList.add("is-selected");
+          selectedCard.setAttribute("aria-current", "true");
+        }
+
+        if (service) {
+          service.value = label;
+        }
+        if (interest) {
+          interest.value = "Selected from the services explorer: " + label;
+        }
+        if (message && (!message.value.trim() || message.value === previousPrefill)) {
+          message.value = nextPrefill;
+          message.setAttribute("data-service-prefill-value", nextPrefill);
+        }
+        if (selection && selectionLabel) {
+          selectionLabel.textContent = label;
+          selection.hidden = false;
+        }
+      }
+
+      window.AUDO_SELECT_SERVICE = applyServiceChoice;
+
       cards.forEach(function (card) {
         card.addEventListener("click", function () {
           var label = card.getAttribute("data-service-choice") || "Small business technology help";
           var topic = card.getAttribute("data-service-prefill") || "small business technology";
-          var nextPrefill = "I need help with " + topic + ".\n\n";
-          var previousPrefill = message ? message.getAttribute("data-service-prefill-value") || "" : "";
-
-          cards.forEach(function (otherCard) {
-            otherCard.classList.remove("is-selected");
-            otherCard.removeAttribute("aria-current");
+          applyServiceChoice({
+            label: label,
+            prefill: "I need help with " + topic + ".\n\n",
+            card: card
           });
-          card.classList.add("is-selected");
-          card.setAttribute("aria-current", "true");
-
-          if (service) {
-            service.value = label;
-          }
-          if (interest) {
-            interest.value = "Selected from the services grid: " + label;
-          }
-          if (message && (!message.value.trim() || message.value === previousPrefill)) {
-            message.value = nextPrefill;
-            message.setAttribute("data-service-prefill-value", nextPrefill);
-          }
-          if (selection && selectionLabel) {
-            selectionLabel.textContent = label;
-            selection.hidden = false;
-          }
         });
       });
     }());
@@ -3239,260 +4023,250 @@
 
     (function () {
       var section = document.getElementById("service-list");
-      var panel = document.querySelector("[data-service-deck]");
-      var grid = document.getElementById("service-list-grid");
-      var status = document.getElementById("service-list-status");
-      if (!grid) {
+      var explorer = document.querySelector("[data-service-explorer]");
+      if (!section || !explorer) {
         return;
       }
 
-      var endpoint = grid.getAttribute("data-services-endpoint") || "/assets/services.json";
+      var endpoint = explorer.getAttribute("data-services-endpoint") || "/assets/services.json";
+      var tabs = explorer.querySelector("[data-explorer-tabs]");
+      var shuffle = explorer.querySelector("[data-explorer-shuffle]");
+      var spotlight = explorer.querySelector("[data-explorer-spotlight]");
+      var visual = explorer.querySelector("[data-explorer-visual]");
+      var groupLabel = explorer.querySelector("[data-explorer-group]");
+      var title = explorer.querySelector("[data-explorer-title]");
+      var summary = explorer.querySelector("[data-explorer-summary]");
+      var result = explorer.querySelector("[data-explorer-result]");
+      var choices = explorer.querySelector("[data-explorer-choices]");
+      var choose = explorer.querySelector("[data-explorer-choose]");
+      var details = explorer.querySelector("[data-explorer-details]");
+      var status = document.getElementById("service-list-status");
       var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var services = [];
-      var visible = [];
-      var sectionObserver = null;
+      var currentGroup = "website";
+      var pageStart = 0;
+      var currentPage = [];
+      var selectedService = null;
       var hasLoaded = false;
-      var displayCount = 3;
-      var previousUrls = [];
-      var cycleMs = 7000;
-      var transitionMs = 1100;
-      var staggerMs = Math.round(transitionMs / 3);
-      var autoTimer = null;
-      var cycleTimer = null;
-      var slotTimers = [];
-      var currentServices = [];
-      var isAnimating = false;
-      var hoverPaused = false;
-      var focusPaused = false;
+      var sectionObserver = null;
+      var animationTimer = null;
 
-      if (panel) {
-        panel.style.setProperty("--service-card-transition-ms", transitionMs + "ms");
+      var groups = [
+        { id: "website", label: "Your website", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
+        { id: "customers", label: "Customers and leads", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
+        { id: "work", label: "Daily work", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
+        { id: "ai", label: "AI at work", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
+        { id: "decisions", label: "Decisions and projects", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
+      ];
+
+      var scenes = {
+        website: [
+          '<div class="explorer-scene">',
+          '  <div class="explorer-window">',
+          '    <div class="explorer-window-bar"></div>',
+          '    <div class="explorer-window-body">',
+          '      <div class="explorer-window-copy"></div>',
+          '      <div class="explorer-window-panel"></div>',
+          '    </div>',
+          '  </div>',
+          '  <div class="explorer-status">Working for customers</div>',
+          '</div>'
+        ].join(""),
+        customers: [
+          '<div class="explorer-scene">',
+          '  <div class="explorer-conversation">',
+          '    <div class="explorer-message">New inquiry<strong>Can you help with this?</strong></div>',
+          '    <div class="explorer-message">Follow-up sent<strong>Here is the next step.</strong></div>',
+          '  </div>',
+          '</div>'
+        ].join(""),
+        work: [
+          '<div class="explorer-scene">',
+          '  <div class="explorer-workflow">',
+          '    <span class="explorer-step">Request arrives</span>',
+          '    <i class="explorer-connector"></i>',
+          '    <span class="explorer-step is-middle">Right person notified</span>',
+          '    <i class="explorer-connector"></i>',
+          '    <span class="explorer-step is-done">Work tracked</span>',
+          '  </div>',
+          '</div>'
+        ].join(""),
+        ai: [
+          '<div class="explorer-scene">',
+          '  <div class="explorer-ai-note">Use our policies and keep the answer short.</div>',
+          '  <div class="explorer-ai-orb">✦</div>',
+          '  <div class="explorer-ai-note">Ready for a person to review.</div>',
+          '</div>'
+        ].join(""),
+        decisions: [
+          '<div class="explorer-scene">',
+          '  <div class="explorer-compare">',
+          '    <div class="explorer-option"><strong>Option A</strong>Faster start<br>More compromise</div>',
+          '    <span class="explorer-versus">or</span>',
+          '    <div class="explorer-option"><strong>Option B</strong>Better fit<br>More effort</div>',
+          '  </div>',
+          '</div>'
+        ].join("")
+      };
+
+      function groupConfig(groupId) {
+        return groups.filter(function (group) {
+          return group.id === groupId;
+        })[0] || groups[0];
       }
 
-      function updateStatus(message, show) {
+      function updateTheme(groupId) {
+        var config = groupConfig(groupId);
+        explorer.setAttribute("data-theme", groupId);
+        explorer.style.setProperty("--explorer-accent", config.accent);
+        explorer.style.setProperty("--explorer-accent-soft", config.soft);
+        explorer.style.setProperty("--explorer-ink", config.ink);
+        spotlight.setAttribute("data-theme", groupId);
+      }
+
+      function announce(message) {
         if (status) {
           status.textContent = message;
-          status.hidden = !show;
         }
       }
 
-      function canRotate() {
-        return !reducedMotion && !hoverPaused && !focusPaused && visible.length > displayCount;
+      function servicesForGroup(groupId) {
+        return services.filter(function (service) {
+          return service.group === groupId;
+        });
       }
 
-      function stopAuto() {
-        if (autoTimer) {
-          window.clearTimeout(autoTimer);
-          autoTimer = null;
+      function pageForGroup(groupId) {
+        var groupServices = servicesForGroup(groupId);
+        var count = Math.min(4, groupServices.length);
+        var page = [];
+        var index;
+        for (index = 0; index < count; index += 1) {
+          page.push(groupServices[(pageStart + index) % groupServices.length]);
         }
+        return page;
       }
 
-      function stopCycle() {
-        if (cycleTimer) {
-          window.clearTimeout(cycleTimer);
-          cycleTimer = null;
+      function renderTabs() {
+        tabs.innerHTML = "";
+        groups.forEach(function (group) {
+          var button = document.createElement("button");
+          button.className = "problem-tab";
+          button.type = "button";
+          button.setAttribute("role", "tab");
+          button.setAttribute("aria-controls", "problem-explorer-stage");
+          button.setAttribute("aria-selected", String(group.id === currentGroup));
+          button.textContent = group.label;
+          button.addEventListener("click", function () {
+            if (currentGroup === group.id) {
+              return;
+            }
+            currentGroup = group.id;
+            pageStart = 0;
+            renderTabs();
+            renderPage(true);
+            announce("Showing " + group.label.toLowerCase() + " examples.");
+          });
+          tabs.appendChild(button);
+        });
+      }
+
+      function animateSpotlight() {
+        if (reducedMotion) {
+          return;
         }
-
-        slotTimers.forEach(function (timer) {
-          window.clearTimeout(timer);
-        });
-        slotTimers = [];
-        isAnimating = false;
+        window.clearTimeout(animationTimer);
+        spotlight.classList.remove("is-changing");
+        void spotlight.offsetWidth;
+        spotlight.classList.add("is-changing");
+        animationTimer = window.setTimeout(function () {
+          spotlight.classList.remove("is-changing");
+        }, 620);
       }
 
-      function shuffled(list) {
-        var copy = list.slice();
-        var index = copy.length;
-        while (index > 1) {
-          index -= 1;
-          var randomIndex = Math.floor(Math.random() * (index + 1));
-          var item = copy[index];
-          copy[index] = copy[randomIndex];
-          copy[randomIndex] = item;
-        }
-        return copy;
-      }
-
-      function pickServices() {
-        var count = Math.min(displayCount, visible.length);
-        var pool = shuffled(visible);
-        var currentUrls = currentServices.map(function (service) {
-          return service.url;
-        });
-        var fresh = pool.filter(function (service) {
-          return currentUrls.indexOf(service.url) === -1 && previousUrls.indexOf(service.url) === -1;
-        });
-        var selected = fresh.length >= count ? fresh.slice(0, count) : pool.slice(0, count);
-        previousUrls = selected.map(function (service) {
-          return service.url;
-        });
-        return selected;
-      }
-
-      function createCard(service) {
-        var card = document.createElement("a");
-        var headingWrap = document.createElement("div");
-        var category = document.createElement("span");
-        var title = document.createElement("h3");
-        var summary = document.createElement("p");
-        var action = document.createElement("em");
-
-        card.className = "service-list-card";
-        card.href = service.url;
-        card.setAttribute("aria-label", service.title + " - " + service.category);
-        category.textContent = service.category;
+      function renderSpotlight(service, animate) {
+        selectedService = service;
+        updateTheme(service.group);
+        visual.innerHTML = scenes[service.group] || scenes.website;
+        groupLabel.textContent = service.group_label;
         title.textContent = service.title;
         summary.textContent = service.summary || "";
-        action.textContent = "See how this works";
-
-        headingWrap.appendChild(category);
-        headingWrap.appendChild(title);
-        headingWrap.appendChild(summary);
-        card.appendChild(headingWrap);
-        card.appendChild(action);
-        return card;
+        result.textContent = service.result || "";
+        details.href = service.url;
+        choose.setAttribute("aria-label", "Tell me about this: " + service.title);
+        if (animate) {
+          animateSpotlight();
+        }
       }
 
-      function createSlot(service, index) {
-        var slot = document.createElement("div");
-        slot.className = "service-list-slot";
-        slot.setAttribute("data-service-slot", String(index));
-        slot.appendChild(createCard(service));
-        return slot;
+      function renderChoices() {
+        choices.innerHTML = "";
+        currentPage.filter(function (service) {
+          return service.url !== selectedService.url;
+        }).forEach(function (service, index) {
+          var button = document.createElement("button");
+          var number = document.createElement("span");
+          var copy = document.createElement("span");
+          var label = document.createElement("small");
+          var heading = document.createElement("strong");
+          var arrow = document.createElement("span");
+
+          button.className = "problem-choice";
+          button.type = "button";
+          button.style.setProperty("--choice-delay", String(index * 70) + "ms");
+          button.setAttribute("aria-label", "Explore: " + service.title);
+          number.className = "problem-choice-number";
+          number.textContent = String(index + 1).padStart(2, "0");
+          copy.className = "problem-choice-copy";
+          label.textContent = "Another familiar problem";
+          heading.textContent = service.title;
+          arrow.className = "problem-choice-arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.textContent = "→";
+
+          copy.appendChild(label);
+          copy.appendChild(heading);
+          button.appendChild(number);
+          button.appendChild(copy);
+          button.appendChild(arrow);
+          button.addEventListener("click", function () {
+            renderSpotlight(service, true);
+            renderChoices();
+            announce("Selected " + service.title + ".");
+          });
+          choices.appendChild(button);
+        });
       }
 
-      function scheduleAuto() {
-        stopAuto();
-
-        if (!canRotate() || isAnimating) {
+      function renderPage(animate) {
+        currentPage = pageForGroup(currentGroup);
+        if (!currentPage.length) {
+          announce("No examples are available in this area right now.");
           return;
         }
-
-        autoTimer = window.setTimeout(function () {
-          renderDeck({ automatic: true });
-        }, cycleMs);
+        renderSpotlight(currentPage[0], animate);
+        renderChoices();
       }
 
-      function updateDeck(selected, automatic) {
-        var fragment = document.createDocumentFragment();
-
-        selected.forEach(function (service, index) {
-          fragment.appendChild(createSlot(service, index));
-        });
-
-        grid.innerHTML = "";
-        grid.appendChild(fragment);
-        currentServices = selected.slice();
-
-        updateStatus("", false);
-
-        if (automatic && panel) {
-          panel.setAttribute("data-last-auto-rotation", String(Date.now()));
-        }
-
-        scheduleAuto();
-      }
-
-      function replaceSlot(slot, service, index) {
-        var outgoing = slot.querySelector(".service-list-card");
-        var incoming = createCard(service);
-
-        incoming.classList.add("is-entering");
-        incoming.setAttribute("tabindex", "-1");
-        outgoing.classList.add("is-leaving");
-        outgoing.setAttribute("aria-hidden", "true");
-        outgoing.setAttribute("tabindex", "-1");
-        slot.classList.add("is-transitioning");
-        slot.appendChild(incoming);
-
-        slotTimers.push(window.setTimeout(function () {
-          incoming.classList.add("is-settled");
-          incoming.classList.remove("is-entering");
-          incoming.removeAttribute("tabindex");
-          outgoing.remove();
-          slot.classList.remove("is-transitioning");
-          currentServices[index] = service;
-        }, transitionMs + 40));
-      }
-
-      function animateDeck(selected, automatic) {
-        var slots = Array.prototype.slice.call(grid.querySelectorAll("[data-service-slot]"));
-        var totalMs = transitionMs + (staggerMs * Math.max(0, selected.length - 1)) + 90;
-
-        if (slots.length !== selected.length) {
-          updateDeck(selected, automatic);
+      shuffle.addEventListener("click", function () {
+        var groupServices = servicesForGroup(currentGroup);
+        if (!groupServices.length) {
           return;
         }
+        pageStart = (pageStart + 4) % groupServices.length;
+        renderPage(true);
+        announce("Showing different " + groupConfig(currentGroup).label.toLowerCase() + " examples.");
+      });
 
-        isAnimating = true;
-        slotTimers = selected.map(function (service, index) {
-          return window.setTimeout(function () {
-            replaceSlot(slots[index], service, index);
-          }, staggerMs * index);
-        });
-
-        cycleTimer = window.setTimeout(function () {
-          slotTimers = [];
-          cycleTimer = null;
-          isAnimating = false;
-          currentServices = selected.slice();
-          updateStatus("", false);
-
-          if (automatic && panel) {
-            panel.setAttribute("data-last-auto-rotation", String(Date.now()));
-          }
-
-          scheduleAuto();
-        }, totalMs);
-      }
-
-      function renderDeck(options) {
-        var automatic = !!(options && options.automatic);
-        var immediate = !!(options && options.immediate);
-
-        stopAuto();
-        stopCycle();
-
-        if (!visible.length) {
-          grid.innerHTML = "";
-          currentServices = [];
-          updateStatus("No services are available right now.", true);
+      choose.addEventListener("click", function () {
+        if (!selectedService || typeof window.AUDO_SELECT_SERVICE !== "function") {
           return;
         }
-
-        var selected = pickServices();
-
-        if (reducedMotion || immediate || !grid.children.length) {
-          updateDeck(selected, automatic);
-          return;
-        }
-
-        animateDeck(selected, automatic);
-      }
-
-      if (panel) {
-        panel.addEventListener("mouseenter", function () {
-          hoverPaused = true;
-          stopAuto();
+        window.AUDO_SELECT_SERVICE({
+          label: selectedService.title,
+          prefill: "This sounds familiar: " + selectedService.title + ".\n\n"
         });
-
-        panel.addEventListener("mouseleave", function () {
-          hoverPaused = false;
-          scheduleAuto();
-        });
-
-        panel.addEventListener("focusin", function () {
-          focusPaused = true;
-          stopAuto();
-        });
-
-        panel.addEventListener("focusout", function () {
-          window.setTimeout(function () {
-            focusPaused = !!(document.activeElement && panel.contains(document.activeElement));
-            scheduleAuto();
-          }, 0);
-        });
-      }
+      });
 
       function loadServices() {
         if (hasLoaded) {
@@ -3500,7 +4274,7 @@
         }
         hasLoaded = true;
 
-        fetch(endpoint, { headers: { "Accept": "application/json" } })
+        fetch(endpoint, { cache: "no-store", headers: { "Accept": "application/json" } })
           .then(function (response) {
             if (!response.ok) {
               throw new Error("Service request failed");
@@ -3509,17 +4283,22 @@
           })
           .then(function (payload) {
             services = Array.isArray(payload.services) ? payload.services : [];
-            visible = services.slice();
-            previousUrls = [];
-            currentServices = [];
-            renderDeck({ immediate: true });
+            if (!services.length) {
+              throw new Error("No service examples returned");
+            }
+            renderTabs();
+            renderPage(false);
+            announce("Explore a problem area, then choose an example that sounds familiar.");
           })
           .catch(function () {
-            updateStatus("The service examples could not load. Please refresh the page.", true);
+            title.textContent = "The examples could not load.";
+            summary.textContent = "Please refresh the page or tell me what is going on in the discovery form.";
+            choices.innerHTML = "";
+            announce("The service examples could not load. Please refresh the page.");
           });
       }
 
-      if ("IntersectionObserver" in window && section) {
+      if ("IntersectionObserver" in window) {
         sectionObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {

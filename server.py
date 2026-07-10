@@ -1399,10 +1399,11 @@ class AudoHandler(BaseHTTPRequestHandler):
             raise ValueError("Please tell me what's going on.")
 
     def serve_services_json(self, send_body: bool = True) -> None:
+        cards = service_cards()
         data = json.dumps(
             {
-                "count": len(SERVICES),
-                "services": service_cards(),
+                "count": len(cards),
+                "services": cards,
             },
             separators=(",", ":"),
         ).encode("utf-8")

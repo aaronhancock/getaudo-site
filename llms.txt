@@ -1,8 +1,8 @@
 # Audo
 
-> Senior technology partner for small-business websites, automation, practical AI, internal tools, and ongoing support.
+> Direct technology help for small-business websites, automation, AI, internal tools, and ongoing support.
 
-Audo helps small businesses get practical technology work off their plate. Audo is Aaron Hancock's independent consulting practice, intentionally small so owners and teams can work directly with one senior partner who understands the context, makes the fix, and can continue supporting the work without large-agency overhead.
+Audo is Aaron Hancock's independent consulting practice. Aaron works directly with small businesses to fix websites, automate repetitive work, use AI well, build software, and provide ongoing technology support.
 
 Website: https://getaudo.com/
 Discovery: https://getaudo.com/#discovery
@@ -25,7 +25,7 @@ Service pages use clean URLs under https://getaudo.com/services/ and are listed 
 
 ## Why Audo
 
-Audo gives small businesses senior technology help without the agency runaround. Owners and teams do not need to know the exact problem before reaching out; Aaron can help discover what is slowing things down, explain the options clearly, and get the work handled without account layers, handoff chains, multiple vendors, or technical translation. Audo is Aaron Hancock's independent consulting practice, built for small businesses that need a trusted technology partner. Aaron has spent 30 years solving technology problems, from building websites in high school to leading product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com. Through prior roles, OEM programs, and agency work, he has also supported M&A, product due diligence, integrations, migrations, launches, and client work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
+Audo gives small businesses direct access to a senior technology partner. Clients work with Aaron from the first conversation through the finished work, without account managers or repeated handoffs. Aaron has spent 30 years building websites and software, leading product and engineering teams, and solving technology problems for companies large and small. His background includes Cox Automotive, Dealertrack, Dealer.com, M&A and product due diligence, integrations, migrations, launches, and agency work for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others.
 
 ## Client Work
 

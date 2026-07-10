@@ -98,16 +98,16 @@
     section.hidden = true;
     section.innerHTML = [
       '<div class="booking-step-header">',
-      '  <p class="booking-step-kicker">Step 2 of 2 · Request received</p>',
-      '  <h3 id="booking-step-title" tabindex="-1" data-booking-heading>Choose a time that works.</h3>',
-      '  <p class="booking-step-copy">Select a free 30-minute Google Meet time. All times shown are Central Time.</p>',
+      '  <p class="booking-step-kicker">Step 2 of 2 · Pick a time</p>',
+      '  <h3 id="booking-step-title" tabindex="-1" data-booking-heading>When would you like to talk?</h3>',
+      '  <p class="booking-step-copy">Choose any open 30-minute slot. Times are shown in Central Time.</p>',
       '</div>',
       '<ul class="booking-policies" aria-label="Booking details">',
       '  <li>Monday–Saturday</li>',
       '  <li>24-hour notice</li>',
       '  <li>Google Meet</li>',
       '</ul>',
-      '<p class="booking-loading" data-booking-loading>Checking Aaron\'s live calendar…</p>',
+      '<p class="booking-loading" data-booking-loading>Loading available times…</p>',
       '<p class="booking-alert" role="alert" data-booking-alert hidden></p>',
       '<div data-booking-picker hidden>',
       '  <div class="booking-date-list" role="tablist" aria-label="Available dates" data-booking-dates></div>',
@@ -117,17 +117,17 @@
       '  </div>',
       '</div>',
       '<div class="booking-confirmation" data-booking-confirmation hidden>',
-      '  <p>Your selection<strong data-booking-selection></strong></p>',
+      '  <p>You chose<strong data-booking-selection></strong></p>',
       '  <button class="button primary" type="button" data-booking-confirm>Book this time</button>',
       '</div>',
       '<div class="booking-success" data-booking-success hidden>',
       '  <span class="booking-success-mark" aria-hidden="true">✓</span>',
       '  <h4>You\'re booked.</h4>',
       '  <p data-booking-success-time></p>',
-      '  <p>A Google Calendar invitation has been sent to your email. It includes the Google Meet link and a copy of the details you shared.</p>',
+      '  <p>Your calendar invite is on the way. It includes the Google Meet link and the note you sent me.</p>',
       '  <a class="button primary" href="#" target="_blank" rel="noopener noreferrer" data-booking-meet hidden>Open Google Meet</a>',
       '</div>',
-      '<p class="booking-fallback-line" data-booking-fallback hidden>Having trouble? <a href="#" target="_blank" rel="noopener noreferrer">Use the Google booking page instead</a>.</p>'
+      '<p class="booking-fallback-line" data-booking-fallback hidden>Calendar not working? <a href="#" target="_blank" rel="noopener noreferrer">Book through Google instead</a>.</p>'
     ].join("");
     return section;
   }
@@ -283,7 +283,7 @@
       }
       if (!payload.days || !payload.days.length) {
         picker.hidden = true;
-        setAlert("There are no open discovery times in the next 30 days. Please use the Google booking page or submit the form and Aaron will follow up.");
+        setAlert("I don't have an open time in the next 30 days. You can book through Google instead, or leave your note and I'll follow up.");
         return;
       }
 
@@ -325,7 +325,7 @@
         booking_token: context.booking_token
       }).then(renderAvailability).catch(function (error) {
         loading.hidden = true;
-        setAlert(error.message || "Available times could not be loaded right now.");
+        setAlert(error.message || "I couldn't load the calendar. Please try again or use the Google booking page.");
         setFallback(error.payload && error.payload.fallback_url);
       });
     }
@@ -333,14 +333,14 @@
     function submitLead() {
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = "Saving your request…";
+        submitButton.textContent = "Sending your note…";
       }
       form.setAttribute("aria-busy", "true");
       if (status) {
         status.hidden = false;
         status.classList.remove("is-error");
         status.setAttribute("role", "status");
-        status.textContent = "Saving your request securely.";
+        status.textContent = "One moment…";
       }
 
       loadRecaptcha(siteKey).then(function (token) {
@@ -373,7 +373,7 @@
         showScheduler();
         loadAvailability();
       }).catch(function (error) {
-        resetSubmit(error.message || "Your request could not be saved. Please try again.");
+        resetSubmit(error.message || "I couldn't send your note. Please try again.");
       });
     }
 
@@ -401,7 +401,7 @@
       }).catch(function (error) {
         confirmButton.disabled = false;
         confirmButton.textContent = "Book this time";
-        setAlert(error.message || "That time could not be booked.");
+        setAlert(error.message || "I couldn't book that time. Please choose another one.");
         setFallback(error.payload && error.payload.fallback_url);
         if (error.payload && error.payload.refresh_availability) {
           window.setTimeout(loadAvailability, 900);

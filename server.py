@@ -797,7 +797,7 @@ def create_calendar_event(
         f"Promo code: {consultation.get('promo_code') or 'Not provided'}",
         f"Service: {consultation.get('service') or 'Small business technology help'}",
         "",
-        "What needs help:",
+        "What they shared:",
         str(consultation.get("message") or "Not provided"),
     ]
     attendees = [{"email": consultation["email"], "displayName": consultation["name"]}]
@@ -949,7 +949,7 @@ Scheduling: {fields.get("timeline") or "Choose from Google Calendar after submis
 
 Help needed: {fields["service"]}
 
-What needs help:
+What they shared:
 {fields["message"]}
 """
     message.set_content(body)
@@ -1396,7 +1396,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         if not payload["email"] or not EMAIL_RE.match(payload["email"]):
             raise ValueError("Please include a valid email address.")
         if not payload["message"]:
-            raise ValueError("Please describe what needs help.")
+            raise ValueError("Please tell me what's going on.")
 
     def serve_services_json(self, send_body: bool = True) -> None:
         data = json.dumps(
@@ -1480,11 +1480,11 @@ class AudoHandler(BaseHTTPRequestHandler):
             grouped.setdefault(service.category, []).append(service)
 
         main_links = [
-            ("/", "Home", "See how Audo helps small businesses get practical technology work handled."),
-            ("/#services", "Things I can help with", "Scan the main kinds of work I can help take off your plate."),
+            ("/", "Home", "See how Aaron helps small businesses fix websites, automate work, use AI, and build tools."),
+            ("/#services", "What I can help with", "Browse the main kinds of technology work Aaron handles."),
             ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
-            ("/#discovery", "Book free discovery", "Share what you are dealing with and I will review it personally."),
-            ("/#service-list", "Specific examples", "Browse common situations that may look like yours."),
+            ("/#discovery", "Book free discovery", "Tell Aaron what's going on, then pick a time to talk."),
+            ("/#service-list", "Specific examples", "Browse common problems Aaron has worked on."),
             ("/privacy", "Privacy Policy", "See what information Audo collects and how it is used and protected."),
         ]
 
@@ -1582,7 +1582,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sitemap | Audo</title>
-  <meta name="description" content="Find Audo small-business technology help for a website, workflow, automation, practical AI, internal tool, or technology decision.">
+  <meta name="description" content="Find Audo help for small-business websites, automation, AI, internal tools, software, and everyday technology problems.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron Hancock">
   <meta name="theme-color" content="#101815">
@@ -1883,8 +1883,8 @@ class AudoHandler(BaseHTTPRequestHandler):
         <a href="/#discovery">Book free discovery</a>
       </nav>
       <p class="eyebrow">Sitemap</p>
-      <h1>Find small-business technology help.</h1>
-      <p class="hero-copy">Jump to the website, automation, practical AI, internal-tool, or technology-decision problem that sounds closest to what your business is dealing with.</p>
+      <h1>Find the kind of help you need.</h1>
+      <p class="hero-copy">Browse website, automation, AI, software, and everyday technology problems Aaron can help with.</p>
     </div>
   </header>
   <main id="main">
@@ -1892,7 +1892,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <section class="section" aria-labelledby="main-pages-heading">
         <div class="section-head">
           <h2 id="main-pages-heading">Start here.</h2>
-          <p>If you want the big picture or are ready to reach out, these are the best places to begin.</p>
+          <p>Use these links to see the overview, browse examples, or book a call.</p>
         </div>
         <ul class="sitemap-links">
 {link_cards(main_links)}
@@ -1903,8 +1903,8 @@ class AudoHandler(BaseHTTPRequestHandler):
 
       <section class="cta" aria-labelledby="sitemap-cta-heading">
         <div>
-          <h2 id="sitemap-cta-heading">Not sure which page fits?</h2>
-          <p>You do not need to know the exact problem before reaching out. Start with what feels slow, confusing, risky, or unfinished, and I will help sort the next step.</p>
+          <h2 id="sitemap-cta-heading">Not sure which page to choose?</h2>
+          <p>Skip the list and tell me what's going on. You don't need to diagnose it first.</p>
         </div>
         <a class="button" href="/#discovery">Book free discovery</a>
       </section>
@@ -2049,7 +2049,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "logo": "https://getaudo.com/assets/audo-logo-white.png",
                         "image": social_image,
                         "founder": {"@id": "https://getaudo.com/#aaron-hancock"},
-                        "description": "Audo gives small businesses one senior technology partner for websites, automation, practical AI, internal tools, technology decisions, and ongoing support.",
+                        "description": "Audo gives small businesses direct help with websites, automation, AI, internal tools, technology decisions, and ongoing support.",
                     },
                 ],
             },
@@ -2384,7 +2384,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <p class="hero-lead">{h(service.summary)}</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book free discovery</a>
-          <a class="button" href="/#service-list">See Common Problems I Solve</a>
+          <a class="button" href="/#service-list">See more examples</a>
         </div>
       </div>
     </div>
@@ -2393,36 +2393,36 @@ class AudoHandler(BaseHTTPRequestHandler):
     <div class="shell detail-layout">
       <article class="detail-content">
         <section class="story-block" aria-labelledby="problem-heading">
-          <h2 id="problem-heading">The problem</h2>
+          <h2 id="problem-heading">The issue</h2>
           <p>{h(service.pain)}</p>
         </section>
         <section class="story-block" aria-labelledby="solution-heading">
-          <h2 id="solution-heading">How I help</h2>
+          <h2 id="solution-heading">What I'd do</h2>
           <p>{h(service.solution)}</p>
         </section>
         <section class="story-block" aria-labelledby="result-heading">
-          <h2 id="result-heading">Expected result</h2>
+          <h2 id="result-heading">The result</h2>
           <p>{h(service.result)}</p>
         </section>
         <section aria-labelledby="look-heading">
-          <p class="eyebrow" id="look-heading">What I look at first</p>
-          <h2>A quick look before you commit to a bigger project.</h2>
+          <p class="eyebrow" id="look-heading">Where I start</p>
+          <h2>I can check the basics before you commit to a big project.</h2>
           <ul class="check-list">
             {checks_html}
           </ul>
         </section>
         <section id="faq" aria-labelledby="faq-heading">
           <p class="eyebrow">Common questions</p>
-          <h2 id="faq-heading">Questions people ask about this kind of help.</h2>
+          <h2 id="faq-heading">A few questions you may have.</h2>
           <div class="faq-list">
             {faqs_html}
           </div>
         </section>
       </article>
       <aside id="discovery" class="form-panel" aria-labelledby="service-form-heading">
-        <p class="eyebrow">Free Discovery</p>
-        <h2 id="service-form-heading">Start with this service.</h2>
-        <p>Share what is happening in plain English. After submitting, choose a live time from my Google Calendar. The 30-minute call is free and has no obligation.</p>
+        <p class="eyebrow">Free 30-minute call</p>
+        <h2 id="service-form-heading">Tell me about the problem.</h2>
+        <p>Write a few sentences about what's happening. After you send the form, you'll pick a time from my calendar.</p>
         <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
             <label for="service_website_url_confirm">Confirm website</label>
@@ -2438,12 +2438,12 @@ class AudoHandler(BaseHTTPRequestHandler):
               <input id="service_email" name="email" type="email" autocomplete="email" required>
             </div>
             <div class="form-field full">
-              <label for="service_website">Business website or useful link (optional)</label>
+              <label for="service_website">Link you want me to review (optional)</label>
               <input id="service_website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com">
             </div>
             <div class="form-field full">
-              <label for="service_message">What should I know?</label>
-              <textarea id="service_message" name="message" placeholder="A few sentences is enough. Include anything I should review first." required></textarea>
+              <label for="service_message">What's going on?</label>
+              <textarea id="service_message" name="message" placeholder="Tell me what happened and what you've tried so far." required></textarea>
             </div>
             <details class="promo-details">
               <summary>Have a promo code?</summary>
@@ -2460,7 +2460,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Continue to scheduling</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="service-form-note" class="form-note">Step 1 of 2. I will know which service page you came from; next, choose a live time from my Google Calendar.</p>
+          <p id="service-form-note" class="form-note">Step 1 of 2 · After this, you'll pick a time from my calendar.</p>
         </form>
       </aside>
     </div>
@@ -2473,7 +2473,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
       <h2 id="cookie-title">Cookie choices</h2>
-      <p>Audo uses essential browser storage to remember this choice, Google reCAPTCHA to protect the discovery form, and Google Analytics only if you accept. <a href="/privacy">Read the Privacy Policy.</a></p>
+      <p>Audo remembers your cookie choice, uses Google reCAPTCHA to protect this form, and loads Google Analytics only if you agree. <a href="/privacy">Read the Privacy Policy.</a></p>
     </div>
     <div class="cookie-actions">
       <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
@@ -2481,7 +2481,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
   </section>
   {recaptcha_js}
-  <script src="/assets/booking.js?v=20260710-2" defer></script>
+  <script src="/assets/booking.js?v=20260710-3" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")

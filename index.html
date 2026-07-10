@@ -417,7 +417,11 @@
 
     h1,
     h2,
-    h3,
+    h3 {
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
     p {
       overflow-wrap: break-word;
     }
@@ -457,6 +461,7 @@
       color: var(--muted);
       font-size: 18px;
       line-height: 1.65;
+      text-wrap: pretty;
     }
 
     .hero-actions {
@@ -1501,7 +1506,7 @@
     }
 
     .client-work-head {
-      max-width: 780px;
+      max-width: none;
       margin-bottom: 26px;
     }
 
@@ -1515,18 +1520,19 @@
     }
 
     .client-work-head h2 {
-      max-width: 740px;
+      max-width: 980px;
       color: var(--ink);
       font-size: clamp(30px, 4vw, 58px);
       line-height: 1.03;
     }
 
     .client-work-head p:not(.eyebrow) {
-      max-width: 720px;
+      max-width: 920px;
       margin: 14px 0 0;
       color: var(--muted);
       font-size: 17px;
       line-height: 1.6;
+      text-wrap: pretty;
     }
 
     .client-showcase {
@@ -3759,7 +3765,7 @@
             </div>
             <div class="form-field full">
               <label for="message">What's going on?</label>
-              <textarea id="message" name="message" placeholder="Tell me what happened and what you've tried so far." required></textarea>
+                  <textarea id="message" name="message" placeholder="What have you noticed? What would you like to be easier?" required></textarea>
             </div>
             <details class="promo-details">
               <summary>Have a promo code?</summary>
@@ -3968,7 +3974,9 @@
       function applyServiceChoice(options) {
         var settings = options || {};
         var label = settings.label || "Small business technology help";
-        var nextPrefill = settings.prefill || "I need help with small business technology.\n\n";
+        var nextPrefill = Object.prototype.hasOwnProperty.call(settings, "prefill")
+          ? settings.prefill
+          : "";
         var selectedCard = settings.card || null;
         var previousPrefill = message ? message.getAttribute("data-service-prefill-value") || "" : "";
 
@@ -4002,10 +4010,9 @@
       cards.forEach(function (card) {
         card.addEventListener("click", function () {
           var label = card.getAttribute("data-service-choice") || "Small business technology help";
-          var topic = card.getAttribute("data-service-prefill") || "small business technology";
           applyServiceChoice({
             label: label,
-            prefill: "I need help with " + topic + ".\n\n",
+            prefill: "",
             card: card
           });
         });
@@ -4327,7 +4334,7 @@
         }
         window.AUDO_SELECT_SERVICE({
           label: selectedService.title,
-          prefill: "This sounds familiar: " + selectedService.title + ".\n\n"
+          prefill: ""
         });
       });
 

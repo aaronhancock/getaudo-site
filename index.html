@@ -718,16 +718,15 @@
 
     .founder-story {
       display: grid;
-      gap: 18px;
-      padding-top: 8px;
+      gap: 14px;
     }
 
     .founder-story p {
-      max-width: 980px;
+      max-width: 680px;
       margin: 0;
       color: rgba(255, 255, 255, 0.78);
-      font-size: clamp(16px, 1.7vw, 20px);
-      line-height: 1.48;
+      font-size: 16px;
+      line-height: 1.55;
     }
 
     .founder-story strong {
@@ -738,10 +737,10 @@
     .why-story-panel {
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.62fr);
-      gap: 28px;
-      align-items: start;
-      padding: 24px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+      gap: 0;
+      align-items: stretch;
+      overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.045);
@@ -749,10 +748,21 @@
 
     .why-story-main {
       display: grid;
-      gap: 14px;
+      grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.28fr);
+      gap: 24px;
+      align-items: center;
+      padding: 22px;
     }
 
-    .why-story-main h3 {
+    .why-story-copy {
+      min-width: 0;
+    }
+
+    .why-story-copy .panel-label {
+      margin-bottom: 10px;
+    }
+
+    .why-story-copy h3 {
       margin: 0;
       color: var(--white);
       font-size: clamp(23px, 2.8vw, 32px);
@@ -761,13 +771,14 @@
 
     .founder-letter {
       display: grid;
-      gap: 14px;
+      gap: 10px;
+      margin-top: 14px;
     }
 
     .founder-signature {
       display: grid;
       gap: 4px;
-      margin-top: 4px;
+      margin-top: 14px;
       color: var(--white);
       font-size: 18px;
       font-weight: 820;
@@ -775,7 +786,7 @@
     }
 
     .signature-mark {
-      width: min(330px, 100%);
+      width: min(220px, 100%);
       height: auto;
       display: block;
     }
@@ -790,17 +801,16 @@
 
     .why-difference {
       display: grid;
-      gap: 14px;
+      align-content: start;
+      gap: 2px;
       margin: 0;
-      padding: 0 0 0 24px;
+      padding: 24px;
       border-left: 1px solid rgba(244, 220, 169, 0.2);
+      background: rgba(9, 17, 14, 0.16);
     }
 
-    .why-difference h3 {
-      margin: 0;
-      color: var(--white);
-      font-size: clamp(21px, 2.4vw, 28px);
-      line-height: 1.12;
+    .why-difference .panel-label {
+      margin-bottom: 10px;
     }
 
     .why-highlights {
@@ -812,7 +822,7 @@
     }
 
     .why-highlights li {
-      padding: 16px 0;
+      padding: 17px 0;
       border-top: 1px solid rgba(255, 255, 255, 0.12);
       color: rgba(255, 255, 255, 0.8);
       font-size: 15.5px;
@@ -821,7 +831,7 @@
 
     .why-highlights span {
       display: block;
-      margin-bottom: 7px;
+      margin-bottom: 5px;
       color: var(--white);
       font-size: 17px;
       font-weight: 820;
@@ -1020,24 +1030,24 @@
 
     .cta-process {
       display: grid;
-      gap: 14px;
-      margin-top: clamp(30px, 5vw, 48px);
-      padding-top: 26px;
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      margin-top: 28px;
     }
 
     .process-grid {
       display: grid;
-      gap: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.13);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .process-card {
       display: grid;
-      grid-template-columns: 30px minmax(0, 1fr);
-      gap: 13px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+      grid-template-columns: 26px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
     }
 
     .process-number {
@@ -1055,31 +1065,14 @@
     .process-card h3 {
       margin-top: 0;
       color: var(--white);
-      font-size: 17px;
+      font-size: 15px;
       line-height: 1.2;
-    }
-
-    .process-card p {
-      margin: 5px 0 0;
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .why-about {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
-      gap: clamp(22px, 4vw, 42px);
-      align-items: center;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.045);
     }
 
     .why-photo {
       margin: 0;
-      height: 270px;
+      height: 100%;
+      min-height: 330px;
       overflow: hidden;
       border-radius: 7px;
       background: rgba(255, 255, 255, 0.06);
@@ -1093,30 +1086,8 @@
       object-position: center 58%;
     }
 
-    .why-about-copy h3 {
-      margin: 0;
-      color: var(--white);
-      font-size: clamp(22px, 2.8vw, 32px);
-      line-height: 1.12;
-    }
-
-    .why-about-copy p {
-      margin: 12px 0 0;
-      color: rgba(255, 255, 255, 0.76);
-      font-size: 16px;
-      line-height: 1.58;
-    }
-
-    .work-note {
-      margin-top: 18px;
-      padding: 16px 0 0;
-      border-top: 1px solid rgba(244, 220, 169, 0.18);
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 15px;
-      line-height: 1.58;
-    }
-
     .cta-band {
+      padding: 0;
       color: var(--white);
       background: #101815;
       overflow: hidden;
@@ -1125,23 +1096,36 @@
     .cta-inner {
       max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(360px, 0.78fr);
+      grid-template-columns: minmax(0, 0.8fr) minmax(440px, 0.8fr);
       gap: clamp(32px, 5vw, 64px);
       align-items: start;
       padding: 72px 0;
     }
 
     .cta-copy {
-      max-width: 700px;
-      padding-top: clamp(8px, 2vw, 24px);
+      max-width: 620px;
+      padding-top: 0;
+    }
+
+    .cta-copy h2 {
+      max-width: 560px;
+      font-size: clamp(36px, 4.4vw, 54px);
     }
 
     .cta-copy p {
-      max-width: 650px;
-      margin: 20px 0 0;
+      max-width: 540px;
+      margin: 16px 0 0;
       color: rgba(255, 255, 255, 0.78);
-      font-size: 19px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .cta-copy > .eyebrow {
+      max-width: none;
+      margin: 0 0 14px;
+      color: #f4dca9;
+      font-size: 13px;
+      line-height: 1.35;
     }
 
     .cta-copy .panel-label {
@@ -1150,14 +1134,6 @@
       color: var(--brass);
       font-size: 12px;
       line-height: 1.2;
-    }
-
-    .cta-copy .process-card p {
-      max-width: none;
-      margin: 5px 0 0;
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 14px;
-      line-height: 1.5;
     }
 
     .consultation-form {
@@ -1275,7 +1251,7 @@
     .form-note {
       margin: -2px 0 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.5;
     }
 
@@ -1564,6 +1540,15 @@
     }
 
     @media (max-width: 1040px) {
+      .why-story-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .why-difference {
+        border-top: 1px solid rgba(244, 220, 169, 0.2);
+        border-left: 0;
+      }
+
       .service-card {
         grid-template-columns: 54px minmax(0, 1fr);
         column-gap: 20px;
@@ -1653,8 +1638,7 @@
       }
 
       .section-head,
-      .why-grid,
-      .why-about {
+      .why-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1688,8 +1672,7 @@
         text-align: center;
       }
 
-      .service-card p,
-      .why-about-copy p {
+      .service-card p {
         font-size: 14px;
         line-height: 1.55;
       }
@@ -1727,13 +1710,19 @@
 
       .why-story-panel {
         grid-template-columns: 1fr;
+        gap: 0;
+        padding: 0;
+      }
+
+      .why-story-main {
+        grid-template-columns: 1fr;
         gap: 18px;
         padding: 18px;
       }
 
       .why-difference {
-        margin-top: 4px;
-        padding: 22px 0 0;
+        margin-top: 0;
+        padding: 20px 18px;
         border-top: 1px solid rgba(244, 220, 169, 0.24);
         border-left: 0;
       }
@@ -1749,7 +1738,8 @@
       }
 
       .why-photo {
-        height: 320px;
+        height: 300px;
+        min-height: 0;
       }
 
       .partner-band {
@@ -1796,8 +1786,12 @@
       }
 
       .cta-copy p {
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.55;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
       }
 
       .cta-copy .hero-actions {
@@ -1980,50 +1974,43 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2>Senior technology help for small businesses—without the agency runaround.</h2>
-          <p class="section-copy">Most small businesses do not need a big agency process just to fix a website, clean up a workflow, make better use of AI, or build a simple tool. You may not even know what the real problem is yet. That's okay. We can find it together, sort through the options, and help get it handled.</p>
+          <h2>Senior help, without the agency layers.</h2>
+          <p class="section-copy">Work directly with Aaron to fix what is broken, plan what comes next, and make technology easier to manage.</p>
         </div>
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
             <div class="why-story-panel">
               <div class="why-story-main">
-                <h3>Why I started Audo.</h3>
-                <div class="founder-letter">
-                  <p>Hi, I'm Aaron. Audo is my independent consulting practice. When you work with Audo, you work directly with me: the person who listens, asks the right questions, explains the options, and does the work.</p>
-                  <p>I bring 30 years of hands-on technology experience, from building websites in high school to leading product and engineering teams across <strong>Cox Automotive, Dealertrack, and Dealer.com</strong>. I have worked through M&amp;A, product due diligence, integrations, migrations, OEM launches, and agency projects for organizations including John Maxwell Leadership Foundation, Hattori Hanzo, L'Oreal, and others. Now I bring that experience directly to small businesses that need senior help without hiring a full technology department or a large agency.</p>
-                  <p>I started Audo because the best technology help should feel clear, personal, and based on how your business actually works. You should not have to translate your problem into technical language, repeat yourself to a chain of people, or wonder whether anyone understands what is going on.</p>
-                  <p>Start with whatever you know: the website that needs attention, the workflow that keeps wasting time, the AI idea you are unsure about, or the feeling that something could work better. You do not have to diagnose it first. I will help you make sense of it and move forward with care.</p>
+                <figure class="why-photo">
+                  <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" decoding="async">
+                </figure>
+                <div class="why-story-copy">
+                  <p class="panel-label">Meet your technology partner</p>
+                  <h3>I'm Aaron Hancock.</h3>
+                  <div class="founder-letter">
+                    <p>For 30 years, I have built websites, led product and engineering teams, and helped organizations work through difficult technology decisions.</p>
+                    <p>Now I bring that experience directly to small businesses—without the handoffs, overhead, or technical runaround of a large agency.</p>
+                  </div>
                   <div class="founder-signature" aria-label="Signed by Aaron Hancock, Founder and Senior Tech Partner of Audo">
                     <img class="signature-mark" src="/assets/aaron-hancock-signature.png" alt="Aaron Hancock signature" decoding="async">
                     <small>Founder &amp; Senior Tech Partner, Audo</small>
                   </div>
                 </div>
               </div>
-              <div class="why-difference" aria-labelledby="why-difference-title">
-                <h3 id="why-difference-title">Why Audo is different.</h3>
+              <div class="why-difference" aria-label="What working with Audo feels like">
+                <p class="panel-label">What you can expect</p>
                 <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
-                  <li><span>You work directly with the person doing the work.</span>No account manager in the middle and no repeating the same story over and over.</li>
-                  <li><span>Strategy and execution stay together.</span>Some problems need a quick fix. Others need better planning before anyone builds anything.</li>
-                  <li><span>You do not have to talk in tech language.</span>Bring the broken form, confusing workflow, stale website, AI question, or product decision in plain English.</li>
-                  <li><span>You pay for thinking and execution, not account layers.</span>Audo is intentionally small, so the effort goes into figuring out what matters, getting it done, and supporting it afterward.</li>
+                  <li><span>One person, start to finish.</span>You talk directly with the person planning and doing the work.</li>
+                  <li><span>Plain-English decisions.</span>Bring the problem as you understand it. I will help make the options clear.</li>
+                  <li><span>Help sized to the problem.</span>A focused fix, a thoughtful plan, or ongoing support—only what is useful.</li>
                 </ul>
-              </div>
-            </div>
-            <div class="why-about">
-              <figure class="why-photo">
-                <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" decoding="async">
-              </figure>
-              <div class="why-about-copy">
-                <h3>Audo stays intentionally small.</h3>
-                <p>I work with a small number of clients so I can learn your tools, workflows, customers, and priorities. The more I understand, the better I can help.</p>
-                <div class="work-note">The goal is simple: take good care of the work, bring senior judgment to the decisions, and solve the problems that keep costing time, attention, and opportunity.</div>
               </div>
             </div>
             <div class="client-meaning">
               <div>
                 <h3>Not sure what needs help yet?</h3>
-                <p>Start with what feels slow, unclear, or harder than it should. I will help you find what's slowing things down and sort the next step.</p>
+                <p>Start with what feels slow, unclear, or harder than it should. We will sort the next step together.</p>
               </div>
               <a class="button" href="#discovery">Book free discovery</a>
             </div>
@@ -2081,32 +2068,21 @@
       <div class="shell cta-inner">
         <div class="cta-copy">
           <p class="eyebrow">Free Discovery</p>
-          <h2>Tell me what needs attention, then choose a time.</h2>
-          <p>Start with the website, workflow, AI question, or technology decision that keeps getting pushed off. The call is 30 minutes, free, and has no obligation.</p>
-          <div class="cta-process" aria-label="What happens next">
-            <p class="panel-label">What happens next</p>
+          <h2>Start with what needs attention.</h2>
+          <p>Share a few details so I can prepare. You will choose a live, 30-minute Google Meet time on the next screen.</p>
+          <div class="cta-process" aria-label="Two quick steps">
             <div class="process-grid">
               <article class="process-card">
                 <span class="process-number">1</span>
                 <div>
-                  <h3>Share the issue.</h3>
-                  <p>A few sentences and a useful link give me enough context to prepare.</p>
+                  <h3>Share a few details</h3>
                 </div>
               </article>
 
               <article class="process-card">
                 <span class="process-number">2</span>
                 <div>
-                  <h3>Choose a live time.</h3>
-                  <p>After submitting, pick an available time directly from my Google Calendar.</p>
-                </div>
-              </article>
-
-              <article class="process-card">
-                <span class="process-number">3</span>
-                <div>
-                  <h3>Leave with a clear first move.</h3>
-                  <p>We sort what matters, what can wait, and whether Audo is the right fit.</p>
+                  <h3>Choose a live time</h3>
                 </div>
               </article>
             </div>
@@ -2132,7 +2108,7 @@
             </div>
             <div class="form-field full">
               <label for="message">What needs help?</label>
-              <textarea id="message" name="message" placeholder="A few sentences is enough. Include anything I should research before we talk." required></textarea>
+              <textarea id="message" name="message" placeholder="What is slow, broken, confusing, or unfinished?" required></textarea>
             </div>
             <details class="promo-details">
               <summary>Have a promo code?</summary>
@@ -2149,7 +2125,7 @@
           <input type="hidden" name="recaptcha_token" value="">
           <button class="button primary" type="submit">Continue to scheduling</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p id="form-note" class="form-note">Step 1 of 2. After submitting, choose a live time from Aaron's Google Calendar. If you do not book immediately, Aaron usually replies within one business day.</p>
+          <p id="form-note" class="form-note">Step 1 of 2 · Next, choose a live time from Aaron's calendar.</p>
         </form>
       </div>
     </section>

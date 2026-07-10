@@ -1986,7 +1986,13 @@ class AudoHandler(BaseHTTPRequestHandler):
         }
         detail_steps = tuple(str(step) for step in detail_copy["steps"])
         detail_questions = tuple(str(question) for question in detail_copy["faq_questions"])
-        detail_answers = (service.pain, " ".join(detail_steps), service.result)
+        detail_answers = tuple(
+            str(answer)
+            for answer in detail_copy.get(
+                "faq_answers",
+                (service.pain, " ".join(detail_steps), service.result),
+            )
+        )
         seed_message = display_title.rstrip(".!?") + "."
         social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg?v={SERVICE_SOCIAL_CARD_VERSION}"
         social_image_alt = f"Audo social card for {display_title} with Aaron Hancock."
@@ -2606,19 +2612,19 @@ class AudoHandler(BaseHTTPRequestHandler):
             <h2 id="problem-heading">{h(detail_copy["problem_heading"])}</h2>
           </article>
           <article class="story-card is-result" aria-labelledby="result-heading">
-            <p class="eyebrow">What we are aiming for</p>
+            <p class="eyebrow">What you want</p>
             <h2 id="result-heading">{h(detail_copy["goal_heading"])}</h2>
           </article>
         </section>
         <section class="steps-panel" aria-labelledby="look-heading">
-          <p class="eyebrow">How I would help</p>
+          <p class="eyebrow">How I can help</p>
           <h2 id="look-heading">{h(detail_copy["approach_heading"])}</h2>
           <ul class="check-list">
             {checks_html}
           </ul>
         </section>
         <section id="faq" aria-labelledby="faq-heading">
-          <p class="eyebrow">Questions about this example</p>
+          <p class="eyebrow">You may be wondering</p>
           <h2 id="faq-heading">{h(detail_copy["faq_heading"])}</h2>
           <div class="faq-list">
             {faqs_html}
@@ -2627,7 +2633,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       </article>
       <aside id="discovery" class="form-panel" aria-labelledby="service-form-heading">
         <div class="form-context">
-          <span>You're asking about</span>
+          <span>You want help with</span>
           <strong>{h(display_title)}</strong>
         </div>
         <div class="form-intro">

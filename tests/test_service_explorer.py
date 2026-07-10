@@ -70,6 +70,61 @@ class ServiceExplorerTests(unittest.TestCase):
 
                 self.assertEqual(len(card["steps"]), 3)
                 self.assertEqual(len(card["faq_questions"]), 3)
+                self.assertEqual(len(card["faq_answers"]), 3)
+
+                page_copy = " ".join(
+                    [
+                        card["title"],
+                        card["summary"],
+                        card["result"],
+                        card["problem_heading"],
+                        card["goal_heading"],
+                        card["approach_heading"],
+                        card["form_heading"],
+                        card["form_prompt"],
+                        card["faq_heading"],
+                        *card["steps"],
+                        *card["faq_questions"],
+                        *card["faq_answers"],
+                    ]
+                ).lower()
+                for clinical_phrase in (
+                    "approved facts",
+                    "blocker",
+                    "classify",
+                    "compromised",
+                    "conflicting records",
+                    "current record",
+                    "dashboard",
+                    "dependencies",
+                    "dependable",
+                    "guided response",
+                    "handoffs",
+                    "impact, urgency",
+                    "low-risk",
+                    "practical uses",
+                    "requirements",
+                    "reusable",
+                    "routing",
+                    "scope",
+                    "source links",
+                    "submission path",
+                    "suitable",
+                    "technology basics",
+                    "technology priorities",
+                    "verifiable milestone",
+                ):
+                    self.assertNotIn(clinical_phrase, page_copy)
+
+                for heading in (
+                    card["problem_heading"],
+                    card["goal_heading"],
+                    card["approach_heading"],
+                ):
+                    self.assertLessEqual(len(heading.split()), 18)
+
+                for step in card["steps"]:
+                    self.assertLessEqual(len(step.split()), 15)
 
         self.assertEqual(
             len({step for card in cards for step in card["steps"]}),

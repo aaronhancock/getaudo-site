@@ -135,7 +135,7 @@
   function initForm(form, formIndex) {
     var siteKey = window.AUDO_RECAPTCHA_SITE_KEY || "";
     var submitButton = form.querySelector("button[type='submit']");
-    var submitLabel = submitButton ? submitButton.textContent : "Book free discovery";
+    var submitLabel = submitButton ? submitButton.textContent : "Continue to scheduling";
     var status = form.querySelector(".form-status");
     var note = form.querySelector(".form-note");
     var grid = form.querySelector(".form-grid");

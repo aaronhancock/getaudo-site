@@ -2458,7 +2458,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
           <input type="hidden" name="recaptcha_token" value="">
-          <button class="button primary" type="submit">Book free discovery</button>
+          <button class="button primary" type="submit">Continue to scheduling</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="service-form-note" class="form-note">Step 1 of 2. I will know which service page you came from; next, choose a live time from my Google Calendar.</p>
         </form>
@@ -2481,7 +2481,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
   </section>
   {recaptcha_js}
-  <script src="/assets/booking.js?v=20260710-1" defer></script>
+  <script src="/assets/booking.js?v=20260710-2" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")

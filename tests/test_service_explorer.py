@@ -103,6 +103,8 @@ class ServiceExplorerTests(unittest.TestCase):
         server_source = (Path(__file__).resolve().parents[1] / "server.py").read_text()
 
         self.assertIn('f"""<details open>', server_source)
+        self.assertIn('seed_message = display_title.rstrip(".!?") + "."', server_source)
+        self.assertIn('required>{h(seed_message)}', server_source)
         self.assertNotIn("This is a real, fixable problem.", server_source)
         self.assertNotIn("A few questions you may have.", server_source)
 

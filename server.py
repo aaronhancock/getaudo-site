@@ -1987,6 +1987,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         detail_steps = tuple(str(step) for step in detail_copy["steps"])
         detail_questions = tuple(str(question) for question in detail_copy["faq_questions"])
         detail_answers = (service.pain, " ".join(detail_steps), service.result)
+        seed_message = display_title.rstrip(".!?") + "."
         social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg?v={SERVICE_SOCIAL_CARD_VERSION}"
         social_image_alt = f"Audo social card for {display_title} with Aaron Hancock."
         form_context = f"Example: {display_title} ({PUBLIC_BASE_URL}{service.url})"
@@ -2380,7 +2381,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       gap: 16px;
     }}
     .story-card {{
-      min-height: 250px;
+      min-height: 230px;
       display: grid;
       align-content: start;
       padding: clamp(26px, 3vw, 34px);
@@ -2396,8 +2397,6 @@ class AudoHandler(BaseHTTPRequestHandler):
     }}
     .story-card .eyebrow {{ margin-bottom: 12px; color: var(--theme-accent); }}
     .story-card h2 {{ max-width: none; font-size: clamp(27px, 2.6vw, 34px); line-height: 1.08; }}
-    .story-card p {{ margin: 14px 0 0; color: var(--muted); font-size: 17px; line-height: 1.6; text-wrap: pretty; }}
-    .story-card.is-result p {{ color: var(--theme-ink); font-size: 19px; line-height: 1.55; }}
     .steps-panel {{
       padding: clamp(28px, 3.5vw, 38px);
       border: 1px solid var(--line);
@@ -2472,7 +2471,6 @@ class AudoHandler(BaseHTTPRequestHandler):
     .form-context strong {{ display: block; font-size: 19px; line-height: 1.3; text-wrap: balance; }}
     .form-intro {{ padding: 28px 28px 0; }}
     .form-panel h2 {{ font-size: 28px; }}
-    .form-intro > p {{ margin: 10px 0 0; color: var(--muted); line-height: 1.55; }}
     .consultation-form {{ display: grid; gap: 14px; padding: 24px 28px 28px; }}
     .form-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }}
     .form-field {{ display: grid; gap: 7px; }}
@@ -2606,12 +2604,10 @@ class AudoHandler(BaseHTTPRequestHandler):
           <article class="story-card" aria-labelledby="problem-heading">
             <p class="eyebrow">What's happening</p>
             <h2 id="problem-heading">{h(detail_copy["problem_heading"])}</h2>
-            <p>{h(service.pain)}</p>
           </article>
           <article class="story-card is-result" aria-labelledby="result-heading">
             <p class="eyebrow">What we are aiming for</p>
             <h2 id="result-heading">{h(detail_copy["goal_heading"])}</h2>
-            <p>{h(display_result)}</p>
           </article>
         </section>
         <section class="steps-panel" aria-labelledby="look-heading">
@@ -2636,8 +2632,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         </div>
         <div class="form-intro">
           <p class="eyebrow">Free 30-minute call</p>
-          <h2 id="service-form-heading">{h(detail_copy["form_heading"])}</h2>
-          <p>{h(detail_copy["form_prompt"])}</p>
+          <h2 id="service-form-heading">{h(detail_copy["form_prompt"])}</h2>
         </div>
         <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
@@ -2659,7 +2654,9 @@ class AudoHandler(BaseHTTPRequestHandler):
             </div>
             <div class="form-field full">
               <label for="service_message">What's going on?</label>
-              <textarea id="service_message" name="message" placeholder="{h(detail_copy["form_prompt"])}" required></textarea>
+              <textarea id="service_message" name="message" required>{h(seed_message)}
+
+</textarea>
             </div>
             <details class="promo-details">
               <summary>Have a promo code?</summary>

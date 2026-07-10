@@ -33,7 +33,8 @@
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/booking.css?v=20260710-1">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260710-2">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-1">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1349,13 +1350,11 @@
 
     .founder-story {
       display: grid;
-      gap: 14px;
+      gap: 18px;
     }
 
     .founder-story p {
-      max-width: 680px;
       margin: 0;
-      color: rgba(255, 255, 255, 0.78);
       font-size: 16px;
       line-height: 1.55;
     }
@@ -1366,51 +1365,68 @@
     }
 
     .why-story-panel {
-      max-width: none;
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
-      gap: 0;
+      grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+      gap: 18px;
       align-items: stretch;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.045);
     }
 
-    .why-story-main {
-      display: grid;
-      grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.28fr);
-      gap: 24px;
-      align-items: center;
-      padding: 22px;
+    .why-portrait-card {
+      min-height: 440px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 24px 54px rgba(5, 12, 9, 0.18);
     }
 
     .why-story-copy {
       min-width: 0;
+      display: grid;
+      align-content: center;
+      padding: clamp(30px, 4vw, 52px);
+      border-radius: 24px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 8%, rgba(200, 155, 75, 0.2) 0 84px, transparent 85px),
+        #f7f3e8;
+      box-shadow: 0 24px 54px rgba(5, 12, 9, 0.16);
     }
 
     .why-story-copy .panel-label {
-      margin-bottom: 10px;
+      margin-bottom: 13px;
+      color: #805b18;
     }
 
     .why-story-copy h3 {
+      max-width: 680px;
       margin: 0;
-      color: var(--white);
-      font-size: clamp(23px, 2.8vw, 32px);
-      line-height: 1.1;
+      color: var(--ink);
+      font-size: clamp(30px, 3.1vw, 44px);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
     }
 
     .founder-letter {
       display: grid;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 12px;
+      max-width: 660px;
+      margin-top: 22px;
+    }
+
+    .founder-letter p {
+      color: #526159;
+      font-size: 17px;
+      line-height: 1.58;
     }
 
     .founder-signature {
       display: grid;
       gap: 4px;
-      margin-top: 14px;
-      color: var(--white);
+      width: fit-content;
+      margin-top: 24px;
+      color: var(--ink);
       font-size: 18px;
       font-weight: 820;
       line-height: 1.2;
@@ -1420,73 +1436,139 @@
       width: min(220px, 100%);
       height: auto;
       display: block;
+      filter: invert(1);
+      opacity: 0.88;
     }
 
     .founder-signature small {
-      color: #f4dca9;
+      color: #805b18;
       font-size: 12px;
       font-weight: 820;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
+    .why-experience-badge {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: min(210px, calc(100% - 36px));
+      display: grid;
+      gap: 2px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 18px;
+      color: var(--ink);
+      background: rgba(247, 243, 232, 0.94);
+      box-shadow: 0 16px 36px rgba(5, 12, 9, 0.22);
+      backdrop-filter: blur(12px);
+    }
+
+    .why-experience-badge strong {
+      color: var(--ink);
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .why-experience-badge span {
+      color: #526159;
+      font-size: 13px;
+      font-weight: 720;
+      line-height: 1.35;
+    }
+
     .why-difference {
       display: grid;
-      align-content: start;
-      gap: 2px;
+      gap: 16px;
       margin: 0;
-      padding: 24px;
-      border-left: 1px solid rgba(244, 220, 169, 0.2);
-      background: rgba(9, 17, 14, 0.16);
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      background: rgba(9, 17, 14, 0.15);
     }
 
     .why-difference .panel-label {
-      margin-bottom: 10px;
+      margin-bottom: 0;
     }
 
     .why-highlights {
       display: grid;
-      gap: 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
     .why-highlights li {
-      padding: 17px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 15.5px;
-      line-height: 1.45;
+      min-height: 190px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 22px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      color: var(--ink);
+      background: #f4dca9;
+      box-shadow: 0 14px 34px rgba(5, 12, 9, 0.13);
     }
 
-    .why-highlights span {
-      display: block;
-      margin-bottom: 5px;
+    .why-highlights li:nth-child(2) {
       color: var(--white);
-      font-size: 17px;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .why-highlights li:nth-child(3) {
+      color: var(--ink);
+      background: #dbe8e3;
+    }
+
+    .why-highlight-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 840;
+      letter-spacing: 0.05em;
+      opacity: 0.72;
+    }
+
+    .why-highlight-copy {
+      align-self: end;
+      font-size: 15.5px;
+      line-height: 1.48;
+    }
+
+    .why-highlight-copy strong {
+      display: block;
+      margin-bottom: 8px;
+      color: inherit;
+      font-size: 19px;
       font-weight: 820;
       letter-spacing: 0;
       line-height: 1.22;
-      text-transform: none;
     }
 
     .client-meaning {
-      max-width: none;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 20px;
       align-items: center;
-      padding: 22px;
-      border: 1px solid rgba(244, 220, 169, 0.18);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.045);
+      padding: 26px 28px;
+      border: 1px solid rgba(244, 220, 169, 0.42);
+      border-radius: 22px;
+      background:
+        linear-gradient(90deg, rgba(244, 220, 169, 0.11), rgba(255, 255, 255, 0.05));
     }
 
     .client-meaning h3 {
       margin: 0;
       color: var(--white);
-      font-size: clamp(20px, 2.2vw, 26px);
+      font-size: clamp(24px, 2.6vw, 34px);
       line-height: 1.12;
     }
 
@@ -2821,9 +2903,8 @@
         grid-template-columns: 1fr;
       }
 
-      .why-difference {
-        border-top: 1px solid rgba(244, 220, 169, 0.2);
-        border-left: 0;
+      .why-portrait-card {
+        min-height: 420px;
       }
 
       .service-grid {
@@ -3155,21 +3236,35 @@
 
       .why-story-panel {
         grid-template-columns: 1fr;
-        gap: 0;
-        padding: 0;
+        gap: 14px;
       }
 
-      .why-story-main {
-        grid-template-columns: 1fr;
-        gap: 18px;
-        padding: 18px;
+      .why-portrait-card {
+        min-height: 400px;
+      }
+
+      .why-story-copy {
+        padding: 28px 22px;
+      }
+
+      .why-story-copy h3 {
+        font-size: 32px;
+      }
+
+      .founder-letter p {
+        font-size: 16px;
       }
 
       .why-difference {
-        margin-top: 0;
-        padding: 20px 18px;
-        border-top: 1px solid rgba(244, 220, 169, 0.24);
-        border-left: 0;
+        padding: 20px;
+      }
+
+      .why-highlights {
+        grid-template-columns: 1fr;
+      }
+
+      .why-highlights li {
+        min-height: 150px;
       }
 
       .client-meaning {
@@ -3183,7 +3278,7 @@
       }
 
       .why-photo {
-        height: 300px;
+        height: 100%;
         min-height: 0;
       }
 
@@ -3626,52 +3721,68 @@
     <section id="why" class="why-band">
       <div class="shell">
         <div class="section-head">
-          <h2><span class="why-heading-line">Senior help, without</span> <span class="why-heading-line">the agency layers.</span></h2>
+          <div>
+            <p class="panel-label">Why Audo</p>
+            <h2><span class="why-heading-line">Senior experience.</span> <span class="why-heading-line">One person to call.</span></h2>
+          </div>
           <p class="section-copy">You work directly with me from the first conversation through the finished work. No account manager and no handoffs.</p>
         </div>
 
         <div class="why-grid">
           <div class="founder-story" aria-label="Aaron Hancock background and experience">
             <div class="why-story-panel">
-              <div class="why-story-main">
+              <div class="why-portrait-card">
                 <figure class="why-photo">
                   <img src="/assets/founder-field-portrait.webp" alt="Aaron Hancock outdoors at a fence in a field" decoding="async">
                 </figure>
-                <div class="why-story-copy">
-                  <p class="panel-label">About me</p>
-                  <h3>I'm Aaron Hancock.</h3>
-                  <div class="founder-letter">
-                    <p>For 30 years, I've built websites and software, led product and engineering teams, and untangled technology problems for companies large and small.</p>
-                    <p>With Audo, I do that work directly for small businesses. You get the experience without the agency meetings, handoffs, or runaround.</p>
-                  </div>
-                  <div class="founder-signature" aria-label="Signed by Aaron Hancock, Founder and Senior Tech Partner of Audo">
-                    <img class="signature-mark" src="/assets/aaron-hancock-signature.png" alt="Aaron Hancock signature" decoding="async">
-                    <small>Founder &amp; Senior Tech Partner, Audo</small>
-                  </div>
+                <div class="why-experience-badge" aria-label="30 years building and fixing technology">
+                  <strong>30 years</strong>
+                  <span>building and fixing technology</span>
                 </div>
               </div>
-              <div class="why-difference" aria-label="What working with Audo feels like">
-                <p class="panel-label">What you can expect</p>
-                <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
-                  <li><span>You work with me.</span>I plan the work, explain the options, and do the work.</li>
-                  <li><span>No tech vocabulary required.</span>Tell me what is frustrating you. I'll ask the questions and explain the options without jargon.</li>
-                  <li><span>As much help as you need.</span>That might be one repair, a larger project, or someone to call when something breaks.</li>
-                </ul>
+              <div class="why-story-copy">
+                <p class="panel-label">Meet Aaron</p>
+                <h3>I'm Aaron Hancock, and I do the work.</h3>
+                <div class="founder-letter">
+                  <p>I've built websites and software, led product and engineering teams, and untangled technology problems for companies large and small.</p>
+                  <p>Now I bring that experience directly to small businesses—without the agency meetings, handoffs, or runaround.</p>
+                </div>
+                <div class="founder-signature" aria-label="Signed by Aaron Hancock, Founder and Senior Tech Partner of Audo">
+                  <img class="signature-mark" src="/assets/aaron-hancock-signature.png" alt="Aaron Hancock signature" decoding="async">
+                  <small>Founder &amp; Senior Tech Partner, Audo</small>
+                </div>
               </div>
+            </div>
+            <div class="why-difference" aria-label="What working with Audo feels like">
+              <p class="panel-label">What working together feels like</p>
+              <ul class="why-highlights" aria-label="How Aaron works with Audo clients">
+                <li>
+                  <span class="why-highlight-number" aria-hidden="true">01</span>
+                  <span class="why-highlight-copy"><strong>One person throughout</strong>I plan it, explain it, and do it.</span>
+                </li>
+                <li>
+                  <span class="why-highlight-number" aria-hidden="true">02</span>
+                  <span class="why-highlight-copy"><strong>Plain English</strong>Tell me what's frustrating you. You don't need the right tech words.</span>
+                </li>
+                <li>
+                  <span class="why-highlight-number" aria-hidden="true">03</span>
+                  <span class="why-highlight-copy"><strong>Help that fits</strong>One repair, a larger project, or ongoing support when you need it.</span>
+                </li>
+              </ul>
             </div>
             <div class="client-meaning">
               <div>
-                <h3>Don't know what's wrong yet?</h3>
-                <p>Tell me what you're seeing. I can help track down the cause.</p>
+                <h3>Not sure what's wrong? Start with what you can see.</h3>
+                <p>Tell me what's happening. I'll help you figure out the rest.</p>
               </div>
-              <a class="button" href="#discovery">Book free discovery</a>
+              <a class="button primary" href="#discovery">Book free discovery</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="partner-band" aria-labelledby="client-work-heading">
+    <section id="client-work" class="partner-band" aria-labelledby="client-work-heading">
       <div class="shell">
         <div class="client-work-head">
           <p class="eyebrow">Client work</p>
@@ -3838,9 +3949,65 @@
     </section>
   </main>
 
-  <footer>
-    <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Book free discovery</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+  <footer id="site-footer" class="mega-footer">
+    <div class="shell footer-shell">
+      <section class="footer-cta" aria-labelledby="footer-cta-heading">
+        <div class="footer-cta-copy">
+          <p class="footer-eyebrow">Free 30-minute discovery call</p>
+          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
+          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+        </div>
+        <a class="footer-cta-button" href="#discovery">Book free discovery</a>
+      </section>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="Audo home">
+            <img src="/assets/audo-logo-white.png" alt="Audo">
+          </a>
+          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
+        </div>
+
+        <nav class="footer-nav" aria-labelledby="footer-help-heading">
+          <h2 id="footer-help-heading">Ways I can help</h2>
+          <ul>
+            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
+            <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
+            <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
+            <li><a href="/services/decide-what-to-build-first">Choose what to do first</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-nav" aria-labelledby="footer-explore-heading">
+          <h2 id="footer-explore-heading">Explore Audo</h2>
+          <ul>
+            <li><a href="/#why">About Aaron and Audo</a></li>
+            <li><a href="/#client-work">Client work</a></li>
+            <li><a href="/#service-list">Browse real examples</a></li>
+            <li><a href="/sitemap">View all pages</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-next">
+          <h2>What happens next</h2>
+          <ol>
+            <li><span aria-hidden="true">1</span><p>Tell me what's going on.</p></li>
+            <li><span aria-hidden="true">2</span><p>Pick a 30-minute Google Meet time.</p></li>
+          </ol>
+          <p class="footer-response">I'll review your note before we talk.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Audo. Aaron Hancock, Founder &amp; Senior Tech Partner.</p>
+        <nav class="footer-legal" aria-label="Privacy and site information">
+          <a href="/privacy">Privacy</a>
+          <a href="/sitemap">Sitemap</a>
+          <button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button>
+        </nav>
+      </div>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
@@ -4478,6 +4645,6 @@
       });
     }());
   </script>
-  <script src="/assets/booking.js?v=20260710-3" defer></script>
+  <script src="/assets/booking.js?v=20260710-4" defer></script>
 </body>
 </html>

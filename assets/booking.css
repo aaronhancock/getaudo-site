@@ -85,6 +85,10 @@
   scrollbar-width: thin;
 }
 
+.booking-mobile-date-field {
+  display: none;
+}
+
 .booking-date {
   min-width: 66px;
   min-height: 68px;
@@ -266,12 +270,76 @@
 }
 
 @media (max-width: 620px) {
+  .booking-step {
+    gap: 18px;
+  }
+
+  .booking-step h3 {
+    font-size: 30px;
+    line-height: 1.08;
+  }
+
+  .booking-step-copy {
+    font-size: 15px;
+  }
+
+  .booking-policies {
+    gap: 6px;
+  }
+
+  .booking-policies li {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
   .booking-date-list {
-    grid-template-columns: repeat(5, 72px);
+    display: none;
+  }
+
+  .booking-mobile-date-field {
+    display: grid;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .booking-mobile-date-field label {
+    color: var(--ink, #18221d);
+    font-size: 12px;
+    font-weight: 820;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .booking-mobile-date-field select {
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid rgba(24, 34, 29, 0.18);
+    border-radius: 10px;
+    padding: 0 42px 0 13px;
+    color: var(--ink, #18221d);
+    background: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 720;
+  }
+
+  .booking-mobile-date-field select:focus-visible {
+    outline: 3px solid rgba(240, 198, 111, 0.55);
+    outline-offset: 2px;
   }
 
   .booking-time-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .booking-time {
+    min-height: 50px;
+    font-size: 14px;
+  }
+
+  .booking-confirmation {
+    padding: 14px;
   }
 }
 

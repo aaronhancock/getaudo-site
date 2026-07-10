@@ -1609,7 +1609,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/booking.css?v=20260710-1">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-1">
   <script type="application/ld+json">{json_ld}</script>
   {analytics_js}
   <style>
@@ -1911,9 +1911,58 @@ class AudoHandler(BaseHTTPRequestHandler):
       </section>
     </div>
   </main>
-  <footer>
-    <div class="shell">
-      <p><strong>Audo</strong> · Aaron Hancock · <a href="/">Home</a> · <a href="/#discovery">Book free discovery</a> · <a href="/privacy">Privacy</a> · <a href="/sitemap">Sitemap</a></p>
+  <footer id="site-footer" class="mega-footer">
+    <div class="shell footer-shell">
+      <section class="footer-cta" aria-labelledby="footer-cta-heading">
+        <div class="footer-cta-copy">
+          <p class="footer-eyebrow">Free 30-minute discovery call</p>
+          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
+          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+        </div>
+        <a class="footer-cta-button" href="/#discovery">Book free discovery</a>
+      </section>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
+          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
+        </div>
+        <nav class="footer-nav" aria-labelledby="footer-help-heading">
+          <h2 id="footer-help-heading">Ways I can help</h2>
+          <ul>
+            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
+            <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
+            <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
+            <li><a href="/services/decide-what-to-build-first">Choose what to do first</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav" aria-labelledby="footer-explore-heading">
+          <h2 id="footer-explore-heading">Explore Audo</h2>
+          <ul>
+            <li><a href="/#why">About Aaron and Audo</a></li>
+            <li><a href="/#client-work">Client work</a></li>
+            <li><a href="/#service-list">Browse real examples</a></li>
+            <li><a href="/sitemap" aria-current="page">View all pages</a></li>
+          </ul>
+        </nav>
+        <div class="footer-next">
+          <h2>What happens next</h2>
+          <ol>
+            <li><span aria-hidden="true">1</span><p>Tell me what's going on.</p></li>
+            <li><span aria-hidden="true">2</span><p>Pick a 30-minute Google Meet time.</p></li>
+          </ol>
+          <p class="footer-response">I'll review your note before we talk.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Audo. Aaron Hancock, Founder &amp; Senior Tech Partner.</p>
+        <nav class="footer-legal" aria-label="Privacy and site information">
+          <a href="/privacy">Privacy</a>
+          <a href="/sitemap" aria-current="page">Sitemap</a>
+          <a href="/privacy#cookies">Cookie information</a>
+        </nav>
+      </div>
     </div>
   </footer>
 </body>
@@ -2154,6 +2203,8 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260710-2">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-1">
   <script type="application/ld+json">{json_ld}</script>
   <style>
     :root {{
@@ -2684,9 +2735,58 @@ class AudoHandler(BaseHTTPRequestHandler):
       </aside>
     </div>
   </main>
-  <footer>
-    <div class="shell">
-      <p class="footer-line"><strong>Audo</strong><span>·</span><span>Aaron Hancock</span><span>·</span><span>Senior technology partner for small businesses</span><span>·</span><a href="#discovery">Book free discovery</a><span>·</span><a href="/privacy">Privacy</a><span>·</span><a href="/sitemap">Sitemap</a><span>·</span><button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button></p>
+  <footer id="site-footer" class="mega-footer">
+    <div class="shell footer-shell">
+      <section class="footer-cta" aria-labelledby="footer-cta-heading">
+        <div class="footer-cta-copy">
+          <p class="footer-eyebrow">Free 30-minute discovery call</p>
+          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
+          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+        </div>
+        <a class="footer-cta-button" href="#discovery">Book free discovery</a>
+      </section>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
+          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
+        </div>
+        <nav class="footer-nav" aria-labelledby="footer-help-heading">
+          <h2 id="footer-help-heading">Ways I can help</h2>
+          <ul>
+            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
+            <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
+            <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
+            <li><a href="/services/decide-what-to-build-first">Choose what to do first</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-nav" aria-labelledby="footer-explore-heading">
+          <h2 id="footer-explore-heading">Explore Audo</h2>
+          <ul>
+            <li><a href="/#why">About Aaron and Audo</a></li>
+            <li><a href="/#client-work">Client work</a></li>
+            <li><a href="/#service-list">Browse real examples</a></li>
+            <li><a href="/sitemap">View all pages</a></li>
+          </ul>
+        </nav>
+        <div class="footer-next">
+          <h2>What happens next</h2>
+          <ol>
+            <li><span aria-hidden="true">1</span><p>Tell me what's going on.</p></li>
+            <li><span aria-hidden="true">2</span><p>Pick a 30-minute Google Meet time.</p></li>
+          </ol>
+          <p class="footer-response">I'll review your note before we talk.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Audo. Aaron Hancock, Founder &amp; Senior Tech Partner.</p>
+        <nav class="footer-legal" aria-label="Privacy and site information">
+          <a href="/privacy">Privacy</a>
+          <a href="/sitemap">Sitemap</a>
+          <button class="footer-preferences" type="button" data-cookie-preferences>Cookie preferences</button>
+        </nav>
+      </div>
     </div>
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
@@ -2700,7 +2800,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
   </section>
   {recaptcha_js}
-  <script src="/assets/booking.js?v=20260710-3" defer></script>
+  <script src="/assets/booking.js?v=20260710-4" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")

@@ -110,6 +110,10 @@
       '<p class="booking-loading" data-booking-loading>Loading available times…</p>',
       '<p class="booking-alert" role="alert" data-booking-alert hidden></p>',
       '<div data-booking-picker hidden>',
+      '  <div class="booking-mobile-date-field">',
+      '    <label for="booking-date-select">Choose a date</label>',
+      '    <select id="booking-date-select" data-booking-date-select></select>',
+      '  </div>',
       '  <div class="booking-date-list" role="tablist" aria-label="Available dates" data-booking-dates></div>',
       '  <div class="booking-time-group">',
       '    <p class="booking-time-heading" data-booking-time-heading></p>',
@@ -145,6 +149,7 @@
     var alertBox = scheduler.querySelector("[data-booking-alert]");
     var picker = scheduler.querySelector("[data-booking-picker]");
     var dateList = scheduler.querySelector("[data-booking-dates]");
+    var dateSelect = scheduler.querySelector("[data-booking-date-select]");
     var timeHeading = scheduler.querySelector("[data-booking-time-heading]");
     var timeList = scheduler.querySelector("[data-booking-times]");
     var confirmation = scheduler.querySelector("[data-booking-confirmation]");
@@ -162,6 +167,8 @@
 
     heading.id = "booking-step-title-" + formIndex;
     scheduler.setAttribute("aria-labelledby", heading.id);
+    dateSelect.id = "booking-date-select-" + formIndex;
+    scheduler.querySelector("label[for='booking-date-select']").setAttribute("for", dateSelect.id);
     form.appendChild(scheduler);
 
     // The page's original reCAPTCHA enhancement remains the non-AJAX fallback.
@@ -270,6 +277,9 @@
         item.setAttribute("aria-selected", selected ? "true" : "false");
         item.tabIndex = selected ? 0 : -1;
       });
+      if (availability && availability.days) {
+        dateSelect.value = String(availability.days.indexOf(day));
+      }
       renderTimes(day);
     }
 
@@ -288,6 +298,7 @@
       }
 
       dateList.textContent = "";
+      dateSelect.textContent = "";
       payload.days.forEach(function (day, index) {
         var button = document.createElement("button");
         button.type = "button";
@@ -309,10 +320,29 @@
           selectDay(day, button);
         });
         dateList.appendChild(button);
+
+        var option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = day.label;
+        dateSelect.appendChild(option);
       });
+      dateSelect.value = "0";
       picker.hidden = false;
       renderTimes(payload.days[0]);
     }
+
+    dateSelect.addEventListener("change", function () {
+      if (!availability || !availability.days) {
+        return;
+      }
+      var index = Number(dateSelect.value);
+      var day = availability.days[index];
+      if (!day) {
+        return;
+      }
+      var buttons = dateList.querySelectorAll("button");
+      selectDay(day, buttons[index]);
+    });
 
     function loadAvailability() {
       loading.hidden = false;

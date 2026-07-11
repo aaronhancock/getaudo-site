@@ -127,6 +127,14 @@
   text-underline-offset: 4px;
 }
 
+.mega-footer .footer-nav {
+  display: block;
+  margin: 0;
+  align-items: initial;
+  justify-content: initial;
+  gap: 0;
+}
+
 .footer-nav h2,
 .footer-next h2 {
   margin: 0 0 13px;

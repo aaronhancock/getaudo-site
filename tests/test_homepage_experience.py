@@ -29,6 +29,9 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn('href="mailto:getaudo@gmail.com"', homepage)
         self.assertIn("min-height: 44px", footer_css)
         self.assertIn(":focus-visible", footer_css)
+        self.assertIn(".mega-footer .footer-nav {", footer_css)
+        self.assertIn("display: block;", footer_css)
+        self.assertIn("margin: 0;", footer_css)
 
     def test_mobile_scheduler_uses_a_compact_date_select(self) -> None:
         booking_js = (ROOT / "assets" / "booking.js").read_text()

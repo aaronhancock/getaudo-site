@@ -861,20 +861,11 @@ ACTIVE_SERVICE_TITLES = {
     "Contact form submissions are not arriving",
     "The website feels slow",
     "WordPress warnings are piling up",
-    "Website leads are going missing",
     "The mobile website is confusing",
     "The homepage no longer matches the business",
-    "One offer needs its own page",
-    "A website move feels risky",
-    "Key pages have accessibility barriers",
-    "Visitors are seeing security warnings",
-    "Visitors get lost on the site",
-    "Website inquiries are stuck in inboxes or spreadsheets",
     "Give customers a cleaner way to send requests and files",
-    "Website updates keep getting postponed",
     "Prospects need quicker quote or fit answers",
     "The business needs a better website",
-    "Build a mobile app for a specific workflow",
     "Leads need follow-up you can trust",
     "Turn form submissions into tracked tasks",
     "Important numbers take too long to see",
@@ -884,29 +875,19 @@ ACTIVE_SERVICE_TITLES = {
     "New customer onboarding feels inconsistent",
     "A spreadsheet is carrying too much responsibility",
     "Copy-paste is slowing the work down",
-    "The spreadsheet process is getting fragile",
-    "Operations are scattered across too many places",
     "Customer details are disconnected from the CRM",
     "There are too many AI tools to choose from",
     "The team needs safer rules for AI and client data",
-    "AI prompts are inconsistent across daily work",
     "The team does not know where AI fits",
     "Support replies need to be faster without getting sloppy",
     "Procedures are hard for the team to find",
     "Website visitors need quick answers",
     "You have too many product ideas",
-    "A product idea needs a reality check",
     "A build-vs-buy decision is unclear",
-    "A software acquisition needs product due diligence",
-    "MVP scope is starting to sprawl",
     "Simplify the process before you buy or build software",
-    "The vendor or developer request is too vague",
     "A vendor proposal is hard to evaluate",
     "A project has stalled",
-    "Inbox and calendar are overloaded",
     "Set up the basics for a new small business",
-    "You need a simple website or portfolio",
-    "Client onboarding feels awkward or inconsistent",
 }
 
 
@@ -964,7 +945,7 @@ SERVICE_SLUG_OVERRIDES = {
 
 
 ARCHIVED_SERVICE_REDIRECTS = {
-    slugify(title): "/#service-list"
+    SERVICE_SLUG_OVERRIDES.get(title, slugify(title)): "/#service-list"
     for title, *_ in SERVICE_SEEDS
     if title not in ACTIVE_SERVICE_TITLES
 }

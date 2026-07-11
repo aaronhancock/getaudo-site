@@ -24,6 +24,18 @@ from pathlib import Path
 from urllib.parse import parse_qs, quote, urlencode, urlparse
 from zoneinfo import ZoneInfo
 
+from site_catalog import (
+    CATEGORY_ORDER,
+    build_llms_full_txt,
+    build_llms_txt,
+    build_service_markdown,
+    build_services_markdown,
+    build_sitemap_xml,
+    catalog_entries,
+    catalog_lastmod,
+    get_catalog_entry,
+    grouped_catalog,
+)
 from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, get_service, service_cards
 
 try:
@@ -37,7 +49,7 @@ DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
 CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "getaudo@gmail.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
-SITEMAP_LASTMOD = os.environ.get("SITEMAP_LASTMOD", "2026-07-10")
+SITEMAP_LASTMOD = catalog_lastmod(BASE_DIR)
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
 RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
@@ -1069,6 +1081,47 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.serve_user_sitemap(send_body=send_body)
             return
 
+        if path == "/llm.txt":
+            self.redirect_permanent("/llms.txt")
+            return
+
+        if path == "/llms.txt":
+            self.serve_generated_text(
+                build_llms_txt(PUBLIC_BASE_URL),
+                "text/plain; charset=utf-8",
+                send_body=send_body,
+            )
+            return
+
+        if path == "/llms-full.txt":
+            self.serve_generated_text(
+                build_llms_full_txt(PUBLIC_BASE_URL),
+                "text/plain; charset=utf-8",
+                send_body=send_body,
+            )
+            return
+
+        if path == "/services.md":
+            self.serve_generated_text(
+                build_services_markdown(PUBLIC_BASE_URL),
+                "text/markdown; charset=utf-8",
+                send_body=send_body,
+            )
+            return
+
+        service_markdown_match = re.fullmatch(r"/services/([a-z0-9-]+)\.md", path)
+        if service_markdown_match:
+            entry = get_catalog_entry(service_markdown_match.group(1))
+            if entry:
+                self.serve_generated_text(
+                    build_service_markdown(entry, PUBLIC_BASE_URL),
+                    "text/markdown; charset=utf-8",
+                    send_body=send_body,
+                )
+                return
+            self.render_error(HTTPStatus.NOT_FOUND, "That service page was not found.")
+            return
+
         if path in {"/services", "/services/"}:
             self.redirect("/#service-list")
             return
@@ -1439,26 +1492,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.wfile.write(data)
 
     def serve_sitemap(self, send_body: bool = True) -> None:
-        urls = [
-            (f"{PUBLIC_BASE_URL}/", "monthly", "1.0"),
-            (f"{PUBLIC_BASE_URL}/privacy", "yearly", "0.5"),
-            (f"{PUBLIC_BASE_URL}/sitemap", "monthly", "0.8"),
-            *[(service.canonical_url, "monthly", "0.72") for service in SERVICES],
-        ]
-        entries = "\n".join(
-            f"""  <url>
-    <loc>{html.escape(loc)}</loc>
-    <lastmod>{SITEMAP_LASTMOD}</lastmod>
-    <changefreq>{changefreq}</changefreq>
-    <priority>{priority}</priority>
-  </url>"""
-            for loc, changefreq, priority in urls
-        )
-        data = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{entries}
-</urlset>
-""".encode("utf-8")
+        data = build_sitemap_xml(PUBLIC_BASE_URL, SITEMAP_LASTMOD).encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "application/xml; charset=utf-8")
         self.send_header("Cache-Control", "public, max-age=3600")
@@ -1469,16 +1503,8 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def serve_user_sitemap(self, send_body: bool = True) -> None:
         h = lambda value: html.escape(str(value), quote=True)
-        category_order = [
-            "Website and app care",
-            "Automation",
-            "AI coaching and support",
-            "Product strategy",
-            "Small business setup and operations",
-        ]
-        grouped: dict[str, list] = {}
-        for service in SERVICES:
-            grouped.setdefault(service.category, []).append(service)
+        entries = catalog_entries()
+        grouped = grouped_catalog(entries)
 
         main_links = [
             ("/", "Home", "See how Aaron helps small businesses fix websites, automate work, use AI, and build tools."),
@@ -1499,23 +1525,23 @@ class AudoHandler(BaseHTTPRequestHandler):
             )
 
         category_sections = []
-        for category in category_order:
-            services = grouped.get(category, [])
-            if not services:
+        for category in CATEGORY_ORDER:
+            category_entries = grouped.get(category, [])
+            if not category_entries:
                 continue
             anchor = re.sub(r"[^a-z0-9]+", "-", category.lower()).strip("-")
             service_items = "\n".join(
                 f"""          <li>
-            <a href="{h(service.url)}">{h(service.title)}</a>
-            <p>{h(service.summary)}</p>
+            <a href="{h(entry.html_path)}">{h(entry.title)}</a>
+            <p>{h(entry.summary)}</p>
           </li>"""
-                for service in services
+                for entry in category_entries
             )
             category_sections.append(
                 f"""      <section class="sitemap-group" aria-labelledby="{h(anchor)}-heading">
         <div class="group-title">
           <h2 id="{h(anchor)}-heading">{h(category)}</h2>
-          <span>{len(services)} common situations</span>
+          <span>{len(category_entries)} common situations</span>
         </div>
         <ul class="sitemap-links">
 {service_items}
@@ -1527,10 +1553,10 @@ class AudoHandler(BaseHTTPRequestHandler):
             {
                 "@type": "ListItem",
                 "position": index + 1,
-                "url": f"{PUBLIC_BASE_URL}{service.url}",
-                "name": service.title,
+                "url": f"{PUBLIC_BASE_URL}{entry.html_path}",
+                "name": entry.title,
             }
-            for index, service in enumerate(SERVICES)
+            for index, entry in enumerate(entries)
         ]
         json_ld = json.dumps(
             {
@@ -1549,7 +1575,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "@type": "ItemList",
                         "@id": f"{PUBLIC_BASE_URL}/sitemap#service-pages",
                         "name": "Audo service pages",
-                        "numberOfItems": len(SERVICES),
+                        "numberOfItems": len(entries),
                         "itemListElement": item_list,
                     },
                     {
@@ -3096,6 +3122,16 @@ class AudoHandler(BaseHTTPRequestHandler):
         encoded = data.encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        if send_body:
+            self.wfile.write(encoded)
+
+    def serve_generated_text(self, content: str, content_type: str, send_body: bool = True) -> None:
+        encoded = content.encode("utf-8")
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Cache-Control", "public, max-age=3600")
         self.send_header("Content-Length", str(len(encoded)))
         self.end_headers()
         if send_body:

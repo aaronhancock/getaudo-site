@@ -1635,7 +1635,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-3">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
   <script type="application/ld+json">{json_ld}</script>
   {analytics_js}
   <style>
@@ -2230,7 +2230,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
   <link rel="stylesheet" href="/assets/booking.css?v=20260710-2">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-3">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
   <script type="application/ld+json">{json_ld}</script>
   <style>
     :root {{

@@ -225,6 +225,9 @@
 
 .footer-bottom > p {
   margin: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .footer-legal {
@@ -233,6 +236,14 @@
   justify-content: flex-end;
   gap: 18px;
   flex-wrap: wrap;
+}
+
+.mega-footer .footer-legal {
+  margin: 0;
+}
+
+.cookie-consent[hidden] {
+  display: none !important;
 }
 
 .footer-legal a,

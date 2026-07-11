@@ -32,6 +32,9 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn(".mega-footer .footer-nav {", footer_css)
         self.assertIn("display: block;", footer_css)
         self.assertIn("margin: 0;", footer_css)
+        self.assertIn(".mega-footer .footer-legal {", footer_css)
+        self.assertIn(".cookie-consent[hidden] {", footer_css)
+        self.assertIn("display: none !important;", footer_css)
 
     def test_mobile_scheduler_uses_a_compact_date_select(self) -> None:
         booking_js = (ROOT / "assets" / "booking.js").read_text()

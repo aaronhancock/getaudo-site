@@ -78,6 +78,7 @@ class CatalogSurfaceTests(unittest.TestCase):
         self.assertFalse((ROOT / "sitemap.xml").exists())
         self.assertNotIn("COPY llms.txt", dockerfile)
         self.assertNotIn("COPY sitemap.xml", dockerfile)
+        self.assertIn("COPY site_catalog.py /app/site_catalog.py", dockerfile)
         self.assertIn('if path == "/llm.txt":', server_source)
         self.assertIn('self.redirect_permanent("/llms.txt")', server_source)
         self.assertIn('if path == "/services.md":', server_source)

@@ -15,6 +15,7 @@ ENV PORT=80 \
 
 COPY server.py /app/server.py
 COPY services.py /app/services.py
+COPY site_catalog.py /app/site_catalog.py
 COPY index.html /app/index.html
 COPY privacy.html /app/privacy.html
 COPY thank-you.html /app/thank-you.html

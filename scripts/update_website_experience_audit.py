@@ -82,10 +82,10 @@ def fixed_inventory() -> list[dict[str, object]]:
              "The visitor reaches the consultation form or concrete examples.", "The first screen determines whether the visitor stays.",
              "It is the primary acquisition and conversion surface.", "H1, support copy, CTA labels, destinations, and first-screen render are verified.",
              ["direct landing", "mobile first screen", "reduced motion"]),
-        item("homepage-help-grid", "/#services", "Homepage problem and help choices", 1,
-             "Match a familiar business problem to the kind of help available.", "Choose the closest card.",
-             "The chosen context is carried into the consultation form.", "Visitors should not need technical vocabulary.",
-             "Self-selection improves lead quality.", "Each card is readable, actionable, and preserves the selected context.",
+        item("homepage-help-grid", "/#services", "Combined problem finder category choices", 1,
+             "Choose the part of the business where help is needed.", "Choose one of five plain-language category cards.",
+             "The same section immediately shows familiar situations in that area.", "Visitors should not need technical vocabulary or choose between duplicate sections.",
+             "One continuous decision path improves self-selection and lead quality.", "Each category card filters the real situations below with clear selected state and focus behavior.",
              ["none fit", "keyboard use", "back navigation"]),
         item("homepage-footer", "site-wide", "Mega-footer and next-step guidance", 1,
              "Find a service, contact method, privacy page, or next-step explanation.", "Choose one footer link or book discovery.",
@@ -127,10 +127,10 @@ def fixed_inventory() -> list[dict[str, object]]:
              "The visitor has a clear next destination and response expectation.", "Fallback visitors must not reach a dead end.",
              "Recovery protects leads during script or calendar outages.", "Success copy, fallback destination, and no-JavaScript path are verified.",
              ["JavaScript disabled", "calendar outage", "direct visit"]),
-        item("homepage-problem-explorer", "/#service-list", "Interactive 30-example explorer", 3,
-             "Browse familiar problems without knowing the service name.", "Choose a category or example.",
-             "The example moves into focus or opens its tailored detail page.", "Visitors need concrete, plain-language situations.",
-             "Relevant examples expand qualified demand.", "All 30 examples load, categories work, focus is managed, and actions route correctly.",
+        item("homepage-problem-explorer", "/#services", "Combined problem finder situation explorer", 3,
+             "Browse familiar situations without knowing a service name.", "Choose a situation, read its page, or tell Aaron about it.",
+             "The situation moves into focus, opens its tailored page, or carries into the consultation form.", "Visitors need concrete, plain-language situations in one continuous section.",
+             "Relevant examples expand qualified demand while preserving all 30 search pages.", "All 30 examples load, five visual filters work, focus is managed, and detail/form actions route correctly.",
              ["data load failure", "keyboard tabs", "no JavaScript", "back navigation"]),
         item("homepage-founder", "/#why", "Aaron identity, credibility, and working style", 4,
              "Decide whether Aaron is credible, approachable, and responsible for the work.", "Continue to client work or book discovery.",
@@ -469,11 +469,11 @@ def merge_state(manifest: dict[str, object]) -> dict[str, object]:
         state["nextAdjustment"] = "Repair the incorrect unknown-route response, then the false fallback confirmation."
     failing_ids = [entry_id for entry_id, result in existing.items() if result.get("status") == "failing"]
     if not failing_ids:
-        state["currentItem"] = "Complete public consulting-site inventory"
-        state["currentLoop"] = "Loop 7 · final local verification"
-        state["latestChange"] = "Completed the worst-first improvement pass across all 57 inventoried experiences."
+        state["currentItem"] = "Combined homepage problem finder"
+        state["currentLoop"] = "Loop 8 · merged finder verification"
+        state["latestChange"] = "Combined the help categories and real-world problem explorer into one continuous, accessible decision path while retaining all 30 detail pages."
         state["latestResult"] = "Every desktop and mobile category is at least 95 and no hard gate remains."
-        state["nextAdjustment"] = "Run final tests, freeze the tested revision, and stop for deployment approval."
+        state["nextAdjustment"] = "Freeze the tested revision and stop for deployment approval."
     elif state["baselineFrozen"]:
         worst_id = min(failing_ids, key=lambda entry_id: minimum_score(existing[entry_id]))
         state["currentItem"] = worst_id

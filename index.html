@@ -3682,6 +3682,260 @@
       }
     }
 
+    /* Combined category and real-problem finder */
+    .service-grid.is-category-filter {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-rows: auto;
+      gap: 12px;
+    }
+
+    .is-category-filter .service-card,
+    .is-category-filter .service-card:nth-child(1),
+    .is-category-filter .service-card:nth-child(2),
+    .is-category-filter .service-card:nth-child(3),
+    .is-category-filter .service-card:nth-child(4),
+    .is-category-filter .service-card:nth-child(5) {
+      min-width: 0;
+      min-height: 252px;
+      grid-column: auto;
+      grid-row: auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: 104px minmax(0, 1fr);
+      border: 1px solid rgba(24, 34, 29, 0.11);
+      padding: 0;
+      font: inherit;
+      text-align: left;
+      appearance: none;
+    }
+
+    .is-category-filter .service-card:nth-child(2) .service-visual,
+    .is-category-filter .service-card:nth-child(5) .service-visual,
+    .is-category-filter .service-card:nth-child(2) .service-main,
+    .is-category-filter .service-card:nth-child(5) .service-main {
+      order: initial;
+    }
+
+    .is-category-filter .service-card .service-visual,
+    .is-category-filter .service-card:nth-child(2) .service-visual,
+    .is-category-filter .service-card:nth-child(5) .service-visual {
+      min-height: 104px;
+      border: 0;
+      border-bottom: 1px solid rgba(24, 34, 29, 0.08);
+    }
+
+    .is-category-filter .service-main,
+    .is-category-filter .service-card:nth-child(2) .service-main,
+    .is-category-filter .service-card:nth-child(3) .service-main,
+    .is-category-filter .service-card:nth-child(4) .service-main,
+    .is-category-filter .service-card:nth-child(5) .service-main {
+      justify-content: flex-start;
+      padding: 17px;
+    }
+
+    .is-category-filter .service-main h3,
+    .is-category-filter .service-card:nth-child(3) .service-main h3,
+    .is-category-filter .service-card:nth-child(4) .service-main h3 {
+      font-size: 19px;
+      line-height: 1.12;
+    }
+
+    .is-category-filter .service-card p,
+    .is-category-filter .service-card:nth-child(3) p,
+    .is-category-filter .service-card:nth-child(4) p {
+      margin-top: 8px;
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+
+    .is-category-filter .service-card-action {
+      width: auto;
+      margin-top: auto;
+      padding-top: 13px;
+      font-size: 11.5px;
+      line-height: 1.25;
+    }
+
+    .is-category-filter .service-card-action::after {
+      content: "\2193";
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .is-category-filter .service-card[aria-selected="true"] {
+      border-color: var(--visual-accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--visual-accent) 16%, transparent), 0 20px 44px rgba(12, 18, 15, 0.11);
+      transform: translateY(-3px);
+    }
+
+    .customer-filter-scene {
+      width: min(86%, 190px);
+      display: grid;
+      gap: 9px;
+    }
+
+    .customer-filter-scene span {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(24, 34, 29, 0.11);
+      border-radius: 10px;
+      padding: 0 11px;
+      color: #63371f;
+      background: rgba(255, 255, 255, 0.88);
+      font-size: 10px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(12, 18, 15, 0.07);
+    }
+
+    .customer-filter-scene span:last-child {
+      margin-left: 22px;
+      color: #fff;
+      background: #b56a3e;
+    }
+
+    .is-category-filter .ai-stack {
+      width: calc(100% - 28px);
+      height: 76px;
+    }
+
+    .is-category-filter .ai-bubble {
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 9.5px;
+      line-height: 1.25;
+    }
+
+    .is-category-filter .ai-bubble.answer::before {
+      margin-right: 4px;
+      font-size: 12px;
+    }
+
+    .is-category-filter .decision-board {
+      width: calc(100% - 12px);
+      transform: scale(0.8);
+    }
+
+    .combined-explorer-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 50px 0 20px;
+      padding-top: 42px;
+      border-top: 1px solid rgba(24, 34, 29, 0.12);
+    }
+
+    .combined-explorer-head .services-kicker {
+      margin-bottom: 8px;
+    }
+
+    .combined-explorer-head h3 {
+      max-width: 680px;
+      font-size: clamp(27px, 3.3vw, 42px);
+      line-height: 1.05;
+    }
+
+    .all-problems-link {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(24, 34, 29, 0.16);
+      border-radius: 10px;
+      padding: 0 16px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.78);
+      font-weight: 820;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .services-band .problem-explorer {
+      gap: 12px;
+    }
+
+    .services-band .services-next {
+      margin-top: 26px;
+    }
+
+    @media (max-width: 1040px) {
+      .service-grid.is-category-filter {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .is-category-filter .service-card:nth-child(4),
+      .is-category-filter .service-card:nth-child(5) {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .service-grid.is-category-filter {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .is-category-filter .service-card,
+      .is-category-filter .service-card:nth-child(1),
+      .is-category-filter .service-card:nth-child(2),
+      .is-category-filter .service-card:nth-child(3),
+      .is-category-filter .service-card:nth-child(4),
+      .is-category-filter .service-card:nth-child(5) {
+        min-height: 190px;
+        grid-column: auto;
+        grid-template-rows: 76px minmax(0, 1fr);
+        border-radius: 16px;
+      }
+
+      .is-category-filter .service-card:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .is-category-filter .service-card .service-visual,
+      .is-category-filter .service-card:nth-child(2) .service-visual,
+      .is-category-filter .service-card:nth-child(5) .service-visual {
+        min-height: 76px;
+      }
+
+      .is-category-filter .service-main,
+      .is-category-filter .service-card:nth-child(2) .service-main,
+      .is-category-filter .service-card:nth-child(3) .service-main,
+      .is-category-filter .service-card:nth-child(4) .service-main,
+      .is-category-filter .service-card:nth-child(5) .service-main {
+        padding: 14px;
+      }
+
+      .is-category-filter .service-main h3,
+      .is-category-filter .service-card:nth-child(3) .service-main h3,
+      .is-category-filter .service-card:nth-child(4) .service-main h3 {
+        font-size: 17px;
+      }
+
+      .is-category-filter .service-card p,
+      .is-category-filter .service-card:nth-child(3) p,
+      .is-category-filter .service-card:nth-child(4) p {
+        font-size: 12.5px;
+        line-height: 1.35;
+      }
+
+      .is-category-filter .service-card-action {
+        display: none;
+      }
+
+      .combined-explorer-head {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 36px;
+        padding-top: 32px;
+      }
+
+      .all-problems-link {
+        width: 100%;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -3722,14 +3976,12 @@
       </a>
       <div class="nav-links">
         <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu">Menu</button>
-        <a href="#services">How I can help</a>
-        <a href="#service-list">Real examples</a>
+        <a href="#services">Find your starting point</a>
         <a href="#why">Why Audo</a>
         <a class="nav-cta" href="#discovery">Book free discovery</a>
       </div>
       <div class="mobile-nav-menu" id="mobile-nav-menu" hidden>
-        <a href="#services">Ways I can help</a>
-        <a href="#service-list">Real problems I help solve</a>
+        <a href="#services">Find your starting point</a>
         <a href="#why">About Aaron and Audo</a>
         <a href="#client-work">Work I've done</a>
       </div>
@@ -3744,7 +3996,7 @@
         <p class="hero-lead">I help small businesses fix website problems, cut repetitive work, make sense of AI, and choose what to do next.</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book free discovery</a>
-          <a class="button ghost" href="#service-list">See more examples</a>
+          <a class="button ghost" href="#services">See real problems</a>
         </div>
         <p class="hero-note">Work directly with Aaron. Free 30-minute call. No charge or obligation.</p>
       </div>
@@ -3756,14 +4008,14 @@
       <div class="shell">
         <div class="services-intro">
           <div>
-            <p class="services-kicker">How I can help</p>
-            <h2 id="services-heading">What are you trying to get done?</h2>
+            <p class="services-kicker">Find your starting point</p>
+            <h2 id="services-heading">What’s getting in your way?</h2>
           </div>
-          <p class="section-copy">Choose a card to tell me where you want to start. I'll carry your choice into the form for you.</p>
+          <p class="section-copy">Choose the part of the business that sounds closest. Then explore real situations small businesses run into every day.</p>
         </div>
 
-        <div class="service-grid">
-          <a class="service-card" href="#discovery" data-service-choice="Website or app repair" data-service-prefill="getting a website or app working again">
+        <div class="service-grid is-category-filter" role="tablist" aria-label="Choose an area" data-explorer-tabs>
+          <button class="service-card" type="button" role="tab" aria-controls="problem-explorer-stage" aria-selected="true" data-explorer-group="website">
             <div class="service-visual visual-fix" aria-hidden="true">
               <div class="fix-scene">
                 <div class="mock-browser">
@@ -3779,34 +4031,27 @@
               </div>
             </div>
             <div class="service-main">
-              <h3>Get a website or app working again</h3>
-              <p>A form stops sending messages, pages load slowly, or something on your site is broken or out of date.</p>
-              <span class="service-card-action" aria-hidden="true">Start here</span>
+              <h3>My website</h3>
+              <p>Something is broken, slow, confusing, or out of date.</p>
+              <span class="service-card-action" aria-hidden="true">Explore website problems</span>
             </div>
-          </a>
+          </button>
 
-          <a class="service-card" href="#discovery" data-service-choice="Website or tool build" data-service-prefill="building a website or business tool">
+          <button class="service-card" type="button" role="tab" aria-controls="problem-explorer-stage" aria-selected="false" data-explorer-group="customers" tabindex="-1">
             <div class="service-visual visual-build" aria-hidden="true">
-              <div class="build-stage">
-                <div class="build-sidebar"></div>
-                <div class="build-page">
-                  <span class="build-page-title"></span>
-                  <div class="build-blocks">
-                    <span class="build-block"></span>
-                    <span class="build-block"></span>
-                    <span class="build-block"></span>
-                  </div>
-                </div>
+              <div class="customer-filter-scene">
+                <span>New inquiry</span>
+                <span>Reply sent</span>
               </div>
             </div>
             <div class="service-main">
-              <h3>Build a website or tool</h3>
-              <p>You need a new site, online form, customer area, or simple tool that fits how your business works.</p>
-              <span class="service-card-action" aria-hidden="true">Start here</span>
+              <h3>My customers and leads</h3>
+              <p>Follow-up, booking, records, or onboarding is harder than it should be.</p>
+              <span class="service-card-action" aria-hidden="true">Explore customer problems</span>
             </div>
-          </a>
+          </button>
 
-          <a class="service-card" href="#discovery" data-service-choice="Workflow automation" data-service-prefill="automating repetitive work">
+          <button class="service-card" type="button" role="tab" aria-controls="problem-explorer-stage" aria-selected="false" data-explorer-group="work" tabindex="-1">
             <div class="service-visual visual-automate" aria-hidden="true">
               <div class="automation-flow">
                 <span class="flow-node">New form</span>
@@ -3817,13 +4062,13 @@
               </div>
             </div>
             <div class="service-main">
-              <h3>Stop doing the same work by hand</h3>
-              <p>You keep copying information, sending the same follow-ups, or rebuilding the same reports and documents.</p>
-              <span class="service-card-action" aria-hidden="true">Start here</span>
+              <h3>Work we do by hand</h3>
+              <p>Your team repeats the same steps, copying, follow-up, reports, or paperwork.</p>
+              <span class="service-card-action" aria-hidden="true">Explore everyday work</span>
             </div>
-          </a>
+          </button>
 
-          <a class="service-card" href="#discovery" data-service-choice="Practical AI help" data-service-prefill="helping my team use AI well">
+          <button class="service-card" type="button" role="tab" aria-controls="problem-explorer-stage" aria-selected="false" data-explorer-group="ai" tabindex="-1">
             <div class="service-visual visual-ai" aria-hidden="true">
               <div class="ai-stack">
                 <div class="ai-bubble prompt">Draft a reply using our support policy.</div>
@@ -3831,13 +4076,13 @@
               </div>
             </div>
             <div class="service-main">
-              <h3>Help your team use AI well</h3>
-              <p>You want to know which AI tools are worth using, what is safe, and where they could save your team time.</p>
-              <span class="service-card-action" aria-hidden="true">Start here</span>
+              <h3>Using AI</h3>
+              <p>You want practical help choosing tools, protecting information, or saving time.</p>
+              <span class="service-card-action" aria-hidden="true">Explore AI questions</span>
             </div>
-          </a>
+          </button>
 
-          <a class="service-card" href="#discovery" data-service-choice="Choosing the right next step" data-service-prefill="choosing the right next step">
+          <button class="service-card" type="button" role="tab" aria-controls="problem-explorer-stage" aria-selected="false" data-explorer-group="decisions" tabindex="-1">
             <div class="service-visual visual-decide" aria-hidden="true">
               <div class="decision-board">
                 <div class="decision-option">
@@ -3855,9 +4100,64 @@
             <div class="service-main">
               <h3>Choose the right next step</h3>
               <p>You are comparing software, reviewing a proposal, or deciding what to fix or build first.</p>
-              <span class="service-card-action" aria-hidden="true">Start here</span>
+              <span class="service-card-action" aria-hidden="true">Explore decisions</span>
             </div>
-          </a>
+          </button>
+        </div>
+
+        <span id="service-list" class="anchor-alias" aria-hidden="true"></span>
+        <div class="combined-explorer-head">
+          <div>
+            <p class="services-kicker">Real situations</p>
+            <h3>Choose the one that sounds familiar.</h3>
+          </div>
+          <a class="all-problems-link" href="/sitemap#website-and-app-care">View all 30 problem pages</a>
+        </div>
+
+        <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-owner-copy">
+          <div id="problem-explorer-stage" class="problem-stage">
+            <article class="problem-spotlight" data-explorer-spotlight data-theme="website" aria-live="polite">
+              <div class="problem-visual" data-explorer-visual aria-hidden="true"></div>
+              <div class="problem-spotlight-copy">
+                <p class="problem-group-label" data-explorer-group-label></p>
+                <h3 data-explorer-title tabindex="-1">Loading examples...</h3>
+                <p class="problem-summary" data-explorer-summary></p>
+                <div class="problem-result">
+                  <span>What gets better</span>
+                  <p data-explorer-result></p>
+                </div>
+                <div class="problem-actions">
+                  <a class="problem-primary" href="#discovery" data-explorer-choose>Tell Aaron about this</a>
+                  <a class="problem-secondary" href="#" data-explorer-details>Read how I can help</a>
+                </div>
+              </div>
+            </article>
+
+            <div class="problem-more-head">
+              <div>
+                <p>More in this area</p>
+                <h3 data-explorer-more-label>More website problems</h3>
+              </div>
+              <span>Choose one to bring it into focus.</span>
+            </div>
+            <div class="problem-choices" data-explorer-choices aria-label="More situations in this area"></div>
+          </div>
+
+          <p id="service-list-status" class="sr-only" role="status" aria-live="polite">Loading examples...</p>
+          <noscript>
+            <div class="explorer-noscript">
+              <h3>Browse a few common starting points</h3>
+              <p>The interactive problem finder needs JavaScript, but every individual page works without it.</p>
+              <ul>
+                <li><a href="/services/fix-a-broken-contact-form">My website form is not working</a></li>
+                <li><a href="/services/automate-lead-follow-up">New leads are not getting a quick reply</a></li>
+                <li><a href="/services/reduce-copy-and-paste-between-tools">We copy the same information between tools</a></li>
+                <li><a href="/services/choose-ai-tools-for-your-business">I do not know which AI tools are worth using</a></li>
+                <li><a href="/services/decide-what-to-build-first">I do not know what to fix or build first</a></li>
+              </ul>
+              <a class="button" href="/sitemap">View all 30 problem pages</a>
+            </div>
+          </noscript>
         </div>
 
         <div class="services-next">
@@ -3867,7 +4167,7 @@
           </div>
           <div class="services-next-actions">
             <a class="button primary" href="#discovery">Book free discovery</a>
-            <a class="button" href="#service-list">See more examples</a>
+            <a class="button" href="/sitemap">View all 30 problem pages</a>
           </div>
         </div>
       </div>
@@ -4058,66 +4358,6 @@
       </div>
     </section>
 
-    <section id="service-list" class="service-list-band" aria-labelledby="service-list-heading">
-      <div class="shell">
-        <div class="section-head">
-          <div>
-            <p class="services-kicker">Explore real problems</p>
-            <h2 id="service-list-heading">What keeps getting pushed off?</h2>
-          </div>
-          <p class="section-copy">Choose the part of the business that feels stuck. Then explore situations that small teams run into every day.</p>
-        </div>
-        <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-owner-copy">
-          <div class="problem-explorer-toolbar">
-            <div class="problem-tabs" role="tablist" aria-label="Problem areas" data-explorer-tabs></div>
-          </div>
-
-          <div id="problem-explorer-stage" class="problem-stage">
-            <article class="problem-spotlight" data-explorer-spotlight data-theme="website" aria-live="polite">
-              <div class="problem-visual" data-explorer-visual aria-hidden="true"></div>
-              <div class="problem-spotlight-copy">
-                <p class="problem-group-label" data-explorer-group></p>
-                <h3 data-explorer-title tabindex="-1">Loading examples...</h3>
-                <p class="problem-summary" data-explorer-summary></p>
-                <div class="problem-result">
-                  <span>What gets better</span>
-                  <p data-explorer-result></p>
-                </div>
-                <div class="problem-actions">
-                  <a class="problem-primary" href="#discovery" data-explorer-choose>Tell Aaron about this</a>
-                  <a class="problem-secondary" href="#" data-explorer-details>Read how I can help</a>
-                </div>
-              </div>
-            </article>
-
-            <div class="problem-more-head">
-              <div>
-                <p>Keep exploring</p>
-                <h3 data-explorer-more-label>More website problems</h3>
-              </div>
-              <span>Choose any example to see the full details above.</span>
-            </div>
-            <div class="problem-choices" data-explorer-choices aria-label="More situations in this area"></div>
-          </div>
-
-          <p id="service-list-status" class="sr-only" role="status" aria-live="polite">Loading examples...</p>
-          <noscript>
-            <div class="explorer-noscript">
-              <h3>Browse a few common starting points</h3>
-              <p>The interactive explorer needs JavaScript, but these pages work without it.</p>
-              <ul>
-                <li><a href="/services/fix-a-broken-contact-form">My website form is not working</a></li>
-                <li><a href="/services/automate-lead-follow-up">New leads are not getting a quick reply</a></li>
-                <li><a href="/services/reduce-copy-and-paste-between-tools">We copy the same information between tools</a></li>
-                <li><a href="/services/choose-ai-tools-for-your-business">I do not know which AI tools are worth using</a></li>
-                <li><a href="/services/decide-what-to-build-first">I do not know what to fix or build first</a></li>
-              </ul>
-              <a class="button" href="/sitemap">View all 30 examples</a>
-            </div>
-          </noscript>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer id="site-footer" class="mega-footer">
@@ -4143,7 +4383,7 @@
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
           <h2 id="footer-help-heading">Ways I can help</h2>
           <ul>
-            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/#services">Find your starting point</a></li>
             <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
             <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
             <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
@@ -4156,7 +4396,6 @@
           <ul>
             <li><a href="/#why">About Aaron and Audo</a></li>
             <li><a href="/#client-work">Client work</a></li>
-            <li><a href="/#service-list">Browse real examples</a></li>
             <li><a href="/sitemap">View all pages</a></li>
           </ul>
         </nav>
@@ -4358,7 +4597,7 @@
     (function () {
       var cards = Array.prototype.slice.call(document.querySelectorAll("[data-service-choice]"));
       var form = document.querySelector("#discovery .consultation-form");
-      if (!cards.length || !form) {
+      if (!form) {
         return;
       }
 
@@ -4494,17 +4733,18 @@
     }());
 
     (function () {
-      var section = document.getElementById("service-list");
+      var section = document.getElementById("services");
       var explorer = document.querySelector("[data-service-explorer]");
       if (!section || !explorer) {
         return;
       }
 
       var endpoint = explorer.getAttribute("data-services-endpoint") || "/assets/services.json";
-      var tabs = explorer.querySelector("[data-explorer-tabs]");
+      var tabs = document.querySelector("[data-explorer-tabs]");
+      var tabButtons = tabs ? Array.prototype.slice.call(tabs.querySelectorAll("[data-explorer-group]")) : [];
       var spotlight = explorer.querySelector("[data-explorer-spotlight]");
       var visual = explorer.querySelector("[data-explorer-visual]");
-      var groupLabel = explorer.querySelector("[data-explorer-group]");
+      var groupLabel = explorer.querySelector("[data-explorer-group-label]");
       var title = explorer.querySelector("[data-explorer-title]");
       var summary = explorer.querySelector("[data-explorer-summary]");
       var result = explorer.querySelector("[data-explorer-result]");
@@ -4523,10 +4763,10 @@
 
       var groups = [
         { id: "website", label: "My website", moreLabel: "More website problems", accent: "#1f624d", soft: "#d9ebe2", ink: "#173e31" },
-        { id: "customers", label: "My customers", moreLabel: "More customer problems", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
-        { id: "work", label: "How we work", moreLabel: "More day-to-day problems", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
+        { id: "customers", label: "My customers and leads", moreLabel: "More customer and lead problems", accent: "#b56a3e", soft: "#f2ddd0", ink: "#63371f" },
+        { id: "work", label: "Work we do by hand", moreLabel: "More day-to-day problems", accent: "#a77925", soft: "#f3e3b8", ink: "#594011" },
         { id: "ai", label: "Using AI", moreLabel: "More ways AI could help", accent: "#77629b", soft: "#e5dff0", ink: "#45365f" },
-        { id: "decisions", label: "I need help deciding", moreLabel: "More things to figure out", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
+        { id: "decisions", label: "Choosing what to do next", moreLabel: "More things to figure out", accent: "#4f7887", soft: "#dbe8ed", ink: "#2c5260" }
       ];
 
       var scenes = {
@@ -4607,55 +4847,60 @@
       }
 
       function renderTabs(focusSelected) {
-        tabs.innerHTML = "";
         var selectedButton = null;
-        groups.forEach(function (group, groupIndex) {
-          var button = document.createElement("button");
-          var selected = group.id === currentGroup;
-          button.className = "problem-tab";
-          button.type = "button";
-          button.setAttribute("role", "tab");
-          button.setAttribute("aria-controls", "problem-explorer-stage");
+        tabButtons.forEach(function (button) {
+          var selected = button.getAttribute("data-explorer-group") === currentGroup;
           button.setAttribute("aria-selected", String(selected));
           button.tabIndex = selected ? 0 : -1;
+          button.classList.toggle("is-selected", selected);
           if (selected) {
             selectedButton = button;
           }
-          button.textContent = group.label;
-          button.addEventListener("click", function () {
-            if (currentGroup === group.id) {
-              return;
-            }
-            currentGroup = group.id;
-            renderTabs(true);
-            renderPage(true);
-            announce("Showing " + group.label.toLowerCase() + " examples.");
-          });
-          button.addEventListener("keydown", function (event) {
-            var nextIndex = groupIndex;
-            if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-              nextIndex = (groupIndex + 1) % groups.length;
-            } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-              nextIndex = (groupIndex - 1 + groups.length) % groups.length;
-            } else if (event.key === "Home") {
-              nextIndex = 0;
-            } else if (event.key === "End") {
-              nextIndex = groups.length - 1;
-            } else {
-              return;
-            }
-            event.preventDefault();
-            currentGroup = groups[nextIndex].id;
-            renderTabs(true);
-            renderPage(true);
-            announce("Showing " + groups[nextIndex].label.toLowerCase() + " examples.");
-          });
-          tabs.appendChild(button);
         });
         if (focusSelected && selectedButton) {
           selectedButton.focus();
         }
       }
+
+      tabButtons.forEach(function (button, groupIndex) {
+        button.addEventListener("click", function () {
+          var nextGroup = button.getAttribute("data-explorer-group") || "website";
+          if (currentGroup === nextGroup) {
+            document.getElementById("problem-explorer-stage").scrollIntoView({
+              behavior: reducedMotion ? "auto" : "smooth",
+              block: "start"
+            });
+            return;
+          }
+          currentGroup = nextGroup;
+          renderTabs(false);
+          renderPage(true);
+          announce("Showing " + groupConfig(nextGroup).label.toLowerCase() + " examples.");
+          document.getElementById("problem-explorer-stage").scrollIntoView({
+            behavior: reducedMotion ? "auto" : "smooth",
+            block: "start"
+          });
+        });
+        button.addEventListener("keydown", function (event) {
+          var nextIndex = groupIndex;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+            nextIndex = (groupIndex + 1) % tabButtons.length;
+          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+            nextIndex = (groupIndex - 1 + tabButtons.length) % tabButtons.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = tabButtons.length - 1;
+          } else {
+            return;
+          }
+          event.preventDefault();
+          currentGroup = tabButtons[nextIndex].getAttribute("data-explorer-group") || "website";
+          renderTabs(true);
+          renderPage(true);
+          announce("Showing " + groupConfig(currentGroup).label.toLowerCase() + " examples.");
+        });
+      });
 
       function animateSpotlight() {
         if (reducedMotion) {

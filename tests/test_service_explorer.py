@@ -166,8 +166,14 @@ class ServiceExplorerTests(unittest.TestCase):
     def test_explorer_actions_and_tabs_explain_and_support_their_behavior(self) -> None:
         index_html = (Path(__file__).resolve().parents[1] / "index.html").read_text()
 
+        self.assertEqual(index_html.count('<div class="problem-explorer" data-service-explorer'), 1)
+        self.assertEqual(index_html.count('id="problem-explorer-stage"'), 1)
+        self.assertEqual(index_html.count('id="service-list"'), 1)
+        self.assertIn('class="service-grid is-category-filter" role="tablist"', index_html)
+        self.assertEqual(index_html.count("data-explorer-group="), 5)
         self.assertIn("Tell Aaron about this", index_html)
         self.assertIn("Read how I can help", index_html)
+        self.assertIn("View all 30 problem pages", index_html)
         self.assertIn('event.key === "ArrowRight"', index_html)
         self.assertIn('event.key === "Home"', index_html)
         self.assertIn("button.tabIndex = selected ? 0 : -1", index_html)

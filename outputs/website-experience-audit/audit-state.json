@@ -1,9 +1,9 @@
 {
-  "currentItem": "Complete public consulting-site inventory",
-  "currentLoop": "Loop 7 \u00b7 final local verification",
-  "latestChange": "Completed the worst-first improvement pass across all 57 inventoried experiences.",
+  "currentItem": "Combined homepage problem finder",
+  "currentLoop": "Loop 8 \u00b7 merged finder verification",
+  "latestChange": "Combined the help categories and real-world problem explorer into one continuous, accessible decision path while retaining all 30 detail pages.",
   "latestResult": "Every desktop and mobile category is at least 95 and no hard gate remains.",
-  "nextAdjustment": "Run final tests, freeze the tested revision, and stop for deployment approval.",
+  "nextAdjustment": "Freeze the tested revision and stop for deployment approval.",
   "baselineFrozen": true,
   "items": {
     "human-sitemap": {
@@ -39,7 +39,7 @@
           "href": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/sitemap-full.png",
       "afterScreenshot": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
@@ -81,31 +81,31 @@
           "href": "evidence/after/loop-04-validation-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
     },
     "homepage-hero": {
       "status": "passing",
-      "currentLoop": 3,
-      "latestNotes": "The first screen now explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without overflow.",
-      "latestChange": "Rewrote the support line around familiar owner problems and added Aaron, duration, price, and obligation context at the first decision point.",
-      "latestResult": "All categories are at least 96; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "The first screen explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without creating a duplicate browse path.",
+      "latestChange": "Pointed the lower-commitment hero action directly to the combined problem finder and named it See real problems.",
+      "latestResult": "The hero now feeds the single decision path; all categories are at least 97 and hard gates pass.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
-        "clarity": 97,
+        "clarity": 98,
         "simplicity": 98,
-        "usability_accessibility": 96,
-        "trust_credibility": 96,
-        "business_effectiveness": 97
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "mobile": {
-        "clarity": 96,
+        "clarity": 97,
         "simplicity": 98,
-        "usability_accessibility": 96,
-        "trust_credibility": 96,
-        "business_effectiveness": 96
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
       },
       "deductions": [],
       "hardGates": [],
@@ -121,12 +121,16 @@
         {
           "label": "Revised mobile homepage",
           "href": "evidence/after/loop-03-homepage-mobile.png"
+        },
+        {
+          "label": "Combined finder destination",
+          "href": "evidence/after/loop-08-combined-finder-desktop.png"
         }
       ],
-      "attempts": 5,
+      "attempts": 7,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
-      "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png"
+      "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png"
     },
     "consultation-validation": {
       "status": "passing",
@@ -161,7 +165,7 @@
           "href": "evidence/after/loop-04-validation-mobile.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
@@ -195,7 +199,7 @@
           "href": "../../tests/test_homepage_experience.py"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
@@ -387,7 +391,7 @@
           "href": "evidence/after/loop-07-client-work-mobile-clean.png"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-07-client-work-mobile-clean.png"
@@ -425,7 +429,7 @@
           "href": "evidence/after/loop-07-privacy-summary-mobile-full.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/privacy-full.png",
       "afterScreenshot": "evidence/after/loop-07-privacy-summary-mobile-full.png"
@@ -517,7 +521,7 @@
           "href": "evidence/after/loop-04-scheduler-mobile.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-desktop.png"
@@ -551,7 +555,7 @@
           "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/not-found-full.png",
       "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
@@ -593,7 +597,7 @@
           "href": "evidence/after/loop-07-founder-mobile-clean.png"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-07-founder-mobile-clean.png"
@@ -922,7 +926,7 @@
           "href": "evidence/after/loop-04-scheduler-mobile.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-mobile.png"
@@ -971,7 +975,7 @@
           "href": "evidence/after/loop-01-not-found-mobile.png"
         }
       ],
-      "attempts": 7,
+      "attempts": 9,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/not-found-full.png",
       "afterScreenshot": "evidence/after/loop-01-not-found-desktop.png"
@@ -1128,24 +1132,24 @@
     },
     "homepage-footer": {
       "status": "passing",
-      "currentLoop": 3,
-      "latestNotes": "Each group now serves one recovery need: contact, kinds of help, proof/browse, process, or privacy. No overflow at 390px or 360px.",
-      "latestChange": "Shortened the CTA and brand copy, separated the call action from browse links, and retained 44px navigation targets.",
-      "latestResult": "All categories are at least 95; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "Each group serves one recovery need: contact, the combined finder, proof, process, or privacy. No overflow at 390px or 360px.",
+      "latestChange": "Removed the duplicate Real examples link and renamed the remaining browse route Find your starting point across shared footers.",
+      "latestResult": "The footer preserves access to the full catalog without recreating the homepage's old duplicate choice; all categories are at least 96.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "mobile": {
         "clarity": 97,
         "simplicity": 96,
         "usability_accessibility": 97,
-        "trust_credibility": 96,
+        "trust_credibility": 97,
         "business_effectiveness": 96
-      },
-      "mobile": {
-        "clarity": 96,
-        "simplicity": 95,
-        "usability_accessibility": 96,
-        "trust_credibility": 96,
-        "business_effectiveness": 95
       },
       "deductions": [],
       "hardGates": [],
@@ -1163,31 +1167,31 @@
           "href": "evidence/after/loop-03-homepage-desktop.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png"
     },
     "homepage-help-grid": {
       "status": "passing",
-      "currentLoop": 3,
-      "latestNotes": "All five choices remain visible and distinct. Selection carries the plain label into the form while leaving the visitor's message open-ended and editable.",
-      "latestChange": "Replaced technical lists with familiar symptoms, renamed technology decision to choosing the right next step, and compressed decorative mobile visuals.",
-      "latestResult": "All categories are at least 95; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "The selected state is visible and programmatic. Arrow keys, Home, and End update both focus and content; 390px and 360px have no horizontal overflow.",
+      "latestChange": "Turned the five visual cards into plain-language category filters for the real situations directly beneath them.",
+      "latestResult": "The cards now begin one continuous decision path instead of competing with a second explorer; all categories are at least 97.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
-        "clarity": 97,
-        "simplicity": 96,
-        "usability_accessibility": 96,
-        "trust_credibility": 95,
-        "business_effectiveness": 96
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "mobile": {
-        "clarity": 96,
-        "simplicity": 95,
-        "usability_accessibility": 95,
-        "trust_credibility": 95,
-        "business_effectiveness": 95
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
       },
       "deductions": [],
       "hardGates": [],
@@ -1197,18 +1201,26 @@
           "href": "evidence/baseline/mobile/homepage-full.png"
         },
         {
-          "label": "Revised mobile help grid",
+          "label": "Earlier standalone help grid",
           "href": "evidence/after/loop-03-homepage-mobile.png"
         },
         {
-          "label": "Revised desktop help grid",
-          "href": "evidence/after/loop-03-homepage-desktop.png"
+          "label": "Combined mobile category filters",
+          "href": "evidence/after/loop-08-combined-finder-mobile.png"
+        },
+        {
+          "label": "Combined desktop category filters",
+          "href": "evidence/after/loop-08-combined-finder-desktop.png"
+        },
+        {
+          "label": "Narrow 360px combined finder",
+          "href": "evidence/after/loop-08-combined-finder-narrow-360.png"
         }
       ],
-      "attempts": 5,
+      "attempts": 7,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
-      "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png"
+      "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png"
     },
     "service-refresh-an-outdated-homepage": {
       "status": "passing",
@@ -1562,24 +1574,24 @@
     },
     "homepage-problem-explorer": {
       "status": "passing",
-      "currentLoop": 6,
-      "latestNotes": "ArrowRight moved selection and focus from My website to My customers. All 30 examples remain reachable, choices return to the spotlight, and mobile width settled without overflow.",
-      "latestChange": "Renamed the two actions by destination, hid repeated summaries in secondary mobile cards, shortened those cards, and completed the arrow/Home/End tab keyboard pattern.",
-      "latestResult": "All categories are at least 96; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "Each focused situation keeps a direct detail-page link and a form-context action. All 30 pages remain available through the persistent catalog link, sitemap, and machine-readable catalogs.",
+      "latestChange": "Moved the 30-situation explorer into the category section, connected the five visual cards as its accessible filters, and removed the duplicate lower section.",
+      "latestResult": "One continuous problem-finding task replaces two competing sections; all categories are at least 97 and hard gates pass.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
-        "clarity": 98,
-        "simplicity": 97,
+        "clarity": 99,
+        "simplicity": 98,
         "usability_accessibility": 98,
-        "trust_credibility": 96,
-        "business_effectiveness": 97
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "mobile": {
-        "clarity": 97,
-        "simplicity": 96,
+        "clarity": 98,
+        "simplicity": 97,
         "usability_accessibility": 97,
-        "trust_credibility": 96,
-        "business_effectiveness": 96
+        "trust_credibility": 97,
+        "business_effectiveness": 97
       },
       "deductions": [],
       "hardGates": [],
@@ -1589,14 +1601,22 @@
           "href": "evidence/baseline/mobile/homepage-full.png"
         },
         {
-          "label": "Revised mobile explorer",
+          "label": "Earlier separate mobile explorer",
           "href": "evidence/after/loop-06-explorer-mobile.png"
+        },
+        {
+          "label": "Combined mobile situation explorer",
+          "href": "evidence/after/loop-08-combined-finder-mobile-lower.png"
+        },
+        {
+          "label": "Combined desktop finder",
+          "href": "evidence/after/loop-08-combined-finder-desktop.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
-      "afterScreenshot": "evidence/after/loop-06-explorer-mobile.png"
+      "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile-lower.png"
     },
     "scheduler-confirmation": {
       "status": "passing",
@@ -1631,7 +1651,7 @@
           "href": "evidence/after/loop-04-scheduler-success-desktop.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-success-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-success-desktop.png"
@@ -1665,31 +1685,31 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
     },
     "site-header-mobile": {
       "status": "passing",
-      "currentLoop": 3,
-      "latestNotes": "All controls measure at least 44px at 390px and 360px. Open moves focus to the first link; Escape closes and restores focus to Menu.",
-      "latestChange": "Added a compact mobile Menu with service, example, identity, and proof links while keeping the discovery CTA visible.",
-      "latestResult": "All categories are at least 96; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "The compact Menu now leads into the combined finder. All controls measure at least 44px; open, Escape, and focus restoration behavior remain intact.",
+      "latestChange": "Replaced the two competing help and example routes with one Find your starting point route while keeping the discovery CTA visible.",
+      "latestResult": "Navigation now presents one clear browse path; all categories are at least 97 and hard gates pass.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
         "clarity": 98,
         "simplicity": 98,
         "usability_accessibility": 98,
-        "trust_credibility": 96,
-        "business_effectiveness": 97
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "mobile": {
         "clarity": 98,
         "simplicity": 97,
         "usability_accessibility": 97,
-        "trust_credibility": 96,
-        "business_effectiveness": 96
+        "trust_credibility": 97,
+        "business_effectiveness": 97
       },
       "deductions": [],
       "hardGates": [],
@@ -1701,12 +1721,16 @@
         {
           "label": "Open accessible mobile menu",
           "href": "evidence/after/loop-03-mobile-menu-open.png"
+        },
+        {
+          "label": "Combined mobile destination",
+          "href": "evidence/after/loop-08-combined-finder-mobile.png"
         }
       ],
-      "attempts": 5,
+      "attempts": 7,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-first-screen.png",
-      "afterScreenshot": "evidence/after/loop-03-mobile-menu-open.png"
+      "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png"
     },
     "cookie-preferences": {
       "status": "passing",
@@ -1737,7 +1761,7 @@
           "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
@@ -2262,7 +2286,7 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
@@ -2310,24 +2334,24 @@
     },
     "site-header-desktop": {
       "status": "passing",
-      "currentLoop": 3,
-      "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and route to the promised section.",
-      "latestChange": "Added a direct Real examples route beside help, identity, and discovery navigation.",
-      "latestResult": "All categories are at least 96; hard gates pass.",
+      "currentLoop": 8,
+      "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and the browse route now matches the page's single problem-finding task.",
+      "latestChange": "Replaced separate help and Real examples links with one Find your starting point route into the combined finder.",
+      "latestResult": "The header removes a redundant choice; all categories are at least 97 and hard gates pass.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
-        "clarity": 98,
+        "clarity": 99,
         "simplicity": 98,
-        "usability_accessibility": 97,
-        "trust_credibility": 96,
-        "business_effectiveness": 97
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "mobile": {
-        "clarity": 98,
+        "clarity": 99,
         "simplicity": 98,
-        "usability_accessibility": 97,
-        "trust_credibility": 96,
-        "business_effectiveness": 97
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
       },
       "deductions": [],
       "hardGates": [],
@@ -2339,12 +2363,16 @@
         {
           "label": "Revised desktop header",
           "href": "evidence/after/loop-03-homepage-desktop.png"
+        },
+        {
+          "label": "Single combined-finder route",
+          "href": "evidence/after/loop-08-combined-finder-desktop.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
-      "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png"
+      "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png"
     },
     "service-fix-a-broken-contact-form": {
       "status": "passing",
@@ -2483,7 +2511,7 @@
           "href": "evidence/after/loop-05-thank-you-direct-mobile.png"
         }
       ],
-      "attempts": 7,
+      "attempts": 9,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/thank-you-full.png",
       "afterScreenshot": "evidence/after/loop-05-thank-you-direct-desktop.png"
@@ -2517,7 +2545,7 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/service-new-business-full.png",
       "afterScreenshot": ""
@@ -2551,11 +2579,11 @@
           "href": "../../tests/test_homepage_experience.py"
         }
       ],
-      "attempts": 2,
+      "attempts": 4,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": ""
     }
   },
-  "updatedAt": "2026-07-16T19:15:29+00:00"
+  "updatedAt": "2026-07-16T19:56:02+00:00"
 }

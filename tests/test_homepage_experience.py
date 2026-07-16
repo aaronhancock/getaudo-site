@@ -98,14 +98,18 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn('id="mobile-nav-menu" hidden', homepage)
         self.assertIn('event.key === "Escape"', homepage)
         self.assertIn('toggle.setAttribute("aria-expanded"', homepage)
-        self.assertIn('<a href="#service-list">Real examples</a>', homepage)
+        self.assertIn('<a href="#services">Find your starting point</a>', homepage)
+        self.assertNotIn('<a href="#service-list">Real examples</a>', homepage)
 
     def test_homepage_help_choices_use_owner_language(self) -> None:
         homepage = (ROOT / "index.html").read_text()
 
-        self.assertIn("A form stops sending messages", homepage)
+        self.assertIn("What’s getting in your way?", homepage)
+        self.assertIn("Something is broken, slow, confusing, or out of date.", homepage)
+        self.assertIn("My customers and leads", homepage)
+        self.assertIn("Work we do by hand", homepage)
         self.assertIn("Choose the right next step", homepage)
-        self.assertIn("which AI tools are worth using", homepage)
+        self.assertIn("choosing tools, protecting information, or saving time", homepage)
         for phrase in (
             "hosting problems, analytics, integrations, accessibility",
             "customer portal, dashboard, prototype",
@@ -133,7 +137,7 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn("Browse a few common starting points", homepage)
         self.assertIn("My website form is not working", homepage)
         self.assertIn("We copy the same information between tools", homepage)
-        self.assertIn("View all 30 examples", homepage)
+        self.assertIn("View all 30 problem pages", homepage)
 
     def test_legacy_public_routes_use_permanent_redirects(self) -> None:
         server_source = (ROOT / "server.py").read_text()

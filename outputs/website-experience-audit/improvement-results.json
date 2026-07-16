@@ -110,91 +110,98 @@
     ]
   },
   "homepage-problem-explorer": {
-    "loop": 6,
-    "desktop": [98, 97, 98, 96, 97],
-    "mobile": [97, 96, 97, 96, 96],
+    "loop": 8,
+    "desktop": [99, 98, 98, 97, 98],
+    "mobile": [98, 97, 97, 97, 97],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Renamed the two actions by destination, hid repeated summaries in secondary mobile cards, shortened those cards, and completed the arrow/Home/End tab keyboard pattern.",
-    "latestNotes": "ArrowRight moved selection and focus from My website to My customers. All 30 examples remain reachable, choices return to the spotlight, and mobile width settled without overflow.",
-    "latestResult": "All categories are at least 96; hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-06-explorer-mobile.png",
+    "latestChange": "Moved the 30-situation explorer into the category section, connected the five visual cards as its accessible filters, and removed the duplicate lower section.",
+    "latestNotes": "Each focused situation keeps a direct detail-page link and a form-context action. All 30 pages remain available through the persistent catalog link, sitemap, and machine-readable catalogs.",
+    "latestResult": "One continuous problem-finding task replaces two competing sections; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile-lower.png",
     "evidence": [
       {"label": "Original mobile explorer", "href": "evidence/baseline/mobile/homepage-full.png"},
-      {"label": "Revised mobile explorer", "href": "evidence/after/loop-06-explorer-mobile.png"}
+      {"label": "Earlier separate mobile explorer", "href": "evidence/after/loop-06-explorer-mobile.png"},
+      {"label": "Combined mobile situation explorer", "href": "evidence/after/loop-08-combined-finder-mobile-lower.png"},
+      {"label": "Combined desktop finder", "href": "evidence/after/loop-08-combined-finder-desktop.png"}
     ]
   },
   "site-header-mobile": {
-    "loop": 3,
-    "desktop": [98, 98, 98, 96, 97],
-    "mobile": [98, 97, 97, 96, 96],
+    "loop": 8,
+    "desktop": [98, 98, 98, 97, 98],
+    "mobile": [98, 97, 97, 97, 97],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Added a compact mobile Menu with service, example, identity, and proof links while keeping the discovery CTA visible.",
-    "latestNotes": "All controls measure at least 44px at 390px and 360px. Open moves focus to the first link; Escape closes and restores focus to Menu.",
-    "latestResult": "All categories are at least 96; hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-03-mobile-menu-open.png",
+    "latestChange": "Replaced the two competing help and example routes with one Find your starting point route while keeping the discovery CTA visible.",
+    "latestNotes": "The compact Menu now leads into the combined finder. All controls measure at least 44px; open, Escape, and focus restoration behavior remain intact.",
+    "latestResult": "Navigation now presents one clear browse path; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png",
     "evidence": [
       {"label": "Original mobile first screen", "href": "evidence/baseline/mobile/homepage-first-screen.png"},
-      {"label": "Open accessible mobile menu", "href": "evidence/after/loop-03-mobile-menu-open.png"}
+      {"label": "Open accessible mobile menu", "href": "evidence/after/loop-03-mobile-menu-open.png"},
+      {"label": "Combined mobile destination", "href": "evidence/after/loop-08-combined-finder-mobile.png"}
     ]
   },
   "homepage-hero": {
-    "loop": 3,
-    "desktop": [97, 98, 96, 96, 97],
-    "mobile": [96, 98, 96, 96, 96],
+    "loop": 8,
+    "desktop": [98, 98, 97, 97, 98],
+    "mobile": [97, 98, 97, 97, 97],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Rewrote the support line around familiar owner problems and added Aaron, duration, price, and obligation context at the first decision point.",
-    "latestNotes": "The first screen now explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without overflow.",
-    "latestResult": "All categories are at least 96; hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png",
+    "latestChange": "Pointed the lower-commitment hero action directly to the combined problem finder and named it See real problems.",
+    "latestNotes": "The first screen explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without creating a duplicate browse path.",
+    "latestResult": "The hero now feeds the single decision path; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png",
     "evidence": [
       {"label": "Original desktop homepage", "href": "evidence/baseline/desktop/homepage-full.png"},
       {"label": "Revised desktop homepage", "href": "evidence/after/loop-03-homepage-desktop.png"},
-      {"label": "Revised mobile homepage", "href": "evidence/after/loop-03-homepage-mobile.png"}
+      {"label": "Revised mobile homepage", "href": "evidence/after/loop-03-homepage-mobile.png"},
+      {"label": "Combined finder destination", "href": "evidence/after/loop-08-combined-finder-desktop.png"}
     ]
   },
   "homepage-help-grid": {
-    "loop": 3,
-    "desktop": [97, 96, 96, 95, 96],
-    "mobile": [96, 95, 95, 95, 95],
+    "loop": 8,
+    "desktop": [99, 98, 98, 97, 98],
+    "mobile": [98, 97, 97, 97, 97],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Replaced technical lists with familiar symptoms, renamed technology decision to choosing the right next step, and compressed decorative mobile visuals.",
-    "latestNotes": "All five choices remain visible and distinct. Selection carries the plain label into the form while leaving the visitor's message open-ended and editable.",
-    "latestResult": "All categories are at least 95; hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png",
+    "latestChange": "Turned the five visual cards into plain-language category filters for the real situations directly beneath them.",
+    "latestNotes": "The selected state is visible and programmatic. Arrow keys, Home, and End update both focus and content; 390px and 360px have no horizontal overflow.",
+    "latestResult": "The cards now begin one continuous decision path instead of competing with a second explorer; all categories are at least 97.",
+    "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png",
     "evidence": [
       {"label": "Original mobile help grid", "href": "evidence/baseline/mobile/homepage-full.png"},
-      {"label": "Revised mobile help grid", "href": "evidence/after/loop-03-homepage-mobile.png"},
-      {"label": "Revised desktop help grid", "href": "evidence/after/loop-03-homepage-desktop.png"}
+      {"label": "Earlier standalone help grid", "href": "evidence/after/loop-03-homepage-mobile.png"},
+      {"label": "Combined mobile category filters", "href": "evidence/after/loop-08-combined-finder-mobile.png"},
+      {"label": "Combined desktop category filters", "href": "evidence/after/loop-08-combined-finder-desktop.png"},
+      {"label": "Narrow 360px combined finder", "href": "evidence/after/loop-08-combined-finder-narrow-360.png"}
     ]
   },
   "site-header-desktop": {
-    "loop": 3,
-    "desktop": [98, 98, 97, 96, 97],
-    "mobile": [98, 98, 97, 96, 97],
+    "loop": 8,
+    "desktop": [99, 98, 98, 97, 98],
+    "mobile": [99, 98, 98, 97, 98],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Added a direct Real examples route beside help, identity, and discovery navigation.",
-    "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and route to the promised section.",
-    "latestResult": "All categories are at least 96; hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png",
+    "latestChange": "Replaced separate help and Real examples links with one Find your starting point route into the combined finder.",
+    "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and the browse route now matches the page's single problem-finding task.",
+    "latestResult": "The header removes a redundant choice; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png",
     "evidence": [
       {"label": "Original desktop header", "href": "evidence/baseline/desktop/homepage-full.png"},
-      {"label": "Revised desktop header", "href": "evidence/after/loop-03-homepage-desktop.png"}
+      {"label": "Revised desktop header", "href": "evidence/after/loop-03-homepage-desktop.png"},
+      {"label": "Single combined-finder route", "href": "evidence/after/loop-08-combined-finder-desktop.png"}
     ]
   },
   "homepage-footer": {
-    "loop": 3,
-    "desktop": [97, 96, 97, 96, 96],
-    "mobile": [96, 95, 96, 96, 95],
+    "loop": 8,
+    "desktop": [98, 97, 98, 97, 97],
+    "mobile": [97, 96, 97, 97, 96],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Shortened the CTA and brand copy, separated the call action from browse links, and retained 44px navigation targets.",
-    "latestNotes": "Each group now serves one recovery need: contact, kinds of help, proof/browse, process, or privacy. No overflow at 390px or 360px.",
-    "latestResult": "All categories are at least 95; hard gates pass.",
+    "latestChange": "Removed the duplicate Real examples link and renamed the remaining browse route Find your starting point across shared footers.",
+    "latestNotes": "Each group serves one recovery need: contact, the combined finder, proof, process, or privacy. No overflow at 390px or 360px.",
+    "latestResult": "The footer preserves access to the full catalog without recreating the homepage's old duplicate choice; all categories are at least 96.",
     "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png",
     "evidence": [
       {"label": "Original mobile footer", "href": "evidence/baseline/mobile/homepage-full.png"},

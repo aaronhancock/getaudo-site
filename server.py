@@ -1527,7 +1527,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             ("/#services", "What I can help with", "Browse the main kinds of technology work Aaron handles."),
             ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
             ("/#discovery", "Book free discovery", "Tell Aaron what's going on, then pick a time to talk."),
-            ("/#service-list", "Specific examples", "Browse common problems Aaron has worked on."),
+            ("/#services", "Find your starting point", "Choose an area and browse common problems Aaron helps solve."),
             ("/privacy", "Privacy Policy", "See what information Audo collects and how it is used and protected."),
         ]
 
@@ -2018,7 +2018,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
           <h2 id="footer-help-heading">Ways I can help</h2>
           <ul>
-            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/#services">Find your starting point</a></li>
             <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
             <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
             <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
@@ -2030,7 +2030,6 @@ class AudoHandler(BaseHTTPRequestHandler):
           <ul>
             <li><a href="/#why">About Aaron and Audo</a></li>
             <li><a href="/#client-work">Client work</a></li>
-            <li><a href="/#service-list">Browse real examples</a></li>
             <li><a href="/sitemap" aria-current="page">View all pages</a></li>
           </ul>
         </nav>
@@ -2208,7 +2207,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                                 "@type": "ListItem",
                                 "position": 2,
                                 "name": "Services",
-                                "item": "https://getaudo.com/#service-list",
+                                "item": "https://getaudo.com/#services",
                             },
                             {
                                 "@type": "ListItem",
@@ -2740,7 +2739,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           </div>
           <div class="hero-actions">
             <a class="button primary" href="#discovery">Book free discovery</a>
-            <a class="button" href="/#service-list">Explore more examples</a>
+            <a class="button" href="/#services">Find another starting point</a>
           </div>
           <p class="hero-call-note">Free 30-minute call. No charge or obligation.</p>
         </div>
@@ -2848,7 +2847,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
           <h2 id="footer-help-heading">Ways I can help</h2>
           <ul>
-            <li><a href="/#services">See how I can help</a></li>
+            <li><a href="/#services">Find your starting point</a></li>
             <li><a href="/services/fix-a-broken-contact-form">Fix a website problem</a></li>
             <li><a href="/services/reduce-copy-and-paste-between-tools">Cut repetitive work</a></li>
             <li><a href="/services/choose-ai-tools-for-your-business">Use AI with confidence</a></li>
@@ -2860,7 +2859,6 @@ class AudoHandler(BaseHTTPRequestHandler):
           <ul>
             <li><a href="/#why">About Aaron and Audo</a></li>
             <li><a href="/#client-work">Client work</a></li>
-            <li><a href="/#service-list">Browse real examples</a></li>
             <li><a href="/sitemap">View all pages</a></li>
           </ul>
         </nav>
@@ -3223,7 +3221,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     <p class="lead">The link may be old or the address may have a typo. You can go back to the homepage, browse real problems I help small businesses solve, or tell me what you need.</p>
     <div class="actions">
       <a class="button primary" href="/">Go to the homepage</a>
-      <a class="button" href="/#service-list">Browse real examples</a>
+      <a class="button" href="/#services">Find your starting point</a>
       <a class="button" href="/#discovery">Book free discovery</a>
     </div>
     <p class="contact">Still stuck? Email <a href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>.</p>

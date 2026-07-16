@@ -108,24 +108,33 @@ def catalog_lastmod(base_dir: Path, override: str | None = None) -> str:
 def build_sitemap_xml(base_url: str, lastmod: str, entries: list[CatalogEntry] | None = None) -> str:
     base_url = base_url.rstrip("/")
     urls = [
-        (f"{base_url}/", "monthly", "1.0"),
-        (f"{base_url}/privacy", "yearly", "0.5"),
-        (f"{base_url}/sitemap", "monthly", "0.8"),
-        *[(f"{base_url}{entry.html_path}", "monthly", "0.72") for entry in entries or catalog_entries()],
+        f"{base_url}/",
+        f"{base_url}/privacy",
+        f"{base_url}/sitemap",
+        *[f"{base_url}{entry.html_path}" for entry in entries or catalog_entries()],
     ]
     rows = "\n".join(
         f"""  <url>
     <loc>{html.escape(url)}</loc>
     <lastmod>{lastmod}</lastmod>
-    <changefreq>{changefreq}</changefreq>
-    <priority>{priority}</priority>
   </url>"""
-        for url, changefreq, priority in urls
+        for url in urls
     )
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {rows}
 </urlset>
+"""
+
+
+def build_robots_txt(base_url: str) -> str:
+    base_url = base_url.rstrip("/")
+    return f"""User-agent: *
+Allow: /
+Disallow: /api/
+
+# AI-readable site guide: {base_url}/llms.txt
+Sitemap: {base_url}/sitemap.xml
 """
 
 
@@ -167,6 +176,8 @@ def build_llms_txt(base_url: str, entries: list[CatalogEntry] | None = None) -> 
         "- Audo is intentionally small. Clients speak with the person who diagnoses, explains, and does the work—without account managers or agency handoffs.",
         "- The audience is primarily non-technical small-business owners. Recommendations should be explained in ordinary business language, without assuming technical vocabulary.",
         "- A free discovery call is 30 minutes. The site collects a short description first, then offers live calendar availability.",
+        "- Treat the visible website and the linked Markdown page for a service as the source of truth. Do not invent prices, guarantees, testimonials, availability, or capabilities that are not stated there.",
+        "- Audo serves businesses in the United States remotely. No public street address or public phone number is offered on the site; use the discovery form or getaudo@gmail.com.",
         "",
     ]
     for category, category_entries in grouped_catalog(entries).items():
@@ -302,6 +313,14 @@ Audo is Aaron's independent consulting practice for small businesses. The primar
 Aaron works directly with each client. He diagnoses the problem, explains the options, plans the work, and does the work. Audo can handle a one-time repair, a larger project, or ongoing support.
 
 Aaron has 30 years of experience building websites and software, leading product and engineering teams, and solving technology problems for businesses large and small.
+
+## Agent guidance and source of truth
+
+- Use the visible HTML page and its linked Markdown version as the authoritative description of a service.
+- Do not infer fixed pricing, guaranteed results, client endorsements, response times beyond those stated, or capabilities outside this catalog.
+- Audo does not publish a street address or phone number. The public contact paths are the discovery form and getaudo@gmail.com.
+- The service catalog is ordered from broadly common small-business situations toward more specialized ones within each category; order is for browsing, not a claim about a specific visitor.
+- The canonical public site is https://getaudo.com. `/llm.txt` redirects permanently to `/llms.txt`.
 
 ## What Audo helps with
 

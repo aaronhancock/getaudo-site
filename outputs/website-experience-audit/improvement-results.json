@@ -92,38 +92,38 @@
     "evidence": [{"label": "Repaired footer preference control", "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"}]
   },
   "human-sitemap": {
-    "loop": 2,
-    "desktop": [96, 92, 97, 95, 94],
-    "mobile": [95, 88, 96, 94, 92],
-    "deductions": [
-      {"category": "Simplicity", "points": 10, "reason": "Thirty detailed links plus primary pages still form a very long mobile scan.", "required": "Add compact category jumps or filtering while keeping every link crawlable."},
-      {"category": "Business effectiveness", "points": 5, "reason": "The page lacks a quick way to narrow the catalog by the owner's current problem.", "required": "Offer a simple, accessible category navigator."}
-    ],
+    "loop": 9,
+    "desktop": [98, 98, 98, 97, 98],
+    "mobile": [97, 97, 98, 97, 97],
+    "deductions": [],
     "hardGates": [],
-    "latestChange": "Raised the header and every sitemap page link to 48px and all shared footer links to 44px.",
-    "latestNotes": "Touch-target and narrow-mobile gates cleared. Catalog scanning remains too long.",
-    "latestResult": "Mobile accessibility rose from 83 to 96; simplicity remains 88.",
-    "afterScreenshot": "evidence/after/loop-02-sitemap-mobile.png",
+    "latestChange": "Scoped hero navigation styles so category labels remain visible, removed the duplicate starting-point card, and ordered all 30 situations from most common to most specialized within each category.",
+    "latestNotes": "The five category jumps are readable, 48px tall, keyboard accessible, and keep all 30 direct links crawlable. Desktop and 390px layouts have no horizontal overflow.",
+    "latestResult": "The sitemap is now both scan-friendly and complete; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-09-sitemap-category-jumps-mobile.png",
     "evidence": [
       {"label": "Original mobile sitemap", "href": "evidence/baseline/mobile/sitemap-full.png"},
-      {"label": "Repaired mobile sitemap controls", "href": "evidence/after/loop-02-sitemap-mobile.png"}
+      {"label": "Earlier mobile sitemap controls", "href": "evidence/after/loop-02-sitemap-mobile.png"},
+      {"label": "Corrected desktop category navigator", "href": "evidence/after/loop-09-sitemap-category-nav-desktop.png"},
+      {"label": "Corrected ordered mobile category navigator", "href": "evidence/after/loop-09-sitemap-category-jumps-mobile.png"}
     ]
   },
   "homepage-problem-explorer": {
-    "loop": 8,
+    "loop": 9,
     "desktop": [99, 98, 98, 97, 98],
     "mobile": [98, 97, 97, 97, 97],
     "deductions": [],
     "hardGates": [],
-    "latestChange": "Moved the 30-situation explorer into the category section, connected the five visual cards as its accessible filters, and removed the duplicate lower section.",
-    "latestNotes": "Each focused situation keeps a direct detail-page link and a form-context action. All 30 pages remain available through the persistent catalog link, sitemap, and machine-readable catalogs.",
-    "latestResult": "One continuous problem-finding task replaces two competing sections; all categories are at least 97 and hard gates pass.",
-    "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile-lower.png",
+    "latestChange": "Reordered every group by likely small-business familiarity so the broadest problem is featured and more specialized situations follow.",
+    "latestNotes": "The website group now starts with an outgrown website, followed by speed and outdated messaging; the broken form moved last. Customer, daily-work, AI, and decision groups received the same likelihood review.",
+    "latestResult": "The combined explorer now starts with the situations most visitors are likely to recognize; all categories are at least 97 and hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-09-commonness-order-desktop.png",
     "evidence": [
       {"label": "Original mobile explorer", "href": "evidence/baseline/mobile/homepage-full.png"},
       {"label": "Earlier separate mobile explorer", "href": "evidence/after/loop-06-explorer-mobile.png"},
       {"label": "Combined mobile situation explorer", "href": "evidence/after/loop-08-combined-finder-mobile-lower.png"},
-      {"label": "Combined desktop finder", "href": "evidence/after/loop-08-combined-finder-desktop.png"}
+      {"label": "Combined desktop finder", "href": "evidence/after/loop-08-combined-finder-desktop.png"},
+      {"label": "Most-common-first desktop finder", "href": "evidence/after/loop-09-commonness-order-desktop.png"}
     ]
   },
   "site-header-mobile": {
@@ -386,5 +386,33 @@
     "latestNotes": "The server-rendered homepage, direct service links, privacy route, sitemap, and truthful form fallback remain available without the interactive explorer.",
     "latestResult": "All categories are at least 95; core no-JavaScript recovery gates pass.",
     "evidence": [{"label": "No-JavaScript fallback regression test", "href": "../../tests/test_homepage_experience.py"}]
+  },
+  "accessibility-readiness": {
+    "loop": 10,
+    "desktop": [98, 98, 98, 98, 97],
+    "mobile": [98, 97, 98, 98, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added site-wide automated accessibility-signal checks and aligned the shared primary destinations across homepage, privacy, sitemap, confirmation, service-detail, and 404 headers.",
+    "latestNotes": "The package checks language, viewport, H1, landmarks, unique IDs, image alternatives, form labels, control names, and navigation consistency. Existing rendered checks cover keyboard, mobile targets, focus, reflow, form recovery, and reduced motion; the report explicitly avoids legal certification claims.",
+    "latestResult": "All automated checks pass across 34 audited pages; rendered 390px header checks have no overflow.",
+    "evidence": [
+      {"label": "Privacy shared header mobile", "href": "evidence/after/loop-10-privacy-shared-header-mobile.png"},
+      {"label": "Reusable audit report", "href": "../public-website-readiness-audit/index.html"}
+    ]
+  },
+  "reusable-readiness-report": {
+    "loop": 10,
+    "desktop": [99, 98, 98, 98, 98],
+    "mobile": [99, 98, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Packaged a dependency-free audit runner that accepts any website URL and generates matching JSON, Markdown, and HTML reports.",
+    "latestNotes": "The Audo validation run discovered 33 canonical pages plus the noindex confirmation page and completed 586 checks with zero warnings or failures.",
+    "latestResult": "The report package is reusable, evidence-based, and explicitly separates automated signals from manual WCAG and legal review.",
+    "evidence": [
+      {"label": "Comprehensive HTML report", "href": "../public-website-readiness-audit/index.html"},
+      {"label": "Reusable audit instructions", "href": "../../docs/ux-audit/reusable-website-readiness-service.md"}
+    ]
   }
 }

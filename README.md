@@ -125,5 +125,23 @@ Google before storing or emailing the request.
 - `/api/availability` returns protected live availability for a saved request.
 - `/api/book` reserves a slot and creates the Google Calendar event and Meet link.
 - `/health` supports container health checks.
+- `/robots.txt` exposes crawl rules and the canonical XML sitemap.
+- `/sitemap.xml` is generated from the same 30-page catalog used by the site.
+- `/llms.txt` and `/llms-full.txt` provide short and expanded agent-readable context.
+- `/services.md` and `/services/<slug>.md` provide agent-friendly service content tied to canonical HTML pages.
 - `/app` and `/app.html` redirect to `/`; the old portal/product direction is
   no longer part of the public site.
+
+## Reusable Website Audit
+
+Run the packaged SEO, AI-discovery, accessibility-signal, and navigation-consistency audit against any website:
+
+```bash
+python3 scripts/website_readiness_audit.py \
+  --url https://example.com \
+  --output outputs/example-website-audit
+```
+
+The audit produces JSON, Markdown, and HTML reports. See
+`docs/ux-audit/reusable-website-readiness-service.md` for full scope,
+limitations, and the client-service workflow.

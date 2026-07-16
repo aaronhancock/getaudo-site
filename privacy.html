@@ -125,12 +125,28 @@
         url("/assets/consulting-technology-hero.webp") center / cover no-repeat;
     }
 
-    nav {
+    header nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
       margin-bottom: clamp(60px, 9vw, 104px);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .nav-links > a:not(.nav-cta) {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.88);
+      text-decoration: none;
     }
 
     .brand {
@@ -460,8 +476,12 @@
     }
 
     @media (max-width: 760px) {
-      nav {
+      header nav {
         align-items: flex-start;
+      }
+
+      .nav-links > a:not(.nav-cta) {
+        display: none;
       }
 
       .brand img {
@@ -527,7 +547,11 @@
         <a class="brand" href="/" aria-label="Audo home">
           <img src="/assets/audo-logo-white.png" alt="Audo">
         </a>
-        <a class="nav-cta" href="/#discovery">Book free discovery</a>
+        <div class="nav-links">
+          <a href="/#services">Find your starting point</a>
+          <a href="/#why">Why Audo</a>
+          <a class="nav-cta" href="/#discovery">Book free discovery</a>
+        </div>
       </nav>
       <p class="eyebrow">Privacy Policy</p>
       <h1>How Audo handles the information you share.</h1>

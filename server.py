@@ -28,6 +28,7 @@ from site_catalog import (
     CATEGORY_ORDER,
     build_llms_full_txt,
     build_llms_txt,
+    build_robots_txt,
     build_service_markdown,
     build_services_markdown,
     build_sitemap_xml,
@@ -1093,6 +1094,14 @@ class AudoHandler(BaseHTTPRequestHandler):
             self.serve_sitemap(send_body=send_body)
             return
 
+        if path == "/robots.txt":
+            self.serve_generated_text(
+                build_robots_txt(PUBLIC_BASE_URL),
+                "text/plain; charset=utf-8",
+                send_body=send_body,
+            )
+            return
+
         if path in {"/sitemap", "/sitemap/"}:
             self.serve_user_sitemap(send_body=send_body)
             return
@@ -1524,10 +1533,9 @@ class AudoHandler(BaseHTTPRequestHandler):
 
         main_links = [
             ("/", "Home", "See how Aaron helps small businesses fix websites, automate work, use AI, and build tools."),
-            ("/#services", "What I can help with", "Browse the main kinds of technology work Aaron handles."),
+            ("/#services", "Find your starting point", "Choose an area and browse common problems Aaron helps solve."),
             ("/#why", "Why Audo", "Learn why working directly with Aaron can be simpler than hiring a large agency."),
             ("/#discovery", "Book free discovery", "Tell Aaron what's going on, then pick a time to talk."),
-            ("/#services", "Find your starting point", "Choose an area and browse common problems Aaron helps solve."),
             ("/privacy", "Privacy Policy", "See what information Audo collects and how it is used and protected."),
         ]
 
@@ -1627,7 +1635,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sitemap | Audo</title>
+  <title>Small Business Technology Help Sitemap | Audo</title>
   <meta name="description" content="Find Audo help for small-business websites, automation, AI, internal tools, software, and everyday technology problems.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Aaron">
@@ -1715,7 +1723,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         url("/assets/consulting-technology-hero.webp") center / cover no-repeat;
       padding: 32px 0 70px;
     }}
-    nav {{
+    header nav {{
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1727,7 +1735,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       height: auto;
       display: block;
     }}
-    nav a {{
+    header nav a {{
       min-height: 48px;
       display: inline-flex;
       align-items: center;
@@ -1735,7 +1743,12 @@ class AudoHandler(BaseHTTPRequestHandler):
       font-weight: 820;
       text-decoration: none;
     }}
-    nav a:hover {{ color: #fff; }}
+    header nav a:hover {{ color: #fff; }}
+    .header-nav-links {{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }}
     .eyebrow {{
       margin: 0 0 14px;
       color: #f4dca9;
@@ -1853,8 +1866,14 @@ class AudoHandler(BaseHTTPRequestHandler):
       border-radius: 999px;
       padding: 0 14px;
       background: #fff;
+      color: var(--ink);
       font-weight: 790;
       text-decoration: none;
+    }}
+    .category-jump-links a:hover {{
+      border-color: rgba(31, 71, 57, 0.42);
+      background: #f9fbfa;
+      color: var(--evergreen);
     }}
     .group-title {{
       display: flex;
@@ -1935,11 +1954,13 @@ class AudoHandler(BaseHTTPRequestHandler):
       header {{
         padding-bottom: 52px;
       }}
-      nav {{
+      header nav {{
         align-items: flex-start;
         flex-direction: column;
         margin-bottom: 54px;
       }}
+      .header-nav-links {{ width: 100%; justify-content: space-between; gap: 12px; }}
+      .header-nav-links a:not(.nav-cta) {{ display: none; }}
       .sitemap-links {{
         grid-template-columns: 1fr;
       }}
@@ -1964,7 +1985,11 @@ class AudoHandler(BaseHTTPRequestHandler):
         <a href="/" aria-label="Audo home">
           <img class="logo" src="/assets/audo-logo-white.png" alt="Audo">
         </a>
-        <a href="/#discovery">Book free discovery</a>
+        <div class="header-nav-links">
+          <a href="/#services">Find your starting point</a>
+          <a href="/#why">Why Audo</a>
+          <a class="nav-cta" href="/#discovery">Book free discovery</a>
+        </div>
       </nav>
       <p class="eyebrow">Sitemap</p>
       <h1>Find the kind of help you need.</h1>
@@ -2086,7 +2111,11 @@ class AudoHandler(BaseHTTPRequestHandler):
         display_title = explorer_card["title"] if explorer_card else service.title
         display_summary = explorer_card["summary"] if explorer_card else service.summary
         display_result = explorer_card["result"] if explorer_card else service.result
-        page_meta_title = f"{display_title} | Audo"
+        page_meta_title = (
+            "Should I buy software or have it built? | Audo"
+            if service.slug == "choose-build-vs-buy-for-a-tool"
+            else f"{display_title} | Audo"
+        )
         page_meta_description = f"{display_summary} Talk directly with Aaron about a practical next step."
         if len(page_meta_description) > 158:
             page_meta_description = display_summary[:155].rstrip(" ,.;") + "..."
@@ -2719,7 +2748,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <img src="/assets/audo-logo-white.png" alt="Audo">
       </a>
       <div class="nav-links">
-        <a href="/#services">How I can help</a>
+        <a href="/#services">Find your starting point</a>
         <a href="/#why">Why Audo</a>
         <a class="nav-cta" href="#discovery">Book free discovery</a>
       </div>
@@ -3198,8 +3227,11 @@ class AudoHandler(BaseHTTPRequestHandler):
     a:focus-visible { outline:3px solid #b07817; outline-offset:4px; }
     .top { min-height:80px; display:flex; align-items:center; background:#101815; }
     .shell { width:min(1120px,calc(100% - 36px)); margin:auto; }
-    .top a { min-height:44px; display:inline-flex; align-items:center; }
+    .top .shell { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .top a { min-height:44px; display:inline-flex; align-items:center; color:#fff; text-decoration:none; font-weight:760; }
     .top img { display:block; width:126px; height:auto; }
+    .top nav { display:flex; align-items:center; gap:18px; }
+    .top .nav-cta { border:1px solid rgba(255,255,255,.5); border-radius:8px; padding:0 12px; background:rgba(255,255,255,.1); }
     main { min-height:calc(100svh - 80px); display:grid; place-items:center; padding:48px 0; }
     .card { width:min(760px,100%); border:1px solid var(--line); border-radius:28px; padding:clamp(30px,7vw,72px); background:#fff; box-shadow:0 26px 80px rgba(16,24,21,.12); }
     .eyebrow { margin:0 0 12px; color:#815712; font-size:.8rem; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
@@ -3210,11 +3242,12 @@ class AudoHandler(BaseHTTPRequestHandler):
     .button.primary { border-color:var(--gold); background:var(--gold); }
     .contact { margin:30px 0 0; padding-top:22px; border-top:1px solid var(--line); color:var(--muted); }
     .contact a { min-height:44px; display:inline-flex; align-items:center; color:var(--green); font-weight:800; }
+    @media(max-width:760px) { .top nav a:not(.nav-cta) { display:none; } }
     @media(max-width:560px) { .top { min-height:70px; } main { min-height:calc(100svh - 70px); padding:20px 0; } .card { border-radius:20px; padding:28px 22px; } .actions { display:grid; } .button { width:100%; } }
   </style>
 </head>
 <body>
-  <header class="top"><div class="shell"><a href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a></div></header>
+  <header class="top"><div class="shell"><a href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a><nav aria-label="Primary navigation"><a href="/#services">Find your starting point</a><a href="/#why">Why Audo</a><a class="nav-cta" href="/#discovery">Book free discovery</a></nav></div></header>
   <main id="main"><div class="shell"><section class="card" aria-labelledby="missing-title">
     <p class="eyebrow">Page not found</p>
     <h1 id="missing-title">That page isn't here.</h1>

@@ -6,6 +6,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HomepageExperienceTests(unittest.TestCase):
+    def test_every_public_header_exposes_the_same_primary_destinations(self) -> None:
+        shared_labels = ("Find your starting point", "Why Audo", "Book free discovery")
+        sources = {
+            "homepage": (ROOT / "index.html").read_text(),
+            "privacy": (ROOT / "privacy.html").read_text(),
+            "thank-you": (ROOT / "thank-you.html").read_text(),
+            "generated pages": (ROOT / "server.py").read_text(),
+        }
+        for page, source in sources.items():
+            with self.subTest(page=page):
+                for label in shared_labels:
+                    self.assertIn(label, source)
+
     def test_why_audo_section_uses_varied_accessible_cards(self) -> None:
         homepage = (ROOT / "index.html").read_text()
 
@@ -129,6 +142,10 @@ class HomepageExperienceTests(unittest.TestCase):
             self.assertIn("previousFocus", source)
         self.assertIn(".policy-summary a {\n      min-height: 44px;", privacy)
         self.assertIn(".sitemap-links a {{\n      min-height: 48px;", server_source)
+        self.assertIn("header nav {{", server_source)
+        self.assertIn(".category-jump-links a {{", server_source)
+        self.assertIn("background: #fff;\n      color: var(--ink);", server_source)
+        self.assertNotIn("\n    nav {{\n", server_source)
 
     def test_no_javascript_explorer_has_direct_plain_language_routes(self) -> None:
         homepage = (ROOT / "index.html").read_text()

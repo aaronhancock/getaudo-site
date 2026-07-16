@@ -1,0 +1,5344 @@
+{
+  "site": "https://getaudo.com",
+  "generatedAt": "2026-07-16T20:50:31+00:00",
+  "summary": {
+    "pass": 586
+  },
+  "categories": {
+    "AI and structured data": {
+      "pass": 36
+    },
+    "Accessibility": {
+      "pass": 238
+    },
+    "Consistency": {
+      "pass": 34
+    },
+    "Crawl and AI discovery": {
+      "pass": 5
+    },
+    "Reliability": {
+      "pass": 34
+    },
+    "SEO": {
+      "pass": 239
+    }
+  },
+  "pages": [
+    "/",
+    "/privacy",
+    "/services/automate-lead-follow-up",
+    "/services/build-a-customer-portal-for-requests-and-files",
+    "/services/build-a-new-customer-onboarding-workflow",
+    "/services/build-a-new-website-for-your-business",
+    "/services/build-a-simple-reporting-dashboard",
+    "/services/build-an-ai-powered-website-support-agent",
+    "/services/build-an-online-quote-or-estimate-tool",
+    "/services/choose-ai-tools-for-your-business",
+    "/services/choose-build-vs-buy-for-a-tool",
+    "/services/clean-up-crm-fields-and-duplicate-records",
+    "/services/clean-up-wordpress-plugin-warnings",
+    "/services/connect-scheduling-and-confirmation-emails",
+    "/services/convert-spreadsheet-work-into-a-simple-app",
+    "/services/create-a-custom-ai-assistant-for-procedures",
+    "/services/create-safe-ai-rules-for-client-data",
+    "/services/decide-what-to-build-first",
+    "/services/fix-a-broken-contact-form",
+    "/services/generate-proposals-from-repeat-inputs",
+    "/services/improve-a-confusing-mobile-website",
+    "/services/integrate-your-business-with-a-crm",
+    "/services/make-a-slow-website-feel-fast",
+    "/services/recover-a-project-that-stalled",
+    "/services/reduce-copy-and-paste-between-tools",
+    "/services/refresh-an-outdated-homepage",
+    "/services/review-a-vendor-proposal-before-signing",
+    "/services/set-up-a-small-business-tech-stack-from-scratch",
+    "/services/simplify-a-confusing-workflow-before-software",
+    "/services/train-your-team-to-use-ai-confidently",
+    "/services/turn-intake-forms-into-organized-tasks",
+    "/services/use-ai-to-improve-customer-support-replies",
+    "/sitemap",
+    "/thank-you"
+  ],
+  "findings": [
+    {
+      "status": "pass",
+      "category": "Crawl and AI discovery",
+      "check": "robots.txt",
+      "route": "/robots.txt",
+      "message": "HTTP 200; content type text/plain; charset=utf-8.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Crawl and AI discovery",
+      "check": "robots-sitemap",
+      "route": "/robots.txt",
+      "message": "robots.txt names an absolute XML sitemap.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Crawl and AI discovery",
+      "check": "sitemap.xml",
+      "route": "/sitemap.xml",
+      "message": "HTTP 200; content type application/xml; charset=utf-8.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "xml-sitemap",
+      "route": "/sitemap.xml",
+      "message": "Found 33 unique canonical URL(s).",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Crawl and AI discovery",
+      "check": "llms.txt",
+      "route": "/llms.txt",
+      "message": "HTTP 200; content type text/plain; charset=utf-8.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "llms-format",
+      "route": "/llms.txt",
+      "message": "File has a Markdown H1, summary, and absolute source links.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Crawl and AI discovery",
+      "check": "llms-full.txt",
+      "route": "/llms-full.txt",
+      "message": "HTTP 200; content type text/plain; charset=utf-8.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "llms-format",
+      "route": "/llms-full.txt",
+      "message": "File has a Markdown H1, summary, and absolute source links.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Get tech off your plate.",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/",
+      "message": "Title length is 37 characters.",
+      "evidence": "Small Business Technology Help | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/",
+      "message": "Description length is 142 characters.",
+      "evidence": "Work directly with Aaron to fix websites, automate repetitive work, use AI well, build internal tools, and solve everyday technology problems.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/",
+      "message": "Valid JSON-LD types: WebSite, ['ProfessionalService', 'LocalBusiness'], Person, ItemList.",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/privacy",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/privacy",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/privacy",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/privacy",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/privacy",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/privacy",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/privacy",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "How Audo handles the information you share.",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/privacy",
+      "message": "Title length is 21 characters.",
+      "evidence": "Privacy Policy | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/privacy",
+      "message": "Description length is 107 characters.",
+      "evidence": "Learn what information Audo collects through getaudo.com, how it is used, and the choices available to you.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/privacy",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/privacy",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/privacy",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/privacy",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/privacy",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/privacy",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/privacy",
+      "message": "Landmarks: main=1, nav=5, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/privacy",
+      "message": "Valid JSON-LD types: WebPage.",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/sitemap",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/sitemap",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/sitemap",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/sitemap",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/sitemap",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/sitemap",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/sitemap",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Find the kind of help you need.",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/sitemap",
+      "message": "Title length is 45 characters.",
+      "evidence": "Small Business Technology Help Sitemap | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/sitemap",
+      "message": "Description length is 119 characters.",
+      "evidence": "Find Audo help for small-business websites, automation, AI, internal tools, software, and everyday technology problems.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/sitemap",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/sitemap",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/sitemap",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/sitemap",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/sitemap",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/sitemap",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/sitemap",
+      "message": "Landmarks: main=1, nav=5, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/sitemap",
+      "message": "Valid JSON-LD types: CollectionPage, ItemList, BreadcrumbList.",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My business has outgrown its website",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Title length is 43 characters.",
+      "evidence": "My business has outgrown its website | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Description length is 135 characters.",
+      "evidence": "The site feels outdated and no longer gives customers confidence in the business. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-a-new-website-for-your-business",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My website takes too long to load",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Title length is 40 characters.",
+      "evidence": "My website takes too long to load | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Description length is 115 characters.",
+      "evidence": "Customers wait for pages to open, especially on their phones. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/make-a-slow-website-feel-fast",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My website no longer describes my business",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Title length is 49 characters.",
+      "evidence": "My website no longer describes my business | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Description length is 123 characters.",
+      "evidence": "What I offer has changed, but the homepage still tells the old story. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/refresh-an-outdated-homepage",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My website is hard to use on a phone",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Title length is 43 characters.",
+      "evidence": "My website is hard to use on a phone | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Description length is 145 characters.",
+      "evidence": "Customers have trouble using the menu, reading pages, or filling out forms on their phones. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/improve-a-confusing-mobile-website",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My WordPress site keeps showing warnings",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Title length is 47 characters.",
+      "evidence": "My WordPress site keeps showing warnings | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Description length is 147 characters.",
+      "evidence": "I see update and plugin notices, but I'm worried that changing something will break the site. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/clean-up-wordpress-plugin-warnings",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My website form isn't sending me messages",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Title length is 48 characters.",
+      "evidence": "My website form isn't sending me messages | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Description length is 121 characters.",
+      "evidence": "People fill out my contact form, but I don't receive their message. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/fix-a-broken-contact-form",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Customers wait too long for a quote or answer",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Title length is 52 characters.",
+      "evidence": "Customers wait too long for a quote or answer | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Description length is 145 characters.",
+      "evidence": "People have to call or wait for me to learn the price, availability, or whether I can help. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-an-online-quote-or-estimate-tool",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Customer requests and files are scattered everywhere",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Title length is 59 characters.",
+      "evidence": "Customer requests and files are scattered everywhere | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Description length is 139 characters.",
+      "evidence": "Questions, documents, approvals, and updates arrive by email, text, and other places. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-a-customer-portal-for-requests-and-files",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "We copy the same information from one app to another",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Title length is 59 characters.",
+      "evidence": "We copy the same information from one app to another | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Description length is 134 characters.",
+      "evidence": "Names, dates, files, and updates are entered more than once in different places. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/reduce-copy-and-paste-between-tools",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "One spreadsheet is running too much of the business",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Title length is 58 characters.",
+      "evidence": "One spreadsheet is running too much of the business | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Description length is 142 characters.",
+      "evidence": "The file is important, but it is easy to break, slow, and difficult for everyone to use. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/convert-spreadsheet-work-into-a-simple-app",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/automate-lead-follow-up",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I need a better way to follow up with new leads",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Title length is 54 characters.",
+      "evidence": "I need a better way to follow up with new leads | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Description length is 131 characters.",
+      "evidence": "Follow-up depends on someone seeing an email and remembering what to do next. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/automate-lead-follow-up",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/automate-lead-follow-up",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "It takes too long to see how the business is doing",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Title length is 57 characters.",
+      "evidence": "It takes too long to see how the business is doing | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Description length is 130 characters.",
+      "evidence": "I have to rebuild the same report before I can understand what is happening. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-a-simple-reporting-dashboard",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Every new customer gets a different start",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Title length is 48 characters.",
+      "evidence": "Every new customer gets a different start | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Description length is 129 characters.",
+      "evidence": "Forms, emails, payments, and first steps are handled differently each time. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-a-new-customer-onboarding-workflow",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I can't trust my customer list",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Title length is 37 characters.",
+      "evidence": "I can't trust my customer list | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Description length is 143 characters.",
+      "evidence": "Names are duplicated, details are missing, and no one knows which information is current. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/clean-up-crm-fields-and-duplicate-records",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I have to turn every form into a task by hand",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Title length is 52 characters.",
+      "evidence": "I have to turn every form into a task by hand | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Description length is 146 characters.",
+      "evidence": "Someone reads every form, copies the details, assigns the work, and remembers the next step. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/turn-intake-forms-into-organized-tasks",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My appointment messages confuse customers",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Title length is 48 characters.",
+      "evidence": "My appointment messages confuse customers | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Description length is 127 characters.",
+      "evidence": "Customers are not sure when to arrive, where to go, or how to reschedule. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/connect-scheduling-and-confirmation-emails",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I rewrite the same proposal every time",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Title length is 45 characters.",
+      "evidence": "I rewrite the same proposal every time | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Description length is 134 characters.",
+      "evidence": "Services, prices, terms, and customer details are copied into each new proposal. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/generate-proposals-from-repeat-inputs",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I can't see the whole customer story in one place",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Title length is 56 characters.",
+      "evidence": "I can't see the whole customer story in one place | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Description length is 136 characters.",
+      "evidence": "Customer details are split between forms, email, spreadsheets, and different apps. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/integrate-your-business-with-a-crm",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I don't know where AI would actually help my business",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Title length is 60 characters.",
+      "evidence": "I don't know where AI would actually help my business | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Description length is 130 characters.",
+      "evidence": "AI sounds useful, but I can't connect it to the work my team does every day. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/train-your-team-to-use-ai-confidently",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I don't know which AI tools are worth using",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Title length is 50 characters.",
+      "evidence": "I don't know which AI tools are worth using | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Description length is 135 characters.",
+      "evidence": "Every tool promises something different, and I don't want to waste money or time. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/choose-ai-tools-for-your-business",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My team needs simple rules for using AI safely",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Title length is 53 characters.",
+      "evidence": "My team needs simple rules for using AI safely | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Description length is 152 characters.",
+      "evidence": "People are experimenting, but no one knows what customer or business information is safe to share. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/create-safe-ai-rules-for-client-data",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Writing customer replies takes too long",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Title length is 46 characters.",
+      "evidence": "Writing customer replies takes too long | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Description length is 151 characters.",
+      "evidence": "My team answers similar questions again and again, but every response still needs to sound human. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/use-ai-to-improve-customer-support-replies",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My team can't find the instructions they need",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Title length is 52 characters.",
+      "evidence": "My team can't find the instructions they need | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Description length is 143 characters.",
+      "evidence": "Instructions exist, but they are spread across documents, folders, and old conversations. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/create-a-custom-ai-assistant-for-procedures",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Customers keep asking the same questions",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Title length is 47 characters.",
+      "evidence": "Customers keep asking the same questions | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Description length is 152 characters.",
+      "evidence": "Simple questions become phone calls or emails because the answers are hard to find on the website. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/build-an-ai-powered-website-support-agent",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/decide-what-to-build-first",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I have too many technology problems to tackle",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Title length is 52 characters.",
+      "evidence": "I have too many technology problems to tackle | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Description length is 120 characters.",
+      "evidence": "Several things need attention, and I don't know what to fix first. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/decide-what-to-build-first",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/decide-what-to-build-first",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I think the way we work is the real problem",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Title length is 50 characters.",
+      "evidence": "I think the way we work is the real problem | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Description length is 136 characters.",
+      "evidence": "Adding another app may not help if the current steps are confusing or unnecessary. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/simplify-a-confusing-workflow-before-software",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I don't know whether to buy software or have something built",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Title length is 46 characters.",
+      "evidence": "Should I buy software or have it built? | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Description length is 143 characters.",
+      "evidence": "The tools I found don't quite fit, but I don't know if building my own would be worth it. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/choose-build-vs-buy-for-a-tool",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "I don't know if this proposal is a good deal",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Title length is 51 characters.",
+      "evidence": "I don't know if this proposal is a good deal | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Description length is 109 characters.",
+      "evidence": "A company gave me a price and plan, but I can't tell what is included or whether it will solve the problem...",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/review-a-vendor-proposal-before-signing",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My website or software project has stopped",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Title length is 49 characters.",
+      "evidence": "My website or software project has stopped | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Description length is 135 characters.",
+      "evidence": "The work started, but now it is stuck and no one is sure what should happen next. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/recover-a-project-that-stalled",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "My new business needs help with technology",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Title length is 49 characters.",
+      "evidence": "My new business needs help with technology | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Description length is 147 characters.",
+      "evidence": "I need help setting up email, a website, booking, payments, and a simple way to keep records. Talk directly with Aaron about a practical next step.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/services/set-up-a-small-business-tech-stack-from-scratch",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Valid JSON-LD types: WebPage, Service, FAQPage, BreadcrumbList, Person, ['ProfessionalService', 'LocalBusiness'].",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Reliability",
+      "check": "page-status",
+      "route": "/thank-you",
+      "message": "HTTP 200.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title",
+      "route": "/thank-you",
+      "message": "Title is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description",
+      "route": "/thank-you",
+      "message": "Description is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical",
+      "route": "/thank-you",
+      "message": "Canonical is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "language",
+      "route": "/thank-you",
+      "message": "Language is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "viewport",
+      "route": "/thank-you",
+      "message": "Viewport is present.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "single-h1",
+      "route": "/thank-you",
+      "message": "Found 1 H1 element(s).",
+      "evidence": "Tell me what\u2019s going on first.",
+      "recommendation": "Use one descriptive H1 for the page's primary topic."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "title-length",
+      "route": "/thank-you",
+      "message": "Title length is 30 characters.",
+      "evidence": "Choose a Discovery Time | Audo",
+      "recommendation": "Keep the title concise and descriptive; roughly 15\u201365 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "description-length",
+      "route": "/thank-you",
+      "message": "Description length is 100 characters.",
+      "evidence": "Choose an available time for a free 30-minute Audo discovery call, or send Aaron a short note first.",
+      "recommendation": "Write a useful page-specific summary; roughly 70\u2013170 characters is an audit heuristic, not a ranking rule."
+    },
+    {
+      "status": "pass",
+      "category": "SEO",
+      "check": "canonical-alignment",
+      "route": "/thank-you",
+      "message": "Canonical path matches the page.",
+      "evidence": "https://getaudo.com/thank-you",
+      "recommendation": "Use one absolute, self-referential canonical and list that same URL in the XML sitemap."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "unique-ids",
+      "route": "/thank-you",
+      "message": "IDs are unique.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "image-alt",
+      "route": "/thank-you",
+      "message": "Every image has an alt attribute.",
+      "evidence": "",
+      "recommendation": "Give meaningful images concise alternatives and decorative images alt=\"\"."
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "form-labels",
+      "route": "/thank-you",
+      "message": "Form controls have accessible labels.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "control-names",
+      "route": "/thank-you",
+      "message": "Links and buttons have accessible text.",
+      "evidence": "",
+      "recommendation": ""
+    },
+    {
+      "status": "pass",
+      "category": "Accessibility",
+      "check": "landmarks",
+      "route": "/thank-you",
+      "message": "Landmarks: main=1, nav=4, footer=1.",
+      "evidence": "",
+      "recommendation": "Use one main landmark plus named navigation and footer landmarks."
+    },
+    {
+      "status": "pass",
+      "category": "AI and structured data",
+      "check": "json-ld",
+      "route": "/thank-you",
+      "message": "Structured data is optional on this intentionally noindex supporting page.",
+      "evidence": "",
+      "recommendation": "Add only accurate JSON-LD that matches visible page content."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/privacy",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/sitemap",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-a-new-website-for-your-business",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/make-a-slow-website-feel-fast",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/refresh-an-outdated-homepage",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/improve-a-confusing-mobile-website",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/fix-a-broken-contact-form",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-an-online-quote-or-estimate-tool",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/automate-lead-follow-up",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-a-simple-reporting-dashboard",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-a-new-customer-onboarding-workflow",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/clean-up-crm-fields-and-duplicate-records",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/generate-proposals-from-repeat-inputs",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/integrate-your-business-with-a-crm",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/choose-ai-tools-for-your-business",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/create-safe-ai-rules-for-client-data",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/use-ai-to-improve-customer-support-replies",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/create-a-custom-ai-assistant-for-procedures",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/build-an-ai-powered-website-support-agent",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/decide-what-to-build-first",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/review-a-vendor-proposal-before-signing",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/recover-a-project-that-stalled",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    },
+    {
+      "status": "pass",
+      "category": "Consistency",
+      "check": "primary-navigation",
+      "route": "/thank-you",
+      "message": "Primary navigation contains the shared destinations.",
+      "evidence": "",
+      "recommendation": "Use the same visible primary destinations across public pages."
+    }
+  ],
+  "limitations": [
+    "Automated checks cannot establish WCAG conformance or legal compliance.",
+    "Manual keyboard, screen-reader, zoom, contrast, motion, cognitive clarity, and complete conversion-path testing remain required.",
+    "Search engines and AI systems do not guarantee indexing, ranking, citations, or rich results."
+  ]
+}

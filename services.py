@@ -891,6 +891,48 @@ ACTIVE_SERVICE_TITLES = {
 }
 
 
+# Orders the public catalog by how often a non-technical small-business owner
+# is likely to recognize each situation. Keep categories together so the same
+# ordering carries through the sitemap and machine-readable service catalogs.
+SERVICE_COMMONNESS_ORDER = (
+    # Website and app help
+    "The business needs a better website",
+    "The website feels slow",
+    "The homepage no longer matches the business",
+    "The mobile website is confusing",
+    "WordPress warnings are piling up",
+    "Contact form submissions are not arriving",
+    "Prospects need quicker quote or fit answers",
+    "Give customers a cleaner way to send requests and files",
+    # Doing less work by hand
+    "Copy-paste is slowing the work down",
+    "A spreadsheet is carrying too much responsibility",
+    "Leads need follow-up you can trust",
+    "Important numbers take too long to see",
+    "New customer onboarding feels inconsistent",
+    "CRM data is hard to trust",
+    "Turn form submissions into tracked tasks",
+    "Appointment confirmations are confusing",
+    "Proposals take too long to prepare",
+    "Customer details are disconnected from the CRM",
+    # Using AI at work
+    "The team does not know where AI fits",
+    "There are too many AI tools to choose from",
+    "The team needs safer rules for AI and client data",
+    "Support replies need to be faster without getting sloppy",
+    "Procedures are hard for the team to find",
+    "Website visitors need quick answers",
+    # Choosing what to do next
+    "You have too many product ideas",
+    "Simplify the process before you buy or build software",
+    "A build-vs-buy decision is unclear",
+    "A vendor proposal is hard to evaluate",
+    "A project has stalled",
+    # Setting up a small business
+    "Set up the basics for a new small business",
+)
+
+
 SERVICE_SLUG_OVERRIDES = {
     "Contact form submissions are not arriving": "fix-a-broken-contact-form",
     "The website feels slow": "make-a-slow-website-feel-fast",
@@ -976,6 +1018,15 @@ def _build_services() -> list[Service]:
                 result=result,
             )
         )
+    order = {title: index for index, title in enumerate(SERVICE_COMMONNESS_ORDER)}
+    if set(order) != ACTIVE_SERVICE_TITLES:
+        missing_from_order = ACTIVE_SERVICE_TITLES - set(order)
+        stale_in_order = set(order) - ACTIVE_SERVICE_TITLES
+        raise ValueError(
+            f"Service commonness order mismatch; missing={sorted(missing_from_order)}, "
+            f"stale={sorted(stale_in_order)}"
+        )
+    services.sort(key=lambda service: order[service.title])
     return services
 
 
@@ -1484,6 +1535,52 @@ EXPLORER_SERVICES = [
 ]
 
 
+# Homepage groups differ from the formal catalog categories, so they get a
+# separate most-common-first order. The first item in each group is featured.
+EXPLORER_COMMONNESS_ORDER = {
+    "website": (
+        "The business needs a better website",
+        "The website feels slow",
+        "The homepage no longer matches the business",
+        "The mobile website is confusing",
+        "WordPress warnings are piling up",
+        "Contact form submissions are not arriving",
+    ),
+    "customers": (
+        "Leads need follow-up you can trust",
+        "Give customers a cleaner way to send requests and files",
+        "New customer onboarding feels inconsistent",
+        "Prospects need quicker quote or fit answers",
+        "Appointment confirmations are confusing",
+        "Customer details are disconnected from the CRM",
+    ),
+    "work": (
+        "Copy-paste is slowing the work down",
+        "A spreadsheet is carrying too much responsibility",
+        "Important numbers take too long to see",
+        "Turn form submissions into tracked tasks",
+        "Proposals take too long to prepare",
+        "CRM data is hard to trust",
+    ),
+    "ai": (
+        "The team does not know where AI fits",
+        "There are too many AI tools to choose from",
+        "The team needs safer rules for AI and client data",
+        "Support replies need to be faster without getting sloppy",
+        "Procedures are hard for the team to find",
+        "Website visitors need quick answers",
+    ),
+    "decisions": (
+        "You have too many product ideas",
+        "Set up the basics for a new small business",
+        "Simplify the process before you buy or build software",
+        "A build-vs-buy decision is unclear",
+        "A vendor proposal is hard to evaluate",
+        "A project has stalled",
+    ),
+}
+
+
 def _explorer_detail(
     problem_heading: str,
     goal_heading: str,
@@ -1989,6 +2086,26 @@ def service_cards() -> list[dict[str, object]]:
                 "faq_answers": EXPLORER_FAQ_ANSWERS[source_title],
             }
         )
+    group_order = {group: index for index, group in enumerate(EXPLORER_COMMONNESS_ORDER)}
+    commonness = {
+        (group, title): index
+        for group, titles in EXPLORER_COMMONNESS_ORDER.items()
+        for index, title in enumerate(titles)
+    }
+    expected = {(str(card["group"]), str(card["source_title"])) for card in cards}
+    if set(commonness) != expected:
+        missing_from_order = expected - set(commonness)
+        stale_in_order = set(commonness) - expected
+        raise ValueError(
+            f"Explorer commonness order mismatch; missing={sorted(missing_from_order)}, "
+            f"stale={sorted(stale_in_order)}"
+        )
+    cards.sort(
+        key=lambda card: (
+            group_order[str(card["group"])],
+            commonness[(str(card["group"]), str(card["source_title"]))],
+        )
+    )
     return cards
 
 

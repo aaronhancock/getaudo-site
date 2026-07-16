@@ -1,7 +1,7 @@
 {
-  "currentItem": "Combined homepage problem finder",
-  "currentLoop": "Loop 8 \u00b7 merged finder verification",
-  "latestChange": "Combined the help categories and real-world problem explorer into one continuous, accessible decision path while retaining all 30 detail pages.",
+  "currentItem": "Public-site readiness and reusable reporting",
+  "currentLoop": "Loop 10 \u00b7 full discoverability and accessibility verification",
+  "latestChange": "Aligned shared headers and packaged SEO, AI-discovery, structured-data, accessibility-signal, and consistency checks into a reusable comprehensive report.",
   "latestResult": "Every desktop and mobile category is at least 95 and no hard gate remains.",
   "nextAdjustment": "Freeze the tested revision and stop for deployment approval.",
   "baselineFrozen": true,
@@ -39,7 +39,7 @@
           "href": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/sitemap-full.png",
       "afterScreenshot": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
@@ -81,7 +81,7 @@
           "href": "evidence/after/loop-04-validation-mobile.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
@@ -127,7 +127,7 @@
           "href": "evidence/after/loop-08-combined-finder-desktop.png"
         }
       ],
-      "attempts": 7,
+      "attempts": 9,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png"
@@ -165,7 +165,7 @@
           "href": "evidence/after/loop-04-validation-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
@@ -199,7 +199,7 @@
           "href": "../../tests/test_homepage_experience.py"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
@@ -391,7 +391,7 @@
           "href": "evidence/after/loop-07-client-work-mobile-clean.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-07-client-work-mobile-clean.png"
@@ -429,7 +429,7 @@
           "href": "evidence/after/loop-07-privacy-summary-mobile-full.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/privacy-full.png",
       "afterScreenshot": "evidence/after/loop-07-privacy-summary-mobile-full.png"
@@ -521,7 +521,7 @@
           "href": "evidence/after/loop-04-scheduler-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-desktop.png"
@@ -555,7 +555,7 @@
           "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/not-found-full.png",
       "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
@@ -597,7 +597,7 @@
           "href": "evidence/after/loop-07-founder-mobile-clean.png"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-07-founder-mobile-clean.png"
@@ -926,7 +926,7 @@
           "href": "evidence/after/loop-04-scheduler-mobile.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-mobile.png"
@@ -975,7 +975,7 @@
           "href": "evidence/after/loop-01-not-found-mobile.png"
         }
       ],
-      "attempts": 9,
+      "attempts": 11,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/not-found-full.png",
       "afterScreenshot": "evidence/after/loop-01-not-found-desktop.png"
@@ -1167,7 +1167,7 @@
           "href": "evidence/after/loop-03-homepage-desktop.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png"
@@ -1217,7 +1217,7 @@
           "href": "evidence/after/loop-08-combined-finder-narrow-360.png"
         }
       ],
-      "attempts": 7,
+      "attempts": 9,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png"
@@ -1574,10 +1574,10 @@
     },
     "homepage-problem-explorer": {
       "status": "passing",
-      "currentLoop": 8,
-      "latestNotes": "Each focused situation keeps a direct detail-page link and a form-context action. All 30 pages remain available through the persistent catalog link, sitemap, and machine-readable catalogs.",
-      "latestChange": "Moved the 30-situation explorer into the category section, connected the five visual cards as its accessible filters, and removed the duplicate lower section.",
-      "latestResult": "One continuous problem-finding task replaces two competing sections; all categories are at least 97 and hard gates pass.",
+      "currentLoop": 9,
+      "latestNotes": "The website group now starts with an outgrown website, followed by speed and outdated messaging; the broken form moved last. Customer, daily-work, AI, and decision groups received the same likelihood review.",
+      "latestChange": "Reordered every group by likely small-business familiarity so the broadest problem is featured and more specialized situations follow.",
+      "latestResult": "The combined explorer now starts with the situations most visitors are likely to recognize; all categories are at least 97 and hard gates pass.",
       "nextAdjustment": "Capture and analyze baseline evidence.",
       "desktop": {
         "clarity": 99,
@@ -1611,12 +1611,16 @@
         {
           "label": "Combined desktop finder",
           "href": "evidence/after/loop-08-combined-finder-desktop.png"
+        },
+        {
+          "label": "Most-common-first desktop finder",
+          "href": "evidence/after/loop-09-commonness-order-desktop.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
-      "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile-lower.png"
+      "afterScreenshot": "evidence/after/loop-09-commonness-order-desktop.png"
     },
     "scheduler-confirmation": {
       "status": "passing",
@@ -1651,7 +1655,7 @@
           "href": "evidence/after/loop-04-scheduler-success-desktop.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/scheduler-success-local.png",
       "afterScreenshot": "evidence/after/loop-04-scheduler-success-desktop.png"
@@ -1685,7 +1689,7 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
@@ -1727,7 +1731,7 @@
           "href": "evidence/after/loop-08-combined-finder-mobile.png"
         }
       ],
-      "attempts": 7,
+      "attempts": 9,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-first-screen.png",
       "afterScreenshot": "evidence/after/loop-08-combined-finder-mobile.png"
@@ -1761,7 +1765,7 @@
           "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
         }
       ],
-      "attempts": 8,
+      "attempts": 10,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
@@ -2286,7 +2290,7 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "",
       "afterScreenshot": ""
@@ -2369,7 +2373,7 @@
           "href": "evidence/after/loop-08-combined-finder-desktop.png"
         }
       ],
-      "attempts": 6,
+      "attempts": 8,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": "evidence/after/loop-08-combined-finder-desktop.png"
@@ -2511,7 +2515,7 @@
           "href": "evidence/after/loop-05-thank-you-direct-mobile.png"
         }
       ],
-      "attempts": 9,
+      "attempts": 11,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/thank-you-full.png",
       "afterScreenshot": "evidence/after/loop-05-thank-you-direct-desktop.png"
@@ -2545,7 +2549,7 @@
           "href": "../../tests/test_catalog_surfaces.py"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/service-new-business-full.png",
       "afterScreenshot": ""
@@ -2579,11 +2583,87 @@
           "href": "../../tests/test_homepage_experience.py"
         }
       ],
-      "attempts": 4,
+      "attempts": 6,
       "reviewerNotes": "",
       "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
       "afterScreenshot": ""
+    },
+    "accessibility-readiness": {
+      "status": "passing",
+      "currentLoop": 10,
+      "latestNotes": "The package checks language, viewport, H1, landmarks, unique IDs, image alternatives, form labels, control names, and navigation consistency. Existing rendered checks cover keyboard, mobile targets, focus, reflow, form recovery, and reduced motion; the report explicitly avoids legal certification claims.",
+      "latestChange": "Added site-wide automated accessibility-signal checks and aligned the shared primary destinations across homepage, privacy, sitemap, confirmation, service-detail, and 404 headers.",
+      "latestResult": "All automated checks pass across 34 audited pages; rendered 390px header checks have no overflow.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Privacy shared header mobile",
+          "href": "evidence/after/loop-10-privacy-shared-header-mobile.png"
+        },
+        {
+          "label": "Reusable audit report",
+          "href": "../public-website-readiness-audit/index.html"
+        }
+      ],
+      "attempts": 1,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "reusable-readiness-report": {
+      "status": "passing",
+      "currentLoop": 10,
+      "latestNotes": "The Audo validation run discovered 33 canonical pages plus the noindex confirmation page and completed 586 checks with zero warnings or failures.",
+      "latestChange": "Packaged a dependency-free audit runner that accepts any website URL and generates matching JSON, Markdown, and HTML reports.",
+      "latestResult": "The report package is reusable, evidence-based, and explicitly separates automated signals from manual WCAG and legal review.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Comprehensive HTML report",
+          "href": "../public-website-readiness-audit/index.html"
+        },
+        {
+          "label": "Reusable audit instructions",
+          "href": "../../docs/ux-audit/reusable-website-readiness-service.md"
+        }
+      ],
+      "attempts": 1,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
     }
   },
-  "updatedAt": "2026-07-16T19:56:02+00:00"
+  "updatedAt": "2026-07-16T20:48:57+00:00"
 }

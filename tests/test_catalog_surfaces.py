@@ -2,10 +2,11 @@ import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from services import ARCHIVED_SERVICE_REDIRECTS, SERVICES, service_cards
+from services import ARCHIVED_SERVICE_REDIRECTS, SERVICE_COMMONNESS_ORDER, SERVICES, service_cards
 from site_catalog import (
     build_llms_full_txt,
     build_llms_txt,
+    build_robots_txt,
     build_service_markdown,
     build_services_markdown,
     build_sitemap_xml,
@@ -18,6 +19,9 @@ BASE_URL = "https://getaudo.com"
 
 
 class CatalogSurfaceTests(unittest.TestCase):
+    def test_public_catalog_uses_the_reviewed_most_common_first_order(self) -> None:
+        self.assertEqual(tuple(service.title for service in SERVICES), SERVICE_COMMONNESS_ORDER)
+
     def test_every_public_catalog_surface_uses_the_live_services(self) -> None:
         entries = catalog_entries()
 
@@ -43,6 +47,8 @@ class CatalogSurfaceTests(unittest.TestCase):
             *{f"{BASE_URL}{entry.html_path}" for entry in entries},
         }
         self.assertEqual(sitemap_urls, expected_urls)
+        self.assertNotIn("changefreq", xml_text)
+        self.assertNotIn("priority", xml_text)
 
     def test_llms_files_are_linked_markdown_and_include_the_full_catalog(self) -> None:
         entries = catalog_entries()
@@ -142,6 +148,17 @@ class CatalogSurfaceTests(unittest.TestCase):
                 normalized = content.lower()
                 for product_name in forbidden_product_names:
                     self.assertNotIn(product_name, normalized)
+
+    def test_server_exposes_crawl_and_agent_discovery_files(self) -> None:
+        server_source = (ROOT / "server.py").read_text()
+        self.assertIn('if path == "/robots.txt":', server_source)
+        self.assertIn("build_robots_txt(PUBLIC_BASE_URL)", server_source)
+        self.assertIn('if path == "/llms.txt":', server_source)
+        self.assertIn('if path == "/llms-full.txt":', server_source)
+        robots = build_robots_txt(BASE_URL)
+        self.assertIn("Disallow: /api/", robots)
+        self.assertIn(f"Sitemap: {BASE_URL}/sitemap.xml", robots)
+        self.assertIn(f"# AI-readable site guide: {BASE_URL}/llms.txt", robots)
 
     def test_machine_readable_context_matches_the_public_small_business_positioning(self) -> None:
         entries = catalog_entries()

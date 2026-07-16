@@ -187,6 +187,16 @@ def fixed_inventory() -> list[dict[str, object]]:
              "The correct consulting page opens with no misleading preview.", "Metadata sets expectations before the visit.",
              "Search and social acquisition depend on accurate metadata.", "Titles, descriptions, canonicals, robots, Open Graph, and structured data are verified.",
              ["service detail", "privacy", "sitemap", "query string"], kind="machine"),
+        item("accessibility-readiness", "site-wide", "WCAG 2.2 AA accessibility readiness", 7,
+             "Use every public page and conversion path with assistive technology or alternate input.", "Navigate, understand, and complete the same task without a mouse or visual assumptions.",
+             "The visitor receives equivalent content, feedback, recovery, and completion.", "Accessible experiences are necessary for equal use.",
+             "Accessibility protects reach, trust, and conversion while reducing avoidable risk.", "Static checks plus rendered keyboard, focus, reflow, contrast, motion, screen-reader, target-size, and recovery evidence are complete.",
+             ["keyboard only", "screen reader", "200% and 400% zoom", "reduced motion", "form errors"], kind="machine"),
+        item("reusable-readiness-report", "audit artifact", "Reusable SEO, AI, accessibility, and consistency report", 7,
+             "Receive a comprehensive, understandable report that can be rerun after changes.", "Review prioritized failures and recommendations.",
+             "JSON, Markdown, and HTML reports describe the same audited inventory.", "A repeatable report makes remediation and maintenance practical.",
+             "The packaged audit can be offered consistently across websites.", "A fresh cross-site run discovers canonical pages and reports crawl, SEO, AI, structured-data, accessibility-signal, and navigation findings with explicit limitations.",
+             ["public origin", "local mirror", "no sitemap", "noindex support page"], kind="machine"),
         item("not-found", "/a-page-that-does-not-exist", "404 and recovery", 8,
              "Understand that the page is missing and recover safely.", "Return home, browse examples, or book discovery.",
              "A valid public destination opens with no dead end.", "Mistyped or stale links should be recoverable.",
@@ -464,14 +474,14 @@ def merge_state(manifest: dict[str, object]) -> dict[str, object]:
     if state["baselineFrozen"] and str(state.get("currentLoop", "")).lower().startswith("baseline"):
         state["currentItem"] = "Worst-first improvement queue"
         state["currentLoop"] = "Loop 1"
-        state["latestChange"] = "Baseline frozen after all 57 atomic experiences were scored."
+        state["latestChange"] = f"Baseline frozen after all {len(existing)} atomic experiences were scored."
         state["latestResult"] = "Baseline complete; hard-gate failures queued first."
         state["nextAdjustment"] = "Repair the incorrect unknown-route response, then the false fallback confirmation."
     failing_ids = [entry_id for entry_id, result in existing.items() if result.get("status") == "failing"]
     if not failing_ids:
-        state["currentItem"] = "Combined homepage problem finder"
-        state["currentLoop"] = "Loop 8 · merged finder verification"
-        state["latestChange"] = "Combined the help categories and real-world problem explorer into one continuous, accessible decision path while retaining all 30 detail pages."
+        state["currentItem"] = "Public-site readiness and reusable reporting"
+        state["currentLoop"] = "Loop 10 · full discoverability and accessibility verification"
+        state["latestChange"] = "Aligned shared headers and packaged SEO, AI-discovery, structured-data, accessibility-signal, and consistency checks into a reusable comprehensive report."
         state["latestResult"] = "Every desktop and mobile category is at least 95 and no hard gate remains."
         state["nextAdjustment"] = "Freeze the tested revision and stop for deployment approval."
     elif state["baselineFrozen"]:

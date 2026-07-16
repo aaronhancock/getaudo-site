@@ -6,8 +6,8 @@
     "mobile": "390x844",
     "narrowMobile": "360x800"
   },
-  "generatedAt": "2026-07-16T19:56:02+00:00",
-  "count": 57,
+  "generatedAt": "2026-07-16T20:48:57+00:00",
+  "count": 59,
   "items": [
     {
       "id": "site-header-desktop",
@@ -497,6 +497,49 @@
       "kind": "machine"
     },
     {
+      "id": "accessibility-readiness",
+      "route": "site-wide",
+      "title": "WCAG 2.2 AA accessibility readiness",
+      "persona": "Least-technical small-business owner who uses basic email and websites",
+      "objective": "Use every public page and conversion path with assistive technology or alternate input.",
+      "expectedNextAction": "Navigate, understand, and complete the same task without a mouse or visual assumptions.",
+      "afterAction": "The visitor receives equivalent content, feedback, recovery, and completion.",
+      "visitorImportance": "Accessible experiences are necessary for equal use.",
+      "businessImportance": "Accessibility protects reach, trust, and conversion while reducing avoidable risk.",
+      "completionEvidence": "Static checks plus rendered keyboard, focus, reflow, contrast, motion, screen-reader, target-size, and recovery evidence are complete.",
+      "edgeStates": [
+        "keyboard only",
+        "screen reader",
+        "200% and 400% zoom",
+        "reduced motion",
+        "form errors"
+      ],
+      "priorityBand": 7,
+      "criticality": "high",
+      "kind": "machine"
+    },
+    {
+      "id": "reusable-readiness-report",
+      "route": "audit artifact",
+      "title": "Reusable SEO, AI, accessibility, and consistency report",
+      "persona": "Least-technical small-business owner who uses basic email and websites",
+      "objective": "Receive a comprehensive, understandable report that can be rerun after changes.",
+      "expectedNextAction": "Review prioritized failures and recommendations.",
+      "afterAction": "JSON, Markdown, and HTML reports describe the same audited inventory.",
+      "visitorImportance": "A repeatable report makes remediation and maintenance practical.",
+      "businessImportance": "The packaged audit can be offered consistently across websites.",
+      "completionEvidence": "A fresh cross-site run discovers canonical pages and reports crawl, SEO, AI, structured-data, accessibility-signal, and navigation findings with explicit limitations.",
+      "edgeStates": [
+        "public origin",
+        "local mirror",
+        "no sitemap",
+        "noindex support page"
+      ],
+      "priorityBand": 7,
+      "criticality": "high",
+      "kind": "machine"
+    },
+    {
       "id": "not-found",
       "route": "/a-page-that-does-not-exist",
       "title": "404 and recovery",
@@ -557,11 +600,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-fix-a-broken-contact-form",
-      "route": "/services/fix-a-broken-contact-form",
-      "title": "Example detail: My website form isn't sending me messages",
+      "id": "service-build-a-new-website-for-your-business",
+      "route": "/services/build-a-new-website-for-your-business",
+      "title": "Example detail: My business has outgrown its website",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: My website form isn't sending me messages",
+      "objective": "Recognize the situation: My business has outgrown its website",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -599,11 +642,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-clean-up-wordpress-plugin-warnings",
-      "route": "/services/clean-up-wordpress-plugin-warnings",
-      "title": "Example detail: My WordPress site keeps showing warnings",
+      "id": "service-refresh-an-outdated-homepage",
+      "route": "/services/refresh-an-outdated-homepage",
+      "title": "Example detail: My website no longer describes my business",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: My WordPress site keeps showing warnings",
+      "objective": "Recognize the situation: My website no longer describes my business",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -641,11 +684,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-refresh-an-outdated-homepage",
-      "route": "/services/refresh-an-outdated-homepage",
-      "title": "Example detail: My website no longer describes my business",
+      "id": "service-clean-up-wordpress-plugin-warnings",
+      "route": "/services/clean-up-wordpress-plugin-warnings",
+      "title": "Example detail: My WordPress site keeps showing warnings",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: My website no longer describes my business",
+      "objective": "Recognize the situation: My WordPress site keeps showing warnings",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -662,11 +705,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-build-a-new-website-for-your-business",
-      "route": "/services/build-a-new-website-for-your-business",
-      "title": "Example detail: My business has outgrown its website",
+      "id": "service-fix-a-broken-contact-form",
+      "route": "/services/fix-a-broken-contact-form",
+      "title": "Example detail: My website form isn't sending me messages",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: My business has outgrown its website",
+      "objective": "Recognize the situation: My website form isn't sending me messages",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -704,11 +747,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-connect-scheduling-and-confirmation-emails",
-      "route": "/services/connect-scheduling-and-confirmation-emails",
-      "title": "Example detail: My appointment messages confuse customers",
+      "id": "service-build-a-customer-portal-for-requests-and-files",
+      "route": "/services/build-a-customer-portal-for-requests-and-files",
+      "title": "Example detail: Customer requests and files are scattered everywhere",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: My appointment messages confuse customers",
+      "objective": "Recognize the situation: Customer requests and files are scattered everywhere",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -767,11 +810,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-build-a-customer-portal-for-requests-and-files",
-      "route": "/services/build-a-customer-portal-for-requests-and-files",
-      "title": "Example detail: Customer requests and files are scattered everywhere",
+      "id": "service-connect-scheduling-and-confirmation-emails",
+      "route": "/services/connect-scheduling-and-confirmation-emails",
+      "title": "Example detail: My appointment messages confuse customers",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: Customer requests and files are scattered everywhere",
+      "objective": "Recognize the situation: My appointment messages confuse customers",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -809,11 +852,32 @@
       "kind": "screen"
     },
     {
-      "id": "service-turn-intake-forms-into-organized-tasks",
-      "route": "/services/turn-intake-forms-into-organized-tasks",
-      "title": "Example detail: I have to turn every form into a task by hand",
+      "id": "service-reduce-copy-and-paste-between-tools",
+      "route": "/services/reduce-copy-and-paste-between-tools",
+      "title": "Example detail: We copy the same information from one app to another",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: I have to turn every form into a task by hand",
+      "objective": "Recognize the situation: We copy the same information from one app to another",
+      "expectedNextAction": "Read the tailored approach or start a discovery request.",
+      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
+      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
+      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
+      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
+      "edgeStates": [
+        "direct search landing",
+        "form validation",
+        "mobile form",
+        "FAQ reading"
+      ],
+      "priorityBand": 3,
+      "criticality": "high",
+      "kind": "screen"
+    },
+    {
+      "id": "service-convert-spreadsheet-work-into-a-simple-app",
+      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
+      "title": "Example detail: One spreadsheet is running too much of the business",
+      "persona": "Least-technical small-business owner who uses basic email and websites",
+      "objective": "Recognize the situation: One spreadsheet is running too much of the business",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -835,6 +899,27 @@
       "title": "Example detail: It takes too long to see how the business is doing",
       "persona": "Least-technical small-business owner who uses basic email and websites",
       "objective": "Recognize the situation: It takes too long to see how the business is doing",
+      "expectedNextAction": "Read the tailored approach or start a discovery request.",
+      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
+      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
+      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
+      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
+      "edgeStates": [
+        "direct search landing",
+        "form validation",
+        "mobile form",
+        "FAQ reading"
+      ],
+      "priorityBand": 3,
+      "criticality": "high",
+      "kind": "screen"
+    },
+    {
+      "id": "service-turn-intake-forms-into-organized-tasks",
+      "route": "/services/turn-intake-forms-into-organized-tasks",
+      "title": "Example detail: I have to turn every form into a task by hand",
+      "persona": "Least-technical small-business owner who uses basic email and websites",
+      "objective": "Recognize the situation: I have to turn every form into a task by hand",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -893,32 +978,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-convert-spreadsheet-work-into-a-simple-app",
-      "route": "/services/convert-spreadsheet-work-into-a-simple-app",
-      "title": "Example detail: One spreadsheet is running too much of the business",
+      "id": "service-train-your-team-to-use-ai-confidently",
+      "route": "/services/train-your-team-to-use-ai-confidently",
+      "title": "Example detail: I don't know where AI would actually help my business",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: One spreadsheet is running too much of the business",
-      "expectedNextAction": "Read the tailored approach or start a discovery request.",
-      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
-      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
-      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
-      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
-      "edgeStates": [
-        "direct search landing",
-        "form validation",
-        "mobile form",
-        "FAQ reading"
-      ],
-      "priorityBand": 3,
-      "criticality": "high",
-      "kind": "screen"
-    },
-    {
-      "id": "service-reduce-copy-and-paste-between-tools",
-      "route": "/services/reduce-copy-and-paste-between-tools",
-      "title": "Example detail: We copy the same information from one app to another",
-      "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: We copy the same information from one app to another",
+      "objective": "Recognize the situation: I don't know where AI would actually help my business",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -961,27 +1025,6 @@
       "title": "Example detail: My team needs simple rules for using AI safely",
       "persona": "Least-technical small-business owner who uses basic email and websites",
       "objective": "Recognize the situation: My team needs simple rules for using AI safely",
-      "expectedNextAction": "Read the tailored approach or start a discovery request.",
-      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
-      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
-      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
-      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
-      "edgeStates": [
-        "direct search landing",
-        "form validation",
-        "mobile form",
-        "FAQ reading"
-      ],
-      "priorityBand": 3,
-      "criticality": "high",
-      "kind": "screen"
-    },
-    {
-      "id": "service-train-your-team-to-use-ai-confidently",
-      "route": "/services/train-your-team-to-use-ai-confidently",
-      "title": "Example detail: I don't know where AI would actually help my business",
-      "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: I don't know where AI would actually help my business",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -1061,6 +1104,27 @@
       "kind": "screen"
     },
     {
+      "id": "service-decide-what-to-build-first",
+      "route": "/services/decide-what-to-build-first",
+      "title": "Example detail: I have too many technology problems to tackle",
+      "persona": "Least-technical small-business owner who uses basic email and websites",
+      "objective": "Recognize the situation: I have too many technology problems to tackle",
+      "expectedNextAction": "Read the tailored approach or start a discovery request.",
+      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
+      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
+      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
+      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
+      "edgeStates": [
+        "direct search landing",
+        "form validation",
+        "mobile form",
+        "FAQ reading"
+      ],
+      "priorityBand": 3,
+      "criticality": "high",
+      "kind": "screen"
+    },
+    {
       "id": "service-set-up-a-small-business-tech-stack-from-scratch",
       "route": "/services/set-up-a-small-business-tech-stack-from-scratch",
       "title": "Example detail: My new business needs help with technology",
@@ -1082,11 +1146,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-choose-build-vs-buy-for-a-tool",
-      "route": "/services/choose-build-vs-buy-for-a-tool",
-      "title": "Example detail: I don't know whether to buy software or have something built",
+      "id": "service-simplify-a-confusing-workflow-before-software",
+      "route": "/services/simplify-a-confusing-workflow-before-software",
+      "title": "Example detail: I think the way we work is the real problem",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: I don't know whether to buy software or have something built",
+      "objective": "Recognize the situation: I think the way we work is the real problem",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -1103,11 +1167,11 @@
       "kind": "screen"
     },
     {
-      "id": "service-simplify-a-confusing-workflow-before-software",
-      "route": "/services/simplify-a-confusing-workflow-before-software",
-      "title": "Example detail: I think the way we work is the real problem",
+      "id": "service-choose-build-vs-buy-for-a-tool",
+      "route": "/services/choose-build-vs-buy-for-a-tool",
+      "title": "Example detail: I don't know whether to buy software or have something built",
       "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: I think the way we work is the real problem",
+      "objective": "Recognize the situation: I don't know whether to buy software or have something built",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
@@ -1150,27 +1214,6 @@
       "title": "Example detail: My website or software project has stopped",
       "persona": "Least-technical small-business owner who uses basic email and websites",
       "objective": "Recognize the situation: My website or software project has stopped",
-      "expectedNextAction": "Read the tailored approach or start a discovery request.",
-      "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
-      "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",
-      "businessImportance": "Tailored detail pages attract and qualify the right consulting conversation.",
-      "completionEvidence": "Unique problem, goal, steps, FAQs, seeded form, metadata, desktop, and mobile render are verified.",
-      "edgeStates": [
-        "direct search landing",
-        "form validation",
-        "mobile form",
-        "FAQ reading"
-      ],
-      "priorityBand": 3,
-      "criticality": "high",
-      "kind": "screen"
-    },
-    {
-      "id": "service-decide-what-to-build-first",
-      "route": "/services/decide-what-to-build-first",
-      "title": "Example detail: I have too many technology problems to tackle",
-      "persona": "Least-technical small-business owner who uses basic email and websites",
-      "objective": "Recognize the situation: I have too many technology problems to tackle",
       "expectedNextAction": "Read the tailored approach or start a discovery request.",
       "afterAction": "The page carries this exact example into the consultation form and then scheduling.",
       "visitorImportance": "A non-technical owner needs a relatable explanation of this specific problem.",

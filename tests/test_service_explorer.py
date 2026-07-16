@@ -6,6 +6,20 @@ from services import service_cards
 
 
 class ServiceExplorerTests(unittest.TestCase):
+    def test_each_problem_group_is_ordered_by_owner_likelihood(self) -> None:
+        cards = service_cards()
+        titles_by_group = {
+            group: [card["title"] for card in cards if card["group"] == group]
+            for group in ("website", "customers", "work", "ai", "decisions")
+        }
+
+        self.assertEqual(titles_by_group["website"][0], "My business has outgrown its website")
+        self.assertEqual(titles_by_group["website"][-1], "My website form isn't sending me messages")
+        self.assertEqual(titles_by_group["customers"][0], "I need a better way to follow up with new leads")
+        self.assertEqual(titles_by_group["work"][0], "We copy the same information from one app to another")
+        self.assertEqual(titles_by_group["ai"][0], "I don't know where AI would actually help my business")
+        self.assertEqual(titles_by_group["decisions"][0], "I have too many technology problems to tackle")
+
     def test_explorer_has_six_plain_language_examples_per_group(self) -> None:
         cards = service_cards()
 

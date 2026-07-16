@@ -107,12 +107,28 @@
         url("/assets/consulting-technology-hero.webp") center / cover no-repeat;
     }
 
-    nav {
+    header nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
       margin-bottom: clamp(54px, 8vw, 88px);
+    }
+
+    .header-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .header-nav-links > a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
     }
 
     .brand img {
@@ -134,6 +150,10 @@
       text-decoration: none;
       font-size: 14px;
       font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .header-nav-links > a:not(.nav-link) { display: none; }
     }
 
     .eyebrow {
@@ -361,7 +381,11 @@
         <a class="brand" href="/" aria-label="Audo home">
           <img src="/assets/audo-logo-white.png" alt="Audo">
         </a>
-        <a class="nav-link" href="/">Back to Audo</a>
+        <div class="header-nav-links">
+          <a href="/#services">Find your starting point</a>
+          <a href="/#why">Why Audo</a>
+          <a class="nav-link" href="/#discovery">Book free discovery</a>
+        </div>
       </nav>
       <p class="eyebrow">__THANK_YOU_EYEBROW__</p>
       <h1>__THANK_YOU_HEADING__</h1>

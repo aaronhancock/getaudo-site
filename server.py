@@ -814,7 +814,7 @@ def create_calendar_event(
     ]
     attendees = [{"email": consultation["email"], "displayName": consultation["name"]}]
     if BOOKING_INTERNAL_ATTENDEE and BOOKING_INTERNAL_ATTENDEE.lower() != str(consultation["email"]).lower():
-        attendees.append({"email": BOOKING_INTERNAL_ATTENDEE, "displayName": "Matthew Aaron Hancock"})
+        attendees.append({"email": BOOKING_INTERNAL_ATTENDEE, "displayName": "Matthew Aaron"})
 
     payload = {
         "id": event_id,
@@ -1611,7 +1611,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <title>Sitemap | Audo</title>
   <meta name="description" content="Find Audo help for small-business websites, automation, AI, internal tools, software, and everyday technology problems.">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="author" content="Aaron Hancock">
+  <meta name="author" content="Aaron">
   <meta name="theme-color" content="#101815">
   <link rel="canonical" href="{h(PUBLIC_BASE_URL + "/sitemap")}">
   <link rel="alternate" href="/llms.txt" type="text/plain" title="Audo AI summary">
@@ -1626,7 +1626,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <meta property="og:image:secure_url" content="{h(PUBLIC_BASE_URL + "/assets/audo-social-card-free-discovery.jpg")}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Audo social card with Aaron Hancock and Free Discovery call to action.">
+  <meta property="og:image:alt" content="Audo social card with Aaron and Free Discovery call to action.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Audo Sitemap">
   <meta name="twitter:description" content="Find the Audo page that matches the problem you want help with.">
@@ -1982,7 +1982,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Audo. Aaron Hancock, Founder &amp; Senior Tech Partner.</p>
+        <p>© 2026 Audo. Aaron, Founder &amp; Senior Tech Partner.</p>
         <nav class="footer-legal" aria-label="Privacy and site information">
           <a href="/privacy">Privacy</a>
           <a href="/sitemap" aria-current="page">Sitemap</a>
@@ -2070,7 +2070,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         )
         seed_message = display_title.rstrip(".!?") + "."
         social_image = f"{PUBLIC_BASE_URL}/assets/service-social/{service.slug}.jpg?v={SERVICE_SOCIAL_CARD_VERSION}"
-        social_image_alt = f"Audo social card for {display_title} with Aaron Hancock."
+        social_image_alt = f"Audo social card for {display_title} with Aaron."
         form_context = f"Example: {display_title} ({PUBLIC_BASE_URL}{service.url})"
         checks_html = "\n".join(
             f'<li><span>{index:02d}</span><p>{h(check)}</p></li>'
@@ -2158,12 +2158,12 @@ class AudoHandler(BaseHTTPRequestHandler):
                     },
                     {
                         "@type": "Person",
-                        "@id": "https://getaudo.com/#aaron-hancock",
-                        "name": "Aaron Hancock",
+                        "@id": "https://getaudo.com/#aaron",
+                        "name": "Aaron",
                         "jobTitle": "Founder and Senior Tech Partner",
                         "url": "https://getaudo.com/",
                         "image": "https://getaudo.com/assets/founder-field-portrait.webp",
-                        "description": "Aaron Hancock brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
+                        "description": "Aaron brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
                         "knowsAbout": [
                             "Product strategy",
                             "Software engineering",
@@ -2186,7 +2186,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "url": "https://getaudo.com/",
                         "logo": "https://getaudo.com/assets/audo-logo-white.png",
                         "image": social_image,
-                        "founder": {"@id": "https://getaudo.com/#aaron-hancock"},
+                        "founder": {"@id": "https://getaudo.com/#aaron"},
                         "description": "Audo gives small businesses direct help with websites, automation, AI, internal tools, technology decisions, and ongoing support.",
                     },
                 ],
@@ -2203,7 +2203,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <title>{h(page_meta_title)}</title>
   <meta name="description" content="{h(page_meta_description)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="author" content="Aaron Hancock">
+  <meta name="author" content="Aaron">
   <meta name="theme-color" content="#101815">
   <link rel="canonical" href="{h(PUBLIC_BASE_URL + service.url)}">
   <link rel="manifest" href="/site.webmanifest">
@@ -2806,7 +2806,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Audo. Aaron Hancock, Founder &amp; Senior Tech Partner.</p>
+        <p>© 2026 Audo. Aaron, Founder &amp; Senior Tech Partner.</p>
         <nav class="footer-legal" aria-label="Privacy and site information">
           <a href="/privacy">Privacy</a>
           <a href="/sitemap">Sitemap</a>

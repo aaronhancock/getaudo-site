@@ -135,7 +135,7 @@ def build_llms_txt(base_url: str, entries: list[CatalogEntry] | None = None) -> 
     sections = [
         "# Audo",
         "",
-        "> Direct, plain-English technology help for small businesses from Aaron Hancock.",
+        "> Direct, plain-English technology help for small businesses from Aaron.",
         "",
         "Audo helps non-technical small-business owners fix websites, reduce repetitive work, use AI carefully, choose software, and get practical technology projects moving. Clients work directly with Aaron from the first conversation through the work itself.",
         "",
@@ -151,7 +151,7 @@ def build_llms_txt(base_url: str, entries: list[CatalogEntry] | None = None) -> 
         "",
         "## About Audo",
         "",
-        "- Aaron Hancock is Audo's founder and senior technology partner. He has 30 years of hands-on experience building websites and software and leading product and engineering teams.",
+        "- Aaron is Audo's founder and senior technology partner. He has 30 years of hands-on experience building websites and software and leading product and engineering teams.",
         "- Audo is intentionally small. Clients speak with the person who diagnoses, explains, and does the work—without account managers or agency handoffs.",
         "- The audience is primarily non-technical small-business owners. Recommendations should be explained in ordinary business language, without assuming technical vocabulary.",
         "- A free discovery call is 30 minutes. The site collects a short description first, then offers live calendar availability.",
@@ -285,7 +285,7 @@ def build_llms_full_txt(base_url: str, entries: list[CatalogEntry] | None = None
 
 ## Company and audience
 
-Audo is Aaron Hancock's independent consulting practice for small businesses. The primary audience is a non-technical business owner who knows something is frustrating, broken, slow, confusing, or taking too much time but may not know the technical name for the problem. Audo copy and recommendations use simple, direct language and connect technology work to business outcomes.
+Audo is Aaron's independent consulting practice for small businesses. The primary audience is a non-technical business owner who knows something is frustrating, broken, slow, confusing, or taking too much time but may not know the technical name for the problem. Audo copy and recommendations use simple, direct language and connect technology work to business outcomes.
 
 Aaron works directly with each client. He diagnoses the problem, explains the options, plans the work, and does the work. Audo can handle a one-time repair, a larger project, or ongoing support.
 

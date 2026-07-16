@@ -91,6 +91,24 @@ class CatalogSurfaceTests(unittest.TestCase):
         self.assertIn('rel="alternate" href="/llms.txt"', privacy)
         self.assertNotIn("Here's what happens to the information you share.", privacy)
 
+    def test_public_site_uses_aaron_without_a_last_name(self) -> None:
+        public_sources = (
+            ROOT / "index.html",
+            ROOT / "privacy.html",
+            ROOT / "thank-you.html",
+            ROOT / "server.py",
+            ROOT / "site_catalog.py",
+        )
+
+        for source in public_sources:
+            with self.subTest(source=source.name):
+                self.assertNotIn("hancock", source.read_text().lower())
+
+        entries = catalog_entries()
+        self.assertNotIn("hancock", build_llms_txt(BASE_URL, entries).lower())
+        self.assertNotIn("hancock", build_llms_full_txt(BASE_URL, entries).lower())
+        self.assertFalse(any("hancock" in path.name.lower() for path in ROOT.rglob("*") if ".git" not in path.parts))
+
 
 if __name__ == "__main__":
     unittest.main()

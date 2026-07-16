@@ -1,0 +1,2561 @@
+{
+  "currentItem": "Complete public consulting-site inventory",
+  "currentLoop": "Loop 7 \u00b7 final local verification",
+  "latestChange": "Completed the worst-first improvement pass across all 57 inventoried experiences.",
+  "latestResult": "Every desktop and mobile category is at least 95 and no hard gate remains.",
+  "nextAdjustment": "Run final tests, freeze the tested revision, and stop for deployment approval.",
+  "baselineFrozen": true,
+  "items": {
+    "human-sitemap": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "Every category jump is 48px, lands on the promised section, and keeps the complete catalog visible to people and search engines. No overflow at 390px or 360px.",
+      "latestChange": "Added a compact category jump navigator and replaced internal category names with plain owner-facing labels while keeping all 30 crawlable links on the page.",
+      "latestResult": "All categories are at least 96; long-list scan and touch gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile sitemap",
+          "href": "evidence/baseline/mobile/sitemap-full.png"
+        },
+        {
+          "label": "Revised mobile sitemap with category jumps",
+          "href": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/sitemap-full.png",
+      "afterScreenshot": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"
+    },
+    "consultation-form": {
+      "status": "passing",
+      "currentLoop": 4,
+      "latestNotes": "Whitespace name, invalid email, and empty message recovery were exercised locally. The visitor's other fields remain intact and the corrected form advances safely.",
+      "latestChange": "Added privacy and follow-up context plus plain field-level errors, aria-invalid and aria-describedby connections, first-error focus, and preserved values.",
+      "latestResult": "All categories are at least 97; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original homepage form",
+          "href": "evidence/baseline/mobile/homepage-full.png"
+        },
+        {
+          "label": "Form with privacy and follow-up context",
+          "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
+        },
+        {
+          "label": "Field-level recovery and preserved context",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
+    },
+    "homepage-hero": {
+      "status": "passing",
+      "currentLoop": 3,
+      "latestNotes": "The first screen now explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without overflow.",
+      "latestChange": "Rewrote the support line around familiar owner problems and added Aaron, duration, price, and obligation context at the first decision point.",
+      "latestResult": "All categories are at least 96; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 98,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 98,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original desktop homepage",
+          "href": "evidence/baseline/desktop/homepage-full.png"
+        },
+        {
+          "label": "Revised desktop homepage",
+          "href": "evidence/after/loop-03-homepage-desktop.png"
+        },
+        {
+          "label": "Revised mobile homepage",
+          "href": "evidence/after/loop-03-homepage-mobile.png"
+        }
+      ],
+      "attempts": 5,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png"
+    },
+    "consultation-validation": {
+      "status": "passing",
+      "currentLoop": 4,
+      "latestNotes": "Synthetic validation preserved the message while focusing the whitespace-only name field and announcing Please enter your name.",
+      "latestChange": "Added consistent plain errors beside the affected field, semantic error connections, first-error focus, and automatic clearing on edit.",
+      "latestResult": "All categories are at least 97; recovery hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original form baseline",
+          "href": "evidence/baseline/mobile/homepage-full.png"
+        },
+        {
+          "label": "Field-level recovery",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-04-validation-mobile.png"
+    },
+    "legacy-redirects": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "Local route checks returned 301 for /app, /app.html, /services, /scenarios, /llm.txt, and a legacy scenario detail URL, each with the exact canonical destination.",
+      "latestChange": "Changed the legacy app and service-index routes to permanent redirects and verified the complete supported redirect table.",
+      "latestResult": "All categories are at least 98; canonical route gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Permanent redirect regression tests",
+          "href": "../../tests/test_homepage_experience.py"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "service-build-a-new-customer-onboarding-workflow": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-a-new-customer-onboarding-workflow-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-a-new-customer-onboarding-workflow-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-a-new-customer-onboarding-workflow-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-mobile-full.png"
+    },
+    "service-train-your-team-to-use-ai-confidently": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-train-your-team-to-use-ai-confidently-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-train-your-team-to-use-ai-confidently-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-train-your-team-to-use-ai-confidently-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-mobile-full.png"
+    },
+    "service-choose-build-vs-buy-for-a-tool": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-choose-build-vs-buy-for-a-tool-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-choose-build-vs-buy-for-a-tool-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-choose-build-vs-buy-for-a-tool-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-mobile-full.png"
+    },
+    "homepage-client-work": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "No metrics, testimonial language, or unsupported outcomes were added. Both examples now connect the work to concerns a non-technical owner can recognize.",
+      "latestChange": "Replaced technical task lists with two plainly labeled kinds of work, a recognizable business outcome, and simple descriptions of Aaron's responsibility.",
+      "latestResult": "All categories are at least 95; proof and relevance gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original client-work section",
+          "href": "evidence/baseline/desktop/homepage-full.png"
+        },
+        {
+          "label": "Revised desktop proof",
+          "href": "evidence/after/loop-07-client-work-desktop.png"
+        },
+        {
+          "label": "Revised mobile proof",
+          "href": "evidence/after/loop-07-client-work-mobile-clean.png"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-07-client-work-mobile-clean.png"
+    },
+    "privacy-policy": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "The short answer now appears before the legal detail: the note goes to Aaron, supports scheduling, and is not sold. The full policy remains available without hiding required information.",
+      "latestChange": "Added a three-part plain summary of what happens to a discovery note while preserving the complete policy and direct section links.",
+      "latestResult": "All categories are at least 95; privacy comprehension and control gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 98,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile privacy page",
+          "href": "evidence/baseline/mobile/privacy-full.png"
+        },
+        {
+          "label": "Revised full mobile privacy page",
+          "href": "evidence/after/loop-07-privacy-summary-mobile-full.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/privacy-full.png",
+      "afterScreenshot": "evidence/after/loop-07-privacy-summary-mobile-full.png"
+    },
+    "service-recover-a-project-that-stalled": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-recover-a-project-that-stalled-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-recover-a-project-that-stalled-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-recover-a-project-that-stalled-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-recover-a-project-that-stalled-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-recover-a-project-that-stalled-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-recover-a-project-that-stalled-mobile-full.png"
+    },
+    "scheduler-availability": {
+      "status": "passing",
+      "currentLoop": 4,
+      "latestNotes": "Desktop, 390px, and 360px show the same clear date-first sequence with Central Time and 24-hour notice visible. No horizontal overflow.",
+      "latestChange": "Replaced the large multi-row date button grid with one 50px native date selector on desktop and mobile, followed by 44px or larger time choices.",
+      "latestResult": "All categories are at least 97; scheduler hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 97,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile availability",
+          "href": "evidence/baseline/mobile/scheduler-availability-local.png"
+        },
+        {
+          "label": "Revised desktop availability",
+          "href": "evidence/after/loop-04-scheduler-desktop.png"
+        },
+        {
+          "label": "Revised mobile availability",
+          "href": "evidence/after/loop-04-scheduler-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
+      "afterScreenshot": "evidence/after/loop-04-scheduler-desktop.png"
+    },
+    "cookie-first-choice": {
+      "status": "passing",
+      "currentLoop": 2,
+      "latestNotes": "The first choice is specific, equal-weight, keyboard operable, and no optional consent is preselected.",
+      "latestChange": "Renamed Accept to Allow analytics, raised both choices and the policy link to 44px, and added explicit focus handling.",
+      "latestResult": "All desktop and mobile categories are at least 96; hard gates cleared.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 98,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 96,
+        "trust_credibility": 98,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Repaired consent controls",
+          "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/not-found-full.png",
+      "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
+    },
+    "homepage-founder": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "The photo, identity, experience, direct-working promise, plain-English promise, flexible engagement options, and CTA were reviewed together at 1280px, 390px, and 360px with no overflow.",
+      "latestChange": "Reframed the section around a deliberately small practice, made direct responsibility and 30 years of experience explicit, and shortened the mobile portrait and working-style cards.",
+      "latestResult": "All categories are at least 95; identity and trust gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original homepage section",
+          "href": "evidence/baseline/desktop/homepage-full.png"
+        },
+        {
+          "label": "Revised desktop Aaron section",
+          "href": "evidence/after/loop-07-founder-desktop.png"
+        },
+        {
+          "label": "Revised mobile Aaron section",
+          "href": "evidence/after/loop-07-founder-mobile-clean.png"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-07-founder-mobile-clean.png"
+    },
+    "xml-sitemap": {
+      "status": "passing",
+      "currentLoop": 0,
+      "latestNotes": "Evidence-backed Codex baseline analysis recorded.",
+      "latestChange": "None. Baseline discovery is read-only.",
+      "latestResult": "Baseline scored",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 96,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [
+        {
+          "category": "Trust and credibility",
+          "points": 2,
+          "reason": "The live URL set still requires a complete response-status and canonical crawl before release.",
+          "required": "Re-crawl every listed URL at the tested revision and record the result."
+        }
+      ],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Manifest inventory",
+          "href": "manifest.json"
+        }
+      ],
+      "attempts": 1,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "service-build-a-customer-portal-for-requests-and-files": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-a-customer-portal-for-requests-and-files-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-a-customer-portal-for-requests-and-files-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-a-customer-portal-for-requests-and-files-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-mobile-full.png"
+    },
+    "service-make-a-slow-website-feel-fast": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-make-a-slow-website-feel-fast-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-make-a-slow-website-feel-fast-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-make-a-slow-website-feel-fast-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-make-a-slow-website-feel-fast-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-make-a-slow-website-feel-fast-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-make-a-slow-website-feel-fast-mobile-full.png"
+    },
+    "service-build-a-new-website-for-your-business": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-a-new-website-for-your-business-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-a-new-website-for-your-business-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-a-new-website-for-your-business-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-a-new-website-for-your-business-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-a-new-website-for-your-business-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-a-new-website-for-your-business-mobile-full.png"
+    },
+    "service-generate-proposals-from-repeat-inputs": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-generate-proposals-from-repeat-inputs-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-generate-proposals-from-repeat-inputs-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-generate-proposals-from-repeat-inputs-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-mobile-full.png"
+    },
+    "service-choose-ai-tools-for-your-business": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-choose-ai-tools-for-your-business-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-choose-ai-tools-for-your-business-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-choose-ai-tools-for-your-business-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-choose-ai-tools-for-your-business-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-choose-ai-tools-for-your-business-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-choose-ai-tools-for-your-business-mobile-full.png"
+    },
+    "scheduler-loading": {
+      "status": "passing",
+      "currentLoop": 4,
+      "latestNotes": "Focus moves to the step-two heading without losing the saved synthetic request. Loading ends when the accessible date control appears.",
+      "latestChange": "The scheduler now confirms the note is saved, exposes aria-busy during availability loading, and uses a live status message.",
+      "latestResult": "All categories are at least 97; transition hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original local availability",
+          "href": "evidence/baseline/mobile/scheduler-availability-local.png"
+        },
+        {
+          "label": "Revised mobile scheduler",
+          "href": "evidence/after/loop-04-scheduler-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/scheduler-availability-local.png",
+      "afterScreenshot": "evidence/after/loop-04-scheduler-mobile.png"
+    },
+    "not-found": {
+      "status": "passing",
+      "currentLoop": 1,
+      "latestNotes": "Independent desktop and mobile review found no overflow, false destination, or critical undersized recovery control after the final logo target adjustment.",
+      "latestChange": "Replaced the silent homepage fallback with a branded, noindex 404 page, correct status, plain explanation, and three recovery paths.",
+      "latestResult": "All categories are 98 or higher; hard gates cleared.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [
+        {
+          "category": "Trust and credibility",
+          "points": 2,
+          "reason": "The page intentionally has no canonical because the requested URL is invalid.",
+          "required": "Keep noindex and verify the 404 status at release."
+        }
+      ],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original desktop unknown-route response",
+          "href": "evidence/baseline/desktop/not-found-full.png"
+        },
+        {
+          "label": "Improved desktop 404",
+          "href": "evidence/after/loop-01-not-found-desktop.png"
+        },
+        {
+          "label": "Improved mobile 404",
+          "href": "evidence/after/loop-01-not-found-mobile.png"
+        }
+      ],
+      "attempts": 7,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/not-found-full.png",
+      "afterScreenshot": "evidence/after/loop-01-not-found-desktop.png"
+    },
+    "service-build-a-simple-reporting-dashboard": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-a-simple-reporting-dashboard-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-a-simple-reporting-dashboard-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-a-simple-reporting-dashboard-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-a-simple-reporting-dashboard-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-a-simple-reporting-dashboard-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-a-simple-reporting-dashboard-mobile-full.png"
+    },
+    "service-build-an-ai-powered-website-support-agent": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-an-ai-powered-website-support-agent-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-an-ai-powered-website-support-agent-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-an-ai-powered-website-support-agent-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-mobile-full.png"
+    },
+    "service-automate-lead-follow-up": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-automate-lead-follow-up-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-automate-lead-follow-up-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-automate-lead-follow-up-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-automate-lead-follow-up-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-automate-lead-follow-up-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-automate-lead-follow-up-mobile-full.png"
+    },
+    "homepage-footer": {
+      "status": "passing",
+      "currentLoop": 3,
+      "latestNotes": "Each group now serves one recovery need: contact, kinds of help, proof/browse, process, or privacy. No overflow at 390px or 360px.",
+      "latestChange": "Shortened the CTA and brand copy, separated the call action from browse links, and retained 44px navigation targets.",
+      "latestResult": "All categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile footer",
+          "href": "evidence/baseline/mobile/homepage-full.png"
+        },
+        {
+          "label": "Revised mobile footer",
+          "href": "evidence/after/loop-03-homepage-mobile.png"
+        },
+        {
+          "label": "Revised desktop footer",
+          "href": "evidence/after/loop-03-homepage-desktop.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png"
+    },
+    "homepage-help-grid": {
+      "status": "passing",
+      "currentLoop": 3,
+      "latestNotes": "All five choices remain visible and distinct. Selection carries the plain label into the form while leaving the visitor's message open-ended and editable.",
+      "latestChange": "Replaced technical lists with familiar symptoms, renamed technology decision to choosing the right next step, and compressed decorative mobile visuals.",
+      "latestResult": "All categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 96,
+        "trust_credibility": 95,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 95,
+        "trust_credibility": 95,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile help grid",
+          "href": "evidence/baseline/mobile/homepage-full.png"
+        },
+        {
+          "label": "Revised mobile help grid",
+          "href": "evidence/after/loop-03-homepage-mobile.png"
+        },
+        {
+          "label": "Revised desktop help grid",
+          "href": "evidence/after/loop-03-homepage-desktop.png"
+        }
+      ],
+      "attempts": 5,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png"
+    },
+    "service-refresh-an-outdated-homepage": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-refresh-an-outdated-homepage-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-refresh-an-outdated-homepage-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-refresh-an-outdated-homepage-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-refresh-an-outdated-homepage-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-refresh-an-outdated-homepage-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-refresh-an-outdated-homepage-mobile-full.png"
+    },
+    "service-reduce-copy-and-paste-between-tools": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-reduce-copy-and-paste-between-tools-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-reduce-copy-and-paste-between-tools-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-reduce-copy-and-paste-between-tools-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-mobile-full.png"
+    },
+    "service-turn-intake-forms-into-organized-tasks": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-turn-intake-forms-into-organized-tasks-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-turn-intake-forms-into-organized-tasks-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-turn-intake-forms-into-organized-tasks-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-mobile-full.png"
+    },
+    "service-decide-what-to-build-first": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-decide-what-to-build-first-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-decide-what-to-build-first-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-decide-what-to-build-first-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-decide-what-to-build-first-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-decide-what-to-build-first-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-decide-what-to-build-first-mobile-full.png"
+    },
+    "service-integrate-your-business-with-a-crm": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-integrate-your-business-with-a-crm-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-integrate-your-business-with-a-crm-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-integrate-your-business-with-a-crm-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-integrate-your-business-with-a-crm-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-integrate-your-business-with-a-crm-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-integrate-your-business-with-a-crm-mobile-full.png"
+    },
+    "service-improve-a-confusing-mobile-website": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-improve-a-confusing-mobile-website-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-improve-a-confusing-mobile-website-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-improve-a-confusing-mobile-website-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-improve-a-confusing-mobile-website-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-improve-a-confusing-mobile-website-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-improve-a-confusing-mobile-website-mobile-full.png"
+    },
+    "service-simplify-a-confusing-workflow-before-software": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-simplify-a-confusing-workflow-before-software-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-simplify-a-confusing-workflow-before-software-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-simplify-a-confusing-workflow-before-software-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-mobile-full.png"
+    },
+    "homepage-problem-explorer": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "ArrowRight moved selection and focus from My website to My customers. All 30 examples remain reachable, choices return to the spotlight, and mobile width settled without overflow.",
+      "latestChange": "Renamed the two actions by destination, hid repeated summaries in secondary mobile cards, shortened those cards, and completed the arrow/Home/End tab keyboard pattern.",
+      "latestResult": "All categories are at least 96; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 98,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile explorer",
+          "href": "evidence/baseline/mobile/homepage-full.png"
+        },
+        {
+          "label": "Revised mobile explorer",
+          "href": "evidence/after/loop-06-explorer-mobile.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-06-explorer-mobile.png"
+    },
+    "scheduler-confirmation": {
+      "status": "passing",
+      "currentLoop": 4,
+      "latestNotes": "The fake calendar created no real event. Focus landed on You're booked and the complete promise matched the displayed result.",
+      "latestChange": "Made the success heading programmatically focusable and verified date, time, timezone, invite, and fixture meeting link after booking.",
+      "latestResult": "All categories are at least 98; completion hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 99,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original fixture success",
+          "href": "evidence/baseline/mobile/scheduler-success-local.png"
+        },
+        {
+          "label": "Revised fixture success",
+          "href": "evidence/after/loop-04-scheduler-success-desktop.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/scheduler-success-local.png",
+      "afterScreenshot": "evidence/after/loop-04-scheduler-success-desktop.png"
+    },
+    "llms-full": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "The expanded guide now matches what a visitor sees and explicitly excludes the unreleased product through automated public-surface tests.",
+      "latestChange": "Removed automotive-heavy background detail, rewrote client work in business language, and retained the full 30-example consulting catalog and booking constraints.",
+      "latestResult": "All categories are at least 98; completeness and scope gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Full-guide consistency regression tests",
+          "href": "../../tests/test_catalog_surfaces.py"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "site-header-mobile": {
+      "status": "passing",
+      "currentLoop": 3,
+      "latestNotes": "All controls measure at least 44px at 390px and 360px. Open moves focus to the first link; Escape closes and restores focus to Menu.",
+      "latestChange": "Added a compact mobile Menu with service, example, identity, and proof links while keeping the discovery CTA visible.",
+      "latestResult": "All categories are at least 96; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original mobile first screen",
+          "href": "evidence/baseline/mobile/homepage-first-screen.png"
+        },
+        {
+          "label": "Open accessible mobile menu",
+          "href": "evidence/after/loop-03-mobile-menu-open.png"
+        }
+      ],
+      "attempts": 5,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/homepage-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-03-mobile-menu-open.png"
+    },
+    "cookie-preferences": {
+      "status": "passing",
+      "currentLoop": 2,
+      "latestNotes": "Reopen, choose, close, and focus restoration behavior are explicit across homepage, privacy, and detail templates.",
+      "latestChange": "Raised the footer preference control to 44px and added focus transfer into the reopened panel and restoration after a choice.",
+      "latestResult": "All categories are at least 96; hard gates cleared.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 98,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 96,
+        "trust_credibility": 98,
+        "business_effectiveness": 96
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Repaired footer preference control",
+          "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"
+        }
+      ],
+      "attempts": 6,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/mobile/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png"
+    },
+    "service-use-ai-to-improve-customer-support-replies": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-use-ai-to-improve-customer-support-replies-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-use-ai-to-improve-customer-support-replies-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-use-ai-to-improve-customer-support-replies-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-mobile-full.png"
+    },
+    "service-clean-up-crm-fields-and-duplicate-records": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-clean-up-crm-fields-and-duplicate-records-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-clean-up-crm-fields-and-duplicate-records-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-clean-up-crm-fields-and-duplicate-records-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-mobile-full.png"
+    },
+    "service-create-safe-ai-rules-for-client-data": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-create-safe-ai-rules-for-client-data-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-create-safe-ai-rules-for-client-data-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-create-safe-ai-rules-for-client-data-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-mobile-full.png"
+    },
+    "service-clean-up-wordpress-plugin-warnings": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-clean-up-wordpress-plugin-warnings-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-clean-up-wordpress-plugin-warnings-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-clean-up-wordpress-plugin-warnings-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-mobile-full.png"
+    },
+    "service-connect-scheduling-and-confirmation-emails": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-connect-scheduling-and-confirmation-emails-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-connect-scheduling-and-confirmation-emails-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-connect-scheduling-and-confirmation-emails-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-mobile-full.png"
+    },
+    "service-convert-spreadsheet-work-into-a-simple-app": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-mobile-full.png"
+    },
+    "service-build-an-online-quote-or-estimate-tool": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-build-an-online-quote-or-estimate-tool-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-build-an-online-quote-or-estimate-tool-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-build-an-online-quote-or-estimate-tool-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-mobile-full.png"
+    },
+    "service-review-a-vendor-proposal-before-signing": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-review-a-vendor-proposal-before-signing-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-review-a-vendor-proposal-before-signing-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-review-a-vendor-proposal-before-signing-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-mobile-full.png"
+    },
+    "service-set-up-a-small-business-tech-stack-from-scratch": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-mobile-full.png"
+    },
+    "consultation-intro": {
+      "status": "passing",
+      "currentLoop": 0,
+      "latestNotes": "Evidence-backed Codex baseline analysis recorded.",
+      "latestChange": "None. Baseline discovery is read-only.",
+      "latestResult": "Baseline scored",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 97,
+        "usability_accessibility": 96,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 97,
+        "usability_accessibility": 95,
+        "trust_credibility": 96,
+        "business_effectiveness": 96
+      },
+      "deductions": [
+        {
+          "category": "Clarity",
+          "points": 2,
+          "reason": "The intro explains the two steps well but does not explicitly say the call is low pressure or what a useful call produces.",
+          "required": "Add a short outcome cue without increasing form anxiety."
+        }
+      ],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Desktop consultation section",
+          "href": "evidence/baseline/desktop/homepage-full.png"
+        }
+      ],
+      "attempts": 1,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": ""
+    },
+    "llms-catalog": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "The generated guide contains exactly 30 current examples and the same categories and canonical links as the public sitemap.",
+      "latestChange": "Aligned public category headings with owner language and added a regression gate that excludes the unreleased Audo Agent and automotive/internal positioning.",
+      "latestResult": "All categories are at least 98; AI-discovery accuracy gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Catalog consistency regression tests",
+          "href": "../../tests/test_catalog_surfaces.py"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "services-markdown": {
+      "status": "passing",
+      "currentLoop": 0,
+      "latestNotes": "Evidence-backed Codex baseline analysis recorded.",
+      "latestChange": "None. Baseline discovery is read-only.",
+      "latestResult": "Baseline scored",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 95,
+        "business_effectiveness": 95
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 95,
+        "business_effectiveness": 95
+      },
+      "deductions": [
+        {
+          "category": "Simplicity",
+          "points": 2,
+          "reason": "The complete 30-service document is necessarily long and needs strong headings and canonical links to remain scannable.",
+          "required": "Verify heading hierarchy and unique links after every catalog change."
+        }
+      ],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Manifest inventory",
+          "href": "manifest.json"
+        }
+      ],
+      "attempts": 1,
+      "reviewerNotes": "",
+      "beforeScreenshot": "",
+      "afterScreenshot": ""
+    },
+    "site-header-desktop": {
+      "status": "passing",
+      "currentLoop": 3,
+      "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and route to the promised section.",
+      "latestChange": "Added a direct Real examples route beside help, identity, and discovery navigation.",
+      "latestResult": "All categories are at least 96; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 98,
+        "usability_accessibility": 97,
+        "trust_credibility": 96,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original desktop header",
+          "href": "evidence/baseline/desktop/homepage-full.png"
+        },
+        {
+          "label": "Revised desktop header",
+          "href": "evidence/after/loop-03-homepage-desktop.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png"
+    },
+    "service-fix-a-broken-contact-form": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-fix-a-broken-contact-form-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-fix-a-broken-contact-form-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-fix-a-broken-contact-form-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-fix-a-broken-contact-form-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-fix-a-broken-contact-form-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-fix-a-broken-contact-form-mobile-full.png"
+    },
+    "service-create-a-custom-ai-assistant-for-procedures": {
+      "status": "passing",
+      "currentLoop": 6,
+      "latestNotes": "The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.",
+      "latestChange": "Moved the plain problem and outcome ahead of the decorative visual on mobile, added a low-pressure call cue, and kept this exact example in the form.",
+      "latestResult": "All page-specific and shared-template categories are at least 95; hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 97,
+        "simplicity": 96,
+        "usability_accessibility": 97,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 96,
+        "simplicity": 95,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Unique desktop baseline",
+          "href": "evidence/baseline/desktop/service-create-a-custom-ai-assistant-for-procedures-first-screen.png"
+        },
+        {
+          "label": "Unique mobile baseline",
+          "href": "evidence/baseline/mobile/service-create-a-custom-ai-assistant-for-procedures-first-screen.png"
+        },
+        {
+          "label": "Revised full desktop page",
+          "href": "evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-desktop-full.png"
+        },
+        {
+          "label": "Revised full mobile page",
+          "href": "evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-mobile-full.png"
+        },
+        {
+          "label": "Shared field-level recovery proof",
+          "href": "evidence/after/loop-04-validation-mobile.png"
+        }
+      ],
+      "attempts": 4,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-create-a-custom-ai-assistant-for-procedures-first-screen.png",
+      "afterScreenshot": "evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-mobile-full.png"
+    },
+    "thank-you-fallback": {
+      "status": "passing",
+      "currentLoop": 5,
+      "latestNotes": "A synthetic local POST returned 303 with the receipt cookie; the follow-up GET showed Your note is saved. A direct GET showed Tell me what\u2019s going on first and hid booking.",
+      "latestChange": "Made the page conditional: direct visits show one note-first action, while successful non-JavaScript submissions receive a short-lived receipt cookie and see the booking step.",
+      "latestResult": "All categories are 98 or higher; false-success and context-loss hard gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "mobile": {
+        "clarity": 99,
+        "simplicity": 98,
+        "usability_accessibility": 98,
+        "trust_credibility": 98,
+        "business_effectiveness": 98
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Original desktop fallback",
+          "href": "evidence/baseline/desktop/thank-you-full.png"
+        },
+        {
+          "label": "Truthful direct desktop recovery",
+          "href": "evidence/after/loop-05-thank-you-direct-desktop.png"
+        },
+        {
+          "label": "Truthful direct mobile recovery",
+          "href": "evidence/after/loop-05-thank-you-direct-mobile.png"
+        }
+      ],
+      "attempts": 7,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/thank-you-full.png",
+      "afterScreenshot": "evidence/after/loop-05-thank-you-direct-desktop.png"
+    },
+    "metadata-indexing": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "Machine-readable context no longer introduces employer, dealership, M&A, or unreleased-product positioning that is absent from the public page.",
+      "latestChange": "Simplified Person, business, offer, and client-work structured data so it mirrors the visible small-business consulting message and public proof.",
+      "latestResult": "All categories are at least 97; metadata consistency and indexing gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 98,
+        "business_effectiveness": 97
+      },
+      "mobile": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 97,
+        "trust_credibility": 98,
+        "business_effectiveness": 97
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "Machine-context regression tests",
+          "href": "../../tests/test_catalog_surfaces.py"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/service-new-business-full.png",
+      "afterScreenshot": ""
+    },
+    "no-js-homepage": {
+      "status": "passing",
+      "currentLoop": 7,
+      "latestNotes": "The server-rendered homepage, direct service links, privacy route, sitemap, and truthful form fallback remain available without the interactive explorer.",
+      "latestChange": "Replaced the one-line JavaScript warning with five direct, plain-language starting points and a link to all 30 examples.",
+      "latestResult": "All categories are at least 95; core no-JavaScript recovery gates pass.",
+      "nextAdjustment": "Capture and analyze baseline evidence.",
+      "desktop": {
+        "clarity": 98,
+        "simplicity": 97,
+        "usability_accessibility": 96,
+        "trust_credibility": 97,
+        "business_effectiveness": 96
+      },
+      "mobile": {
+        "clarity": 97,
+        "simplicity": 95,
+        "usability_accessibility": 95,
+        "trust_credibility": 97,
+        "business_effectiveness": 95
+      },
+      "deductions": [],
+      "hardGates": [],
+      "evidence": [
+        {
+          "label": "No-JavaScript fallback regression test",
+          "href": "../../tests/test_homepage_experience.py"
+        }
+      ],
+      "attempts": 2,
+      "reviewerNotes": "",
+      "beforeScreenshot": "evidence/baseline/desktop/homepage-full.png",
+      "afterScreenshot": ""
+    }
+  },
+  "updatedAt": "2026-07-16T19:15:29+00:00"
+}

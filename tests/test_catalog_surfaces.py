@@ -57,6 +57,10 @@ class CatalogSurfaceTests(unittest.TestCase):
         self.assertNotIn("auto-rotating", short_guide)
         self.assertIn("# Audo service catalog", service_catalog)
         self.assertIn("# Audo: full context for AI agents", full_guide)
+        self.assertIn("## Using AI at work", short_guide)
+        self.assertIn("## Choosing what to do next", service_catalog)
+        self.assertNotIn("## AI coaching and support", short_guide)
+        self.assertNotIn("## Product strategy", service_catalog)
 
         for entry in entries:
             with self.subTest(service=entry.service.slug):
@@ -108,6 +112,59 @@ class CatalogSurfaceTests(unittest.TestCase):
         self.assertNotIn("hancock", build_llms_txt(BASE_URL, entries).lower())
         self.assertNotIn("hancock", build_llms_full_txt(BASE_URL, entries).lower())
         self.assertFalse(any("hancock" in path.name.lower() for path in ROOT.rglob("*") if ".git" not in path.parts))
+
+    def test_unreleased_audo_agent_is_absent_from_every_public_surface(self) -> None:
+        entries = catalog_entries()
+        forbidden_product_names = (
+            "audo agent",
+            "audo-agent",
+            "audo ai agent",
+        )
+        public_surfaces = {
+            "homepage": (ROOT / "index.html").read_text(),
+            "privacy": (ROOT / "privacy.html").read_text(),
+            "thank-you": (ROOT / "thank-you.html").read_text(),
+            "human sitemap template": (ROOT / "server.py").read_text(),
+            "llms summary": build_llms_txt(BASE_URL, entries),
+            "llms full guide": build_llms_full_txt(BASE_URL, entries),
+            "services markdown": build_services_markdown(BASE_URL, entries),
+            "xml sitemap": build_sitemap_xml(BASE_URL, "2026-07-16", entries),
+        }
+        public_surfaces.update(
+            {
+                f"service page {entry.service.slug}": build_service_markdown(entry, BASE_URL)
+                for entry in entries
+            }
+        )
+
+        for surface, content in public_surfaces.items():
+            with self.subTest(surface=surface):
+                normalized = content.lower()
+                for product_name in forbidden_product_names:
+                    self.assertNotIn(product_name, normalized)
+
+    def test_machine_readable_context_matches_the_public_small_business_positioning(self) -> None:
+        entries = catalog_entries()
+        machine_context = "\n".join(
+            (
+                build_llms_txt(BASE_URL, entries),
+                build_llms_full_txt(BASE_URL, entries),
+                (ROOT / "index.html").read_text(),
+            )
+        ).lower()
+
+        for internal_or_automotive_term in (
+            "cox automotive",
+            "dealertrack",
+            "dealer.com",
+            "dealership platforms",
+            "automotive retail technology",
+            "m&a technology review",
+        ):
+            self.assertNotIn(internal_or_automotive_term, machine_context)
+
+        self.assertIn("small business", machine_context)
+        self.assertIn("30 years", machine_context)
 
 
 if __name__ == "__main__":

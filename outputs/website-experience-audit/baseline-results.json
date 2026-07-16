@@ -1,0 +1,219 @@
+{
+  "site-header-desktop": {
+    "desktop": [92, 94, 93, 91, 91], "mobile": [92, 94, 93, 91, 91],
+    "deductions": [
+      {"category": "Clarity", "points": 5, "reason": "The header names sections but gives no direct route to the detailed real-problem catalog.", "required": "Make the most useful browse path visible without crowding the header."},
+      {"category": "Usability and accessibility", "points": 5, "reason": "The compact white links are low-emphasis over a visually busy hero image.", "required": "Increase readable contrast and interaction presence while preserving the restrained header."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}]
+  },
+  "site-header-mobile": {
+    "desktop": [92, 95, 95, 91, 92], "mobile": [88, 95, 92, 89, 90],
+    "deductions": [
+      {"category": "Clarity", "points": 10, "reason": "Mobile removes every navigation choice except booking, so a visitor who wants to understand services or credibility must discover them by scrolling.", "required": "Offer a simple mobile browse control with plain labels and a clear close/focus pattern."},
+      {"category": "Trust and credibility", "points": 5, "reason": "The mobile header does not expose an About or examples path before asking for a call.", "required": "Let cautious visitors reach proof and service examples without committing first."}
+    ],
+    "evidence": [{"label": "Mobile first screen", "href": "evidence/baseline/mobile/homepage-first-screen.png"}]
+  },
+  "homepage-hero": {
+    "desktop": [92, 96, 94, 88, 92], "mobile": [91, 96, 93, 87, 91],
+    "deductions": [
+      {"category": "Clarity", "points": 5, "reason": "The headline is memorable but relies on the broad word 'tech'; the support line mixes websites, automation, AI, and tools before showing a concrete business outcome.", "required": "Keep the strong headline but make the supporting promise more concrete for a least-technical owner."},
+      {"category": "Trust and credibility", "points": 10, "reason": "The first screen does not identify Aaron or say that the visitor works directly with the senior person doing the work.", "required": "Add one compact, truthful identity and responsibility cue near the primary action."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The first-screen CTA does not say that the call is 30 minutes, Google Meet, and no pressure until lower on the page.", "required": "Clarify the commitment at the decision point without adding a paragraph."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}, {"label": "Mobile first screen", "href": "evidence/baseline/mobile/homepage-first-screen.png"}]
+  },
+  "homepage-help-grid": {
+    "desktop": [88, 87, 92, 91, 91], "mobile": [86, 84, 90, 90, 88],
+    "deductions": [
+      {"category": "Clarity", "points": 10, "reason": "Cards still use terms such as analytics, integrations, accessibility, dashboard, prototype, prompts, and technology decision.", "required": "Translate every card into familiar owner language and concrete symptoms."},
+      {"category": "Simplicity", "points": 10, "reason": "Five tall illustrated cards plus two repeated actions create a long mobile decision before trust and proof.", "required": "Shorten card copy and make the recommended next step obvious after a card is chosen."},
+      {"category": "Business effectiveness", "points": 5, "reason": "Selecting a broad category only carries a label; it does not help the visitor express what is happening.", "required": "Preserve an open-ended form while providing a concise, editable context cue."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}, {"label": "Mobile homepage baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "homepage-footer": {
+    "desktop": [92, 88, 90, 94, 92], "mobile": [89, 84, 82, 93, 88],
+    "deductions": [
+      {"category": "Simplicity", "points": 10, "reason": "The mobile footer repeats many service, proof, process, legal, and CTA messages in one long stack.", "required": "Group links more clearly and remove repeated wording while retaining recovery value."},
+      {"category": "Usability and accessibility", "points": 10, "reason": "Measured mobile footer navigation links are 40px high, below the 44px hard-gate target.", "required": "Give every footer link and preference control at least a 44px interactive box."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The footer CTA repeats the generic technology-problem framing instead of offering a concise recovery choice.", "required": "Use the footer to resolve uncertainty with one plain next step and one browse alternative."}
+    ],
+    "hardGates": ["Mobile footer navigation controls measure 40px high, below the 44px critical interaction target."],
+    "evidence": [{"label": "Mobile homepage baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "consultation-intro": {
+    "desktop": [97, 97, 96, 96, 97], "mobile": [96, 97, 95, 96, 96],
+    "deductions": [
+      {"category": "Clarity", "points": 2, "reason": "The intro explains the two steps well but does not explicitly say the call is low pressure or what a useful call produces.", "required": "Add a short outcome cue without increasing form anxiety."}
+    ],
+    "evidence": [{"label": "Desktop consultation section", "href": "evidence/baseline/desktop/homepage-full.png"}]
+  },
+  "consultation-form": {
+    "desktop": [94, 96, 92, 83, 91], "mobile": [93, 95, 90, 82, 90],
+    "deductions": [
+      {"category": "Trust and credibility", "points": 15, "reason": "The form collects name, email, a link, and problem details without an adjacent plain privacy statement or link explaining how the note is used.", "required": "Add a concise form-level privacy and contact-expectation notice linked to the policy."},
+      {"category": "Usability and accessibility", "points": 5, "reason": "Errors are surfaced in one status region rather than tied to the field that needs attention after server validation.", "required": "Associate field-level messages, move focus to the first problem, and preserve all entered values."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The form does not repeat when Aaron will respond if the visitor does not finish scheduling.", "required": "State the follow-up expectation next to the submit action."}
+    ],
+    "hardGates": ["Personal information is collected without an adjacent privacy/use notice at the point of collection."],
+    "evidence": [{"label": "Mobile homepage form baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "consultation-validation": {
+    "desktop": [87, 89, 86, 88, 86], "mobile": [85, 87, 83, 87, 84],
+    "deductions": [
+      {"category": "Clarity", "points": 10, "reason": "Client-side required and email errors depend on browser-native wording, while server errors appear only in a general status line.", "required": "Provide consistent plain-language messages beside the affected fields."},
+      {"category": "Usability and accessibility", "points": 15, "reason": "There is no explicit first-error focus routine or aria-describedby connection for field errors.", "required": "Focus the first invalid field, announce a concise summary, and connect each message semantically."},
+      {"category": "Business effectiveness", "points": 10, "reason": "A recoverable error does not explain that the visitor's typed note is still present.", "required": "Confirm preserved context and make retry the obvious single action."}
+    ],
+    "evidence": [{"label": "Homepage form baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "scheduler-loading": {
+    "desktop": [94, 96, 94, 94, 94], "mobile": [93, 95, 92, 94, 93],
+    "deductions": [
+      {"category": "Clarity", "points": 5, "reason": "The transition hides step one but does not explicitly confirm that the note was saved before loading availability.", "required": "Confirm receipt in the step-two heading or loading copy."},
+      {"category": "Usability and accessibility", "points": 5, "reason": "Loading has a visual spinner but no explicit aria-busy state on the scheduler region.", "required": "Expose the loading state and completion change to assistive technology."}
+    ],
+    "evidence": [{"label": "Local mobile availability fixture", "href": "evidence/baseline/mobile/scheduler-availability-local.png"}]
+  },
+  "scheduler-availability": {
+    "desktop": [95, 93, 91, 95, 94], "mobile": [96, 96, 95, 95, 95],
+    "deductions": [
+      {"category": "Simplicity", "points": 5, "reason": "Desktop exposes a large number of date controls at once instead of progressively narrowing the choice.", "required": "Present a manageable date range or stronger progressive disclosure on desktop."},
+      {"category": "Usability and accessibility", "points": 5, "reason": "The desktop date controls use tab roles without documented arrow-key behavior; the mobile native select is clearer.", "required": "Implement the expected tab keyboard pattern or use a simpler semantic control consistently."}
+    ],
+    "evidence": [{"label": "Local mobile availability fixture", "href": "evidence/baseline/mobile/scheduler-availability-local.png"}]
+  },
+  "scheduler-confirmation": {
+    "desktop": [96, 96, 95, 96, 96], "mobile": [96, 96, 95, 96, 96],
+    "deductions": [
+      {"category": "Usability and accessibility", "points": 2, "reason": "The success heading receives focus programmatically but is not explicitly focusable in the generated markup.", "required": "Give the success heading a reliable tabindex and verify focus after confirmation."}
+    ],
+    "evidence": [{"label": "Local mobile success fixture", "href": "evidence/baseline/mobile/scheduler-success-local.png"}]
+  },
+  "thank-you-fallback": {
+    "desktop": [76, 88, 90, 76, 72], "mobile": [73, 86, 87, 74, 69],
+    "deductions": [
+      {"category": "Clarity", "points": 20, "reason": "A direct visit claims 'I have your note' even when no consultation request exists.", "required": "Render confirmation only with valid saved context; otherwise explain that no note is attached and offer the form."},
+      {"category": "Trust and credibility", "points": 20, "reason": "The page can communicate false receipt and then send the visitor to a separate Google form that asks for contact details again.", "required": "Separate true confirmation from outage recovery and explain any repeated data entry."},
+      {"category": "Business effectiveness", "points": 20, "reason": "The fallback path can book a call without the context Aaron says he will review.", "required": "Preserve or clearly recover the missing consultation context before booking."}
+    ],
+    "hardGates": ["Direct visits receive a false success claim that Audo has the visitor's note.", "The fallback destination can complete booking without delivering the promised saved context."],
+    "evidence": [{"label": "Desktop thank-you baseline", "href": "evidence/baseline/desktop/thank-you-full.png"}, {"label": "Mobile thank-you baseline", "href": "evidence/baseline/mobile/thank-you-full.png"}]
+  },
+  "homepage-problem-explorer": {
+    "desktop": [94, 92, 92, 93, 94], "mobile": [92, 89, 90, 92, 92],
+    "deductions": [
+      {"category": "Simplicity", "points": 5, "reason": "Each category presents one large spotlight plus five detailed choices, creating a long mobile browse experience.", "required": "Keep all examples discoverable while reducing repeated card content and visual travel."},
+      {"category": "Usability and accessibility", "points": 5, "reason": "Category buttons use tab roles but do not implement arrow-key tab navigation.", "required": "Complete the tab keyboard contract or use standard buttons with clear selected state."},
+      {"category": "Clarity", "points": 5, "reason": "Phrases such as 'bring it into focus' have been improved, but the split between 'This sounds familiar' and 'See how I can help' still requires interpretation.", "required": "Make the difference between starting the form and reading details explicit."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}, {"label": "Mobile homepage baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "homepage-founder": {
+    "desktop": [96, 95, 95, 92, 94], "mobile": [95, 93, 93, 91, 92],
+    "deductions": [
+      {"category": "Trust and credibility", "points": 5, "reason": "The 30-year experience claim is broad and gives no compact, public context for the kinds of responsibility Aaron held.", "required": "Add truthful, approved specificity without naming unapproved employers or inventing proof."},
+      {"category": "Simplicity", "points": 5, "reason": "On mobile the portrait, letter, three cards, and another CTA form a long trust section before client proof.", "required": "Tighten repeated working-style language while keeping the personal tone."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}]
+  },
+  "homepage-client-work": {
+    "desktop": [83, 91, 93, 87, 82], "mobile": [80, 89, 91, 86, 79],
+    "deductions": [
+      {"category": "Clarity", "points": 15, "reason": "Proof bullets rely on ADA, CMS, database, server, proprietary technical analysis, crypto exchange integrations, and AI market analysis language.", "required": "Describe what Aaron did and why it mattered in plain business terms."},
+      {"category": "Trust and credibility", "points": 10, "reason": "The cards show client names and task lists but no role, timeframe, responsibility boundary, or approved outcome.", "required": "Add truthful context that makes the proof meaningful without inventing metrics or testimonials."},
+      {"category": "Business effectiveness", "points": 15, "reason": "A least-technical owner cannot easily map these technical bullets to their own business problem.", "required": "Connect each example to a familiar owner concern and the kind of help available."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}, {"label": "Mobile homepage baseline", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "privacy-policy": {
+    "desktop": [94, 91, 94, 95, 92], "mobile": [92, 88, 82, 94, 89],
+    "deductions": [
+      {"category": "Simplicity", "points": 10, "reason": "The policy is comprehensive but dense for the limiting persona, especially provider, legal disclosure, and retention paragraphs.", "required": "Add a short plain-language summary and progressively disclose detail without weakening accuracy."},
+      {"category": "Usability and accessibility", "points": 15, "reason": "Measured mobile table-of-contents links are only 17px high and body links are about 20px high.", "required": "Give in-page navigation links 44px touch areas and verify visible focus."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The policy explains data handling but does not summarize the visitor's most likely question near the top: what happens to a discovery note.", "required": "Lead with a concise discovery-request summary before the full policy."}
+    ],
+    "hardGates": ["Critical mobile in-page navigation controls measure 17px high, below the 44px touch target."],
+    "evidence": [{"label": "Desktop privacy baseline", "href": "evidence/baseline/desktop/privacy-full.png"}, {"label": "Mobile privacy baseline", "href": "evidence/baseline/mobile/privacy-full.png"}]
+  },
+  "cookie-first-choice": {
+    "desktop": [94, 94, 92, 95, 92], "mobile": [93, 92, 84, 95, 90],
+    "deductions": [
+      {"category": "Usability and accessibility", "points": 10, "reason": "Measured mobile consent buttons are 42px high, below the required 44px minimum.", "required": "Increase both consent choices to at least 44px and verify focus visibility."},
+      {"category": "Clarity", "points": 5, "reason": "The word 'Accept' is less specific than 'Allow analytics' for a two-choice consent decision.", "required": "Name the optional behavior directly in the affirmative action."}
+    ],
+    "hardGates": ["Mobile cookie choice buttons measure 42px high, below the 44px minimum."],
+    "evidence": [{"label": "Mobile 404 baseline showing first-visit panel", "href": "evidence/baseline/mobile/not-found-full.png"}]
+  },
+  "cookie-preferences": {
+    "desktop": [95, 95, 92, 95, 93], "mobile": [94, 93, 86, 95, 91],
+    "deductions": [
+      {"category": "Usability and accessibility", "points": 10, "reason": "The footer preference control sits in a 40px link row and reopening the panel does not move focus to the dialog region.", "required": "Use a 44px target and restore focus intentionally when opening and closing preferences."},
+      {"category": "Business effectiveness", "points": 5, "reason": "Changing from accepted to necessary-only disables future analytics but the interface does not explain whether existing analytics cookies remain.", "required": "State the effect plainly at the choice point."}
+    ],
+    "hardGates": ["Mobile Cookie preferences control is below the 44px critical interaction target."],
+    "evidence": [{"label": "Mobile homepage footer", "href": "evidence/baseline/mobile/homepage-full.png"}]
+  },
+  "human-sitemap": {
+    "desktop": [95, 91, 94, 94, 93], "mobile": [94, 87, 83, 93, 91],
+    "deductions": [
+      {"category": "Simplicity", "points": 10, "reason": "Thirty detailed links plus primary pages create a very long undifferentiated mobile scan.", "required": "Improve category scanning and add a compact jump or filtering aid without hiding content from search."},
+      {"category": "Usability and accessibility", "points": 10, "reason": "Many mobile sitemap links measure 22px or 43px high.", "required": "Give every link a minimum 44px touch box and maintain readable grouping."}
+    ],
+    "hardGates": ["Multiple mobile sitemap links are below the 44px interaction target."],
+    "evidence": [{"label": "Desktop sitemap baseline", "href": "evidence/baseline/desktop/sitemap-full.png"}, {"label": "Mobile sitemap baseline", "href": "evidence/baseline/mobile/sitemap-full.png"}]
+  },
+  "xml-sitemap": {
+    "desktop": [96, 98, 97, 96, 96], "mobile": [96, 98, 97, 96, 96],
+    "deductions": [{"category": "Trust and credibility", "points": 2, "reason": "The live URL set still requires a complete response-status and canonical crawl before release.", "required": "Re-crawl every listed URL at the tested revision and record the result."}],
+    "evidence": [{"label": "Manifest inventory", "href": "manifest.json"}]
+  },
+  "llms-catalog": {
+    "desktop": [95, 96, 96, 94, 95], "mobile": [95, 96, 96, 94, 95],
+    "deductions": [{"category": "Trust and credibility", "points": 5, "reason": "The AI-readable catalog needs an explicit release check that unrelated product content and internal details are absent.", "required": "Add a regression test for consulting-only scope and prohibited internal language."}],
+    "evidence": [{"label": "Manifest inventory", "href": "manifest.json"}]
+  },
+  "llms-full": {
+    "desktop": [95, 94, 96, 94, 95], "mobile": [95, 94, 96, 94, 95],
+    "deductions": [{"category": "Trust and credibility", "points": 5, "reason": "The expanded context needs a content regression gate for consulting-only scope, unsupported proof, and stale service counts.", "required": "Test the generated output against the approved 30-service catalog and public-content rules."}],
+    "evidence": [{"label": "Manifest inventory", "href": "manifest.json"}]
+  },
+  "services-markdown": {
+    "desktop": [96, 95, 96, 95, 95], "mobile": [96, 95, 96, 95, 95],
+    "deductions": [{"category": "Simplicity", "points": 2, "reason": "The complete 30-service document is necessarily long and needs strong headings and canonical links to remain scannable.", "required": "Verify heading hierarchy and unique links after every catalog change."}],
+    "evidence": [{"label": "Manifest inventory", "href": "manifest.json"}]
+  },
+  "metadata-indexing": {
+    "desktop": [94, 96, 95, 93, 94], "mobile": [94, 96, 95, 93, 94],
+    "deductions": [
+      {"category": "Trust and credibility", "points": 5, "reason": "Metadata is extensive but must be checked for consulting-only scope and for claims that are broader than visible page proof.", "required": "Run route-wide title, description, canonical, social, and structured-data assertions."},
+      {"category": "Clarity", "points": 5, "reason": "Some generated detail titles repeat the full visitor problem and brand without a concise service outcome.", "required": "Keep search titles plain, unique, and aligned with the page's actual next step."}
+    ],
+    "evidence": [{"label": "Desktop service baseline", "href": "evidence/baseline/desktop/service-new-business-full.png"}]
+  },
+  "not-found": {
+    "desktop": [25, 35, 20, 30, 20], "mobile": [25, 35, 20, 30, 20],
+    "deductions": [
+      {"category": "Clarity", "points": 70, "reason": "An unknown URL serves the homepage with its canonical and indexing directive instead of identifying the missing page.", "required": "Return a real 404 status and a plain recovery page with noindex."},
+      {"category": "Usability and accessibility", "points": 70, "reason": "There is no missing-page explanation or recovery focus target.", "required": "Provide a semantic 404 heading and clear Home, examples, and discovery actions."},
+      {"category": "Business effectiveness", "points": 75, "reason": "Visitors and search engines cannot tell that the requested page is invalid.", "required": "Use correct status, metadata, and recovery destinations."}
+    ],
+    "hardGates": ["Unknown routes return the indexable homepage rather than a 404 response and recovery page.", "The missing URL exposes the homepage canonical, creating misleading indexing behavior."],
+    "evidence": [{"label": "Desktop unknown-route baseline", "href": "evidence/baseline/desktop/not-found-full.png"}, {"label": "Mobile unknown-route baseline", "href": "evidence/baseline/mobile/not-found-full.png"}]
+  },
+  "legacy-redirects": {
+    "desktop": [92, 96, 94, 93, 93], "mobile": [92, 96, 94, 93, 93],
+    "deductions": [{"category": "Clarity", "points": 5, "reason": "Legacy consulting redirects need a route table proving permanent status and the exact canonical destination.", "required": "Assert every supported legacy route, query string, and trailing-slash behavior."}],
+    "evidence": [{"label": "Manifest inventory", "href": "manifest.json"}]
+  },
+  "no-js-homepage": {
+    "desktop": [91, 91, 90, 92, 87], "mobile": [89, 88, 86, 91, 84],
+    "deductions": [
+      {"category": "Business effectiveness", "points": 10, "reason": "The no-JavaScript form redirects to a page that claims receipt but cannot carry the branded scheduler context.", "required": "Make the fallback confirmation truthful and preserve a clear scheduling recovery path."},
+      {"category": "Usability and accessibility", "points": 10, "reason": "The 30-example explorer is replaced by a single sentence pointing to the very long sitemap.", "required": "Provide a compact server-rendered set of example categories and links."}
+    ],
+    "evidence": [{"label": "Desktop homepage baseline", "href": "evidence/baseline/desktop/homepage-full.png"}]
+  }
+}

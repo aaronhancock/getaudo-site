@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="30"><title>GetAudo 95+ Website Experience Audit</title>
+<style>
+:root{--ink:#10201a;--muted:#5e6b64;--paper:#f7f5ef;--card:#fff;--green:#153d31;--gold:#d5a74f;--line:#d8ded9;--red:#9d352f;--blue:#2d6075}
+*{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{width:min(1500px,calc(100% - 32px));margin:auto;padding:32px 0 80px} h1{font-size:clamp(2rem,5vw,4.5rem);line-height:.95;max-width:13ch;margin:.2em 0}
+.eyebrow,.band{color:#765111;font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.76rem} .lede{max-width:75ch;color:var(--muted);font-size:1.1rem}
+.run-state{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:28px 0}
+.run-state div{background:#fff;padding:18px} .run-state strong{display:block;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.summary{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin:24px 0 32px} .summary div{background:var(--green);color:#fff;border-radius:14px;padding:16px;text-align:center}
+.summary strong{display:block;font-size:1.8rem} .summary span{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.inventory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px} .audit-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 12px 34px rgba(16,32,26,.06)}
+.audit-card>header{display:flex;justify-content:space-between;gap:16px;align-items:center} .kind,.status{font-size:.75rem;border-radius:999px;padding:5px 9px;background:#edf1ee;margin-left:8px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.status-failing{border-top:5px solid var(--red)} .status-passing{border-top:5px solid #2f7a54} .status-blocked{border-top:5px solid var(--gold)} h2{font-size:1.45rem;line-height:1.1;margin:16px 0 4px}
+.route{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--blue);font-size:.8rem;overflow-wrap:anywhere} table{width:100%;border-collapse:collapse;margin:14px 0} th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left} td{text-align:center;font-variant-numeric:tabular-nums}
+.average{font-weight:800;background:#f2f5f3} summary{cursor:pointer;font-weight:800;padding:8px 0} details li span{color:var(--muted)} a{color:#1f6078;text-underline-offset:3px} footer{margin-top:40px;color:var(--muted)}
+@media(max-width:900px){.inventory{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}.run-state{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){main{width:min(100% - 20px,1500px);padding-top:20px}.run-state{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr}.audit-card{padding:16px;border-radius:14px}}
+</style></head><body><main>
+<p class="eyebrow">Local audit dashboard · refreshes every 30 seconds</p><h1>GetAudo 95+ Website Experience Audit</h1>
+<p class="lede">Public GetAudo consulting and marketing website only. Separate products are excluded from the site, inventory, copy, navigation, and search content. A score passes only when every desktop and mobile category is at least 95 and no hard gate remains.</p>
+<section class="run-state" aria-label="Current audit run"><div><strong>Current item</strong>Complete public consulting-site inventory</div><div><strong>Current loop</strong>Loop 7 · final local verification</div><div><strong>Latest result</strong>Every desktop and mobile category is at least 95 and no hard gate remains.</div><div><strong>Next adjustment</strong>Run final tests, freeze the tested revision, and stop for deployment approval.</div></section>
+<section class="summary" aria-label="Audit counts"><div><strong>57</strong><span>Total</span></div><div><strong>57</strong><span>Inventoried</span></div><div><strong>57</strong><span>Analyzed</span></div><div><strong>57</strong><span>Passing</span></div><div><strong>0</strong><span>Failing</span></div><div><strong>0</strong><span>Blocked</span></div><div><strong>0</strong><span>Pending</span></div></section>
+<section class="inventory" aria-label="Atomic audit inventory">
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 1</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Homepage problem and help choices</h2>
+          <p class="route">/#services · homepage-help-grid</p>
+          <p><strong>Visitor objective:</strong> Match a familiar business problem to the kind of help available.</p>
+          <p><strong>Expected next action:</strong> Choose the closest card.</p>
+          <p><strong>After the action:</strong> The chosen context is carried into the consultation form.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>95</td></tr><tr><th>Trust Credibility</th><td>95</td><td>95</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.0</td><td>95.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-full.png">Original mobile help grid</a></li><li><a href="evidence/after/loop-03-homepage-mobile.png">Revised mobile help grid</a></li><li><a href="evidence/after/loop-03-homepage-desktop.png">Revised desktop help grid</a></li></ul>
+            <p><strong>Attempts:</strong> 5 · <strong>Loop:</strong> 3</p>
+            <p><strong>Latest notes:</strong> All five choices remain visible and distinct. Selection carries the plain label into the form while leaving the visitor&#x27;s message open-ended and editable.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-03-homepage-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 1</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Mega-footer and next-step guidance</h2>
+          <p class="route">site-wide · homepage-footer</p>
+          <p><strong>Visitor objective:</strong> Find a service, contact method, privacy page, or next-step explanation.</p>
+          <p><strong>Expected next action:</strong> Choose one footer link or book discovery.</p>
+          <p><strong>After the action:</strong> The promised page or section opens.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.4</td><td>95.6</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-full.png">Original mobile footer</a></li><li><a href="evidence/after/loop-03-homepage-mobile.png">Revised mobile footer</a></li><li><a href="evidence/after/loop-03-homepage-desktop.png">Revised desktop footer</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 3</p>
+            <p><strong>Latest notes:</strong> Each group now serves one recovery need: contact, kinds of help, proof/browse, process, or privacy. No overflow at 390px or 360px.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/homepage-full.png">Before</a> · <a href="evidence/after/loop-03-homepage-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 1</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Homepage first screen</h2>
+          <p class="route">/ · homepage-hero</p>
+          <p><strong>Visitor objective:</strong> Understand who Audo helps, what Aaron does, and whether this is relevant.</p>
+          <p><strong>Expected next action:</strong> Book a free discovery call or view examples.</p>
+          <p><strong>After the action:</strong> The visitor reaches the consultation form or concrete examples.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>96</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>96</td></tr><tr class="average"><th>Average</th><td>96.8</td><td>96.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/homepage-full.png">Original desktop homepage</a></li><li><a href="evidence/after/loop-03-homepage-desktop.png">Revised desktop homepage</a></li><li><a href="evidence/after/loop-03-homepage-mobile.png">Revised mobile homepage</a></li></ul>
+            <p><strong>Attempts:</strong> 5 · <strong>Loop:</strong> 3</p>
+            <p><strong>Latest notes:</strong> The first screen now explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without overflow.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-03-homepage-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 1</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Mobile header and navigation</h2>
+          <p class="route">site-wide · site-header-mobile</p>
+          <p><strong>Visitor objective:</strong> Recognize Audo and reach the discovery call on a phone.</p>
+          <p><strong>Expected next action:</strong> Tap the discovery call action.</p>
+          <p><strong>After the action:</strong> The consultation section opens with no overlap or cutoff.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>97</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>96</td></tr><tr class="average"><th>Average</th><td>97.4</td><td>96.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-first-screen.png">Original mobile first screen</a></li><li><a href="evidence/after/loop-03-mobile-menu-open.png">Open accessible mobile menu</a></li></ul>
+            <p><strong>Attempts:</strong> 5 · <strong>Loop:</strong> 3</p>
+            <p><strong>Latest notes:</strong> All controls measure at least 44px at 390px and 360px. Open moves focus to the first link; Escape closes and restores focus to Menu.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/homepage-first-screen.png">Before</a> · <a href="evidence/after/loop-03-mobile-menu-open.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 1</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Desktop header and navigation</h2>
+          <p class="route">site-wide · site-header-desktop</p>
+          <p><strong>Visitor objective:</strong> Recognize Audo and reach the most important destination.</p>
+          <p><strong>Expected next action:</strong> Choose the relevant navigation link or discovery call.</p>
+          <p><strong>After the action:</strong> The page moves to the promised section without losing context.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>97</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>97</td></tr><tr class="average"><th>Average</th><td>97.2</td><td>97.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/homepage-full.png">Original desktop header</a></li><li><a href="evidence/after/loop-03-homepage-desktop.png">Revised desktop header</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 3</p>
+            <p><strong>Latest notes:</strong> All visible desktop links are 44px high, have clear focus treatment, and route to the promised section.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-03-homepage-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Consultation section introduction</h2>
+          <p class="route">/#discovery · consultation-intro</p>
+          <p><strong>Visitor objective:</strong> Understand what the free call is and what happens next.</p>
+          <p><strong>Expected next action:</strong> Begin the short request form.</p>
+          <p><strong>After the action:</strong> The visitor can complete step one with confidence.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>97</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>95</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>96</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>96.0</td></tr></tbody></table></div>
+          <details><summary>Deductions (1)</summary><ul><li><strong>Clarity −2</strong> The intro explains the two steps well but does not explicitly say the call is low pressure or what a useful call produces.<br><span>Add a short outcome cue without increasing form anxiety.</span></li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/homepage-full.png">Desktop consultation section</a></li></ul>
+            <p><strong>Attempts:</strong> 1 · <strong>Loop:</strong> 0</p>
+            <p><strong>Latest notes:</strong> Evidence-backed Codex baseline analysis recorded.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Consultation form validation and recovery</h2>
+          <p class="route">/#discovery · consultation-validation</p>
+          <p><strong>Visitor objective:</strong> Understand and correct a form problem without losing work.</p>
+          <p><strong>Expected next action:</strong> Fix the clearly identified field.</p>
+          <p><strong>After the action:</strong> The corrected request can continue to scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>97</td></tr><tr class="average"><th>Average</th><td>97.6</td><td>97.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-full.png">Original form baseline</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Field-level recovery</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 4</p>
+            <p><strong>Latest notes:</strong> Synthetic validation preserved the message while focusing the whitespace-only name field and announcing Please enter your name.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/homepage-full.png">Before</a> · <a href="evidence/after/loop-04-validation-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Consultation request form</h2>
+          <p class="route">/#discovery · consultation-form</p>
+          <p><strong>Visitor objective:</strong> Share enough context for Aaron to prepare.</p>
+          <p><strong>Expected next action:</strong> Submit name, email, and a short description.</p>
+          <p><strong>After the action:</strong> A saved synthetic request advances to scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>97</td></tr><tr class="average"><th>Average</th><td>97.6</td><td>97.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-full.png">Original homepage form</a></li><li><a href="evidence/after/loop-02-homepage-form-footer-mobile.png">Form with privacy and follow-up context</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Field-level recovery and preserved context</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 4</p>
+            <p><strong>Latest notes:</strong> Whitespace name, invalid email, and empty message recovery were exercised locally. The visitor&#x27;s other fields remain intact and the corrected form advances safely.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/homepage-full.png">Before</a> · <a href="evidence/after/loop-04-validation-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Scheduler transition and loading</h2>
+          <p class="route">/#discovery · scheduler-loading</p>
+          <p><strong>Visitor objective:</strong> Know that the request was saved and times are loading.</p>
+          <p><strong>Expected next action:</strong> Wait for availability or use recovery guidance.</p>
+          <p><strong>After the action:</strong> Available dates appear without a page change or lost context.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>97</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>97</td></tr><tr class="average"><th>Average</th><td>97.4</td><td>97.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/scheduler-availability-local.png">Original local availability</a></li><li><a href="evidence/after/loop-04-scheduler-mobile.png">Revised mobile scheduler</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 4</p>
+            <p><strong>Latest notes:</strong> Focus moves to the step-two heading without losing the saved synthetic request. Loading ends when the accessible date control appears.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/scheduler-availability-local.png">Before</a> · <a href="evidence/after/loop-04-scheduler-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Scheduler date and time selection</h2>
+          <p class="route">/#discovery · scheduler-availability</p>
+          <p><strong>Visitor objective:</strong> Choose an understandable 30-minute time.</p>
+          <p><strong>Expected next action:</strong> Choose a date, then a time.</p>
+          <p><strong>After the action:</strong> The exact selection is summarized before booking.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>97.8</td><td>97.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/scheduler-availability-local.png">Original mobile availability</a></li><li><a href="evidence/after/loop-04-scheduler-desktop.png">Revised desktop availability</a></li><li><a href="evidence/after/loop-04-scheduler-mobile.png">Revised mobile availability</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 4</p>
+            <p><strong>Latest notes:</strong> Desktop, 390px, and 360px show the same clear date-first sequence with Central Time and 24-hour notice visible. No horizontal overflow.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/scheduler-availability-local.png">Before</a> · <a href="evidence/after/loop-04-scheduler-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Non-JavaScript and scheduling fallback</h2>
+          <p class="route">/thank-you · thank-you-fallback</p>
+          <p><strong>Visitor objective:</strong> Know the request arrived and how to schedule or get help.</p>
+          <p><strong>Expected next action:</strong> Open the safe scheduling fallback or return home.</p>
+          <p><strong>After the action:</strong> The visitor has a clear next destination and response expectation.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.2</td><td>98.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/thank-you-full.png">Original desktop fallback</a></li><li><a href="evidence/after/loop-05-thank-you-direct-desktop.png">Truthful direct desktop recovery</a></li><li><a href="evidence/after/loop-05-thank-you-direct-mobile.png">Truthful direct mobile recovery</a></li></ul>
+            <p><strong>Attempts:</strong> 7 · <strong>Loop:</strong> 5</p>
+            <p><strong>Latest notes:</strong> A synthetic local POST returned 303 with the receipt cookie; the follow-up GET showed Your note is saved. A direct GET showed Tell me what’s going on first and hid booking.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/thank-you-full.png">Before</a> · <a href="evidence/after/loop-05-thank-you-direct-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 2</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Scheduler booking confirmation</h2>
+          <p class="route">/#discovery · scheduler-confirmation</p>
+          <p><strong>Visitor objective:</strong> Confirm the selected time and know what happens afterward.</p>
+          <p><strong>Expected next action:</strong> Confirm the booking.</p>
+          <p><strong>After the action:</strong> A fixture confirmation shows the date, time, timezone, and meeting expectation.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>99</td><td>99</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.4</td><td>98.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/scheduler-success-local.png">Original fixture success</a></li><li><a href="evidence/after/loop-04-scheduler-success-desktop.png">Revised fixture success</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 4</p>
+            <p><strong>Latest notes:</strong> The fake calendar created no real event. Focus landed on You&#x27;re booked and the complete promise matched the displayed result.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/scheduler-success-local.png">Before</a> · <a href="evidence/after/loop-04-scheduler-success-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: Customer requests and files are scattered everywhere</h2>
+          <p class="route">/services/build-a-customer-portal-for-requests-and-files · service-build-a-customer-portal-for-requests-and-files</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: Customer requests and files are scattered everywhere</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-a-customer-portal-for-requests-and-files-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-a-customer-portal-for-requests-and-files-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-a-customer-portal-for-requests-and-files-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-a-customer-portal-for-requests-and-files-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: Customers keep asking the same questions</h2>
+          <p class="route">/services/build-an-ai-powered-website-support-agent · service-build-an-ai-powered-website-support-agent</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: Customers keep asking the same questions</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-an-ai-powered-website-support-agent-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-an-ai-powered-website-support-agent-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-an-ai-powered-website-support-agent-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-an-ai-powered-website-support-agent-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: Customers wait too long for a quote or answer</h2>
+          <p class="route">/services/build-an-online-quote-or-estimate-tool · service-build-an-online-quote-or-estimate-tool</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: Customers wait too long for a quote or answer</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-an-online-quote-or-estimate-tool-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-an-online-quote-or-estimate-tool-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-an-online-quote-or-estimate-tool-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-an-online-quote-or-estimate-tool-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: Every new customer gets a different start</h2>
+          <p class="route">/services/build-a-new-customer-onboarding-workflow · service-build-a-new-customer-onboarding-workflow</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: Every new customer gets a different start</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-a-new-customer-onboarding-workflow-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-a-new-customer-onboarding-workflow-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-a-new-customer-onboarding-workflow-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-a-new-customer-onboarding-workflow-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I can&#x27;t see the whole customer story in one place</h2>
+          <p class="route">/services/integrate-your-business-with-a-crm · service-integrate-your-business-with-a-crm</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I can&#x27;t see the whole customer story in one place</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-integrate-your-business-with-a-crm-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-integrate-your-business-with-a-crm-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-integrate-your-business-with-a-crm-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-integrate-your-business-with-a-crm-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-integrate-your-business-with-a-crm-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-integrate-your-business-with-a-crm-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I can&#x27;t trust my customer list</h2>
+          <p class="route">/services/clean-up-crm-fields-and-duplicate-records · service-clean-up-crm-fields-and-duplicate-records</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I can&#x27;t trust my customer list</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-clean-up-crm-fields-and-duplicate-records-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-clean-up-crm-fields-and-duplicate-records-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-clean-up-crm-fields-and-duplicate-records-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-clean-up-crm-fields-and-duplicate-records-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I don&#x27;t know if this proposal is a good deal</h2>
+          <p class="route">/services/review-a-vendor-proposal-before-signing · service-review-a-vendor-proposal-before-signing</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I don&#x27;t know if this proposal is a good deal</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-review-a-vendor-proposal-before-signing-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-review-a-vendor-proposal-before-signing-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-review-a-vendor-proposal-before-signing-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-review-a-vendor-proposal-before-signing-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I don&#x27;t know where AI would actually help my business</h2>
+          <p class="route">/services/train-your-team-to-use-ai-confidently · service-train-your-team-to-use-ai-confidently</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I don&#x27;t know where AI would actually help my business</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-train-your-team-to-use-ai-confidently-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-train-your-team-to-use-ai-confidently-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-train-your-team-to-use-ai-confidently-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-train-your-team-to-use-ai-confidently-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I don&#x27;t know whether to buy software or have something built</h2>
+          <p class="route">/services/choose-build-vs-buy-for-a-tool · service-choose-build-vs-buy-for-a-tool</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I don&#x27;t know whether to buy software or have something built</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-choose-build-vs-buy-for-a-tool-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-choose-build-vs-buy-for-a-tool-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-choose-build-vs-buy-for-a-tool-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-choose-build-vs-buy-for-a-tool-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I don&#x27;t know which AI tools are worth using</h2>
+          <p class="route">/services/choose-ai-tools-for-your-business · service-choose-ai-tools-for-your-business</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I don&#x27;t know which AI tools are worth using</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-choose-ai-tools-for-your-business-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-choose-ai-tools-for-your-business-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-choose-ai-tools-for-your-business-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-choose-ai-tools-for-your-business-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-choose-ai-tools-for-your-business-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-choose-ai-tools-for-your-business-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I have to turn every form into a task by hand</h2>
+          <p class="route">/services/turn-intake-forms-into-organized-tasks · service-turn-intake-forms-into-organized-tasks</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I have to turn every form into a task by hand</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-turn-intake-forms-into-organized-tasks-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-turn-intake-forms-into-organized-tasks-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-turn-intake-forms-into-organized-tasks-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-turn-intake-forms-into-organized-tasks-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I have too many technology problems to tackle</h2>
+          <p class="route">/services/decide-what-to-build-first · service-decide-what-to-build-first</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I have too many technology problems to tackle</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-decide-what-to-build-first-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-decide-what-to-build-first-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-decide-what-to-build-first-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-decide-what-to-build-first-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-decide-what-to-build-first-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-decide-what-to-build-first-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I need a better way to follow up with new leads</h2>
+          <p class="route">/services/automate-lead-follow-up · service-automate-lead-follow-up</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I need a better way to follow up with new leads</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-automate-lead-follow-up-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-automate-lead-follow-up-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-automate-lead-follow-up-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-automate-lead-follow-up-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-automate-lead-follow-up-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-automate-lead-follow-up-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I rewrite the same proposal every time</h2>
+          <p class="route">/services/generate-proposals-from-repeat-inputs · service-generate-proposals-from-repeat-inputs</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I rewrite the same proposal every time</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-generate-proposals-from-repeat-inputs-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-generate-proposals-from-repeat-inputs-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-generate-proposals-from-repeat-inputs-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-generate-proposals-from-repeat-inputs-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: I think the way we work is the real problem</h2>
+          <p class="route">/services/simplify-a-confusing-workflow-before-software · service-simplify-a-confusing-workflow-before-software</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: I think the way we work is the real problem</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-simplify-a-confusing-workflow-before-software-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-simplify-a-confusing-workflow-before-software-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-simplify-a-confusing-workflow-before-software-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-simplify-a-confusing-workflow-before-software-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: It takes too long to see how the business is doing</h2>
+          <p class="route">/services/build-a-simple-reporting-dashboard · service-build-a-simple-reporting-dashboard</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: It takes too long to see how the business is doing</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-a-simple-reporting-dashboard-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-a-simple-reporting-dashboard-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-a-simple-reporting-dashboard-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-a-simple-reporting-dashboard-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-a-simple-reporting-dashboard-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-a-simple-reporting-dashboard-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My WordPress site keeps showing warnings</h2>
+          <p class="route">/services/clean-up-wordpress-plugin-warnings · service-clean-up-wordpress-plugin-warnings</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My WordPress site keeps showing warnings</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-clean-up-wordpress-plugin-warnings-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-clean-up-wordpress-plugin-warnings-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-clean-up-wordpress-plugin-warnings-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-clean-up-wordpress-plugin-warnings-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My appointment messages confuse customers</h2>
+          <p class="route">/services/connect-scheduling-and-confirmation-emails · service-connect-scheduling-and-confirmation-emails</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My appointment messages confuse customers</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-connect-scheduling-and-confirmation-emails-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-connect-scheduling-and-confirmation-emails-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-connect-scheduling-and-confirmation-emails-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-connect-scheduling-and-confirmation-emails-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My business has outgrown its website</h2>
+          <p class="route">/services/build-a-new-website-for-your-business · service-build-a-new-website-for-your-business</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My business has outgrown its website</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-build-a-new-website-for-your-business-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-build-a-new-website-for-your-business-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-build-a-new-website-for-your-business-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-build-a-new-website-for-your-business-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-build-a-new-website-for-your-business-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-build-a-new-website-for-your-business-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My new business needs help with technology</h2>
+          <p class="route">/services/set-up-a-small-business-tech-stack-from-scratch · service-set-up-a-small-business-tech-stack-from-scratch</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My new business needs help with technology</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-set-up-a-small-business-tech-stack-from-scratch-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-set-up-a-small-business-tech-stack-from-scratch-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My team can&#x27;t find the instructions they need</h2>
+          <p class="route">/services/create-a-custom-ai-assistant-for-procedures · service-create-a-custom-ai-assistant-for-procedures</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My team can&#x27;t find the instructions they need</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-create-a-custom-ai-assistant-for-procedures-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-create-a-custom-ai-assistant-for-procedures-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-create-a-custom-ai-assistant-for-procedures-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-create-a-custom-ai-assistant-for-procedures-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My team needs simple rules for using AI safely</h2>
+          <p class="route">/services/create-safe-ai-rules-for-client-data · service-create-safe-ai-rules-for-client-data</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My team needs simple rules for using AI safely</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-create-safe-ai-rules-for-client-data-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-create-safe-ai-rules-for-client-data-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-create-safe-ai-rules-for-client-data-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-create-safe-ai-rules-for-client-data-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My website form isn&#x27;t sending me messages</h2>
+          <p class="route">/services/fix-a-broken-contact-form · service-fix-a-broken-contact-form</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My website form isn&#x27;t sending me messages</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-fix-a-broken-contact-form-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-fix-a-broken-contact-form-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-fix-a-broken-contact-form-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-fix-a-broken-contact-form-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-fix-a-broken-contact-form-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-fix-a-broken-contact-form-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My website is hard to use on a phone</h2>
+          <p class="route">/services/improve-a-confusing-mobile-website · service-improve-a-confusing-mobile-website</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My website is hard to use on a phone</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-improve-a-confusing-mobile-website-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-improve-a-confusing-mobile-website-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-improve-a-confusing-mobile-website-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-improve-a-confusing-mobile-website-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-improve-a-confusing-mobile-website-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-improve-a-confusing-mobile-website-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My website no longer describes my business</h2>
+          <p class="route">/services/refresh-an-outdated-homepage · service-refresh-an-outdated-homepage</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My website no longer describes my business</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-refresh-an-outdated-homepage-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-refresh-an-outdated-homepage-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-refresh-an-outdated-homepage-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-refresh-an-outdated-homepage-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-refresh-an-outdated-homepage-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-refresh-an-outdated-homepage-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My website or software project has stopped</h2>
+          <p class="route">/services/recover-a-project-that-stalled · service-recover-a-project-that-stalled</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My website or software project has stopped</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-recover-a-project-that-stalled-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-recover-a-project-that-stalled-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-recover-a-project-that-stalled-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-recover-a-project-that-stalled-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-recover-a-project-that-stalled-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-recover-a-project-that-stalled-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: My website takes too long to load</h2>
+          <p class="route">/services/make-a-slow-website-feel-fast · service-make-a-slow-website-feel-fast</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: My website takes too long to load</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-make-a-slow-website-feel-fast-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-make-a-slow-website-feel-fast-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-make-a-slow-website-feel-fast-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-make-a-slow-website-feel-fast-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-make-a-slow-website-feel-fast-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-make-a-slow-website-feel-fast-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: One spreadsheet is running too much of the business</h2>
+          <p class="route">/services/convert-spreadsheet-work-into-a-simple-app · service-convert-spreadsheet-work-into-a-simple-app</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: One spreadsheet is running too much of the business</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-convert-spreadsheet-work-into-a-simple-app-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-convert-spreadsheet-work-into-a-simple-app-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: We copy the same information from one app to another</h2>
+          <p class="route">/services/reduce-copy-and-paste-between-tools · service-reduce-copy-and-paste-between-tools</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: We copy the same information from one app to another</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-reduce-copy-and-paste-between-tools-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-reduce-copy-and-paste-between-tools-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-reduce-copy-and-paste-between-tools-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-reduce-copy-and-paste-between-tools-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Example detail: Writing customer replies takes too long</h2>
+          <p class="route">/services/use-ai-to-improve-customer-support-replies · service-use-ai-to-improve-customer-support-replies</p>
+          <p><strong>Visitor objective:</strong> Recognize the situation: Writing customer replies takes too long</p>
+          <p><strong>Expected next action:</strong> Read the tailored approach or start a discovery request.</p>
+          <p><strong>After the action:</strong> The page carries this exact example into the consultation form and then scheduling.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>97</td><td>96</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/service-use-ai-to-improve-customer-support-replies-first-screen.png">Unique desktop baseline</a></li><li><a href="evidence/baseline/mobile/service-use-ai-to-improve-customer-support-replies-first-screen.png">Unique mobile baseline</a></li><li><a href="evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-desktop-full.png">Revised full desktop page</a></li><li><a href="evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-mobile-full.png">Revised full mobile page</a></li><li><a href="evidence/after/loop-04-validation-mobile.png">Shared field-level recovery proof</a></li></ul>
+            <p><strong>Attempts:</strong> 4 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> The unique desktop and mobile page, tailored copy, seeded form, expanded FAQs, privacy context, validation recovery, and call path were re-reviewed together.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-use-ai-to-improve-customer-support-replies-first-screen.png">Before</a> · <a href="evidence/after/loop-06-service-use-ai-to-improve-customer-support-replies-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 3</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Interactive 30-example explorer</h2>
+          <p class="route">/#service-list · homepage-problem-explorer</p>
+          <p><strong>Visitor objective:</strong> Browse familiar problems without knowing the service name.</p>
+          <p><strong>Expected next action:</strong> Choose a category or example.</p>
+          <p><strong>After the action:</strong> The example moves into focus or opens its tailored detail page.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>97</td><td>96</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>97</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>96</td></tr><tr class="average"><th>Average</th><td>97.2</td><td>96.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/homepage-full.png">Original mobile explorer</a></li><li><a href="evidence/after/loop-06-explorer-mobile.png">Revised mobile explorer</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 6</p>
+            <p><strong>Latest notes:</strong> ArrowRight moved selection and focus from My website to My customers. All 30 examples remain reachable, choices return to the spotlight, and mobile width settled without overflow.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-06-explorer-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 4</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Client work and proof</h2>
+          <p class="route">/#client-work · homepage-client-work</p>
+          <p><strong>Visitor objective:</strong> See truthful evidence of relevant work.</p>
+          <p><strong>Expected next action:</strong> Review the examples or visit an external client site.</p>
+          <p><strong>After the action:</strong> The visitor can connect the work to Audo&#x27;s capabilities.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>97</td><td>96</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>96</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>96.0</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/homepage-full.png">Original client-work section</a></li><li><a href="evidence/after/loop-07-client-work-desktop.png">Revised desktop proof</a></li><li><a href="evidence/after/loop-07-client-work-mobile-clean.png">Revised mobile proof</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> No metrics, testimonial language, or unsupported outcomes were added. Both examples now connect the work to concerns a non-technical owner can recognize.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-07-client-work-mobile-clean.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 4</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Aaron identity, credibility, and working style</h2>
+          <p class="route">/#why · homepage-founder</p>
+          <p><strong>Visitor objective:</strong> Decide whether Aaron is credible, approachable, and responsible for the work.</p>
+          <p><strong>Expected next action:</strong> Continue to client work or book discovery.</p>
+          <p><strong>After the action:</strong> The visitor understands who they will work with and why that is different.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>97</td><td>96</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>97.0</td><td>96.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/homepage-full.png">Original homepage section</a></li><li><a href="evidence/after/loop-07-founder-desktop.png">Revised desktop Aaron section</a></li><li><a href="evidence/after/loop-07-founder-mobile-clean.png">Revised mobile Aaron section</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> The photo, identity, experience, direct-working promise, plain-English promise, flexible engagement options, and CTA were reviewed together at 1280px, 390px, and 360px with no overflow.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a> · <a href="evidence/after/loop-07-founder-mobile-clean.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>Markdown service catalog</h2>
+          <p class="route">/services.md · services-markdown</p>
+          <p><strong>Visitor objective:</strong> Let agents and text browsers scan every consulting example.</p>
+          <p><strong>Expected next action:</strong> Open a relevant service detail page.</p>
+          <p><strong>After the action:</strong> The chosen canonical page provides tailored detail.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>96</td><td>96</td></tr><tr><th>Simplicity</th><td>95</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>96</td></tr><tr><th>Trust Credibility</th><td>95</td><td>95</td></tr><tr><th>Business Effectiveness</th><td>95</td><td>95</td></tr><tr class="average"><th>Average</th><td>95.4</td><td>95.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (1)</summary><ul><li><strong>Simplicity −2</strong> The complete 30-service document is necessarily long and needs strong headings and canonical links to remain scannable.<br><span>Verify heading hierarchy and unique links after every catalog change.</span></li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="manifest.json">Manifest inventory</a></li></ul>
+            <p><strong>Attempts:</strong> 1 · <strong>Loop:</strong> 0</p>
+            <p><strong>Latest notes:</strong> Evidence-backed Codex baseline analysis recorded.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots">Screenshots pending</p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Privacy policy</h2>
+          <p class="route">/privacy · privacy-policy</p>
+          <p><strong>Visitor objective:</strong> Understand what information is collected, why, and what choices exist.</p>
+          <p><strong>Expected next action:</strong> Read the relevant section or contact Audo.</p>
+          <p><strong>After the action:</strong> The visitor can make an informed consent choice.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>96</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>98</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>97.0</td><td>96.0</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/privacy-full.png">Original mobile privacy page</a></li><li><a href="evidence/after/loop-07-privacy-summary-mobile-full.png">Revised full mobile privacy page</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> The short answer now appears before the legal detail: the note goes to Aaron, supports scheduling, and is not sold. The full policy remains available without hiding required information.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/privacy-full.png">Before</a> · <a href="evidence/after/loop-07-privacy-summary-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Human-readable sitemap</h2>
+          <p class="route">/sitemap · human-sitemap</p>
+          <p><strong>Visitor objective:</strong> Find the right public consulting page.</p>
+          <p><strong>Expected next action:</strong> Choose a clearly grouped page link.</p>
+          <p><strong>After the action:</strong> The canonical public page opens.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>97</td><td>96</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>96</td></tr><tr class="average"><th>Average</th><td>97.0</td><td>96.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/mobile/sitemap-full.png">Original mobile sitemap</a></li><li><a href="evidence/after/loop-07-sitemap-jumps-mobile-full.png">Revised mobile sitemap with category jumps</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> Every category jump is 48px, lands on the promised section, and keeps the complete catalog visible to people and search engines. No overflow at 390px or 360px.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/sitemap-full.png">Before</a> · <a href="evidence/after/loop-07-sitemap-jumps-mobile-full.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>XML sitemap</h2>
+          <p class="route">/sitemap.xml · xml-sitemap</p>
+          <p><strong>Visitor objective:</strong> Provide search engines a canonical public page inventory.</p>
+          <p><strong>Expected next action:</strong> Crawl a listed URL.</p>
+          <p><strong>After the action:</strong> Every listed URL resolves canonically.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>96</td><td>96</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>97</td></tr><tr><th>Trust Credibility</th><td>96</td><td>96</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>96</td></tr><tr class="average"><th>Average</th><td>96.6</td><td>96.6</td></tr></tbody></table></div>
+          <details><summary>Deductions (1)</summary><ul><li><strong>Trust and credibility −2</strong> The live URL set still requires a complete response-status and canonical crawl before release.<br><span>Re-crawl every listed URL at the tested revision and record the result.</span></li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="manifest.json">Manifest inventory</a></li></ul>
+            <p><strong>Attempts:</strong> 1 · <strong>Loop:</strong> 0</p>
+            <p><strong>Latest notes:</strong> Evidence-backed Codex baseline analysis recorded.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots">Screenshots pending</p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>First-visit cookie choice</h2>
+          <p class="route">site-wide · cookie-first-choice</p>
+          <p><strong>Visitor objective:</strong> Choose analytics or necessary-only cookies knowingly.</p>
+          <p><strong>Expected next action:</strong> Accept or choose necessary only.</p>
+          <p><strong>After the action:</strong> The choice is remembered and the panel closes.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>98</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>96</td></tr><tr class="average"><th>Average</th><td>97.4</td><td>97.0</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/after/loop-02-homepage-form-footer-mobile.png">Repaired consent controls</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 2</p>
+            <p><strong>Latest notes:</strong> The first choice is specific, equal-weight, keyboard operable, and no optional consent is preselected.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/not-found-full.png">Before</a> · <a href="evidence/after/loop-02-homepage-form-footer-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Reopen cookie preferences</h2>
+          <p class="route">site-wide · cookie-preferences</p>
+          <p><strong>Visitor objective:</strong> Review or change a prior cookie choice.</p>
+          <p><strong>Expected next action:</strong> Open Cookie preferences and choose again.</p>
+          <p><strong>After the action:</strong> The updated choice is saved and applied.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>97</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>96</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>96</td></tr><tr class="average"><th>Average</th><td>97.2</td><td>97.0</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/after/loop-02-homepage-form-footer-mobile.png">Repaired footer preference control</a></li></ul>
+            <p><strong>Attempts:</strong> 6 · <strong>Loop:</strong> 2</p>
+            <p><strong>Latest notes:</strong> Reopen, choose, close, and focus restoration behavior are explicit across homepage, privacy, and detail templates.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/mobile/homepage-full.png">Before</a> · <a href="evidence/after/loop-02-homepage-form-footer-mobile.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>Titles, canonicals, social metadata, and indexing</h2>
+          <p class="route">site-wide · metadata-indexing</p>
+          <p><strong>Visitor objective:</strong> Receive an accurate preview and canonical destination in search or social results.</p>
+          <p><strong>Expected next action:</strong> Open the result or shared link.</p>
+          <p><strong>After the action:</strong> The correct consulting page opens with no misleading preview.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>98</td></tr><tr><th>Simplicity</th><td>97</td><td>97</td></tr><tr><th>Usability Accessibility</th><td>97</td><td>97</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>97</td><td>97</td></tr><tr class="average"><th>Average</th><td>97.4</td><td>97.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="../../tests/test_catalog_surfaces.py">Machine-context regression tests</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> Machine-readable context no longer introduces employer, dealership, M&amp;A, or unreleased-product positioning that is absent from the public page.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/service-new-business-full.png">Before</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>AI-readable consulting summary and discovery catalog</h2>
+          <p class="route">/llms.txt · llms-catalog</p>
+          <p><strong>Visitor objective:</strong> Help an AI search or research tool understand Audo consulting accurately.</p>
+          <p><strong>Expected next action:</strong> Follow a canonical consulting or catalog link.</p>
+          <p><strong>After the action:</strong> The agent reaches current, public, non-secret content.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.2</td><td>98.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="../../tests/test_catalog_surfaces.py">Catalog consistency regression tests</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> The generated guide contains exactly 30 current examples and the same categories and canonical links as the public sitemap.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots">Screenshots pending</p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 7</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>Expanded AI-readable consulting context</h2>
+          <p class="route">/llms-full.txt · llms-full</p>
+          <p><strong>Visitor objective:</strong> Give AI search and research tools complete and accurate consulting context.</p>
+          <p><strong>Expected next action:</strong> Use the structured service and booking details.</p>
+          <p><strong>After the action:</strong> The tool can answer without inventing claims or introducing unrelated products.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>98</td><td>98</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.2</td><td>98.2</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="../../tests/test_catalog_surfaces.py">Full-guide consistency regression tests</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> The expanded guide now matches what a visitor sees and explicitly excludes the unreleased product through automated public-surface tests.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots">Screenshots pending</p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 8</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>404 and recovery</h2>
+          <p class="route">/a-page-that-does-not-exist · not-found</p>
+          <p><strong>Visitor objective:</strong> Understand that the page is missing and recover safely.</p>
+          <p><strong>Expected next action:</strong> Return home, browse examples, or book discovery.</p>
+          <p><strong>After the action:</strong> A valid public destination opens with no dead end.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>99</td><td>99</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.4</td><td>98.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (1)</summary><ul><li><strong>Trust and credibility −2</strong> The page intentionally has no canonical because the requested URL is invalid.<br><span>Keep noindex and verify the 404 status at release.</span></li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="evidence/baseline/desktop/not-found-full.png">Original desktop unknown-route response</a></li><li><a href="evidence/after/loop-01-not-found-desktop.png">Improved desktop 404</a></li><li><a href="evidence/after/loop-01-not-found-mobile.png">Improved mobile 404</a></li></ul>
+            <p><strong>Attempts:</strong> 7 · <strong>Loop:</strong> 1</p>
+            <p><strong>Latest notes:</strong> Independent desktop and mobile review found no overflow, false destination, or critical undersized recovery control after the final logo target adjustment.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/not-found-full.png">Before</a> · <a href="evidence/after/loop-01-not-found-desktop.png">After</a></p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 8</span><span class="kind">machine</span></div>
+            <span class="status">passing</span></header>
+          <h2>Legacy consulting redirects</h2>
+          <p class="route">/app, /app.html, /service/*, /llm.txt · legacy-redirects</p>
+          <p><strong>Visitor objective:</strong> Reach the intended current public destination without confusion.</p>
+          <p><strong>Expected next action:</strong> Follow the redirect.</p>
+          <p><strong>After the action:</strong> The canonical consulting destination opens.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>99</td><td>99</td></tr><tr><th>Simplicity</th><td>99</td><td>99</td></tr><tr><th>Usability Accessibility</th><td>98</td><td>98</td></tr><tr><th>Trust Credibility</th><td>98</td><td>98</td></tr><tr><th>Business Effectiveness</th><td>98</td><td>98</td></tr><tr class="average"><th>Average</th><td>98.4</td><td>98.4</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="../../tests/test_homepage_experience.py">Permanent redirect regression tests</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> Local route checks returned 301 for /app, /app.html, /services, /scenarios, /llm.txt, and a legacy scenario detail URL, each with the exact canonical destination.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots">Screenshots pending</p></details>
+        </article>
+        <article class="audit-card status-passing">
+          <header><div><span class="band">Priority 9</span><span class="kind">screen</span></div>
+            <span class="status">passing</span></header>
+          <h2>Homepage without JavaScript</h2>
+          <p class="route">/ · no-js-homepage</p>
+          <p><strong>Visitor objective:</strong> Understand Audo and find a useful next step without scripts.</p>
+          <p><strong>Expected next action:</strong> Use the form fallback, sitemap, or direct service link.</p>
+          <p><strong>After the action:</strong> A server-rendered destination remains available.</p>
+          <div class="scores"><table><thead><tr><th>Category</th><th>Desktop</th><th>Mobile</th></tr></thead>
+            <tbody><tr><th>Clarity</th><td>98</td><td>97</td></tr><tr><th>Simplicity</th><td>97</td><td>95</td></tr><tr><th>Usability Accessibility</th><td>96</td><td>95</td></tr><tr><th>Trust Credibility</th><td>97</td><td>97</td></tr><tr><th>Business Effectiveness</th><td>96</td><td>95</td></tr><tr class="average"><th>Average</th><td>96.8</td><td>95.8</td></tr></tbody></table></div>
+          <details><summary>Deductions (0)</summary><ul><li>None recorded yet.</li></ul></details>
+          <details open><summary>Hard gates (0)</summary><ul><li>None recorded.</li></ul></details>
+          <details><summary>Evidence and review</summary><ul><li><a href="../../tests/test_homepage_experience.py">No-JavaScript fallback regression test</a></li></ul>
+            <p><strong>Attempts:</strong> 2 · <strong>Loop:</strong> 7</p>
+            <p><strong>Latest notes:</strong> The server-rendered homepage, direct service links, privacy route, sitemap, and truthful form fallback remain available without the interactive explorer.</p>
+            <p><strong>Reviewer:</strong> </p>
+            <p class="screenshots"><a href="evidence/baseline/desktop/homepage-full.png">Before</a></p></details>
+        </article></section>
+<footer>Updated 2026-07-16T19:15:29+00:00 · Baseline frozen: yes · Desktop 1280×900 · Mobile 390×844 · Narrow-mobile gate 360×800</footer>
+</main></body></html>

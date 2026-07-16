@@ -33,8 +33,8 @@
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/booking.css?v=20260710-2">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260716-audit1">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260716-audit1">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -76,28 +76,17 @@
           },
           "priceRange": "Free Discovery",
           "knowsAbout": [
-            "Website management",
-            "Web application support",
+            "Small business websites",
+            "Website repairs and ongoing care",
             "Business automation",
-            "AI coaching",
-            "AI website support agents",
-            "Product strategy",
-            "Internal tools",
+            "Practical AI help",
+            "Technology planning",
+            "Simple internal tools",
             "Customer portals",
             "CRM integrations",
-            "Mobile apps",
             "Quote and estimate tools",
-            "User experience",
-            "Technical analysis tools",
-            "Crypto exchange integrations",
-            "AI market analysis systems",
-            "Automotive retail technology",
-            "Dealership software",
-            "Powersports",
-            "RV",
-            "Marine",
-            "Ecommerce",
-            "Marketplaces"
+            "Customer experience",
+            "Choosing business software"
           ],
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -131,8 +120,8 @@
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "AI coaching, training, and support",
-                  "description": "AI use cases, AI website support agents, prompt coaching, team training, privacy rules, tool selection, and AI-assisted workflows."
+                  "name": "Practical AI help",
+                  "description": "Choose useful AI tools, set sensible privacy rules, train a team, and find everyday work where AI can safely save time."
                 }
               },
               {
@@ -153,23 +142,18 @@
           "jobTitle": "Founder and Senior Tech Partner",
           "url": "https://getaudo.com/",
           "image": "https://getaudo.com/assets/founder-field-portrait.webp",
-          "description": "Aaron brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
+          "description": "Aaron has 30 years of experience building websites and software, leading product and engineering teams, and solving technology problems for businesses large and small.",
           "worksFor": {
             "@id": "https://getaudo.com/#business"
           },
           "knowsAbout": [
-            "Product strategy",
             "Software engineering",
-            "AI-assisted workflows",
-            "Website operations",
-            "Automation",
+            "Practical AI workflows",
+            "Website care",
+            "Business automation",
             "Small business technology",
-            "Automotive retail technology",
-            "Dealership platforms",
-            "Global product and engineering teams",
-            "Large-agency delivery",
-            "Product due diligence",
-            "M&A technology review"
+            "Technology planning",
+            "Product and engineering leadership"
           ]
         },
         {
@@ -184,7 +168,7 @@
                 "@type": "Organization",
                 "name": "Boston's Pizza Restaurant & Sports Bar",
                 "url": "https://www.bostons.com/",
-                "description": "Audo provides ADA compliance support, marketing site and CMS management, database and server management, and ongoing support for Boston's Pizza."
+                "description": "Audo helps keep the Boston's Pizza website accessible, current, and running, with ongoing fixes and support."
               }
             },
             {
@@ -194,7 +178,7 @@
                 "@type": "Organization",
                 "name": "Carnac AI Trading",
                 "url": "https://getcarnac.com/",
-                "description": "Audo built the Carnac AI Trading platform, including proprietary technical analysis tools, crypto exchange integrations, and an AI market analysis system."
+                "description": "Audo built the Carnac customer product, connected the services it relies on, and continues to develop its market research tools."
               }
             }
           ]
@@ -267,6 +251,9 @@
     }
 
     .skip-link {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       position: fixed;
       z-index: 50;
       top: 14px;
@@ -341,6 +328,11 @@
       gap: 22px;
       font-size: 14px;
       font-weight: 720;
+    }
+
+    .nav-menu-toggle,
+    .mobile-nav-menu {
+      display: none;
     }
 
     .nav-links a,
@@ -1631,8 +1623,8 @@
 
     .client-card {
       display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 16px;
+      grid-template-rows: auto auto auto auto 1fr;
+      gap: 12px;
       padding: clamp(20px, 3vw, 26px);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -1676,6 +1668,28 @@
       color: var(--ink);
       font-size: 21px;
       line-height: 1.2;
+    }
+
+    .client-role {
+      width: fit-content;
+      margin: 0;
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #61440f;
+      background: rgba(240, 198, 111, 0.23);
+      font-size: 12px;
+      font-weight: 820;
+      line-height: 1.25;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .client-summary {
+      max-width: 60ch;
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .client-work-list {
@@ -1989,6 +2003,19 @@
       resize: vertical;
     }
 
+    .form-field [aria-invalid="true"] {
+      border-color: #a33c31;
+      box-shadow: 0 0 0 3px rgba(163, 60, 49, 0.14);
+    }
+
+    .field-error {
+      margin: 0;
+      color: #7c2d23;
+      font-size: 12.5px;
+      font-weight: 720;
+      line-height: 1.45;
+    }
+
     .consultation-form .button {
       width: 100%;
       border: 0;
@@ -2002,6 +2029,25 @@
       color: var(--muted);
       font-size: 12.5px;
       line-height: 1.5;
+    }
+
+    .form-privacy {
+      margin: 0;
+      padding: 12px 13px;
+      border-radius: 8px;
+      color: #4e5d55;
+      background: #f2f5f2;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .form-privacy a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--evergreen);
+      font-weight: 800;
+      text-underline-offset: 3px;
     }
 
     .form-status {
@@ -2045,6 +2091,40 @@
       --explorer-ink: #173128;
       display: grid;
       gap: 18px;
+    }
+
+    .explorer-noscript {
+      border: 1px solid rgba(24, 34, 29, 0.12);
+      border-radius: 18px;
+      padding: clamp(20px, 4vw, 30px);
+      background: #fff;
+    }
+
+    .explorer-noscript h3,
+    .explorer-noscript p {
+      margin: 0;
+    }
+
+    .explorer-noscript p {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .explorer-noscript ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 18px;
+      margin: 18px 0;
+      padding-left: 20px;
+    }
+
+    .explorer-noscript a:not(.button) {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink);
+      font-weight: 760;
+      text-underline-offset: 3px;
     }
 
     .problem-explorer-toolbar {
@@ -2869,6 +2949,9 @@
     }
 
     .cookie-copy a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
       color: var(--ink);
       font-weight: 760;
     }
@@ -2881,7 +2964,7 @@
     }
 
     .cookie-button {
-      min-height: 42px;
+      min-height: 44px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 0 14px;
@@ -3005,9 +3088,64 @@
         display: none;
       }
 
+      .nav-inner {
+        position: relative;
+        flex-wrap: nowrap;
+      }
+
       .nav-links {
         gap: 10px;
         font-size: 13px;
+      }
+
+      .nav-menu-toggle {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.46);
+        border-radius: 8px;
+        padding: 0 12px;
+        color: #fff;
+        background: rgba(10, 18, 14, 0.62);
+        font: inherit;
+        font-weight: 780;
+        cursor: pointer;
+      }
+
+      .mobile-nav-menu {
+        position: absolute;
+        z-index: 8;
+        top: calc(100% + 10px);
+        right: 0;
+        width: min(310px, 100%);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 14px;
+        padding: 8px;
+        background: rgba(12, 24, 19, 0.98);
+        box-shadow: 0 22px 55px rgba(0, 0, 0, 0.34);
+      }
+
+      .mobile-nav-menu:not([hidden]) {
+        display: grid;
+      }
+
+      .mobile-nav-menu a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        border-radius: 9px;
+        padding: 0 13px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+        font-weight: 760;
+        text-decoration: none;
+      }
+
+      .mobile-nav-menu a:hover,
+      .mobile-nav-menu a:focus-visible {
+        color: #101815;
+        background: #f0c66f;
       }
 
       .nav-links .nav-cta {
@@ -3130,9 +3268,9 @@
       .service-card:nth-child(5) {
         grid-column: 1;
         grid-row: auto;
-        min-height: 390px;
+        min-height: 0;
         grid-template-columns: 1fr;
-        grid-template-rows: minmax(190px, 1fr) auto;
+        grid-template-rows: 148px auto;
       }
 
       .service-card:nth-child(2) .service-visual,
@@ -3152,17 +3290,17 @@
       .service-main,
       .service-card:nth-child(2) .service-main,
       .service-card:nth-child(5) .service-main {
-        padding: 22px;
+        padding: 20px;
       }
 
       .service-main h3,
       .service-card:nth-child(3) .service-main h3,
       .service-card:nth-child(4) .service-main h3 {
-        font-size: 23px;
+        font-size: 22px;
       }
 
       .service-card p {
-        font-size: 15px;
+        font-size: 14.5px;
         line-height: 1.55;
       }
 
@@ -3240,7 +3378,7 @@
       }
 
       .why-portrait-card {
-        min-height: 400px;
+        min-height: 320px;
       }
 
       .why-story-copy {
@@ -3264,7 +3402,8 @@
       }
 
       .why-highlights li {
-        min-height: 150px;
+        min-height: 0;
+        gap: 14px;
       }
 
       .client-meaning {
@@ -3361,6 +3500,10 @@
         gap: 12px;
       }
 
+      .explorer-noscript ul {
+        grid-template-columns: 1fr;
+      }
+
       .problem-explorer-toolbar {
         gap: 10px;
         border-radius: 18px;
@@ -3375,7 +3518,7 @@
 
       .problem-tab {
         grid-column: auto;
-        min-height: 42px;
+        min-height: 44px;
         padding: 8px 10px;
       }
 
@@ -3513,10 +3656,14 @@
       .problem-choice,
       .problem-choice:nth-child(n + 4),
       .problem-choice:last-child:nth-child(odd) {
-        min-height: 176px;
+        min-height: 124px;
         grid-column: 1;
         border-radius: 18px;
         padding: 18px;
+      }
+
+      .problem-choice-summary {
+        display: none;
       }
 
       .cookie-consent {
@@ -3574,9 +3721,17 @@
         <img src="/assets/audo-logo-white.png" alt="Audo">
       </a>
       <div class="nav-links">
+        <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-menu">Menu</button>
         <a href="#services">How I can help</a>
+        <a href="#service-list">Real examples</a>
         <a href="#why">Why Audo</a>
         <a class="nav-cta" href="#discovery">Book free discovery</a>
+      </div>
+      <div class="mobile-nav-menu" id="mobile-nav-menu" hidden>
+        <a href="#services">Ways I can help</a>
+        <a href="#service-list">Real problems I help solve</a>
+        <a href="#why">About Aaron and Audo</a>
+        <a href="#client-work">Work I've done</a>
       </div>
     </div>
   </nav>
@@ -3586,12 +3741,12 @@
       <div class="hero-content">
         <p class="eyebrow">Small business technology partner</p>
         <h1>Get tech off your plate.</h1>
-        <p class="hero-lead">I fix websites, automate repetitive work, help teams use AI, and build tools for small businesses.</p>
+        <p class="hero-lead">I help small businesses fix website problems, cut repetitive work, make sense of AI, and choose what to do next.</p>
         <div class="hero-actions">
           <a class="button primary" href="#discovery">Book free discovery</a>
           <a class="button ghost" href="#service-list">See more examples</a>
         </div>
-        <p class="hero-note">Not sure where to start? Tell me what is going wrong. I'll help figure it out.</p>
+        <p class="hero-note">Work directly with Aaron. Free 30-minute call. No charge or obligation.</p>
       </div>
     </div>
   </header>
@@ -3625,8 +3780,8 @@
             </div>
             <div class="service-main">
               <h3>Get a website or app working again</h3>
-              <p>Broken forms, slow pages, hosting problems, analytics, integrations, accessibility, or updates that never get done.</p>
-              <span class="service-card-action" aria-hidden="true">Choose this</span>
+              <p>A form stops sending messages, pages load slowly, or something on your site is broken or out of date.</p>
+              <span class="service-card-action" aria-hidden="true">Start here</span>
             </div>
           </a>
 
@@ -3646,8 +3801,8 @@
             </div>
             <div class="service-main">
               <h3>Build a website or tool</h3>
-              <p>A new website, intake form, customer portal, dashboard, prototype, or internal tool made around the way your business works.</p>
-              <span class="service-card-action" aria-hidden="true">Choose this</span>
+              <p>You need a new site, online form, customer area, or simple tool that fits how your business works.</p>
+              <span class="service-card-action" aria-hidden="true">Start here</span>
             </div>
           </a>
 
@@ -3663,8 +3818,8 @@
             </div>
             <div class="service-main">
               <h3>Stop doing the same work by hand</h3>
-              <p>Follow-up, scheduling, reminders, reports, documents, and handoffs between your tools.</p>
-              <span class="service-card-action" aria-hidden="true">Choose this</span>
+              <p>You keep copying information, sending the same follow-ups, or rebuilding the same reports and documents.</p>
+              <span class="service-card-action" aria-hidden="true">Start here</span>
             </div>
           </a>
 
@@ -3677,12 +3832,12 @@
             </div>
             <div class="service-main">
               <h3>Help your team use AI well</h3>
-              <p>Choose tools, train your team, set rules, improve prompts, and find work where AI can save time.</p>
-              <span class="service-card-action" aria-hidden="true">Choose this</span>
+              <p>You want to know which AI tools are worth using, what is safe, and where they could save your team time.</p>
+              <span class="service-card-action" aria-hidden="true">Start here</span>
             </div>
           </a>
 
-          <a class="service-card" href="#discovery" data-service-choice="Technology decision support" data-service-prefill="making a technology decision">
+          <a class="service-card" href="#discovery" data-service-choice="Choosing the right next step" data-service-prefill="choosing the right next step">
             <div class="service-visual visual-decide" aria-hidden="true">
               <div class="decision-board">
                 <div class="decision-option">
@@ -3698,9 +3853,9 @@
               </div>
             </div>
             <div class="service-main">
-              <h3>Make a technology decision</h3>
-              <p>Choose a vendor, decide whether to build or buy, test an app idea, or figure out what deserves attention first.</p>
-              <span class="service-card-action" aria-hidden="true">Choose this</span>
+              <h3>Choose the right next step</h3>
+              <p>You are comparing software, reviewing a proposal, or deciding what to fix or build first.</p>
+              <span class="service-card-action" aria-hidden="true">Start here</span>
             </div>
           </a>
         </div>
@@ -3723,9 +3878,9 @@
         <div class="section-head">
           <div>
             <p class="panel-label">Why Audo</p>
-            <h2><span class="why-heading-line">Senior experience.</span> <span class="why-heading-line">One person to call.</span></h2>
+            <h2>A small practice by design.</h2>
           </div>
-          <p class="section-copy">You work directly with me from the first conversation through the finished work. No account manager and no handoffs.</p>
+          <p class="section-copy">You work directly with me. I bring 30 years of experience, explain the options in plain English, and stay with the work from start to finish.</p>
         </div>
 
         <div class="why-grid">
@@ -3786,8 +3941,8 @@
       <div class="shell">
         <div class="client-work-head">
           <p class="eyebrow">Client work</p>
-          <h2 id="client-work-heading">A few things I've built and supported.</h2>
-          <p>My work includes websites, accessibility, custom software, integrations, servers, and AI systems.</p>
+          <h2 id="client-work-heading">Two examples of work I handle.</h2>
+          <p>One is ongoing website care. The other is a custom product built from the ground up.</p>
         </div>
         <div class="client-showcase" data-client-carousel aria-describedby="client-carousel-note">
           <div class="client-track" id="client-work-track">
@@ -3796,11 +3951,13 @@
                 <img src="/assets/bostons-logo-dough.svg" alt="Boston's Pizza Restaurant &amp; Sports Bar logo" loading="lazy" decoding="async">
               </a>
               <h3>Boston's Pizza</h3>
+              <p class="client-role">Ongoing website care and support</p>
+              <p class="client-summary">I help keep the public website usable, current, and running behind the scenes.</p>
               <ul class="client-work-list" aria-label="Audo work for Boston's Pizza">
-                <li>ADA compliance</li>
-                <li>Marketing site and CMS management</li>
-                <li>Database and server management</li>
-                <li>Ongoing support</li>
+                <li>Make pages easier for people with disabilities to use</li>
+                <li>Update pages and website content</li>
+                <li>Keep the systems behind the website running</li>
+                <li>Fix problems as they come up</li>
               </ul>
             </article>
             <article class="client-card">
@@ -3808,11 +3965,13 @@
                 <img src="/assets/carnac-logo-white.png" alt="Carnac AI Trading logo" loading="lazy" decoding="async">
               </a>
               <h3>Carnac AI Trading</h3>
+              <p class="client-role">Product build and ongoing development</p>
+              <p class="client-summary">I built the customer product and the tools that turn market information into something people can use.</p>
               <ul class="client-work-list" aria-label="Audo work for Carnac AI Trading">
-                <li>Full platform build</li>
-                <li>Creation of proprietary technical analysis tools</li>
-                <li>Crypto exchange integrations</li>
-                <li>AI market analysis system</li>
+                <li>Built the customer-facing product</li>
+                <li>Connected it to the trading services it relies on</li>
+                <li>Built tools for researching the market</li>
+                <li>Continue to improve and support it</li>
               </ul>
             </article>
           </div>
@@ -3851,7 +4010,7 @@
             </div>
           </div>
         </div>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-note" data-recaptcha-form data-inline-booking>
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="form-status form-privacy form-note" data-recaptcha-form data-inline-booking>
           <div class="form-selection" data-service-selection aria-live="polite" hidden>
             <span>Starting with</span>
             <strong data-service-selection-label></strong>
@@ -3891,6 +4050,7 @@
           <input type="hidden" name="timeline" value="Schedule after request">
           <input type="hidden" name="interest_context" value="Small business technology discovery request">
           <input type="hidden" name="recaptcha_token" value="">
+          <p id="form-privacy" class="form-privacy">I’ll use what you share only to prepare for and follow up about your request. If you don’t pick a time, I usually reply within one business day. <a href="/privacy#information">How I handle your information</a></p>
           <button class="button primary" type="submit">Continue to scheduling</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="form-note" class="form-note">Step 1 of 2 · After this, you'll pick a time from my calendar.</p>
@@ -3924,8 +4084,8 @@
                   <p data-explorer-result></p>
                 </div>
                 <div class="problem-actions">
-                  <a class="problem-primary" href="#discovery" data-explorer-choose>This sounds familiar</a>
-                  <a class="problem-secondary" href="#" data-explorer-details>See how I can help</a>
+                  <a class="problem-primary" href="#discovery" data-explorer-choose>Tell Aaron about this</a>
+                  <a class="problem-secondary" href="#" data-explorer-details>Read how I can help</a>
                 </div>
               </div>
             </article>
@@ -3942,7 +4102,18 @@
 
           <p id="service-list-status" class="sr-only" role="status" aria-live="polite">Loading examples...</p>
           <noscript>
-            <p>JavaScript is required to explore these examples. You can still find every service through the sitemap.</p>
+            <div class="explorer-noscript">
+              <h3>Browse a few common starting points</h3>
+              <p>The interactive explorer needs JavaScript, but these pages work without it.</p>
+              <ul>
+                <li><a href="/services/fix-a-broken-contact-form">My website form is not working</a></li>
+                <li><a href="/services/automate-lead-follow-up">New leads are not getting a quick reply</a></li>
+                <li><a href="/services/reduce-copy-and-paste-between-tools">We copy the same information between tools</a></li>
+                <li><a href="/services/choose-ai-tools-for-your-business">I do not know which AI tools are worth using</a></li>
+                <li><a href="/services/decide-what-to-build-first">I do not know what to fix or build first</a></li>
+              </ul>
+              <a class="button" href="/sitemap">View all 30 examples</a>
+            </div>
           </noscript>
         </div>
       </div>
@@ -3954,8 +4125,8 @@
       <section class="footer-cta" aria-labelledby="footer-cta-heading">
         <div class="footer-cta-copy">
           <p class="footer-eyebrow">Free 30-minute discovery call</p>
-          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
-          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+          <h2 id="footer-cta-heading">Ready to talk it through?</h2>
+          <p>Send a short note, then pick a free 30-minute Google Meet time.</p>
         </div>
         <a class="footer-cta-button" href="#discovery">Book free discovery</a>
       </section>
@@ -3965,7 +4136,7 @@
           <a class="footer-logo" href="/" aria-label="Audo home">
             <img src="/assets/audo-logo-white.png" alt="Audo">
           </a>
-          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <p>Practical, senior help for small businesses—directly from Aaron.</p>
           <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
         </div>
 
@@ -4012,11 +4183,11 @@
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
-      <h2 id="cookie-title">Cookie choices</h2>
+      <h2 id="cookie-title" tabindex="-1">Cookie choices</h2>
       <p>Audo remembers your cookie choice, uses Google reCAPTCHA to protect this form, and loads Google Analytics only if you agree. <a href="/privacy">Read the Privacy Policy.</a></p>
     </div>
     <div class="cookie-actions">
-      <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
+      <button class="cookie-button primary" type="button" data-cookie-accept>Allow analytics</button>
       <button class="cookie-button" type="button" data-cookie-necessary>Necessary only</button>
     </div>
   </section>
@@ -4026,6 +4197,49 @@
     window.AUDO_GA_MEASUREMENT_ID = "G-YP5ME1JR6Q";
 
     (function () {
+      var toggle = document.querySelector(".nav-menu-toggle");
+      var menu = document.getElementById("mobile-nav-menu");
+      if (!toggle || !menu) {
+        return;
+      }
+
+      function closeMenu(restoreFocus) {
+        menu.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+        if (restoreFocus) {
+          toggle.focus();
+        }
+      }
+
+      toggle.addEventListener("click", function () {
+        var willOpen = menu.hidden;
+        menu.hidden = !willOpen;
+        toggle.setAttribute("aria-expanded", String(willOpen));
+        if (willOpen) {
+          menu.querySelector("a").focus();
+        }
+      });
+
+      menu.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+          closeMenu(false);
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !menu.hidden) {
+          closeMenu(true);
+        }
+      });
+
+      document.addEventListener("click", function (event) {
+        if (!menu.hidden && !menu.contains(event.target) && !toggle.contains(event.target)) {
+          closeMenu(false);
+        }
+      });
+    }());
+
+    (function () {
       var banner = document.querySelector(".cookie-consent");
       var preferences = document.querySelector("[data-cookie-preferences]");
       var accept = document.querySelector("[data-cookie-accept]");
@@ -4033,6 +4247,7 @@
       var key = "audo_cookie_choice";
       var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
       var analyticsLoaded = false;
+      var previousFocus = null;
 
       function analyticsDisableKey(id) {
         return "ga-disable-" + id;
@@ -4081,16 +4296,31 @@
         }
       }
 
-      function showBanner() {
+      function showBanner(moveFocus) {
         if (banner) {
+          if (moveFocus) {
+            previousFocus = document.activeElement;
+          }
           banner.hidden = false;
+          if (moveFocus) {
+            document.getElementById("cookie-title").focus();
+          }
         }
       }
 
-      function hideBanner() {
+      function hideBanner(restoreFocus) {
         if (banner) {
           banner.hidden = true;
         }
+        if (restoreFocus && previousFocus && previousFocus.focus) {
+          previousFocus.focus();
+        } else if (restoreFocus) {
+          var fallbackFocus = document.querySelector(".nav-cta, main a, main button");
+          if (fallbackFocus) {
+            fallbackFocus.focus();
+          }
+        }
+        previousFocus = null;
       }
 
       var savedChoice = getChoice();
@@ -4101,18 +4331,18 @@
       }
 
       if (banner && !savedChoice) {
-        showBanner();
+        showBanner(false);
       }
 
       if (preferences) {
-        preferences.addEventListener("click", showBanner);
+        preferences.addEventListener("click", function () { showBanner(true); });
       }
 
       if (accept) {
         accept.addEventListener("click", function () {
           setChoice("accepted");
           loadAnalytics();
-          hideBanner();
+          hideBanner(true);
         });
       }
 
@@ -4120,7 +4350,7 @@
         necessary.addEventListener("click", function () {
           setChoice("necessary");
           disableAnalytics();
-          hideBanner();
+          hideBanner(true);
         });
       }
     }());
@@ -4376,27 +4606,55 @@
         });
       }
 
-      function renderTabs() {
+      function renderTabs(focusSelected) {
         tabs.innerHTML = "";
-        groups.forEach(function (group) {
+        var selectedButton = null;
+        groups.forEach(function (group, groupIndex) {
           var button = document.createElement("button");
+          var selected = group.id === currentGroup;
           button.className = "problem-tab";
           button.type = "button";
           button.setAttribute("role", "tab");
           button.setAttribute("aria-controls", "problem-explorer-stage");
-          button.setAttribute("aria-selected", String(group.id === currentGroup));
+          button.setAttribute("aria-selected", String(selected));
+          button.tabIndex = selected ? 0 : -1;
+          if (selected) {
+            selectedButton = button;
+          }
           button.textContent = group.label;
           button.addEventListener("click", function () {
             if (currentGroup === group.id) {
               return;
             }
             currentGroup = group.id;
-            renderTabs();
+            renderTabs(true);
             renderPage(true);
             announce("Showing " + group.label.toLowerCase() + " examples.");
           });
+          button.addEventListener("keydown", function (event) {
+            var nextIndex = groupIndex;
+            if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+              nextIndex = (groupIndex + 1) % groups.length;
+            } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+              nextIndex = (groupIndex - 1 + groups.length) % groups.length;
+            } else if (event.key === "Home") {
+              nextIndex = 0;
+            } else if (event.key === "End") {
+              nextIndex = groups.length - 1;
+            } else {
+              return;
+            }
+            event.preventDefault();
+            currentGroup = groups[nextIndex].id;
+            renderTabs(true);
+            renderPage(true);
+            announce("Showing " + groups[nextIndex].label.toLowerCase() + " examples.");
+          });
           tabs.appendChild(button);
         });
+        if (focusSelected && selectedButton) {
+          selectedButton.focus();
+        }
       }
 
       function animateSpotlight() {
@@ -4645,6 +4903,6 @@
       });
     }());
   </script>
-  <script src="/assets/booking.js?v=20260710-4" defer></script>
+  <script src="/assets/booking.js?v=20260716-audit1" defer></script>
 </body>
 </html>

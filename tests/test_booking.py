@@ -119,6 +119,23 @@ class BookingTests(unittest.TestCase):
         self.assertEqual(captured["attendees"][1]["email"], "matthewaaron@gmail.com")
         self.assertEqual(captured["conferenceData"]["createRequest"]["conferenceSolutionKey"]["type"], "hangoutsMeet")
 
+    def test_audit_fixture_never_contacts_calendar_or_sends_email(self):
+        request_id, token = self.make_lead()
+        lead = server.get_consultation_for_booking(request_id, token)
+        start, end = server.candidate_slots()[0]
+
+        with mock.patch.object(server, "AUDIT_FIXTURES_ENABLED", True), mock.patch.object(
+            server, "google_calendar_request"
+        ) as calendar_request, mock.patch.object(server.smtplib, "SMTP") as smtp:
+            self.assertTrue(server.calendar_configured())
+            self.assertEqual(server.google_busy_periods(start, end), [])
+            event = server.create_calendar_event(lead, start, end, "fixture-event")
+            server.send_email(request_id, {"email": "jamie@example.com"}, {})
+
+        calendar_request.assert_not_called()
+        smtp.assert_not_called()
+        self.assertEqual(event["hangoutLink"], "https://meet.google.com/fixture-audo-call")
+
 
 if __name__ == "__main__":
     unittest.main()

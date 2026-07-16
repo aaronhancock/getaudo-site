@@ -1,0 +1,383 @@
+{
+  "not-found": {
+    "loop": 1,
+    "desktop": [99, 99, 98, 98, 98],
+    "mobile": [99, 99, 98, 98, 98],
+    "deductions": [
+      {"category": "Trust and credibility", "points": 2, "reason": "The page intentionally has no canonical because the requested URL is invalid.", "required": "Keep noindex and verify the 404 status at release."}
+    ],
+    "hardGates": [],
+    "latestChange": "Replaced the silent homepage fallback with a branded, noindex 404 page, correct status, plain explanation, and three recovery paths.",
+    "latestNotes": "Independent desktop and mobile review found no overflow, false destination, or critical undersized recovery control after the final logo target adjustment.",
+    "latestResult": "All categories are 98 or higher; hard gates cleared.",
+    "afterScreenshot": "evidence/after/loop-01-not-found-desktop.png",
+    "evidence": [
+      {"label": "Original desktop unknown-route response", "href": "evidence/baseline/desktop/not-found-full.png"},
+      {"label": "Improved desktop 404", "href": "evidence/after/loop-01-not-found-desktop.png"},
+      {"label": "Improved mobile 404", "href": "evidence/after/loop-01-not-found-mobile.png"}
+    ]
+  },
+  "thank-you-fallback": {
+    "loop": 5,
+    "desktop": [99, 98, 98, 98, 98],
+    "mobile": [99, 98, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Made the page conditional: direct visits show one note-first action, while successful non-JavaScript submissions receive a short-lived receipt cookie and see the booking step.",
+    "latestNotes": "A synthetic local POST returned 303 with the receipt cookie; the follow-up GET showed Your note is saved. A direct GET showed Tell me what’s going on first and hid booking.",
+    "latestResult": "All categories are 98 or higher; false-success and context-loss hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-05-thank-you-direct-desktop.png",
+    "evidence": [
+      {"label": "Original desktop fallback", "href": "evidence/baseline/desktop/thank-you-full.png"},
+      {"label": "Truthful direct desktop recovery", "href": "evidence/after/loop-05-thank-you-direct-desktop.png"},
+      {"label": "Truthful direct mobile recovery", "href": "evidence/after/loop-05-thank-you-direct-mobile.png"}
+    ]
+  },
+  "consultation-form": {
+    "loop": 4,
+    "desktop": [98, 98, 98, 97, 97],
+    "mobile": [98, 97, 98, 97, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added privacy and follow-up context plus plain field-level errors, aria-invalid and aria-describedby connections, first-error focus, and preserved values.",
+    "latestNotes": "Whitespace name, invalid email, and empty message recovery were exercised locally. The visitor's other fields remain intact and the corrected form advances safely.",
+    "latestResult": "All categories are at least 97; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-04-validation-mobile.png",
+    "evidence": [
+      {"label": "Original homepage form", "href": "evidence/baseline/mobile/homepage-full.png"},
+      {"label": "Form with privacy and follow-up context", "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"},
+      {"label": "Field-level recovery and preserved context", "href": "evidence/after/loop-04-validation-mobile.png"}
+    ]
+  },
+  "privacy-policy": {
+    "loop": 2,
+    "desktop": [95, 92, 97, 96, 93],
+    "mobile": [94, 89, 96, 95, 91],
+    "deductions": [
+      {"category": "Simplicity", "points": 10, "reason": "Provider, legal-disclosure, and retention paragraphs remain dense for the limiting persona.", "required": "Strengthen the plain summary and use progressive disclosure without weakening accuracy."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The most common discovery-note question is present but still competes with the full policy structure.", "required": "Make the short discovery-request explanation even easier to scan."}
+    ],
+    "hardGates": [],
+    "latestChange": "Expanded every mobile policy-section jump link to a 44px touch target.",
+    "latestNotes": "Navigation hard gate cleared at 390px and 360px with no overflow. Reading density remains.",
+    "latestResult": "Mobile accessibility rose from 82 to 96; simplicity remains 89.",
+    "afterScreenshot": "evidence/after/loop-02-privacy-mobile.png",
+    "evidence": [
+      {"label": "Original mobile privacy page", "href": "evidence/baseline/mobile/privacy-full.png"},
+      {"label": "Repaired mobile privacy navigation", "href": "evidence/after/loop-02-privacy-mobile.png"}
+    ]
+  },
+  "cookie-first-choice": {
+    "loop": 2,
+    "desktop": [98, 98, 97, 98, 96],
+    "mobile": [98, 97, 96, 98, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Renamed Accept to Allow analytics, raised both choices and the policy link to 44px, and added explicit focus handling.",
+    "latestNotes": "The first choice is specific, equal-weight, keyboard operable, and no optional consent is preselected.",
+    "latestResult": "All desktop and mobile categories are at least 96; hard gates cleared.",
+    "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png",
+    "evidence": [{"label": "Repaired consent controls", "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"}]
+  },
+  "cookie-preferences": {
+    "loop": 2,
+    "desktop": [98, 97, 97, 98, 96],
+    "mobile": [98, 97, 96, 98, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Raised the footer preference control to 44px and added focus transfer into the reopened panel and restoration after a choice.",
+    "latestNotes": "Reopen, choose, close, and focus restoration behavior are explicit across homepage, privacy, and detail templates.",
+    "latestResult": "All categories are at least 96; hard gates cleared.",
+    "afterScreenshot": "evidence/after/loop-02-homepage-form-footer-mobile.png",
+    "evidence": [{"label": "Repaired footer preference control", "href": "evidence/after/loop-02-homepage-form-footer-mobile.png"}]
+  },
+  "human-sitemap": {
+    "loop": 2,
+    "desktop": [96, 92, 97, 95, 94],
+    "mobile": [95, 88, 96, 94, 92],
+    "deductions": [
+      {"category": "Simplicity", "points": 10, "reason": "Thirty detailed links plus primary pages still form a very long mobile scan.", "required": "Add compact category jumps or filtering while keeping every link crawlable."},
+      {"category": "Business effectiveness", "points": 5, "reason": "The page lacks a quick way to narrow the catalog by the owner's current problem.", "required": "Offer a simple, accessible category navigator."}
+    ],
+    "hardGates": [],
+    "latestChange": "Raised the header and every sitemap page link to 48px and all shared footer links to 44px.",
+    "latestNotes": "Touch-target and narrow-mobile gates cleared. Catalog scanning remains too long.",
+    "latestResult": "Mobile accessibility rose from 83 to 96; simplicity remains 88.",
+    "afterScreenshot": "evidence/after/loop-02-sitemap-mobile.png",
+    "evidence": [
+      {"label": "Original mobile sitemap", "href": "evidence/baseline/mobile/sitemap-full.png"},
+      {"label": "Repaired mobile sitemap controls", "href": "evidence/after/loop-02-sitemap-mobile.png"}
+    ]
+  },
+  "homepage-problem-explorer": {
+    "loop": 6,
+    "desktop": [98, 97, 98, 96, 97],
+    "mobile": [97, 96, 97, 96, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Renamed the two actions by destination, hid repeated summaries in secondary mobile cards, shortened those cards, and completed the arrow/Home/End tab keyboard pattern.",
+    "latestNotes": "ArrowRight moved selection and focus from My website to My customers. All 30 examples remain reachable, choices return to the spotlight, and mobile width settled without overflow.",
+    "latestResult": "All categories are at least 96; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-06-explorer-mobile.png",
+    "evidence": [
+      {"label": "Original mobile explorer", "href": "evidence/baseline/mobile/homepage-full.png"},
+      {"label": "Revised mobile explorer", "href": "evidence/after/loop-06-explorer-mobile.png"}
+    ]
+  },
+  "site-header-mobile": {
+    "loop": 3,
+    "desktop": [98, 98, 98, 96, 97],
+    "mobile": [98, 97, 97, 96, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added a compact mobile Menu with service, example, identity, and proof links while keeping the discovery CTA visible.",
+    "latestNotes": "All controls measure at least 44px at 390px and 360px. Open moves focus to the first link; Escape closes and restores focus to Menu.",
+    "latestResult": "All categories are at least 96; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-03-mobile-menu-open.png",
+    "evidence": [
+      {"label": "Original mobile first screen", "href": "evidence/baseline/mobile/homepage-first-screen.png"},
+      {"label": "Open accessible mobile menu", "href": "evidence/after/loop-03-mobile-menu-open.png"}
+    ]
+  },
+  "homepage-hero": {
+    "loop": 3,
+    "desktop": [97, 98, 96, 96, 97],
+    "mobile": [96, 98, 96, 96, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Rewrote the support line around familiar owner problems and added Aaron, duration, price, and obligation context at the first decision point.",
+    "latestNotes": "The first screen now explains audience, practical help, direct responsibility, call length, price, and two readiness-matched actions without overflow.",
+    "latestResult": "All categories are at least 96; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png",
+    "evidence": [
+      {"label": "Original desktop homepage", "href": "evidence/baseline/desktop/homepage-full.png"},
+      {"label": "Revised desktop homepage", "href": "evidence/after/loop-03-homepage-desktop.png"},
+      {"label": "Revised mobile homepage", "href": "evidence/after/loop-03-homepage-mobile.png"}
+    ]
+  },
+  "homepage-help-grid": {
+    "loop": 3,
+    "desktop": [97, 96, 96, 95, 96],
+    "mobile": [96, 95, 95, 95, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Replaced technical lists with familiar symptoms, renamed technology decision to choosing the right next step, and compressed decorative mobile visuals.",
+    "latestNotes": "All five choices remain visible and distinct. Selection carries the plain label into the form while leaving the visitor's message open-ended and editable.",
+    "latestResult": "All categories are at least 95; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png",
+    "evidence": [
+      {"label": "Original mobile help grid", "href": "evidence/baseline/mobile/homepage-full.png"},
+      {"label": "Revised mobile help grid", "href": "evidence/after/loop-03-homepage-mobile.png"},
+      {"label": "Revised desktop help grid", "href": "evidence/after/loop-03-homepage-desktop.png"}
+    ]
+  },
+  "site-header-desktop": {
+    "loop": 3,
+    "desktop": [98, 98, 97, 96, 97],
+    "mobile": [98, 98, 97, 96, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added a direct Real examples route beside help, identity, and discovery navigation.",
+    "latestNotes": "All visible desktop links are 44px high, have clear focus treatment, and route to the promised section.",
+    "latestResult": "All categories are at least 96; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-03-homepage-desktop.png",
+    "evidence": [
+      {"label": "Original desktop header", "href": "evidence/baseline/desktop/homepage-full.png"},
+      {"label": "Revised desktop header", "href": "evidence/after/loop-03-homepage-desktop.png"}
+    ]
+  },
+  "homepage-footer": {
+    "loop": 3,
+    "desktop": [97, 96, 97, 96, 96],
+    "mobile": [96, 95, 96, 96, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Shortened the CTA and brand copy, separated the call action from browse links, and retained 44px navigation targets.",
+    "latestNotes": "Each group now serves one recovery need: contact, kinds of help, proof/browse, process, or privacy. No overflow at 390px or 360px.",
+    "latestResult": "All categories are at least 95; hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-03-homepage-mobile.png",
+    "evidence": [
+      {"label": "Original mobile footer", "href": "evidence/baseline/mobile/homepage-full.png"},
+      {"label": "Revised mobile footer", "href": "evidence/after/loop-03-homepage-mobile.png"},
+      {"label": "Revised desktop footer", "href": "evidence/after/loop-03-homepage-desktop.png"}
+    ]
+  },
+  "consultation-validation": {
+    "loop": 4,
+    "desktop": [98, 98, 98, 97, 97],
+    "mobile": [98, 97, 98, 97, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added consistent plain errors beside the affected field, semantic error connections, first-error focus, and automatic clearing on edit.",
+    "latestNotes": "Synthetic validation preserved the message while focusing the whitespace-only name field and announcing Please enter your name.",
+    "latestResult": "All categories are at least 97; recovery hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-04-validation-mobile.png",
+    "evidence": [
+      {"label": "Original form baseline", "href": "evidence/baseline/mobile/homepage-full.png"},
+      {"label": "Field-level recovery", "href": "evidence/after/loop-04-validation-mobile.png"}
+    ]
+  },
+  "scheduler-loading": {
+    "loop": 4,
+    "desktop": [98, 98, 97, 97, 97],
+    "mobile": [98, 98, 97, 97, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "The scheduler now confirms the note is saved, exposes aria-busy during availability loading, and uses a live status message.",
+    "latestNotes": "Focus moves to the step-two heading without losing the saved synthetic request. Loading ends when the accessible date control appears.",
+    "latestResult": "All categories are at least 97; transition hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-04-scheduler-mobile.png",
+    "evidence": [
+      {"label": "Original local availability", "href": "evidence/baseline/mobile/scheduler-availability-local.png"},
+      {"label": "Revised mobile scheduler", "href": "evidence/after/loop-04-scheduler-mobile.png"}
+    ]
+  },
+  "scheduler-availability": {
+    "loop": 4,
+    "desktop": [98, 98, 98, 97, 98],
+    "mobile": [98, 98, 98, 97, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Replaced the large multi-row date button grid with one 50px native date selector on desktop and mobile, followed by 44px or larger time choices.",
+    "latestNotes": "Desktop, 390px, and 360px show the same clear date-first sequence with Central Time and 24-hour notice visible. No horizontal overflow.",
+    "latestResult": "All categories are at least 97; scheduler hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-04-scheduler-desktop.png",
+    "evidence": [
+      {"label": "Original mobile availability", "href": "evidence/baseline/mobile/scheduler-availability-local.png"},
+      {"label": "Revised desktop availability", "href": "evidence/after/loop-04-scheduler-desktop.png"},
+      {"label": "Revised mobile availability", "href": "evidence/after/loop-04-scheduler-mobile.png"}
+    ]
+  },
+  "scheduler-confirmation": {
+    "loop": 4,
+    "desktop": [99, 99, 98, 98, 98],
+    "mobile": [99, 99, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Made the success heading programmatically focusable and verified date, time, timezone, invite, and fixture meeting link after booking.",
+    "latestNotes": "The fake calendar created no real event. Focus landed on You're booked and the complete promise matched the displayed result.",
+    "latestResult": "All categories are at least 98; completion hard gates pass.",
+    "afterScreenshot": "evidence/after/loop-04-scheduler-success-desktop.png",
+    "evidence": [
+      {"label": "Original fixture success", "href": "evidence/baseline/mobile/scheduler-success-local.png"},
+      {"label": "Revised fixture success", "href": "evidence/after/loop-04-scheduler-success-desktop.png"}
+    ]
+  },
+  "homepage-founder": {
+    "loop": 7,
+    "desktop": [98, 97, 97, 97, 96],
+    "mobile": [97, 96, 96, 97, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Reframed the section around a deliberately small practice, made direct responsibility and 30 years of experience explicit, and shortened the mobile portrait and working-style cards.",
+    "latestNotes": "The photo, identity, experience, direct-working promise, plain-English promise, flexible engagement options, and CTA were reviewed together at 1280px, 390px, and 360px with no overflow.",
+    "latestResult": "All categories are at least 95; identity and trust gates pass.",
+    "afterScreenshot": "evidence/after/loop-07-founder-mobile-clean.png",
+    "evidence": [
+      {"label": "Original homepage section", "href": "evidence/baseline/desktop/homepage-full.png"},
+      {"label": "Revised desktop Aaron section", "href": "evidence/after/loop-07-founder-desktop.png"},
+      {"label": "Revised mobile Aaron section", "href": "evidence/after/loop-07-founder-mobile-clean.png"}
+    ]
+  },
+  "homepage-client-work": {
+    "loop": 7,
+    "desktop": [98, 97, 96, 96, 96],
+    "mobile": [97, 96, 96, 96, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Replaced technical task lists with two plainly labeled kinds of work, a recognizable business outcome, and simple descriptions of Aaron's responsibility.",
+    "latestNotes": "No metrics, testimonial language, or unsupported outcomes were added. Both examples now connect the work to concerns a non-technical owner can recognize.",
+    "latestResult": "All categories are at least 95; proof and relevance gates pass.",
+    "afterScreenshot": "evidence/after/loop-07-client-work-mobile-clean.png",
+    "evidence": [
+      {"label": "Original client-work section", "href": "evidence/baseline/desktop/homepage-full.png"},
+      {"label": "Revised desktop proof", "href": "evidence/after/loop-07-client-work-desktop.png"},
+      {"label": "Revised mobile proof", "href": "evidence/after/loop-07-client-work-mobile-clean.png"}
+    ]
+  },
+  "privacy-policy": {
+    "loop": 7,
+    "desktop": [98, 96, 97, 98, 96],
+    "mobile": [97, 95, 96, 97, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added a three-part plain summary of what happens to a discovery note while preserving the complete policy and direct section links.",
+    "latestNotes": "The short answer now appears before the legal detail: the note goes to Aaron, supports scheduling, and is not sold. The full policy remains available without hiding required information.",
+    "latestResult": "All categories are at least 95; privacy comprehension and control gates pass.",
+    "afterScreenshot": "evidence/after/loop-07-privacy-summary-mobile-full.png",
+    "evidence": [
+      {"label": "Original mobile privacy page", "href": "evidence/baseline/mobile/privacy-full.png"},
+      {"label": "Revised full mobile privacy page", "href": "evidence/after/loop-07-privacy-summary-mobile-full.png"}
+    ]
+  },
+  "human-sitemap": {
+    "loop": 7,
+    "desktop": [98, 97, 97, 96, 97],
+    "mobile": [97, 96, 96, 96, 96],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Added a compact category jump navigator and replaced internal category names with plain owner-facing labels while keeping all 30 crawlable links on the page.",
+    "latestNotes": "Every category jump is 48px, lands on the promised section, and keeps the complete catalog visible to people and search engines. No overflow at 390px or 360px.",
+    "latestResult": "All categories are at least 96; long-list scan and touch gates pass.",
+    "afterScreenshot": "evidence/after/loop-07-sitemap-jumps-mobile-full.png",
+    "evidence": [
+      {"label": "Original mobile sitemap", "href": "evidence/baseline/mobile/sitemap-full.png"},
+      {"label": "Revised mobile sitemap with category jumps", "href": "evidence/after/loop-07-sitemap-jumps-mobile-full.png"}
+    ]
+  },
+  "legacy-redirects": {
+    "loop": 7,
+    "desktop": [99, 99, 98, 98, 98],
+    "mobile": [99, 99, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Changed the legacy app and service-index routes to permanent redirects and verified the complete supported redirect table.",
+    "latestNotes": "Local route checks returned 301 for /app, /app.html, /services, /scenarios, /llm.txt, and a legacy scenario detail URL, each with the exact canonical destination.",
+    "latestResult": "All categories are at least 98; canonical route gates pass.",
+    "evidence": [{"label": "Permanent redirect regression tests", "href": "../../tests/test_homepage_experience.py"}]
+  },
+  "llms-catalog": {
+    "loop": 7,
+    "desktop": [99, 98, 98, 98, 98],
+    "mobile": [99, 98, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Aligned public category headings with owner language and added a regression gate that excludes the unreleased Audo Agent and automotive/internal positioning.",
+    "latestNotes": "The generated guide contains exactly 30 current examples and the same categories and canonical links as the public sitemap.",
+    "latestResult": "All categories are at least 98; AI-discovery accuracy gates pass.",
+    "evidence": [{"label": "Catalog consistency regression tests", "href": "../../tests/test_catalog_surfaces.py"}]
+  },
+  "llms-full": {
+    "loop": 7,
+    "desktop": [99, 98, 98, 98, 98],
+    "mobile": [99, 98, 98, 98, 98],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Removed automotive-heavy background detail, rewrote client work in business language, and retained the full 30-example consulting catalog and booking constraints.",
+    "latestNotes": "The expanded guide now matches what a visitor sees and explicitly excludes the unreleased product through automated public-surface tests.",
+    "latestResult": "All categories are at least 98; completeness and scope gates pass.",
+    "evidence": [{"label": "Full-guide consistency regression tests", "href": "../../tests/test_catalog_surfaces.py"}]
+  },
+  "metadata-indexing": {
+    "loop": 7,
+    "desktop": [98, 97, 97, 98, 97],
+    "mobile": [98, 97, 97, 98, 97],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Simplified Person, business, offer, and client-work structured data so it mirrors the visible small-business consulting message and public proof.",
+    "latestNotes": "Machine-readable context no longer introduces employer, dealership, M&A, or unreleased-product positioning that is absent from the public page.",
+    "latestResult": "All categories are at least 97; metadata consistency and indexing gates pass.",
+    "evidence": [{"label": "Machine-context regression tests", "href": "../../tests/test_catalog_surfaces.py"}]
+  },
+  "no-js-homepage": {
+    "loop": 7,
+    "desktop": [98, 97, 96, 97, 96],
+    "mobile": [97, 95, 95, 97, 95],
+    "deductions": [],
+    "hardGates": [],
+    "latestChange": "Replaced the one-line JavaScript warning with five direct, plain-language starting points and a link to all 30 examples.",
+    "latestNotes": "The server-rendered homepage, direct service links, privacy route, sitemap, and truthful form fallback remain available without the interactive explorer.",
+    "latestResult": "All categories are at least 95; core no-JavaScript recovery gates pass.",
+    "evidence": [{"label": "No-JavaScript fallback regression test", "href": "../../tests/test_homepage_experience.py"}]
+  }
+}

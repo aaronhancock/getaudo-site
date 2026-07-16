@@ -77,16 +77,39 @@
 }
 
 .booking-date-list {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(66px, 1fr));
-  gap: 8px;
-  overflow-x: auto;
-  padding: 2px 2px 7px;
-  scrollbar-width: thin;
+  display: none;
 }
 
 .booking-mobile-date-field {
-  display: none;
+  display: grid;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.booking-mobile-date-field label {
+  color: var(--ink, #18221d);
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.booking-mobile-date-field select {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid rgba(24, 34, 29, 0.18);
+  border-radius: 10px;
+  padding: 0 42px 0 13px;
+  color: var(--ink, #18221d);
+  background: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 720;
+}
+
+.booking-mobile-date-field select:focus-visible {
+  outline: 3px solid rgba(240, 198, 111, 0.55);
+  outline-offset: 2px;
 }
 
 .booking-date {
@@ -260,6 +283,9 @@
 }
 
 .booking-fallback-line a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   color: #684a10;
   font-weight: 790;
   text-underline-offset: 3px;
@@ -294,38 +320,6 @@
 
   .booking-date-list {
     display: none;
-  }
-
-  .booking-mobile-date-field {
-    display: grid;
-    gap: 7px;
-    margin-bottom: 18px;
-  }
-
-  .booking-mobile-date-field label {
-    color: var(--ink, #18221d);
-    font-size: 12px;
-    font-weight: 820;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .booking-mobile-date-field select {
-    width: 100%;
-    min-height: 50px;
-    border: 1px solid rgba(24, 34, 29, 0.18);
-    border-radius: 10px;
-    padding: 0 42px 0 13px;
-    color: var(--ink, #18221d);
-    background: #fff;
-    font: inherit;
-    font-size: 16px;
-    font-weight: 720;
-  }
-
-  .booking-mobile-date-field select:focus-visible {
-    outline: 3px solid rgba(240, 198, 111, 0.55);
-    outline-offset: 2px;
   }
 
   .booking-time-list {

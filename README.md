@@ -29,6 +29,15 @@ For direct Python preview:
 DATA_DIR=/tmp/getaudo-local PORT=8080 python3 server.py
 ```
 
+For the local website-experience audit, enable the non-delivering calendar
+fixture. It stores only synthetic requests in the chosen temporary data
+directory, never contacts Google Calendar, and never sends email when SMTP is
+unset:
+
+```bash
+AUDIT_FIXTURES_ENABLED=true DATA_DIR=/tmp/getaudo-audit PORT=8080 python3 server.py
+```
+
 ## Discovery and Calendar Booking
 
 The public site posts discovery requests to `/api/consultation`.

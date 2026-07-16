@@ -100,14 +100,14 @@
       '<div class="booking-step-header">',
       '  <p class="booking-step-kicker">Step 2 of 2 · Pick a time</p>',
       '  <h3 id="booking-step-title" tabindex="-1" data-booking-heading>When would you like to talk?</h3>',
-      '  <p class="booking-step-copy">Choose any open 30-minute slot. Times are shown in Central Time.</p>',
+      '  <p class="booking-step-copy">Your note is saved. Choose any open 30-minute slot. Times are shown in Central Time.</p>',
       '</div>',
       '<ul class="booking-policies" aria-label="Booking details">',
       '  <li>Monday–Saturday</li>',
       '  <li>24-hour notice</li>',
       '  <li>Google Meet</li>',
       '</ul>',
-      '<p class="booking-loading" data-booking-loading>Loading available times…</p>',
+      '<p class="booking-loading" role="status" aria-live="polite" data-booking-loading>Loading available times…</p>',
       '<p class="booking-alert" role="alert" data-booking-alert hidden></p>',
       '<div data-booking-picker hidden>',
       '  <div class="booking-mobile-date-field">',
@@ -126,7 +126,7 @@
       '</div>',
       '<div class="booking-success" data-booking-success hidden>',
       '  <span class="booking-success-mark" aria-hidden="true">✓</span>',
-      '  <h4>You\'re booked.</h4>',
+      '  <h4 tabindex="-1">You\'re booked.</h4>',
       '  <p data-booking-success-time></p>',
       '  <p>Your calendar invite is on the way. It includes the Google Meet link and the note you sent me.</p>',
       '  <a class="button primary" href="#" target="_blank" rel="noopener noreferrer" data-booking-meet hidden>Open Google Meet</a>',
@@ -164,6 +164,7 @@
     var availability = null;
     var selectedDay = null;
     var selectedSlot = null;
+    var fieldErrors = {};
 
     heading.id = "booking-step-title-" + formIndex;
     scheduler.setAttribute("aria-labelledby", heading.id);
@@ -201,6 +202,59 @@
         status.classList.add("is-error");
         status.textContent = message;
       }
+    }
+
+    function clearFieldError(field) {
+      if (!field || !field.name) {
+        return;
+      }
+      field.removeAttribute("aria-invalid");
+      var error = fieldErrors[field.name];
+      if (error) {
+        error.remove();
+        delete fieldErrors[field.name];
+      }
+      var describedBy = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+      field.setAttribute("aria-describedby", describedBy.filter(function (id) {
+        return id.indexOf("field-error-") !== 0;
+      }).join(" "));
+    }
+
+    function showFieldError(fieldName, message) {
+      var field = form.querySelector("[name='" + fieldName + "']");
+      if (!field) {
+        return false;
+      }
+      clearFieldError(field);
+      var error = document.createElement("p");
+      error.className = "field-error";
+      error.id = "field-error-" + formIndex + "-" + fieldName;
+      error.textContent = message;
+      field.setAttribute("aria-invalid", "true");
+      var describedBy = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+      describedBy.push(error.id);
+      field.setAttribute("aria-describedby", describedBy.join(" "));
+      field.insertAdjacentElement("afterend", error);
+      fieldErrors[fieldName] = error;
+      field.focus();
+      return false;
+    }
+
+    function validateLeadFields() {
+      var name = form.querySelector("[name='name']");
+      var email = form.querySelector("[name='email']");
+      var message = form.querySelector("[name='message']");
+      [name, email, message].forEach(clearFieldError);
+      if (!name || !name.value.trim()) {
+        return showFieldError("name", "Please enter your name.");
+      }
+      if (!email || !email.value.trim() || !email.validity.valid) {
+        return showFieldError("email", "Enter an email address such as name@example.com.");
+      }
+      if (!message || !message.value.trim()) {
+        return showFieldError("message", "Tell me a little about what is happening.");
+      }
+      return true;
     }
 
     function showScheduler() {
@@ -285,6 +339,7 @@
 
     function renderAvailability(payload) {
       availability = payload;
+      scheduler.removeAttribute("aria-busy");
       loading.hidden = true;
       setFallback(payload.fallback_url);
       if (payload.booked && payload.booking) {
@@ -345,6 +400,7 @@
     });
 
     function loadAvailability() {
+      scheduler.setAttribute("aria-busy", "true");
       loading.hidden = false;
       picker.hidden = true;
       confirmation.hidden = true;
@@ -354,6 +410,7 @@
         request_id: context.request_id,
         booking_token: context.booking_token
       }).then(renderAvailability).catch(function (error) {
+        scheduler.removeAttribute("aria-busy");
         loading.hidden = true;
         setAlert(error.message || "I couldn't load the calendar. Please try again or use the Google booking page.");
         setFallback(error.payload && error.payload.fallback_url);
@@ -403,7 +460,15 @@
         showScheduler();
         loadAvailability();
       }).catch(function (error) {
-        resetSubmit(error.message || "I couldn't send your note. Please try again.");
+        var message = error.message || "I couldn't send your note. Please try again.";
+        resetSubmit(message);
+        if (/name/i.test(message)) {
+          showFieldError("name", message);
+        } else if (/email/i.test(message)) {
+          showFieldError("email", message);
+        } else if (/what's going on|tell me|message/i.test(message)) {
+          showFieldError("message", message);
+        }
       });
     }
 
@@ -412,7 +477,16 @@
       if (form.classList.contains("is-scheduling")) {
         return;
       }
+      if (!validateLeadFields()) {
+        return;
+      }
       submitLead();
+    });
+
+    Array.prototype.forEach.call(form.querySelectorAll("[name='name'], [name='email'], [name='message']"), function (field) {
+      field.addEventListener("input", function () {
+        clearFieldError(field);
+      });
     });
 
     confirmButton.addEventListener("click", function () {

@@ -14,7 +14,7 @@
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260716-audit1">
   <meta property="og:site_name" content="Audo">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://getaudo.com/privacy">
@@ -83,6 +83,9 @@
     }
 
     .skip-link {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       position: fixed;
       z-index: 50;
       top: 14px;
@@ -240,6 +243,9 @@
     }
 
     .policy-summary a {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       color: #4e3a12;
       font-size: 14px;
       font-weight: 760;
@@ -248,6 +254,35 @@
 
     .policy-content {
       min-width: 0;
+    }
+
+    .note-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 34px;
+    }
+
+    .note-summary article {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: rgba(238, 244, 241, 0.76);
+    }
+
+    .note-summary strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .note-summary p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .effective-date {
@@ -393,6 +428,9 @@
     }
 
     .cookie-copy a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
       color: var(--ink);
       font-weight: 760;
     }
@@ -405,7 +443,7 @@
     }
 
     .cookie-button {
-      min-height: 42px;
+      min-height: 44px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 0 14px;
@@ -438,6 +476,10 @@
       }
 
       .policy-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .note-summary {
         grid-template-columns: 1fr;
       }
 
@@ -514,6 +556,21 @@
       <article class="policy-content">
         <p class="effective-date">Effective and last updated: July 10, 2026</p>
 
+        <section class="note-summary" aria-label="What happens when you send a discovery note">
+          <article>
+            <strong>It goes to Aaron.</strong>
+            <p>Your name, email, link, and note are used to prepare for and respond to your request.</p>
+          </article>
+          <article>
+            <strong>It helps with scheduling.</strong>
+            <p>If you book a call, your details and note are added to the calendar invitation.</p>
+          </article>
+          <article>
+            <strong>It is not sold.</strong>
+            <p>Audo uses service providers to run the site, protect the form, and arrange the call.</p>
+          </article>
+        </section>
+
         <section class="policy-section" aria-labelledby="overview-title">
           <h2 id="overview-title">Overview</h2>
           <p>Audo is Aaron's independent technology consulting practice. This Privacy Policy applies when you visit <a href="https://getaudo.com/">getaudo.com</a>, browse its service pages, manage cookie preferences, or submit a discovery request.</p>
@@ -572,7 +629,7 @@
           <p>The site stores your cookie choice in your browser under <code>audo_cookie_choice</code>. This is necessary to remember whether you accepted analytics or selected necessary-only operation. During the two-step discovery and scheduling flow, the site also temporarily uses session storage to keep a limited scheduling token if the page is refreshed. That temporary value stays in the current browser tab and is removed after booking or when the tab session ends.</p>
           <ul>
             <li><strong>Necessary only:</strong> Audo does not intentionally load Google Analytics. Site delivery, security, and reCAPTCHA may still process technical information when required to provide the site or protect a submitted form.</li>
-            <li><strong>Accept:</strong> Google Analytics is allowed to load and may use cookies or similar technologies to measure visits and interactions.</li>
+            <li><strong>Allow analytics:</strong> Google Analytics is allowed to load and may use cookies or similar technologies to measure visits and interactions.</li>
           </ul>
           <p>After you submit a discovery request, Audo's server checks availability and creates the appointment through Google Calendar. The branded scheduling screen does not expose Audo's Google credentials to your browser. If the branded scheduler is unavailable, you can choose to open Google's booking page in a separate tab.</p>
           <div class="callout">
@@ -609,15 +666,15 @@
       <section class="footer-cta" aria-labelledby="footer-cta-heading">
         <div class="footer-cta-copy">
           <p class="footer-eyebrow">Free 30-minute discovery call</p>
-          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
-          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+          <h2 id="footer-cta-heading">Ready to talk it through?</h2>
+          <p>Send a short note, then pick a free 30-minute Google Meet time.</p>
         </div>
         <a class="footer-cta-button" href="/#discovery">Book free discovery</a>
       </section>
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
-          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <p>Practical, senior help for small businesses—directly from Aaron.</p>
           <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
@@ -661,11 +718,11 @@
 
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
-      <h2 id="cookie-title">Cookie choices</h2>
+      <h2 id="cookie-title" tabindex="-1">Cookie choices</h2>
       <p>Audo remembers your cookie choice, uses Google reCAPTCHA to protect the discovery form, and loads Google Analytics only if you agree. You are reading the Privacy Policy.</p>
     </div>
     <div class="cookie-actions">
-      <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
+      <button class="cookie-button primary" type="button" data-cookie-accept>Allow analytics</button>
       <button class="cookie-button" type="button" data-cookie-necessary>Necessary only</button>
     </div>
   </section>
@@ -681,6 +738,7 @@
       var key = "audo_cookie_choice";
       var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
       var analyticsLoaded = false;
+      var previousFocus = null;
 
       function analyticsDisableKey(id) {
         return "ga-disable-" + id;
@@ -728,16 +786,31 @@
         }
       }
 
-      function showBanner() {
+      function showBanner(moveFocus) {
         if (banner) {
+          if (moveFocus) {
+            previousFocus = document.activeElement;
+          }
           banner.hidden = false;
+          if (moveFocus) {
+            document.getElementById("cookie-title").focus();
+          }
         }
       }
 
-      function hideBanner() {
+      function hideBanner(restoreFocus) {
         if (banner) {
           banner.hidden = true;
         }
+        if (restoreFocus && previousFocus && previousFocus.focus) {
+          previousFocus.focus();
+        } else if (restoreFocus) {
+          var fallbackFocus = document.querySelector(".nav-cta, main a, main button");
+          if (fallbackFocus) {
+            fallbackFocus.focus();
+          }
+        }
+        previousFocus = null;
       }
 
       var savedChoice = getChoice();
@@ -748,18 +821,18 @@
       }
 
       if (banner && !savedChoice) {
-        showBanner();
+        showBanner(false);
       }
 
       preferences.forEach(function (preference) {
-        preference.addEventListener("click", showBanner);
+        preference.addEventListener("click", function () { showBanner(true); });
       });
 
       if (accept) {
         accept.addEventListener("click", function () {
           setChoice("accepted");
           loadAnalytics();
-          hideBanner();
+          hideBanner(true);
         });
       }
 
@@ -767,7 +840,7 @@
         necessary.addEventListener("click", function () {
           setChoice("necessary");
           disableAnalytics();
-          hideBanner();
+          hideBanner(true);
         });
       }
     }());

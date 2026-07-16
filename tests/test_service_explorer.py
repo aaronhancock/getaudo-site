@@ -163,6 +163,16 @@ class ServiceExplorerTests(unittest.TestCase):
         self.assertNotIn("This is a real, fixable problem.", server_source)
         self.assertNotIn("A few questions you may have.", server_source)
 
+    def test_explorer_actions_and_tabs_explain_and_support_their_behavior(self) -> None:
+        index_html = (Path(__file__).resolve().parents[1] / "index.html").read_text()
+
+        self.assertIn("Tell Aaron about this", index_html)
+        self.assertIn("Read how I can help", index_html)
+        self.assertIn('event.key === "ArrowRight"', index_html)
+        self.assertIn('event.key === "Home"', index_html)
+        self.assertIn("button.tabIndex = selected ? 0 : -1", index_html)
+        self.assertIn(".problem-choice-summary {\n        display: none;", index_html)
+
 
 if __name__ == "__main__":
     unittest.main()

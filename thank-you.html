@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Choose a Discovery Time | Audo</title>
-  <meta name="description" content="Your Audo discovery request has been received. Choose an available time for a free 30-minute Google Meet call.">
+  <meta name="description" content="Choose an available time for a free 30-minute Audo discovery call, or send Aaron a short note first.">
   <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#101815">
   <link rel="canonical" href="https://getaudo.com/thank-you">
@@ -13,7 +13,7 @@
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260716-audit1">
   <script>
     window.AUDO_GA_MEASUREMENT_ID = "G-YP5ME1JR6Q";
 
@@ -188,6 +188,28 @@
       line-height: 1.65;
     }
 
+    .note-first {
+      width: min(760px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(28px, 5vw, 48px);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .note-first h2 {
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.02;
+    }
+
+    .note-first p {
+      max-width: 620px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
     .call-details {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -341,24 +363,30 @@
         </a>
         <a class="nav-link" href="/">Back to Audo</a>
       </nav>
-      <p class="eyebrow">Step 2 of 2 · Pick a time</p>
-      <h1>Pick a time for our call.</h1>
-      <p class="hero-copy">I have your note. Choose a free 30-minute Google Meet time below.</p>
+      <p class="eyebrow">__THANK_YOU_EYEBROW__</p>
+      <h1>__THANK_YOU_HEADING__</h1>
+      <p class="hero-copy">__THANK_YOU_COPY__</p>
     </div>
   </header>
 
   <main>
     <div class="shell">
-      <section class="booking-intro" aria-labelledby="booking-title">
+      <section class="note-first" __NOTE_FIRST_HIDDEN__ aria-labelledby="note-first-title">
+        <h2 id="note-first-title">Tell me a little first.</h2>
+        <p>A short note helps me prepare and makes our first conversation more useful. After you send it, you’ll choose a free 30-minute Google Meet time.</p>
+        <div class="booking-actions"><a class="button primary" href="/#discovery">Send a short note</a><a class="button" href="/#service-list">Browse real examples</a></div>
+      </section>
+      <section class="booking-intro" __BOOKING_CONTENT_HIDDEN__ aria-labelledby="booking-title">
         <div>
-          <h2 id="booking-title">Let's find a time.</h2>
-          <p>I'll read your note before we talk. On the call, we'll dig into the problem, decide what can wait, and talk about whether I can help.</p>
+          <h2 id="booking-title">Choose what fits your schedule.</h2>
+          <p>On the call, we'll talk through what is happening, what can wait, and whether I am the right person to help.</p>
           <div class="booking-actions" data-booking-actions hidden>
             <button class="button primary" type="button" data-load-calendar>Book free discovery</button>
-            <a class="button" href="#" target="_blank" rel="noopener noreferrer" data-open-booking>Open Google Booking Page</a>
+            <a class="button" href="/#discovery">I haven't sent a note yet</a>
+            <a class="button" href="#" target="_blank" rel="noopener noreferrer" data-open-booking>Open Google Calendar</a>
           </div>
           <p class="calendar-note" data-booking-note hidden>Google Calendar will ask you to confirm your name and email when you reserve the appointment. Loading the calendar connects your browser to Google.</p>
-          <div class="booking-fallback" data-booking-fallback hidden>I have your note, but the live calendar is not available yet. I usually reply within one business day to arrange a time.</div>
+          <div class="booking-fallback" data-booking-fallback hidden>The live calendar is not available right now. If you just sent a note, I usually reply within one business day to arrange a time. Otherwise, return to the discovery form first.</div>
         </div>
         <aside class="call-details" aria-label="Discovery call details">
           <strong>Free discovery call</strong>
@@ -390,7 +418,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
-          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <p>Practical, senior help for small businesses—directly from Aaron.</p>
           <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
@@ -434,6 +462,7 @@
 
   <script>
     window.AUDO_GOOGLE_CALENDAR_BOOKING_URL = __GOOGLE_CALENDAR_BOOKING_URL__;
+    window.AUDO_NOTE_SAVED = __NOTE_SAVED__;
 
     (function () {
       var bookingUrl = window.AUDO_GOOGLE_CALENDAR_BOOKING_URL || "";
@@ -445,6 +474,10 @@
       var panel = document.querySelector("[data-calendar-panel]");
       var frame = document.querySelector("[data-calendar-frame]");
       var isInlineUrl = bookingUrl.indexOf("https://calendar.google.com/calendar/appointments/schedules/") === 0;
+
+      if (!window.AUDO_NOTE_SAVED) {
+        return;
+      }
 
       if (!bookingUrl) {
         if (fallback) {

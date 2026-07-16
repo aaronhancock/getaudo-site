@@ -17,6 +17,18 @@ CATEGORY_ORDER = (
     "Small business setup and operations",
 )
 
+CATEGORY_LABELS = {
+    "Website and app care": "Website and app help",
+    "Automation": "Doing less work by hand",
+    "AI coaching and support": "Using AI at work",
+    "Product strategy": "Choosing what to do next",
+    "Small business setup and operations": "Setting up a small business",
+}
+
+
+def category_label(category: str) -> str:
+    return CATEGORY_LABELS.get(category, category)
+
 
 @dataclass(frozen=True)
 class CatalogEntry:
@@ -158,7 +170,7 @@ def build_llms_txt(base_url: str, entries: list[CatalogEntry] | None = None) -> 
         "",
     ]
     for category, category_entries in grouped_catalog(entries).items():
-        sections.extend([f"## {category}", ""])
+        sections.extend([f"## {category_label(category)}", ""])
         sections.extend(_service_link(entry, base_url) for entry in category_entries)
         sections.append("")
     sections.extend(
@@ -210,7 +222,7 @@ def build_services_markdown(base_url: str, entries: list[CatalogEntry] | None = 
         "",
     ]
     for category, category_entries in grouped_catalog(entries).items():
-        lines.extend([f"## {category}", ""])
+        lines.extend([f"## {category_label(category)}", ""])
         for entry in category_entries:
             lines.extend([_entry_markdown(entry, base_url), ""])
     return "\n".join(lines).rstrip() + "\n"
@@ -289,7 +301,7 @@ Audo is Aaron's independent consulting practice for small businesses. The primar
 
 Aaron works directly with each client. He diagnoses the problem, explains the options, plans the work, and does the work. Audo can handle a one-time repair, a larger project, or ongoing support.
 
-Aaron has 30 years of experience building websites and software and leading product and engineering teams. His background includes Cox Automotive, Dealertrack, Dealer.com, product and technology due diligence, integrations, migrations, and client work for organizations including Boston's Pizza, John Maxwell Leadership Foundation, Hattori Hanzo, and L'Oreal.
+Aaron has 30 years of experience building websites and software, leading product and engineering teams, and solving technology problems for businesses large and small.
 
 ## What Audo helps with
 
@@ -305,8 +317,8 @@ The free discovery call lasts 30 minutes and uses Google Meet. A visitor first s
 
 ## Client work shown on the site
 
-- Boston's Pizza Restaurant & Sports Bar: accessibility work, marketing site and content management, database and server management, and ongoing support.
-- Carnac AI Trading: platform development, proprietary market-analysis tools, cryptocurrency exchange connections, and an AI-assisted market analysis system.
+- Boston's Pizza Restaurant & Sports Bar: ongoing work to keep the public website accessible, current, and running, including fixes and support as problems arise.
+- Carnac AI Trading: a customer-facing product built from the ground up, connections to the services it relies on, market research tools, and ongoing improvements.
 
 ## Important public resources
 

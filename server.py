@@ -31,6 +31,7 @@ from site_catalog import (
     build_service_markdown,
     build_services_markdown,
     build_sitemap_xml,
+    category_label,
     catalog_entries,
     catalog_lastmod,
     get_catalog_entry,
@@ -95,6 +96,7 @@ BOOKING_START_HOUR = max(0, min(int(os.environ.get("BOOKING_START_HOUR", "8")), 
 BOOKING_END_HOUR = max(1, min(int(os.environ.get("BOOKING_END_HOUR", "21")), 24))
 BOOKING_TOKEN_HOURS = max(1, int(os.environ.get("BOOKING_TOKEN_HOURS", "72")))
 BOOKING_INTERNAL_ATTENDEE = os.environ.get("BOOKING_INTERNAL_ATTENDEE", "matthewaaron@gmail.com").strip()
+AUDIT_FIXTURES_ENABLED = os.environ.get("AUDIT_FIXTURES_ENABLED", "").lower() in {"1", "true", "yes"}
 GOOGLE_TOKEN_CACHE: dict[str, object] = {"access_token": "", "expires_at": 0.0}
 GOOGLE_TOKEN_LOCK = threading.Lock()
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
@@ -432,7 +434,7 @@ def parse_iso_datetime(value: str) -> datetime:
 
 
 def calendar_configured() -> bool:
-    return bool(GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_REFRESH_TOKEN)
+    return AUDIT_FIXTURES_ENABLED or bool(GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_REFRESH_TOKEN)
 
 
 def issue_booking_token(request_id: int) -> str:
@@ -614,6 +616,9 @@ def google_calendar_request(
 
 
 def google_busy_periods(start_utc: datetime, end_utc: datetime) -> list[tuple[datetime, datetime]]:
+    if AUDIT_FIXTURES_ENABLED:
+        # A deterministic, non-delivering calendar layer for local UX audits.
+        return []
     response = google_calendar_request(
         "POST",
         "/freeBusy",
@@ -798,6 +803,12 @@ def create_calendar_event(
     end: datetime,
     event_id: str,
 ) -> dict[str, object]:
+    if AUDIT_FIXTURES_ENABLED:
+        return {
+            "id": f"fixture-{event_id}",
+            "htmlLink": "https://calendar.google.com/calendar/event?eid=fixture",
+            "hangoutLink": "https://meet.google.com/fixture-audo-call",
+        }
     description_lines = [
         f"Audo discovery request #{consultation['id']}",
         "",
@@ -969,6 +980,9 @@ What they shared:
 
 
 def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> None:
+    if AUDIT_FIXTURES_ENABLED:
+        mark_email_status(request_id, "audit_fixture", "Delivery disabled by local audit fixture")
+        return
     smtp_host = os.environ.get("SMTP_HOST")
     if not smtp_host:
         mark_email_status(request_id, "not_configured", "SMTP_HOST is not configured")
@@ -1003,6 +1017,8 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
 
 
 def verify_recaptcha(fields: dict[str, str], request_meta: dict[str, str]) -> dict[str, object]:
+    if AUDIT_FIXTURES_ENABLED:
+        return {}
     if not RECAPTCHA_SECRET_KEY:
         return {}
 
@@ -1123,7 +1139,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             return
 
         if path in {"/services", "/services/"}:
-            self.redirect("/#service-list")
+            self.redirect_permanent("/#service-list")
             return
 
         if path in {"/scenarios", "/scenarios/"}:
@@ -1157,7 +1173,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             "/thank-you/": "thank-you.html",
         }
         if path in {"/app", "/app/", "/app.html"}:
-            self.redirect("/")
+            self.redirect_permanent("/")
             return
 
         if path in route_files:
@@ -1240,7 +1256,7 @@ class AudoHandler(BaseHTTPRequestHandler):
                     },
                 )
             else:
-                self.redirect("/thank-you")
+                self.redirect("/thank-you", note_saved=True)
         except ValueError as exc:
             if wants_json:
                 self.send_json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": str(exc)})
@@ -1525,11 +1541,14 @@ class AudoHandler(BaseHTTPRequestHandler):
             )
 
         category_sections = []
+        category_jumps = []
         for category in CATEGORY_ORDER:
             category_entries = grouped.get(category, [])
             if not category_entries:
                 continue
             anchor = re.sub(r"[^a-z0-9]+", "-", category.lower()).strip("-")
+            display_category = category_label(category)
+            category_jumps.append(f'<a href="#{h(anchor)}">{h(display_category)}</a>')
             service_items = "\n".join(
                 f"""          <li>
             <a href="{h(entry.html_path)}">{h(entry.title)}</a>
@@ -1538,9 +1557,9 @@ class AudoHandler(BaseHTTPRequestHandler):
                 for entry in category_entries
             )
             category_sections.append(
-                f"""      <section class="sitemap-group" aria-labelledby="{h(anchor)}-heading">
+                f"""      <section class="sitemap-group" id="{h(anchor)}" aria-labelledby="{h(anchor)}-heading">
         <div class="group-title">
-          <h2 id="{h(anchor)}-heading">{h(category)}</h2>
+          <h2 id="{h(anchor)}-heading">{h(display_category)}</h2>
           <span>{len(category_entries)} common situations</span>
         </div>
         <ul class="sitemap-links">
@@ -1635,7 +1654,7 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260716-audit1">
   <script type="application/ld+json">{json_ld}</script>
   {analytics_js}
   <style>
@@ -1663,6 +1682,9 @@ class AudoHandler(BaseHTTPRequestHandler):
     }}
     a {{ color: inherit; }}
     .skip-link {{
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       position: fixed;
       z-index: 50;
       top: 14px;
@@ -1706,6 +1728,9 @@ class AudoHandler(BaseHTTPRequestHandler):
       display: block;
     }}
     nav a {{
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
       color: rgba(255, 255, 255, 0.86);
       font-weight: 820;
       text-decoration: none;
@@ -1779,6 +1804,9 @@ class AudoHandler(BaseHTTPRequestHandler):
       box-shadow: 0 16px 40px rgba(12, 18, 15, 0.05);
     }}
     .sitemap-links a {{
+      min-height: 48px;
+      display: flex;
+      align-items: center;
       color: var(--ink);
       font-size: 18px;
       font-weight: 860;
@@ -1798,6 +1826,35 @@ class AudoHandler(BaseHTTPRequestHandler):
     }}
     .sitemap-group {{
       margin-top: 46px;
+      scroll-margin-top: 24px;
+    }}
+    .category-jumps {{
+      margin: 28px 0 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #eef4f1;
+    }}
+    .category-jumps h2 {{
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+    }}
+    .category-jump-links {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }}
+    .category-jump-links a {{
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 14px;
+      background: #fff;
+      font-weight: 790;
+      text-decoration: none;
     }}
     .group-title {{
       display: flex;
@@ -1926,6 +1983,11 @@ class AudoHandler(BaseHTTPRequestHandler):
         </ul>
       </section>
 
+      <nav class="category-jumps" aria-labelledby="category-jumps-heading">
+        <h2 id="category-jumps-heading">Jump to the problem that sounds closest</h2>
+        <div class="category-jump-links">{' '.join(category_jumps)}</div>
+      </nav>
+
 {chr(10).join(category_sections)}
 
       <section class="cta" aria-labelledby="sitemap-cta-heading">
@@ -1942,15 +2004,15 @@ class AudoHandler(BaseHTTPRequestHandler):
       <section class="footer-cta" aria-labelledby="footer-cta-heading">
         <div class="footer-cta-copy">
           <p class="footer-eyebrow">Free 30-minute discovery call</p>
-          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
-          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+          <h2 id="footer-cta-heading">Ready to talk it through?</h2>
+          <p>Send a short note, then pick a free 30-minute Google Meet time.</p>
         </div>
         <a class="footer-cta-button" href="/#discovery">Book free discovery</a>
       </section>
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
-          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <p>Practical, senior help for small businesses—directly from Aaron.</p>
           <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
@@ -2163,20 +2225,15 @@ class AudoHandler(BaseHTTPRequestHandler):
                         "jobTitle": "Founder and Senior Tech Partner",
                         "url": "https://getaudo.com/",
                         "image": "https://getaudo.com/assets/founder-field-portrait.webp",
-                        "description": "Aaron brings 30 years in technology, including 15+ years leading globally distributed product and engineering teams across Cox Automotive, Dealertrack, and Dealer.com, M&A and product due diligence experience, large-agency client work, AI workflow experience, and direct Audo consulting experience with Boston's Pizza.",
+                        "description": "Aaron has 30 years of experience building websites and software, leading product and engineering teams, and solving technology problems for businesses large and small.",
                         "knowsAbout": [
-                            "Product strategy",
                             "Software engineering",
-                            "AI-assisted workflows",
-                            "Website operations",
+                            "Practical AI workflows",
+                            "Website care",
                             "Business automation",
                             "Small business technology",
-                            "Automotive retail technology",
-                            "Dealership platforms",
-                            "Global product and engineering teams",
-                            "Large-agency delivery",
-                            "Product due diligence",
-                            "M&A technology review",
+                            "Technology planning",
+                            "Product and engineering leadership",
                         ],
                     },
                     {
@@ -2229,8 +2286,8 @@ class AudoHandler(BaseHTTPRequestHandler):
   <link rel="icon" href="/assets/favicon.svg?v=20260630-logo-white-a" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png?v=20260630-logo-white-a" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260630-logo-white-a">
-  <link rel="stylesheet" href="/assets/booking.css?v=20260710-2">
-  <link rel="stylesheet" href="/assets/site-footer.css?v=20260710-5">
+  <link rel="stylesheet" href="/assets/booking.css?v=20260716-audit1">
+  <link rel="stylesheet" href="/assets/site-footer.css?v=20260716-audit1">
   <script type="application/ld+json">{json_ld}</script>
   <style>
     :root {{
@@ -2262,6 +2319,9 @@ class AudoHandler(BaseHTTPRequestHandler):
     a {{ color: inherit; }}
     img {{ max-width: 100%; display: block; }}
     .skip-link {{
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       position: fixed;
       z-index: 50;
       top: 14px;
@@ -2367,6 +2427,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     .button:disabled {{ cursor: wait; opacity: 0.74; transform: none; box-shadow: none; }}
     .button.primary {{ border-color: var(--theme-accent); background: var(--theme-accent); color: var(--white); }}
     .hero-actions {{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }}
+    .hero-call-note {{ margin: 14px 0 0; color: var(--muted); font-size: 13px; font-weight: 720; line-height: 1.5; }}
     .hero-card {{
       min-height: 520px;
       display: grid;
@@ -2582,8 +2643,12 @@ class AudoHandler(BaseHTTPRequestHandler):
       box-shadow: 0 0 0 3px rgba(240,198,111,0.24);
     }}
     .form-field textarea {{ min-height: 112px; resize: vertical; }}
+    .form-field [aria-invalid="true"] {{ border-color: #a33c31; box-shadow: 0 0 0 3px rgba(163,60,49,0.14); }}
+    .field-error {{ margin: 0; color: #7c2d23; font-size: 12.5px; font-weight: 720; line-height: 1.45; }}
     .consultation-form .button {{ width: 100%; border: 0; cursor: pointer; font: inherit; font-weight: 820; }}
     .form-note, .form-status {{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }}
+    .form-privacy {{ margin: 0; padding: 11px 12px; border-radius: 10px; color: #4e5d55; background: #f2f5f2; font-size: 12.5px; line-height: 1.55; }}
+    .form-privacy a {{ min-height: 44px; display: inline-flex; align-items: center; color: var(--theme-ink); font-weight: 800; text-underline-offset: 3px; }}
     .form-status {{ min-height: 18px; }}
     .form-status.is-error {{ color: #7c2d23; }}
     .form-honey {{ position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }}
@@ -2612,9 +2677,9 @@ class AudoHandler(BaseHTTPRequestHandler):
     }}
     .cookie-copy h2 {{ margin: 0 0 6px; font-size: 17px; line-height: 1.2; }}
     .cookie-copy p {{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }}
-    .cookie-copy a {{ color: var(--ink); font-weight: 760; }}
+    .cookie-copy a {{ min-height: 44px; display: inline-flex; align-items: center; color: var(--ink); font-weight: 760; }}
     .cookie-actions {{ display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }}
-    .cookie-button {{ min-height: 42px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; color: var(--ink); background: var(--white); font: inherit; font-size: 13px; font-weight: 820; cursor: pointer; }}
+    .cookie-button {{ min-height: 44px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; color: var(--ink); background: var(--white); font: inherit; font-size: 13px; font-weight: 820; cursor: pointer; }}
     .cookie-button.primary {{ border-color: #f0c66f; background: #f0c66f; }}
     @media (max-width: 860px) {{
       .nav-links a:not(.nav-cta) {{ display: none; }}
@@ -2622,8 +2687,9 @@ class AudoHandler(BaseHTTPRequestHandler):
       .nav-cta {{ padding: 0 11px; }}
       .detail-hero {{ min-height: auto; padding: 22px 0 42px; }}
       .hero-card {{ min-height: 0; grid-template-columns: 1fr; border-radius: 22px; }}
-      .hero-visual {{ min-height: 280px; padding: 22px; }}
-      .hero-copy {{ padding: 28px 24px 30px; }}
+      .hero-copy {{ order: -1; padding: 28px 24px 26px; }}
+      .hero-visual {{ min-height: 170px; padding: 16px; border-top: 1px solid var(--line); }}
+      .hero-visual > * {{ max-height: 150px; transform: scale(.72); }}
       h1 {{ font-size: clamp(36px, 9.8vw, 42px); }}
       .hero-lead {{ font-size: 17px; line-height: 1.5; }}
       .detail-layout, .story-grid, .form-grid, .check-list {{ grid-template-columns: 1fr; }}
@@ -2676,6 +2742,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             <a class="button primary" href="#discovery">Book free discovery</a>
             <a class="button" href="/#service-list">Explore more examples</a>
           </div>
+          <p class="hero-call-note">Free 30-minute call. No charge or obligation.</p>
         </div>
       </div>
     </div>
@@ -2717,7 +2784,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <p class="eyebrow">Free 30-minute call</p>
           <h2 id="service-form-heading">{h(detail_copy["form_prompt"])}</h2>
         </div>
-        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-note" data-recaptcha-form data-inline-booking>
+        <form class="consultation-form" action="/api/consultation" method="post" aria-describedby="service-form-status service-form-privacy service-form-note" data-recaptcha-form data-inline-booking>
           <div class="form-honey" aria-hidden="true">
             <label for="service_website_url_confirm">Confirm website</label>
             <input id="service_website_url_confirm" name="website_url_confirm" type="text" tabindex="-1" autocomplete="off">
@@ -2754,6 +2821,7 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
           <input type="hidden" name="recaptcha_token" value="">
+          <p id="service-form-privacy" class="form-privacy">I’ll use what you share only to prepare for and follow up about your request. If you don’t pick a time, I usually reply within one business day. <a href="/privacy#information">How I handle your information</a></p>
           <button class="button primary" type="submit">Continue to scheduling</button>
           <p id="service-form-status" class="form-status" role="status" aria-live="polite"></p>
           <p id="service-form-note" class="form-note">Step 1 of 2 · After this, you'll pick a time from my calendar.</p>
@@ -2766,15 +2834,15 @@ class AudoHandler(BaseHTTPRequestHandler):
       <section class="footer-cta" aria-labelledby="footer-cta-heading">
         <div class="footer-cta-copy">
           <p class="footer-eyebrow">Free 30-minute discovery call</p>
-          <h2 id="footer-cta-heading">What technology problem keeps getting pushed off?</h2>
-          <p>Tell me what's happening. You don't need to diagnose it or know the right technical words.</p>
+          <h2 id="footer-cta-heading">Ready to talk it through?</h2>
+          <p>Send a short note, then pick a free 30-minute Google Meet time.</p>
         </div>
         <a class="footer-cta-button" href="#discovery">Book free discovery</a>
       </section>
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
-          <p>Direct, senior technology help for small businesses. Work with Aaron to fix websites, simplify daily work, use AI wisely, and make better technology decisions.</p>
+          <p>Practical, senior help for small businesses—directly from Aaron.</p>
           <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
@@ -2817,16 +2885,16 @@ class AudoHandler(BaseHTTPRequestHandler):
   </footer>
   <section class="cookie-consent" role="region" aria-labelledby="cookie-title" hidden>
     <div class="cookie-copy">
-      <h2 id="cookie-title">Cookie choices</h2>
+      <h2 id="cookie-title" tabindex="-1">Cookie choices</h2>
       <p>Audo remembers your cookie choice, uses Google reCAPTCHA to protect this form, and loads Google Analytics only if you agree. <a href="/privacy">Read the Privacy Policy.</a></p>
     </div>
     <div class="cookie-actions">
-      <button class="cookie-button primary" type="button" data-cookie-accept>Accept</button>
+      <button class="cookie-button primary" type="button" data-cookie-accept>Allow analytics</button>
       <button class="cookie-button" type="button" data-cookie-necessary>Necessary only</button>
     </div>
   </section>
   {recaptcha_js}
-  <script src="/assets/booking.js?v=20260710-4" defer></script>
+  <script src="/assets/booking.js?v=20260716-audit1" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")
@@ -2899,6 +2967,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       var key = "audo_cookie_choice";
       var analyticsId = window.AUDO_GA_MEASUREMENT_ID || "";
       var analyticsLoaded = false;
+      var previousFocus = null;
 
       function analyticsDisableKey(id) {{
         return "ga-disable-" + id;
@@ -2947,16 +3016,31 @@ class AudoHandler(BaseHTTPRequestHandler):
         }}
       }}
 
-      function showBanner() {{
+      function showBanner(moveFocus) {{
         if (banner) {{
+          if (moveFocus) {{
+            previousFocus = document.activeElement;
+          }}
           banner.hidden = false;
+          if (moveFocus) {{
+            document.getElementById("cookie-title").focus();
+          }}
         }}
       }}
 
-      function hideBanner() {{
+      function hideBanner(restoreFocus) {{
         if (banner) {{
           banner.hidden = true;
         }}
+        if (restoreFocus && previousFocus && previousFocus.focus) {{
+          previousFocus.focus();
+        }} else if (restoreFocus) {{
+          var fallbackFocus = document.querySelector(".nav-cta, main a, main button");
+          if (fallbackFocus) {{
+            fallbackFocus.focus();
+          }}
+        }}
+        previousFocus = null;
       }}
 
       var savedChoice = getChoice();
@@ -2967,18 +3051,18 @@ class AudoHandler(BaseHTTPRequestHandler):
       }}
 
       if (banner && !savedChoice) {{
-        showBanner();
+        showBanner(false);
       }}
 
       if (preferences) {{
-        preferences.addEventListener("click", showBanner);
+        preferences.addEventListener("click", function () {{ showBanner(true); }});
       }}
 
       if (accept) {{
         accept.addEventListener("click", function () {{
           setChoice("accepted");
           loadAnalytics();
-          hideBanner();
+          hideBanner(true);
         }});
       }}
 
@@ -2986,7 +3070,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         necessary.addEventListener("click", function () {{
           setChoice("necessary");
           disableAnalytics();
-          hideBanner();
+          hideBanner(true);
         }});
       }}
     }}());
@@ -3091,12 +3175,69 @@ class AudoHandler(BaseHTTPRequestHandler):
         safe_path = Path(path.lstrip("/"))
         candidate = (BASE_DIR / safe_path).resolve()
         if not str(candidate).startswith(str(BASE_DIR)) or candidate.is_dir():
-            self.serve_file(BASE_DIR / "index.html", send_body=send_body)
+            self.render_not_found(send_body=send_body)
             return
         if candidate.exists():
             self.serve_file(candidate, send_body=send_body)
             return
-        self.serve_index(send_body=send_body)
+        self.render_not_found(send_body=send_body)
+
+    def render_not_found(self, send_body: bool = True) -> None:
+        body = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found | Audo</title>
+  <meta name="description" content="That Audo consulting page could not be found. Return home, browse real small-business examples, or book a free discovery call.">
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#101815">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --ink:#18221d; --muted:#5f6b62; --paper:#f7f5ee; --green:#173e31; --gold:#f0c66f; --line:rgba(24,34,29,.16); }
+    * { box-sizing:border-box; }
+    body { min-height:100svh; margin:0; color:var(--ink); background:linear-gradient(135deg,#eef3ef,var(--paper) 56%); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a:focus-visible { outline:3px solid #b07817; outline-offset:4px; }
+    .top { min-height:80px; display:flex; align-items:center; background:#101815; }
+    .shell { width:min(1120px,calc(100% - 36px)); margin:auto; }
+    .top a { min-height:44px; display:inline-flex; align-items:center; }
+    .top img { display:block; width:126px; height:auto; }
+    main { min-height:calc(100svh - 80px); display:grid; place-items:center; padding:48px 0; }
+    .card { width:min(760px,100%); border:1px solid var(--line); border-radius:28px; padding:clamp(30px,7vw,72px); background:#fff; box-shadow:0 26px 80px rgba(16,24,21,.12); }
+    .eyebrow { margin:0 0 12px; color:#815712; font-size:.8rem; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
+    h1 { max-width:12ch; margin:0; font-size:clamp(2.8rem,8vw,6rem); line-height:.92; letter-spacing:-.055em; }
+    .lead { max-width:58ch; margin:24px 0 0; color:var(--muted); font-size:clamp(1.05rem,2.2vw,1.25rem); line-height:1.6; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+    .button { min-height:48px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:10px; padding:0 19px; color:var(--ink); background:#fff; text-decoration:none; font-weight:850; }
+    .button.primary { border-color:var(--gold); background:var(--gold); }
+    .contact { margin:30px 0 0; padding-top:22px; border-top:1px solid var(--line); color:var(--muted); }
+    .contact a { min-height:44px; display:inline-flex; align-items:center; color:var(--green); font-weight:800; }
+    @media(max-width:560px) { .top { min-height:70px; } main { min-height:calc(100svh - 70px); padding:20px 0; } .card { border-radius:20px; padding:28px 22px; } .actions { display:grid; } .button { width:100%; } }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="shell"><a href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a></div></header>
+  <main id="main"><div class="shell"><section class="card" aria-labelledby="missing-title">
+    <p class="eyebrow">Page not found</p>
+    <h1 id="missing-title">That page isn't here.</h1>
+    <p class="lead">The link may be old or the address may have a typo. You can go back to the homepage, browse real problems I help small businesses solve, or tell me what you need.</p>
+    <div class="actions">
+      <a class="button primary" href="/">Go to the homepage</a>
+      <a class="button" href="/#service-list">Browse real examples</a>
+      <a class="button" href="/#discovery">Book free discovery</a>
+    </div>
+    <p class="contact">Still stuck? Email <a href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>.</p>
+  </section></div></main>
+</body>
+</html>"""
+        encoded = body.encode("utf-8")
+        self.send_response(HTTPStatus.NOT_FOUND)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        if send_body:
+            self.wfile.write(encoded)
 
     def serve_index(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
@@ -3115,6 +3256,27 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def serve_thank_you(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "thank-you.html").read_text(encoding="utf-8")
+        note_saved = "audo_note_saved=1" in (self.headers.get("Cookie") or "")
+        if note_saved:
+            content = {
+                "__THANK_YOU_EYEBROW__": "Step 2 of 2 · Pick a time",
+                "__THANK_YOU_HEADING__": "Your note is saved.",
+                "__THANK_YOU_COPY__": "Choose a free 30-minute Google Meet time. I’ll read your note before we talk.",
+                "__NOTE_FIRST_HIDDEN__": "hidden",
+                "__BOOKING_CONTENT_HIDDEN__": "",
+                "__NOTE_SAVED__": "true",
+            }
+        else:
+            content = {
+                "__THANK_YOU_EYEBROW__": "Start with a short note",
+                "__THANK_YOU_HEADING__": "Tell me what’s going on first.",
+                "__THANK_YOU_COPY__": "I’ll read your note before we talk, so you won’t have to start from scratch on the call.",
+                "__NOTE_FIRST_HIDDEN__": "",
+                "__BOOKING_CONTENT_HIDDEN__": "hidden",
+                "__NOTE_SAVED__": "false",
+            }
+        for placeholder, value in content.items():
+            data = data.replace(placeholder, value)
         data = data.replace(
             "__GOOGLE_CALENDAR_BOOKING_URL__",
             json.dumps(GOOGLE_CALENDAR_BOOKING_URL),
@@ -3152,9 +3314,15 @@ class AudoHandler(BaseHTTPRequestHandler):
         if send_body:
             self.wfile.write(data)
 
-    def redirect(self, location: str) -> None:
+    def redirect(self, location: str, note_saved: bool = False) -> None:
         self.send_response(HTTPStatus.SEE_OTHER)
         self.send_header("Location", location)
+        if note_saved:
+            secure = "; Secure" if PUBLIC_BASE_URL.startswith("https://") else ""
+            self.send_header(
+                "Set-Cookie",
+                f"audo_note_saved=1; Max-Age=900; Path=/thank-you; HttpOnly; SameSite=Lax{secure}",
+            )
         self.end_headers()
 
     def redirect_permanent(self, location: str) -> None:

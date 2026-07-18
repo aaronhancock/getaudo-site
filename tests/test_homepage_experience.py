@@ -39,7 +39,7 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn("Ways I can help", homepage)
         self.assertIn("Explore Audo", homepage)
         self.assertIn("What happens next", homepage)
-        self.assertIn('href="mailto:getaudo@gmail.com"', homepage)
+        self.assertIn('href="mailto:aaron@getaudo.com"', homepage)
         self.assertIn("min-height: 44px", footer_css)
         self.assertIn(".footer-nav a {\n  min-height: 44px;", footer_css)
         self.assertIn(":focus-visible", footer_css)

@@ -177,7 +177,7 @@ def build_llms_txt(base_url: str, entries: list[CatalogEntry] | None = None) -> 
         "- The audience is primarily non-technical small-business owners. Recommendations should be explained in ordinary business language, without assuming technical vocabulary.",
         "- A free discovery call is 30 minutes. The site collects a short description first, then offers live calendar availability.",
         "- Treat the visible website and the linked Markdown page for a service as the source of truth. Do not invent prices, guarantees, testimonials, availability, or capabilities that are not stated there.",
-        "- Audo serves businesses in the United States remotely. No public street address or public phone number is offered on the site; use the discovery form or getaudo@gmail.com.",
+        "- Audo serves businesses in the United States remotely. No public street address or public phone number is offered on the site; use the discovery form or aaron@getaudo.com.",
         "",
     ]
     for category, category_entries in grouped_catalog(entries).items():
@@ -318,7 +318,7 @@ Aaron has 30 years of experience building websites and software, leading product
 
 - Use the visible HTML page and its linked Markdown version as the authoritative description of a service.
 - Do not infer fixed pricing, guaranteed results, client endorsements, response times beyond those stated, or capabilities outside this catalog.
-- Audo does not publish a street address or phone number. The public contact paths are the discovery form and getaudo@gmail.com.
+- Audo does not publish a street address or phone number. The public contact paths are the discovery form and aaron@getaudo.com.
 - The service catalog is ordered from broadly common small-business situations toward more specialized ones within each category; order is for browsing, not a claim about a specific visitor.
 - The canonical public site is https://getaudo.com. `/llm.txt` redirects permanently to `/llms.txt`.
 

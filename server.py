@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import html
 import hashlib
 import hmac
@@ -49,7 +50,7 @@ except ImportError:  # pragma: no cover - Pillow is installed in the deployed im
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", "/data/audo"))
 DATABASE_PATH = Path(os.environ.get("DATABASE_PATH", DATA_DIR / "consultations.sqlite3"))
-CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "getaudo@gmail.com")
+CONSULTATION_TO = os.environ.get("CONSULTATION_TO", "aaron@getaudo.com")
 PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "https://getaudo.com").rstrip("/")
 SITEMAP_LASTMOD = catalog_lastmod(BASE_DIR)
 MAX_BODY_BYTES = int(os.environ.get("MAX_FORM_BODY_BYTES", "131072"))
@@ -83,9 +84,17 @@ GOOGLE_CALENDAR_BOOKING_URL = normalize_google_calendar_booking_url(
     os.environ.get("GOOGLE_CALENDAR_BOOKING_URL", DEFAULT_GOOGLE_CALENDAR_BOOKING_URL)
 )
 GOOGLE_CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary").strip() or "primary"
+GOOGLE_CALENDAR_BUSY_IDS = tuple(
+    dict.fromkeys(
+        calendar_id.strip()
+        for calendar_id in os.environ.get("GOOGLE_CALENDAR_BUSY_IDS", GOOGLE_CALENDAR_ID).split(",")
+        if calendar_id.strip()
+    )
+) or (GOOGLE_CALENDAR_ID,)
 GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "").strip()
 GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET", "").strip()
 GOOGLE_OAUTH_REFRESH_TOKEN = os.environ.get("GOOGLE_OAUTH_REFRESH_TOKEN", "").strip()
+GMAIL_API_SEND_ENABLED = os.environ.get("GMAIL_API_SEND_ENABLED", "").lower() in {"1", "true", "yes"}
 BOOKING_TIMEZONE = os.environ.get("BOOKING_TIMEZONE", "America/Chicago").strip() or "America/Chicago"
 BOOKING_ZONE = ZoneInfo(BOOKING_TIMEZONE)
 BOOKING_WINDOW_DAYS = max(1, min(int(os.environ.get("BOOKING_WINDOW_DAYS", "30")), 60))
@@ -627,21 +636,22 @@ def google_busy_periods(start_utc: datetime, end_utc: datetime) -> list[tuple[da
             "timeMin": start_utc.isoformat().replace("+00:00", "Z"),
             "timeMax": end_utc.isoformat().replace("+00:00", "Z"),
             "timeZone": BOOKING_TIMEZONE,
-            "items": [{"id": GOOGLE_CALENDAR_ID}],
+            "items": [{"id": calendar_id} for calendar_id in GOOGLE_CALENDAR_BUSY_IDS],
         },
     )
     calendars = response.get("calendars") or {}
-    calendar_result = calendars.get(GOOGLE_CALENDAR_ID)
-    if calendar_result is None and calendars:
-        calendar_result = next(iter(calendars.values()))
-    if not isinstance(calendar_result, dict) or calendar_result.get("errors"):
+    calendar_results = [result for result in calendars.values() if isinstance(result, dict)]
+    if len(calendar_results) < len(GOOGLE_CALENDAR_BUSY_IDS) or any(
+        result.get("errors") for result in calendar_results
+    ):
         raise GoogleCalendarError("Google Calendar availability could not be read.", status=503)
 
     busy: list[tuple[datetime, datetime]] = []
-    for period in calendar_result.get("busy", []):
-        if period.get("start") and period.get("end"):
-            busy.append((parse_iso_datetime(period["start"]), parse_iso_datetime(period["end"])))
-    return busy
+    for calendar_result in calendar_results:
+        for period in calendar_result.get("busy", []):
+            if period.get("start") and period.get("end"):
+                busy.append((parse_iso_datetime(period["start"]), parse_iso_datetime(period["end"])))
+    return sorted(set(busy))
 
 
 def database_booking_periods() -> tuple[list[tuple[datetime, datetime]], dict[date, int]]:
@@ -953,7 +963,12 @@ def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str,
     service = fields.get("service", "Discovery")
     company = fields.get("company_name") or fields["name"]
     message["Subject"] = f"New Audo discovery: {company} - {service}"
-    message["From"] = os.environ.get("SMTP_FROM") or os.environ.get("SMTP_USER") or "Audo <no-reply@getaudo.com>"
+    message["From"] = (
+        os.environ.get("GMAIL_FROM")
+        or os.environ.get("SMTP_FROM")
+        or os.environ.get("SMTP_USER")
+        or CONSULTATION_TO
+    )
     message["To"] = CONSULTATION_TO
     message["Reply-To"] = fields["email"]
 
@@ -980,16 +995,50 @@ What they shared:
     return message
 
 
+def send_gmail_api_message(message: EmailMessage, retry_auth: bool = True) -> None:
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("ascii").rstrip("=")
+    request = urllib.request.Request(
+        "https://gmail.googleapis.com/gmail/v1/users/me/messages/send",
+        data=json.dumps({"raw": raw_message}).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {google_access_token()}",
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=15):
+            return
+    except urllib.error.HTTPError as exc:
+        if exc.code == 401 and retry_auth:
+            google_access_token(force_refresh=True)
+            send_gmail_api_message(message, retry_auth=False)
+            return
+        raise RuntimeError(f"Gmail API returned HTTP {exc.code}.") from exc
+    except (urllib.error.URLError, TimeoutError) as exc:
+        raise RuntimeError("Gmail API is temporarily unavailable.") from exc
+
+
 def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> None:
     if AUDIT_FIXTURES_ENABLED:
         mark_email_status(request_id, "audit_fixture", "Delivery disabled by local audit fixture")
         return
-    smtp_host = os.environ.get("SMTP_HOST")
-    if not smtp_host:
-        mark_email_status(request_id, "not_configured", "SMTP_HOST is not configured")
-        print(f"discovery request {request_id} stored; email not configured", file=sys.stderr)
+    message = build_email(request_id, fields, request_meta)
+    if GMAIL_API_SEND_ENABLED:
+        try:
+            send_gmail_api_message(message)
+            mark_email_status(request_id, "sent")
+        except Exception as exc:  # pragma: no cover - depends on the live Google API.
+            mark_email_status(request_id, "failed", str(exc))
+            print(f"discovery request {request_id} stored; email failed: {exc}", file=sys.stderr)
         return
 
+    smtp_host = os.environ.get("SMTP_HOST")
+    if not smtp_host:
+        mark_email_status(request_id, "not_configured", "Email delivery is not configured")
+        print(f"discovery request {request_id} stored; email not configured", file=sys.stderr)
+        return
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     smtp_user = os.environ.get("SMTP_USER")
     smtp_pass = os.environ.get("SMTP_PASS")
@@ -997,7 +1046,6 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
     use_ssl = smtp_secure == "ssl" or smtp_port == 465
     use_starttls = os.environ.get("SMTP_STARTTLS", "true").lower() not in {"0", "false", "no"}
 
-    message = build_email(request_id, fields, request_meta)
     try:
         if use_ssl:
             with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as smtp:
@@ -2038,7 +2086,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
           <p>Practical, senior help for small businesses—directly from Aaron.</p>
-          <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
+          <a class="footer-email" href="mailto:aaron@getaudo.com">aaron@getaudo.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
           <h2 id="footer-help-heading">Ways I can help</h2>
@@ -2131,10 +2179,22 @@ class AudoHandler(BaseHTTPRequestHandler):
             "website": """<div class="scene-window"><span></span><span></span><span></span><div class="scene-copy"></div><div class="scene-panel"></div></div><div class="scene-status">✓ Working for customers</div>""",
             "customers": """<div class="scene-messages"><div><span>New message</span><strong>Can you help with this?</strong></div><div><span>Reply sent</span><strong>Here is the next step.</strong></div></div>""",
             "work": """<div class="scene-flow"><span>Request arrives</span><i></i><span>Right person knows</span><i></i><span>Work gets done</span></div>""",
-            "ai": """<div class="scene-ai"><div>Use our rules and keep it clear.</div><strong>✦</strong><div>Ready for a person to review.</div></div>""",
+            "ai": """<div class="scene-ai"><div><span>Start here</span>Choose one real job that takes too long.</div><strong>✦</strong><div><span>Next</span>Try AI on that job and see if it helps.</div></div>""",
             "decisions": """<div class="scene-compare"><div><strong>Option A</strong><span>Faster start</span><span>More compromise</span></div><b>or</b><div class="is-best"><small>BETTER FIT</small><strong>Option B</strong><span>Built around the business</span></div></div>""",
         }
         scene_html = scenes[group]
+        if group == "ai" and explorer_card:
+            scene_html = (
+                '<div class="scene-ai"><div><span>'
+                + h(explorer_card["scene_before_label"])
+                + "</span>"
+                + h(explorer_card["scene_before"])
+                + "</div><strong>✦</strong><div><span>"
+                + h(explorer_card["scene_after_label"])
+                + "</span>"
+                + h(explorer_card["scene_after"])
+                + "</div></div>"
+            )
         detail_copy = explorer_card or {
             "problem_heading": service.title,
             "goal_heading": service.result,
@@ -2532,6 +2592,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     .scene-ai strong {{ width: 74px; height: 74px; display: grid; place-items: center; border-radius: 24px; color: white; background: var(--theme-accent); font-size: 34px; box-shadow: 0 16px 30px color-mix(in srgb, var(--theme-accent) 28%, transparent); }}
     .scene-ai div:first-child {{ justify-self: start; }}
     .scene-ai div:last-child {{ justify-self: end; }}
+    .scene-ai div > span {{ display: block; margin-bottom: 7px; color: var(--theme-accent); font-size: 11px; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }}
     .scene-compare {{ width: min(430px, 96%); position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; }}
     .scene-compare > div {{ min-height: 190px; display: grid; align-content: center; gap: 7px; padding: 22px; border: 1px solid rgba(24,34,29,0.12); border-radius: 22px; background: white; }}
     .scene-compare .is-best {{ border-color: var(--theme-accent); box-shadow: 0 16px 34px color-mix(in srgb, var(--theme-accent) 14%, transparent); }}
@@ -2871,7 +2932,7 @@ class AudoHandler(BaseHTTPRequestHandler):
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Audo home"><img src="/assets/audo-logo-white.png" alt="Audo"></a>
           <p>Practical, senior help for small businesses—directly from Aaron.</p>
-          <a class="footer-email" href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>
+          <a class="footer-email" href="mailto:aaron@getaudo.com">aaron@getaudo.com</a>
         </div>
         <nav class="footer-nav" aria-labelledby="footer-help-heading">
           <h2 id="footer-help-heading">Ways I can help</h2>
@@ -3257,7 +3318,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       <a class="button" href="/#services">Find your starting point</a>
       <a class="button" href="/#discovery">Book free discovery</a>
     </div>
-    <p class="contact">Still stuck? Email <a href="mailto:getaudo@gmail.com">getaudo@gmail.com</a>.</p>
+    <p class="contact">Still stuck? Email <a href="mailto:aaron@getaudo.com">aaron@getaudo.com</a>.</p>
   </section></div></main>
 </body>
 </html>"""

@@ -10,7 +10,7 @@ RUN apt-get update \
 ENV PORT=80 \
     DATA_DIR=/data/audo \
     DATABASE_PATH=/data/audo/consultations.sqlite3 \
-    CONSULTATION_TO=getaudo@gmail.com \
+    CONSULTATION_TO=aaron@getaudo.com \
     PUBLIC_BASE_URL=https://getaudo.com
 
 COPY server.py /app/server.py

@@ -21,6 +21,7 @@ from pathlib import Path
 SCOPES = (
     "https://www.googleapis.com/auth/calendar.events",
     "https://www.googleapis.com/auth/calendar.freebusy",
+    "https://www.googleapis.com/auth/gmail.send",
 )
 
 
@@ -62,7 +63,7 @@ def main() -> int:
             result["error"] = query.get("error", [""])[-1]
             ok = bool(result["code"] and result["state"] == state and not result["error"])
             body = (
-                "<h1>Audo Calendar connected</h1><p>You can close this tab and return to Codex.</p>"
+                "<h1>Audo Google services connected</h1><p>You can close this tab and return to Codex.</p>"
                 if ok
                 else "<h1>Authorization did not complete</h1><p>Return to Codex and try again.</p>"
             ).encode("utf-8")
@@ -87,7 +88,7 @@ def main() -> int:
             "access_type": "offline",
             "prompt": "consent",
             "include_granted_scopes": "true",
-            "login_hint": "getaudo@gmail.com",
+            "login_hint": "aaron@getaudo.com",
             "state": state,
             "code_challenge": code_challenge,
             "code_challenge_method": "S256",

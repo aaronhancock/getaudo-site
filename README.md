@@ -42,20 +42,30 @@ AUDIT_FIXTURES_ENABLED=true DATA_DIR=/tmp/getaudo-audit PORT=8080 python3 server
 
 The public site posts discovery requests to `/api/consultation`.
 
-Each request is written to SQLite first, then emailed to `getaudo@gmail.com`.
+Each request is written to SQLite first, then emailed to `aaron@getaudo.com`.
 The default database path is `/data/audo/consultations.sqlite3`; keep
 `/data/audo` as persistent storage in Coolify so form submissions survive
 rebuilds.
 
-Email delivery uses SMTP environment variables:
+Email delivery uses the same Google OAuth connection as the scheduler. The
+OAuth grant includes only Calendar event access, Calendar free/busy access,
+and permission to send mail as the connected account:
 
 ```bash
-CONSULTATION_TO=getaudo@gmail.com
+GMAIL_API_SEND_ENABLED=true
+GMAIL_FROM=aaron@getaudo.com
+CONSULTATION_TO=aaron@getaudo.com
+```
+
+SMTP remains available as a fallback when Gmail API sending is disabled:
+
+```bash
+CONSULTATION_TO=aaron@getaudo.com
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=getaudo@gmail.com
+SMTP_USER=aaron@getaudo.com
 SMTP_PASS=<gmail-app-password>
-SMTP_FROM=getaudo@gmail.com
+SMTP_FROM=aaron@getaudo.com
 SMTP_STARTTLS=true
 ```
 
@@ -69,15 +79,20 @@ and invites the lead. The event description includes the submitted lead and
 request details. The Google Appointment Schedule remains the outage and
 non-JavaScript fallback.
 
-The scheduler uses OAuth server credentials. Authorize `getaudo@gmail.com`
+The scheduler uses OAuth server credentials. Authorize `aaron@getaudo.com`
 once with offline Calendar access, then configure these runtime secrets:
 
 ```bash
 GOOGLE_OAUTH_CLIENT_ID=<google-oauth-web-client-id>
 GOOGLE_OAUTH_CLIENT_SECRET=<optional-for-confidential-web-clients>
-GOOGLE_OAUTH_REFRESH_TOKEN=<offline-refresh-token-for-getaudo@gmail.com>
+GOOGLE_OAUTH_REFRESH_TOKEN=<offline-refresh-token-for-aaron@getaudo.com>
 GOOGLE_CALENDAR_ID=primary
+GOOGLE_CALENDAR_BUSY_IDS=primary,matthewaaron@gmail.com
 ```
+
+`GOOGLE_CALENDAR_ID` is the Audo calendar where bookings are created.
+`GOOGLE_CALENDAR_BUSY_IDS` is the comma-separated list checked for conflicts;
+the personal calendar must be shared with `aaron@getaudo.com` as free/busy.
 
 Booking rules can be adjusted without changing code:
 
@@ -95,7 +110,7 @@ BOOKING_INTERNAL_ATTENDEE=matthewaaron@gmail.com
 ```
 
 The deployed fallback points to the 30-minute Small Business Technology
-Discovery Call owned by `getaudo@gmail.com`. To replace that schedule, set:
+Discovery Call owned by `aaron@getaudo.com`. To replace that schedule, set:
 
 ```bash
 GOOGLE_CALENDAR_BOOKING_URL=https://calendar.google.com/calendar/appointments/schedules/...

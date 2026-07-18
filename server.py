@@ -95,6 +95,12 @@ GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID", "").strip()
 GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET", "").strip()
 GOOGLE_OAUTH_REFRESH_TOKEN = os.environ.get("GOOGLE_OAUTH_REFRESH_TOKEN", "").strip()
 GMAIL_API_SEND_ENABLED = os.environ.get("GMAIL_API_SEND_ENABLED", "").lower() in {"1", "true", "yes"}
+HUBSPOT_SERVICE_KEY = os.environ.get("HUBSPOT_SERVICE_KEY", "").strip()
+HUBSPOT_API_BASE_URL = os.environ.get("HUBSPOT_API_BASE_URL", "https://api.hubapi.com").rstrip("/")
+HUBSPOT_PIPELINE = os.environ.get("HUBSPOT_PIPELINE", "default").strip() or "default"
+HUBSPOT_NEW_INQUIRY_STAGE = (
+    os.environ.get("HUBSPOT_NEW_INQUIRY_STAGE", "appointmentscheduled").strip() or "appointmentscheduled"
+)
 BOOKING_TIMEZONE = os.environ.get("BOOKING_TIMEZONE", "America/Chicago").strip() or "America/Chicago"
 BOOKING_ZONE = ZoneInfo(BOOKING_TIMEZONE)
 BOOKING_WINDOW_DAYS = max(1, min(int(os.environ.get("BOOKING_WINDOW_DAYS", "30")), 60))
@@ -366,6 +372,11 @@ def init_db() -> None:
             "recaptcha_hostname": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_hostname TEXT",
             "booking_token_hash": "ALTER TABLE consultation_requests ADD COLUMN booking_token_hash TEXT",
             "booking_token_expires_at": "ALTER TABLE consultation_requests ADD COLUMN booking_token_expires_at TEXT",
+            "hubspot_contact_id": "ALTER TABLE consultation_requests ADD COLUMN hubspot_contact_id TEXT",
+            "hubspot_deal_id": "ALTER TABLE consultation_requests ADD COLUMN hubspot_deal_id TEXT",
+            "hubspot_status": "ALTER TABLE consultation_requests ADD COLUMN hubspot_status TEXT",
+            "hubspot_error": "ALTER TABLE consultation_requests ADD COLUMN hubspot_error TEXT",
+            "hubspot_synced_at": "ALTER TABLE consultation_requests ADD COLUMN hubspot_synced_at TEXT",
         }
         for column, statement in migrations.items():
             if column not in columns:
@@ -958,6 +969,147 @@ def mark_email_status(request_id: int, status: str, error: str | None = None) ->
         )
 
 
+def mark_hubspot_status(
+    request_id: int,
+    status: str,
+    *,
+    contact_id: str | None = None,
+    deal_id: str | None = None,
+    error: str | None = None,
+) -> None:
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET hubspot_status = ?, hubspot_contact_id = COALESCE(?, hubspot_contact_id),
+                hubspot_deal_id = COALESCE(?, hubspot_deal_id), hubspot_error = ?,
+                hubspot_synced_at = ?
+            WHERE id = ?
+            """,
+            (
+                status,
+                clean(contact_id, 255) if contact_id else None,
+                clean(deal_id, 255) if deal_id else None,
+                clean(error, 2000) if error else None,
+                utc_now() if status == "synced" else None,
+                request_id,
+            ),
+        )
+
+
+def hubspot_request(endpoint: str, payload: dict[str, object]) -> dict[str, object]:
+    request = urllib.request.Request(
+        f"{HUBSPOT_API_BASE_URL}{endpoint}",
+        data=json.dumps(payload).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {HUBSPOT_SERVICE_KEY}",
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = ""
+        try:
+            detail = json.loads(exc.read().decode("utf-8")).get("message", "")
+        except (UnicodeDecodeError, json.JSONDecodeError, AttributeError):
+            pass
+        suffix = f": {clean(detail, 500)}" if detail else ""
+        raise RuntimeError(f"HubSpot returned HTTP {exc.code}{suffix}") from exc
+    except (urllib.error.URLError, TimeoutError) as exc:
+        raise RuntimeError("HubSpot is temporarily unavailable") from exc
+
+
+def split_contact_name(name: str) -> tuple[str, str]:
+    parts = name.strip().split(maxsplit=1)
+    return (parts[0], parts[1] if len(parts) > 1 else "")
+
+
+def sync_hubspot(request_id: int, fields: dict[str, str]) -> None:
+    if AUDIT_FIXTURES_ENABLED:
+        mark_hubspot_status(request_id, "audit_fixture", error="Sync disabled by local audit fixture")
+        return
+    if not HUBSPOT_SERVICE_KEY:
+        mark_hubspot_status(request_id, "not_configured", error="HubSpot sync is not configured")
+        return
+
+    mark_hubspot_status(request_id, "syncing")
+    try:
+        first_name, last_name = split_contact_name(fields["name"])
+        contact_properties = {
+            "firstname": first_name,
+            "lastname": last_name,
+            "phone": fields.get("phone", ""),
+            "company": fields.get("company_name", ""),
+            "website": fields.get("website", ""),
+            "lifecyclestage": "lead",
+            "hs_lead_status": "NEW",
+        }
+        contact = hubspot_request(
+            "/crm/objects/2026-03/contacts/batch/upsert",
+            {
+                "inputs": [
+                    {
+                        "id": fields["email"],
+                        "idProperty": "email",
+                        "properties": {key: value for key, value in contact_properties.items() if value},
+                    }
+                ]
+            },
+        )
+        contact_results = contact.get("results") or []
+        if not contact_results or not contact_results[0].get("id"):
+            raise RuntimeError("HubSpot did not return a contact ID")
+        contact_id = str(contact_results[0]["id"])
+
+        company_or_name = fields.get("company_name") or fields["name"]
+        inquiry_details = "\n".join(
+            line
+            for line in (
+                f"Submitted from getaudo.com (request #{request_id})",
+                f"Name: {fields['name']}",
+                f"Email: {fields['email']}",
+                f"Phone: {fields.get('phone') or 'Not provided'}",
+                f"Website: {fields.get('website') or 'Not provided'}",
+                f"Interested in: {fields.get('interest_context') or fields.get('service') or 'General discovery'}",
+                "",
+                fields.get("message", ""),
+            )
+        )
+        deal = hubspot_request(
+            "/crm/objects/2026-03/deals",
+            {
+                "properties": {
+                    "dealname": f"{company_or_name} — {fields.get('service') or 'Discovery inquiry'}",
+                    "pipeline": HUBSPOT_PIPELINE,
+                    "dealstage": HUBSPOT_NEW_INQUIRY_STAGE,
+                    "description": inquiry_details,
+                },
+                "associations": [
+                    {
+                        "to": {"id": contact_id},
+                        "types": [
+                            {
+                                "associationCategory": "HUBSPOT_DEFINED",
+                                "associationTypeId": 3,
+                            }
+                        ],
+                    }
+                ],
+            },
+        )
+        deal_id = str(deal.get("id") or "")
+        if not deal_id:
+            raise RuntimeError("HubSpot did not return a deal ID")
+        mark_hubspot_status(request_id, "synced", contact_id=contact_id, deal_id=deal_id)
+    except Exception as exc:  # pragma: no cover - depends on the live HubSpot API.
+        mark_hubspot_status(request_id, "failed", error=str(exc))
+        print(f"discovery request {request_id} stored; HubSpot sync failed: {exc}", file=sys.stderr)
+
+
 def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> EmailMessage:
     message = EmailMessage()
     service = fields.get("service", "Discovery")
@@ -1300,6 +1452,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 
             request_id = store_request(payload, request_meta)
             booking_token = issue_booking_token(request_id)
+            sync_hubspot(request_id, payload)
             send_email(request_id, payload, request_meta)
             if wants_json:
                 self.send_json(

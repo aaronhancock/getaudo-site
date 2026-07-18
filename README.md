@@ -72,6 +72,19 @@ SMTP_STARTTLS=true
 If SMTP is not configured, the request is still stored and marked
 `not_configured` in the database.
 
+Every saved request can also create or update its contact and add a **New
+inquiry** deal in Audo's HubSpot sales pipeline. Configure the supported
+HubSpot service key in the deployment environment (never in source control):
+
+```bash
+HUBSPOT_SERVICE_KEY=<supported-hubspot-service-key>
+HUBSPOT_PIPELINE=default
+HUBSPOT_NEW_INQUIRY_STAGE=appointmentscheduled
+```
+
+HubSpot sync is deliberately non-blocking: an API failure is recorded on the
+saved request but does not prevent email delivery or calendar scheduling.
+
 With JavaScript available, the request form now transitions directly into a
 branded second scheduling step. The server reads busy periods from Google
 Calendar, enforces the booking rules, creates the event and Google Meet link,

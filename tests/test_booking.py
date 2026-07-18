@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
@@ -135,6 +136,57 @@ class BookingTests(unittest.TestCase):
         calendar_request.assert_not_called()
         smtp.assert_not_called()
         self.assertEqual(event["hangoutLink"], "https://meet.google.com/fixture-audo-call")
+
+    def test_hubspot_sync_upserts_contact_and_creates_associated_new_inquiry(self):
+        request_id, _ = self.make_lead()
+        payload = {
+            "name": "Jamie Rivera",
+            "company_name": "Rivera Hardware",
+            "website": "https://example.com",
+            "email": "jamie@example.com",
+            "phone": "555-0100",
+            "service": "Small business technology help",
+            "message": "Our inventory workflow needs attention.",
+            "interest_context": "Daily work",
+        }
+        calls = []
+
+        def fake_request(endpoint, body):
+            calls.append((endpoint, body))
+            if endpoint.endswith("/batch/upsert"):
+                return {"results": [{"id": "contact-123"}]}
+            return {"id": "deal-456"}
+
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request", side_effect=fake_request
+        ):
+            server.sync_hubspot(request_id, payload)
+
+        self.assertEqual(calls[0][1]["inputs"][0]["id"], "jamie@example.com")
+        self.assertEqual(calls[1][1]["properties"]["dealstage"], "appointmentscheduled")
+        self.assertEqual(calls[1][1]["associations"][0]["to"]["id"], "contact-123")
+        self.assertIn("Our inventory workflow needs attention.", calls[1][1]["properties"]["description"])
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT hubspot_status, hubspot_contact_id, hubspot_deal_id FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row, ("synced", "contact-123", "deal-456"))
+
+    def test_hubspot_failure_does_not_raise_or_lose_the_saved_request(self):
+        request_id, _ = self.make_lead()
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request", side_effect=RuntimeError("temporary outage")
+        ):
+            server.sync_hubspot(request_id, {"name": "Jamie Rivera", "email": "jamie@example.com"})
+
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT hubspot_status, hubspot_error FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row[0], "failed")
+        self.assertIn("temporary outage", row[1])
 
 
 if __name__ == "__main__":

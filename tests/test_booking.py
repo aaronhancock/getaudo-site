@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 import sqlite3
+import inspect
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
@@ -155,6 +156,8 @@ class BookingTests(unittest.TestCase):
             calls.append((endpoint, body))
             if endpoint.endswith("/batch/upsert"):
                 return {"results": [{"id": "contact-123"}]}
+            if endpoint.endswith("/search"):
+                return {"results": []}
             return {"id": "deal-456"}
 
         with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
@@ -163,9 +166,10 @@ class BookingTests(unittest.TestCase):
             server.sync_hubspot(request_id, payload)
 
         self.assertEqual(calls[0][1]["inputs"][0]["id"], "jamie@example.com")
-        self.assertEqual(calls[1][1]["properties"]["dealstage"], "appointmentscheduled")
-        self.assertEqual(calls[1][1]["associations"][0]["to"]["id"], "contact-123")
-        self.assertIn("Our inventory workflow needs attention.", calls[1][1]["properties"]["description"])
+        self.assertEqual(calls[2][1]["properties"]["dealstage"], "appointmentscheduled")
+        self.assertEqual(calls[2][1]["associations"][0]["to"]["id"], "contact-123")
+        self.assertIn("Website request #", calls[2][1]["properties"]["dealname"])
+        self.assertIn("Our inventory workflow needs attention.", calls[2][1]["properties"]["description"])
         with sqlite3.connect(server.DATABASE_PATH) as conn:
             row = conn.execute(
                 "SELECT hubspot_status, hubspot_contact_id, hubspot_deal_id FROM consultation_requests WHERE id = ?",
@@ -185,8 +189,133 @@ class BookingTests(unittest.TestCase):
                 "SELECT hubspot_status, hubspot_error FROM consultation_requests WHERE id = ?",
                 (request_id,),
             ).fetchone()
-        self.assertEqual(row[0], "failed")
+        self.assertEqual(row[0], "retry")
         self.assertIn("temporary outage", row[1])
+
+    def test_hubspot_enqueue_never_calls_the_network(self):
+        request_id, _ = self.make_lead()
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request"
+        ) as hubspot_request:
+            server.queue_hubspot_sync(request_id)
+
+        hubspot_request.assert_not_called()
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT hubspot_status, hubspot_attempt_count FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row, ("queued", 0))
+        handler_source = inspect.getsource(server.AudoHandler.handle_consultation_post)
+        self.assertIn("queue_hubspot_sync(request_id)", handler_source)
+        self.assertNotIn("sync_hubspot(request_id", handler_source)
+
+    def test_request_store_persists_the_hubspot_job_atomically(self):
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request"
+        ) as hubspot_request:
+            request_id, _ = self.make_lead()
+
+        hubspot_request.assert_not_called()
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT hubspot_status, hubspot_next_attempt_at FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row[0], "queued")
+        self.assertTrue(row[1])
+
+    def test_hubspot_retry_finds_the_created_deal_instead_of_creating_a_duplicate(self):
+        request_id, _ = self.make_lead()
+        external_deal = {"id": ""}
+        create_count = 0
+
+        def fake_request(endpoint, body):
+            nonlocal create_count
+            if endpoint.endswith("/contacts/batch/upsert"):
+                return {"results": [{"id": "contact-123"}]}
+            if endpoint.endswith("/deals/search"):
+                return {"results": [{"id": external_deal["id"]}]} if external_deal["id"] else {"results": []}
+            if endpoint.endswith("/deals"):
+                create_count += 1
+                external_deal["id"] = "deal-created-before-timeout"
+                raise RuntimeError("connection dropped after create")
+            self.fail(f"Unexpected HubSpot endpoint: {endpoint}")
+
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request", side_effect=fake_request
+        ):
+            server.sync_hubspot(request_id)
+            with sqlite3.connect(server.DATABASE_PATH) as conn:
+                conn.execute(
+                    "UPDATE consultation_requests SET hubspot_next_attempt_at = ? WHERE id = ?",
+                    ((datetime.now(timezone.utc) - timedelta(minutes=1)).isoformat(timespec="seconds"), request_id),
+                )
+            server.sync_hubspot(request_id)
+
+        self.assertEqual(create_count, 1)
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                """
+                SELECT hubspot_status, hubspot_deal_id, hubspot_attempt_count
+                FROM consultation_requests WHERE id = ?
+                """,
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row, ("synced", "deal-created-before-timeout", 2))
+
+    def test_hubspot_reconciliation_reclaims_a_stale_sync(self):
+        request_id, _ = self.make_lead()
+        stale_at = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat(timespec="seconds")
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            conn.execute(
+                """
+                UPDATE consultation_requests
+                SET hubspot_status = 'syncing', hubspot_attempt_count = 1,
+                    hubspot_last_attempt_at = ?, hubspot_next_attempt_at = NULL
+                WHERE id = ?
+                """,
+                (stale_at, request_id),
+            )
+
+        claimed = server.claim_next_hubspot_sync()
+
+        self.assertIsNotNone(claimed)
+        self.assertEqual(claimed["id"], request_id)
+        self.assertEqual(claimed["hubspot_attempt_count"], 2)
+
+    def test_hubspot_reconciliation_claims_a_legacy_failed_sync(self):
+        request_id, _ = self.make_lead()
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            conn.execute(
+                """
+                UPDATE consultation_requests
+                SET hubspot_status = 'failed', hubspot_attempt_count = 0,
+                    hubspot_next_attempt_at = NULL
+                WHERE id = ?
+                """,
+                (request_id,),
+            )
+
+        claimed = server.claim_next_hubspot_sync()
+
+        self.assertIsNotNone(claimed)
+        self.assertEqual(claimed["id"], request_id)
+        self.assertEqual(claimed["hubspot_attempt_count"], 1)
+
+    def test_hubspot_retry_becomes_terminal_after_the_attempt_limit(self):
+        request_id, _ = self.make_lead()
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "HUBSPOT_SYNC_MAX_ATTEMPTS", 1
+        ), mock.patch.object(server, "hubspot_request", side_effect=RuntimeError("permanent outage")):
+            server.sync_hubspot(request_id)
+
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT hubspot_status, hubspot_next_attempt_at FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(row, ("failed", None))
 
 
 if __name__ == "__main__":

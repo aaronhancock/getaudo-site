@@ -80,10 +80,21 @@ HubSpot service key in the deployment environment (never in source control):
 HUBSPOT_SERVICE_KEY=<supported-hubspot-service-key>
 HUBSPOT_PIPELINE=default
 HUBSPOT_NEW_INQUIRY_STAGE=appointmentscheduled
+HUBSPOT_SYNC_MAX_ATTEMPTS=6
+HUBSPOT_SYNC_RETRY_BASE_SECONDS=30
+HUBSPOT_SYNC_STALE_SECONDS=300
+HUBSPOT_SYNC_POLL_SECONDS=30
+HUBSPOT_SYNC_BATCH_SIZE=10
 ```
 
-HubSpot sync is deliberately non-blocking: an API failure is recorded on the
-saved request but does not prevent email delivery or calendar scheduling.
+HubSpot sync is deliberately non-blocking. The form stores a persistent queue
+record and continues to email delivery without waiting for HubSpot. A background
+worker retries transient failures with exponential backoff, reclaims work left
+in a stale `syncing` state after a restart, and records a terminal failure after
+the configured attempt limit. Each deal name includes the website request ID;
+the worker searches that exact name before creating a deal so retrying a request
+does not create duplicate deals. Queue state and HubSpot IDs remain in the same
+persistent SQLite database as the original request.
 
 With JavaScript available, the request form now transitions directly into a
 branded second scheduling step. The server reads busy periods from Google

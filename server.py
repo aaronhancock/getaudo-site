@@ -101,6 +101,11 @@ HUBSPOT_PIPELINE = os.environ.get("HUBSPOT_PIPELINE", "default").strip() or "def
 HUBSPOT_NEW_INQUIRY_STAGE = (
     os.environ.get("HUBSPOT_NEW_INQUIRY_STAGE", "appointmentscheduled").strip() or "appointmentscheduled"
 )
+HUBSPOT_SYNC_MAX_ATTEMPTS = max(1, int(os.environ.get("HUBSPOT_SYNC_MAX_ATTEMPTS", "6")))
+HUBSPOT_SYNC_RETRY_BASE_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_RETRY_BASE_SECONDS", "30")))
+HUBSPOT_SYNC_STALE_SECONDS = max(30, int(os.environ.get("HUBSPOT_SYNC_STALE_SECONDS", "300")))
+HUBSPOT_SYNC_POLL_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_POLL_SECONDS", "30")))
+HUBSPOT_SYNC_BATCH_SIZE = max(1, min(int(os.environ.get("HUBSPOT_SYNC_BATCH_SIZE", "10")), 100))
 BOOKING_TIMEZONE = os.environ.get("BOOKING_TIMEZONE", "America/Chicago").strip() or "America/Chicago"
 BOOKING_ZONE = ZoneInfo(BOOKING_TIMEZONE)
 BOOKING_WINDOW_DAYS = max(1, min(int(os.environ.get("BOOKING_WINDOW_DAYS", "30")), 60))
@@ -115,6 +120,9 @@ BOOKING_INTERNAL_ATTENDEE = os.environ.get("BOOKING_INTERNAL_ATTENDEE", "matthew
 AUDIT_FIXTURES_ENABLED = os.environ.get("AUDIT_FIXTURES_ENABLED", "").lower() in {"1", "true", "yes"}
 GOOGLE_TOKEN_CACHE: dict[str, object] = {"access_token": "", "expires_at": 0.0}
 GOOGLE_TOKEN_LOCK = threading.Lock()
+HUBSPOT_SYNC_WAKE = threading.Event()
+HUBSPOT_SYNC_THREAD_LOCK = threading.Lock()
+HUBSPOT_SYNC_THREAD: threading.Thread | None = None
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
 SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
@@ -377,6 +385,15 @@ def init_db() -> None:
             "hubspot_status": "ALTER TABLE consultation_requests ADD COLUMN hubspot_status TEXT",
             "hubspot_error": "ALTER TABLE consultation_requests ADD COLUMN hubspot_error TEXT",
             "hubspot_synced_at": "ALTER TABLE consultation_requests ADD COLUMN hubspot_synced_at TEXT",
+            "hubspot_attempt_count": (
+                "ALTER TABLE consultation_requests ADD COLUMN hubspot_attempt_count INTEGER NOT NULL DEFAULT 0"
+            ),
+            "hubspot_next_attempt_at": (
+                "ALTER TABLE consultation_requests ADD COLUMN hubspot_next_attempt_at TEXT"
+            ),
+            "hubspot_last_attempt_at": (
+                "ALTER TABLE consultation_requests ADD COLUMN hubspot_last_attempt_at TEXT"
+            ),
         }
         for column, statement in migrations.items():
             if column not in columns:
@@ -385,6 +402,12 @@ def init_db() -> None:
             """
             CREATE INDEX IF NOT EXISTS idx_consultation_requests_created_at
             ON consultation_requests(created_at)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_consultation_requests_hubspot_queue
+            ON consultation_requests(hubspot_status, hubspot_next_attempt_at, hubspot_last_attempt_at)
             """
         )
         conn.execute(
@@ -921,6 +944,18 @@ def fail_booking(booking_id: int, error: str) -> None:
 
 def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
     init_db()
+    if AUDIT_FIXTURES_ENABLED:
+        hubspot_status = "audit_fixture"
+        hubspot_error = "Sync disabled by local audit fixture"
+        hubspot_next_attempt_at = None
+    elif HUBSPOT_SERVICE_KEY:
+        hubspot_status = "queued"
+        hubspot_error = None
+        hubspot_next_attempt_at = utc_now()
+    else:
+        hubspot_status = "not_configured"
+        hubspot_error = "HubSpot sync is not configured"
+        hubspot_next_attempt_at = None
     with sqlite3.connect(DATABASE_PATH) as conn:
         cursor = conn.execute(
             """
@@ -928,9 +963,9 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
                 created_at, name, company_name, website, promo_code, email, phone, service,
                 timeline, preferred_times, message, source, interest_context,
                 user_agent, referrer, ip_address, recaptcha_score, recaptcha_action, recaptcha_hostname,
-                email_status
+                email_status, hubspot_status, hubspot_error, hubspot_next_attempt_at
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)
             """,
             (
                 utc_now(),
@@ -952,6 +987,9 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
                 fields.get("recaptcha_score"),
                 fields.get("recaptcha_action"),
                 fields.get("recaptcha_hostname"),
+                hubspot_status,
+                hubspot_error,
+                hubspot_next_attempt_at,
             ),
         )
         return int(cursor.lastrowid)
@@ -983,7 +1021,8 @@ def mark_hubspot_status(
             UPDATE consultation_requests
             SET hubspot_status = ?, hubspot_contact_id = COALESCE(?, hubspot_contact_id),
                 hubspot_deal_id = COALESCE(?, hubspot_deal_id), hubspot_error = ?,
-                hubspot_synced_at = ?
+                hubspot_synced_at = ?,
+                hubspot_next_attempt_at = CASE WHEN ? = 'synced' THEN NULL ELSE hubspot_next_attempt_at END
             WHERE id = ?
             """,
             (
@@ -992,8 +1031,127 @@ def mark_hubspot_status(
                 clean(deal_id, 255) if deal_id else None,
                 clean(error, 2000) if error else None,
                 utc_now() if status == "synced" else None,
+                status,
                 request_id,
             ),
+        )
+
+
+def queue_hubspot_sync(request_id: int) -> None:
+    """Persist a HubSpot job without making a network request."""
+    if AUDIT_FIXTURES_ENABLED:
+        mark_hubspot_status(request_id, "audit_fixture", error="Sync disabled by local audit fixture")
+        return
+    if not HUBSPOT_SERVICE_KEY:
+        mark_hubspot_status(request_id, "not_configured", error="HubSpot sync is not configured")
+        return
+
+    now = utc_now()
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET hubspot_status = 'queued', hubspot_error = NULL, hubspot_next_attempt_at = ?
+            WHERE id = ?
+              AND COALESCE(hubspot_status, '') NOT IN ('synced', 'syncing', 'queued', 'retry')
+              AND COALESCE(hubspot_attempt_count, 0) < ?
+            """,
+            (now, request_id, HUBSPOT_SYNC_MAX_ATTEMPTS),
+        )
+    HUBSPOT_SYNC_WAKE.set()
+
+
+def claim_next_hubspot_sync(request_id: int | None = None) -> dict[str, object] | None:
+    """Atomically claim one due, failed, or stale HubSpot job."""
+    init_db()
+    now = utc_now_datetime()
+    now_text = now.isoformat(timespec="seconds")
+    stale_before = (now - timedelta(seconds=HUBSPOT_SYNC_STALE_SECONDS)).isoformat(timespec="seconds")
+    request_filter = "AND id = ?" if request_id is not None else ""
+    parameters: list[object] = [
+        HUBSPOT_SYNC_MAX_ATTEMPTS,
+        stale_before,
+        now_text,
+    ]
+    if request_id is not None:
+        parameters.append(request_id)
+
+    with sqlite3.connect(DATABASE_PATH, timeout=10) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(
+            f"""
+            SELECT *
+            FROM consultation_requests
+            WHERE COALESCE(hubspot_attempt_count, 0) < ?
+              AND (
+                hubspot_status IN ('queued', 'retry', 'failed')
+                OR (
+                  hubspot_status = 'syncing'
+                  AND (hubspot_last_attempt_at IS NULL OR hubspot_last_attempt_at <= ?)
+                )
+              )
+              AND (
+                hubspot_status = 'syncing'
+                OR hubspot_next_attempt_at IS NULL
+                OR hubspot_next_attempt_at <= ?
+              )
+              {request_filter}
+            ORDER BY created_at, id
+            LIMIT 1
+            """,
+            parameters,
+        ).fetchone()
+        if not row:
+            return None
+
+        attempt_count = int(row["hubspot_attempt_count"] or 0) + 1
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET hubspot_status = 'syncing', hubspot_attempt_count = ?,
+                hubspot_last_attempt_at = ?, hubspot_next_attempt_at = NULL,
+                hubspot_error = NULL
+            WHERE id = ?
+            """,
+            (attempt_count, now_text, row["id"]),
+        )
+        claimed = dict(row)
+        claimed["hubspot_attempt_count"] = attempt_count
+        return claimed
+
+
+def save_hubspot_ids(request_id: int, *, contact_id: str | None = None, deal_id: str | None = None) -> None:
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET hubspot_contact_id = COALESCE(?, hubspot_contact_id),
+                hubspot_deal_id = COALESCE(?, hubspot_deal_id)
+            WHERE id = ?
+            """,
+            (
+                clean(contact_id, 255) if contact_id else None,
+                clean(deal_id, 255) if deal_id else None,
+                request_id,
+            ),
+        )
+
+
+def schedule_hubspot_retry(request_id: int, attempt_count: int, error: str) -> None:
+    terminal = attempt_count >= HUBSPOT_SYNC_MAX_ATTEMPTS
+    next_attempt_at = None
+    if not terminal:
+        delay = min(HUBSPOT_SYNC_RETRY_BASE_SECONDS * (2 ** max(attempt_count - 1, 0)), 3600)
+        next_attempt_at = (utc_now_datetime() + timedelta(seconds=delay)).isoformat(timespec="seconds")
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET hubspot_status = ?, hubspot_error = ?, hubspot_next_attempt_at = ?
+            WHERE id = ?
+            """,
+            ("failed" if terminal else "retry", clean(error, 2000), next_attempt_at, request_id),
         )
 
 
@@ -1028,23 +1186,45 @@ def split_contact_name(name: str) -> tuple[str, str]:
     return (parts[0], parts[1] if len(parts) > 1 else "")
 
 
-def sync_hubspot(request_id: int, fields: dict[str, str]) -> None:
-    if AUDIT_FIXTURES_ENABLED:
-        mark_hubspot_status(request_id, "audit_fixture", error="Sync disabled by local audit fixture")
-        return
-    if not HUBSPOT_SERVICE_KEY:
-        mark_hubspot_status(request_id, "not_configured", error="HubSpot sync is not configured")
-        return
+def hubspot_deal_name(request_id: int, fields: dict[str, object]) -> str:
+    company_or_name = str(fields.get("company_name") or fields["name"])
+    service = str(fields.get("service") or "Discovery inquiry")
+    suffix = f" · Website request #{request_id}"
+    return f"{clean(f'{company_or_name} — {service}', 250 - len(suffix))}{suffix}"
 
-    mark_hubspot_status(request_id, "syncing")
+
+def find_hubspot_deal(deal_name: str) -> str:
+    result = hubspot_request(
+        "/crm/objects/2026-03/deals/search",
+        {
+            "filterGroups": [
+                {
+                    "filters": [
+                        {"propertyName": "dealname", "operator": "EQ", "value": deal_name},
+                        {"propertyName": "pipeline", "operator": "EQ", "value": HUBSPOT_PIPELINE},
+                    ]
+                }
+            ],
+            "limit": 2,
+            "properties": ["dealname", "pipeline"],
+            "sorts": ["createdate"],
+        },
+    )
+    matches = result.get("results") or []
+    return str(matches[0].get("id") or "") if matches else ""
+
+
+def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
+    request_id = int(claimed["id"])
+    attempt_count = int(claimed.get("hubspot_attempt_count") or 1)
     try:
-        first_name, last_name = split_contact_name(fields["name"])
+        first_name, last_name = split_contact_name(str(claimed["name"]))
         contact_properties = {
             "firstname": first_name,
             "lastname": last_name,
-            "phone": fields.get("phone", ""),
-            "company": fields.get("company_name", ""),
-            "website": fields.get("website", ""),
+            "phone": claimed.get("phone", ""),
+            "company": claimed.get("company_name", ""),
+            "website": claimed.get("website", ""),
             "lifecyclestage": "lead",
             "hs_lead_status": "NEW",
         }
@@ -1053,7 +1233,7 @@ def sync_hubspot(request_id: int, fields: dict[str, str]) -> None:
             {
                 "inputs": [
                     {
-                        "id": fields["email"],
+                        "id": claimed["email"],
                         "idProperty": "email",
                         "properties": {key: value for key, value in contact_properties.items() if value},
                     }
@@ -1064,50 +1244,106 @@ def sync_hubspot(request_id: int, fields: dict[str, str]) -> None:
         if not contact_results or not contact_results[0].get("id"):
             raise RuntimeError("HubSpot did not return a contact ID")
         contact_id = str(contact_results[0]["id"])
+        save_hubspot_ids(request_id, contact_id=contact_id)
 
-        company_or_name = fields.get("company_name") or fields["name"]
         inquiry_details = "\n".join(
             line
             for line in (
                 f"Submitted from getaudo.com (request #{request_id})",
-                f"Name: {fields['name']}",
-                f"Email: {fields['email']}",
-                f"Phone: {fields.get('phone') or 'Not provided'}",
-                f"Website: {fields.get('website') or 'Not provided'}",
-                f"Interested in: {fields.get('interest_context') or fields.get('service') or 'General discovery'}",
+                f"Name: {claimed['name']}",
+                f"Email: {claimed['email']}",
+                f"Phone: {claimed.get('phone') or 'Not provided'}",
+                f"Website: {claimed.get('website') or 'Not provided'}",
+                f"Interested in: {claimed.get('interest_context') or claimed.get('service') or 'General discovery'}",
                 "",
-                fields.get("message", ""),
+                str(claimed.get("message") or ""),
             )
         )
-        deal = hubspot_request(
-            "/crm/objects/2026-03/deals",
-            {
-                "properties": {
-                    "dealname": f"{company_or_name} — {fields.get('service') or 'Discovery inquiry'}",
-                    "pipeline": HUBSPOT_PIPELINE,
-                    "dealstage": HUBSPOT_NEW_INQUIRY_STAGE,
-                    "description": inquiry_details,
+        deal_id = str(claimed.get("hubspot_deal_id") or "")
+        if not deal_id:
+            deal_name = hubspot_deal_name(request_id, claimed)
+            deal_id = find_hubspot_deal(deal_name)
+        if not deal_id:
+            trace_id = hashlib.sha256(f"{PUBLIC_BASE_URL}:hubspot-deal:{request_id}".encode("utf-8")).hexdigest()
+            deal = hubspot_request(
+                "/crm/objects/2026-03/deals",
+                {
+                    "objectWriteTraceId": trace_id,
+                    "properties": {
+                        "dealname": hubspot_deal_name(request_id, claimed),
+                        "pipeline": HUBSPOT_PIPELINE,
+                        "dealstage": HUBSPOT_NEW_INQUIRY_STAGE,
+                        "description": inquiry_details,
+                    },
+                    "associations": [
+                        {
+                            "to": {"id": contact_id},
+                            "types": [
+                                {
+                                    "associationCategory": "HUBSPOT_DEFINED",
+                                    "associationTypeId": 3,
+                                }
+                            ],
+                        }
+                    ],
                 },
-                "associations": [
-                    {
-                        "to": {"id": contact_id},
-                        "types": [
-                            {
-                                "associationCategory": "HUBSPOT_DEFINED",
-                                "associationTypeId": 3,
-                            }
-                        ],
-                    }
-                ],
-            },
-        )
-        deal_id = str(deal.get("id") or "")
+            )
+            deal_id = str(deal.get("id") or "")
         if not deal_id:
             raise RuntimeError("HubSpot did not return a deal ID")
+        save_hubspot_ids(request_id, deal_id=deal_id)
         mark_hubspot_status(request_id, "synced", contact_id=contact_id, deal_id=deal_id)
     except Exception as exc:  # pragma: no cover - depends on the live HubSpot API.
-        mark_hubspot_status(request_id, "failed", error=str(exc))
+        schedule_hubspot_retry(request_id, attempt_count, str(exc))
         print(f"discovery request {request_id} stored; HubSpot sync failed: {exc}", file=sys.stderr)
+
+
+def sync_hubspot(request_id: int, fields: dict[str, str] | None = None) -> None:
+    """Synchronously process one request; retained for tests and operator reconciliation."""
+    queue_hubspot_sync(request_id)
+    claimed = claim_next_hubspot_sync(request_id)
+    if claimed:
+        sync_claimed_hubspot_request(claimed)
+
+
+def reconcile_hubspot_syncs(limit: int | None = None) -> int:
+    if AUDIT_FIXTURES_ENABLED or not HUBSPOT_SERVICE_KEY:
+        return 0
+    processed = 0
+    for _ in range(limit or HUBSPOT_SYNC_BATCH_SIZE):
+        claimed = claim_next_hubspot_sync()
+        if not claimed:
+            break
+        sync_claimed_hubspot_request(claimed)
+        processed += 1
+    return processed
+
+
+def hubspot_sync_worker() -> None:
+    while True:
+        try:
+            processed = reconcile_hubspot_syncs()
+        except Exception as exc:  # pragma: no cover - defensive worker guard.
+            processed = 0
+            print(f"HubSpot reconciliation worker error: {exc}", file=sys.stderr)
+        if processed >= HUBSPOT_SYNC_BATCH_SIZE:
+            continue
+        HUBSPOT_SYNC_WAKE.wait(timeout=HUBSPOT_SYNC_POLL_SECONDS)
+        HUBSPOT_SYNC_WAKE.clear()
+
+
+def start_hubspot_sync_worker() -> threading.Thread:
+    global HUBSPOT_SYNC_THREAD
+    with HUBSPOT_SYNC_THREAD_LOCK:
+        if HUBSPOT_SYNC_THREAD and HUBSPOT_SYNC_THREAD.is_alive():
+            return HUBSPOT_SYNC_THREAD
+        HUBSPOT_SYNC_THREAD = threading.Thread(
+            target=hubspot_sync_worker,
+            name="audo-hubspot-sync",
+            daemon=True,
+        )
+        HUBSPOT_SYNC_THREAD.start()
+        return HUBSPOT_SYNC_THREAD
 
 
 def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> EmailMessage:
@@ -1452,7 +1688,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 
             request_id = store_request(payload, request_meta)
             booking_token = issue_booking_token(request_id)
-            sync_hubspot(request_id, payload)
+            queue_hubspot_sync(request_id)
             send_email(request_id, payload, request_meta)
             if wants_json:
                 self.send_json(
@@ -3615,6 +3851,7 @@ class AudoHandler(BaseHTTPRequestHandler):
 
 def main() -> None:
     init_db()
+    start_hubspot_sync_worker()
     port = int(os.environ.get("PORT", "80"))
     server = ThreadingHTTPServer(("0.0.0.0", port), AudoHandler)
     print(json.dumps({"status": "listening", "port": port, "database": str(DATABASE_PATH)}))

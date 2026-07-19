@@ -168,6 +168,25 @@ class ServiceExplorerTests(unittest.TestCase):
             index_html,
         )
 
+    def test_each_ai_example_has_a_clear_matching_visual_story(self) -> None:
+        ai_cards = [card for card in service_cards() if card["group"] == "ai"]
+        scene_fields = (
+            "scene_before_label",
+            "scene_before",
+            "scene_after_label",
+            "scene_after",
+        )
+
+        self.assertEqual(len(ai_cards), 6)
+        for card in ai_cards:
+            with self.subTest(title=card["title"]):
+                for field in scene_fields:
+                    self.assertTrue(card[field])
+        self.assertEqual(
+            len({tuple(card[field] for field in scene_fields) for card in ai_cards}),
+            len(ai_cards),
+        )
+
     def test_detail_page_faqs_are_expanded_by_default(self) -> None:
         server_source = (Path(__file__).resolve().parents[1] / "server.py").read_text()
 
@@ -187,7 +206,7 @@ class ServiceExplorerTests(unittest.TestCase):
         self.assertEqual(index_html.count("data-explorer-group="), 5)
         self.assertIn("Tell Aaron about this", index_html)
         self.assertIn("Read how I can help", index_html)
-        self.assertIn("View all 30 problem pages", index_html)
+        self.assertIn("Browse all examples", index_html)
         self.assertIn('event.key === "ArrowRight"', index_html)
         self.assertIn('event.key === "Home"', index_html)
         self.assertIn("button.tabIndex = selected ? 0 : -1", index_html)

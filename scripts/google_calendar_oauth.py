@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Authorize the Audo scheduler and save its offline Google OAuth credentials."""
+"""Authorize Audo Google APIs and save offline OAuth credentials.
+
+The scheduler scopes remain the default for backward compatibility. Pass one or
+more ``--scope`` values to create a separate least-privilege grant, such as the
+Drive-only grant used by client provisioning.
+"""
 
 from __future__ import annotations
 
@@ -42,7 +47,14 @@ def main() -> int:
     client_source.add_argument("--client-id")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--port", type=int, default=8766)
+    parser.add_argument(
+        "--scope",
+        action="append",
+        dest="scopes",
+        help="OAuth scope to request. Repeat for multiple scopes; defaults to scheduler scopes.",
+    )
     args = parser.parse_args()
+    scopes = tuple(dict.fromkeys(args.scopes or SCOPES))
 
     if args.client_file:
         client_id, client_secret = load_client(args.client_file)
@@ -84,7 +96,7 @@ def main() -> int:
             "client_id": client_id,
             "redirect_uri": redirect_uri,
             "response_type": "code",
-            "scope": " ".join(SCOPES),
+            "scope": " ".join(scopes),
             "access_type": "offline",
             "prompt": "consent",
             "include_granted_scopes": "true",
@@ -142,7 +154,7 @@ def main() -> int:
     payload = {
         "clientId": client_id,
         "refreshToken": refresh_token,
-        "scope": token.get("scope", " ".join(SCOPES)),
+        "scope": token.get("scope", " ".join(scopes)),
     }
     if client_secret:
         payload["clientSecret"] = client_secret

@@ -138,6 +138,53 @@ class BookingTests(unittest.TestCase):
         smtp.assert_not_called()
         self.assertEqual(event["hangoutLink"], "https://meet.google.com/fixture-audo-call")
 
+    def test_owner_email_failure_is_persisted_and_retried(self):
+        request_id, _ = self.make_lead()
+        with mock.patch.object(server, "GMAIL_API_SEND_ENABLED", True), mock.patch.object(
+            server, "deliver_email_message", side_effect=RuntimeError("temporary Gmail outage")
+        ):
+            server.send_email(request_id, {"name": "Jamie Rivera", "email": "jamie@example.com"}, {})
+
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            row = conn.execute(
+                "SELECT email_status, email_attempt_count, email_next_attempt_at FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+            conn.execute(
+                "UPDATE consultation_requests SET email_next_attempt_at = ? WHERE id = ?",
+                (server.utc_now(), request_id),
+            )
+        self.assertEqual(row[0], "retry")
+        self.assertEqual(row[1], 1)
+        self.assertTrue(row[2])
+
+        with mock.patch.object(server, "GMAIL_API_SEND_ENABLED", True), mock.patch.object(
+            server, "deliver_email_message"
+        ) as deliver:
+            self.assertEqual(server.reconcile_email_deliveries(limit=1), 1)
+
+        deliver.assert_called_once()
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            status, attempts = conn.execute(
+                "SELECT email_status, email_attempt_count FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        self.assertEqual(status, "sent")
+        self.assertEqual(attempts, 2)
+
+    def test_owner_email_uses_a_stable_message_id_for_retries(self):
+        message = server.build_email(
+            42,
+            {
+                "name": "Jamie Rivera",
+                "email": "jamie@example.com",
+                "service": "Small business technology help",
+                "message": "Please help.",
+            },
+            {},
+        )
+        self.assertEqual(message["Message-ID"], "<audo-consultation-42@getaudo.com>")
+
     def test_hubspot_sync_upserts_contact_and_creates_associated_new_inquiry(self):
         request_id, _ = self.make_lead()
         payload = {
@@ -176,6 +223,44 @@ class BookingTests(unittest.TestCase):
                 (request_id,),
             ).fetchone()
         self.assertEqual(row, ("synced", "contact-123", "deal-456"))
+
+    def test_confirmed_booking_advances_existing_deal_to_discovery_scheduled(self):
+        request_id, _ = self.make_lead()
+        start, end = server.candidate_slots()[0]
+        booking, _ = server.reserve_booking(request_id, start, end)
+        server.finalize_booking(
+            int(booking["id"]),
+            {
+                "id": "calendar-event",
+                "htmlLink": "https://calendar.google.com/event?eid=test",
+                "hangoutLink": "https://meet.google.com/abc-defg-hij",
+            },
+        )
+        server.save_hubspot_ids(request_id, contact_id="contact-123", deal_id="deal-456")
+        calls = []
+
+        def fake_request(endpoint, body):
+            calls.append((endpoint, body))
+            if endpoint.endswith("/batch/upsert"):
+                return {"results": [{"id": "contact-123"}]}
+            return {"status": "COMPLETE"}
+
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request", side_effect=fake_request
+        ):
+            server.queue_hubspot_sync(request_id, force=True)
+            claimed = server.claim_next_hubspot_sync(request_id)
+            self.assertIsNotNone(claimed)
+            server.sync_claimed_hubspot_request(claimed)
+
+        update = next(body for endpoint, body in calls if endpoint.endswith("/deals/batch/update"))
+        self.assertEqual(update["inputs"][0]["id"], "deal-456")
+        self.assertEqual(update["inputs"][0]["properties"]["dealstage"], "qualifiedtobuy")
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            status = conn.execute(
+                "SELECT hubspot_status FROM consultation_requests WHERE id = ?", (request_id,)
+            ).fetchone()[0]
+        self.assertEqual(status, "synced")
 
     def test_hubspot_failure_does_not_raise_or_lose_the_saved_request(self):
         request_id, _ = self.make_lead()
@@ -229,6 +314,7 @@ class BookingTests(unittest.TestCase):
         request_id, _ = self.make_lead()
         external_deal = {"id": ""}
         create_count = 0
+        stage_updates = []
 
         def fake_request(endpoint, body):
             nonlocal create_count
@@ -240,12 +326,25 @@ class BookingTests(unittest.TestCase):
                 create_count += 1
                 external_deal["id"] = "deal-created-before-timeout"
                 raise RuntimeError("connection dropped after create")
+            if endpoint.endswith("/deals/batch/update"):
+                stage_updates.append(body)
+                return {"status": "COMPLETE"}
             self.fail(f"Unexpected HubSpot endpoint: {endpoint}")
 
         with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
             server, "hubspot_request", side_effect=fake_request
         ):
             server.sync_hubspot(request_id)
+            start, end = server.candidate_slots()[0]
+            booking, _ = server.reserve_booking(request_id, start, end)
+            server.finalize_booking(
+                int(booking["id"]),
+                {
+                    "id": "calendar-event",
+                    "htmlLink": "https://calendar.google.com/event?eid=test",
+                    "hangoutLink": "https://meet.google.com/abc-defg-hij",
+                },
+            )
             with sqlite3.connect(server.DATABASE_PATH) as conn:
                 conn.execute(
                     "UPDATE consultation_requests SET hubspot_next_attempt_at = ? WHERE id = ?",
@@ -254,6 +353,8 @@ class BookingTests(unittest.TestCase):
             server.sync_hubspot(request_id)
 
         self.assertEqual(create_count, 1)
+        self.assertEqual(stage_updates[0]["inputs"][0]["id"], "deal-created-before-timeout")
+        self.assertEqual(stage_updates[0]["inputs"][0]["properties"]["dealstage"], "qualifiedtobuy")
         with sqlite3.connect(server.DATABASE_PATH) as conn:
             row = conn.execute(
                 """

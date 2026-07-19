@@ -101,11 +101,26 @@ HUBSPOT_PIPELINE = os.environ.get("HUBSPOT_PIPELINE", "default").strip() or "def
 HUBSPOT_NEW_INQUIRY_STAGE = (
     os.environ.get("HUBSPOT_NEW_INQUIRY_STAGE", "appointmentscheduled").strip() or "appointmentscheduled"
 )
+HUBSPOT_DISCOVERY_SCHEDULED_STAGE = (
+    os.environ.get("HUBSPOT_DISCOVERY_SCHEDULED_STAGE", "qualifiedtobuy").strip() or "qualifiedtobuy"
+)
 HUBSPOT_SYNC_MAX_ATTEMPTS = max(1, int(os.environ.get("HUBSPOT_SYNC_MAX_ATTEMPTS", "6")))
 HUBSPOT_SYNC_RETRY_BASE_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_RETRY_BASE_SECONDS", "30")))
 HUBSPOT_SYNC_STALE_SECONDS = max(30, int(os.environ.get("HUBSPOT_SYNC_STALE_SECONDS", "300")))
 HUBSPOT_SYNC_POLL_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_POLL_SECONDS", "30")))
 HUBSPOT_SYNC_BATCH_SIZE = max(1, min(int(os.environ.get("HUBSPOT_SYNC_BATCH_SIZE", "10")), 100))
+EMAIL_DELIVERY_MAX_ATTEMPTS = max(1, int(os.environ.get("EMAIL_DELIVERY_MAX_ATTEMPTS", "6")))
+EMAIL_DELIVERY_RETRY_BASE_SECONDS = max(1, int(os.environ.get("EMAIL_DELIVERY_RETRY_BASE_SECONDS", "30")))
+EMAIL_DELIVERY_STALE_SECONDS = max(30, int(os.environ.get("EMAIL_DELIVERY_STALE_SECONDS", "300")))
+EMAIL_DELIVERY_POLL_SECONDS = max(1, int(os.environ.get("EMAIL_DELIVERY_POLL_SECONDS", "30")))
+EMAIL_DELIVERY_BATCH_SIZE = max(1, min(int(os.environ.get("EMAIL_DELIVERY_BATCH_SIZE", "10")), 100))
+CLIENT_PROVISIONING_ENABLED = os.environ.get("CLIENT_PROVISIONING_ENABLED", "").lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+CLIENT_PROVISIONING_POLL_SECONDS = max(30, int(os.environ.get("CLIENT_PROVISIONING_POLL_SECONDS", "300")))
 BOOKING_TIMEZONE = os.environ.get("BOOKING_TIMEZONE", "America/Chicago").strip() or "America/Chicago"
 BOOKING_ZONE = ZoneInfo(BOOKING_TIMEZONE)
 BOOKING_WINDOW_DAYS = max(1, min(int(os.environ.get("BOOKING_WINDOW_DAYS", "30")), 60))
@@ -123,6 +138,11 @@ GOOGLE_TOKEN_LOCK = threading.Lock()
 HUBSPOT_SYNC_WAKE = threading.Event()
 HUBSPOT_SYNC_THREAD_LOCK = threading.Lock()
 HUBSPOT_SYNC_THREAD: threading.Thread | None = None
+EMAIL_DELIVERY_WAKE = threading.Event()
+EMAIL_DELIVERY_THREAD_LOCK = threading.Lock()
+EMAIL_DELIVERY_THREAD: threading.Thread | None = None
+CLIENT_PROVISIONING_THREAD_LOCK = threading.Lock()
+CLIENT_PROVISIONING_THREAD: threading.Thread | None = None
 SERVICE_SOCIAL_CARD_SIZE = (1200, 630)
 SERVICE_SOCIAL_CARD_CACHE_SECONDS = 60 * 60 * 24 * 7
 SERVICE_SOCIAL_CARD_VERSION = os.environ.get("SERVICE_SOCIAL_CARD_VERSION", "20260701-v2")
@@ -394,6 +414,15 @@ def init_db() -> None:
             "hubspot_last_attempt_at": (
                 "ALTER TABLE consultation_requests ADD COLUMN hubspot_last_attempt_at TEXT"
             ),
+            "email_attempt_count": (
+                "ALTER TABLE consultation_requests ADD COLUMN email_attempt_count INTEGER NOT NULL DEFAULT 0"
+            ),
+            "email_next_attempt_at": (
+                "ALTER TABLE consultation_requests ADD COLUMN email_next_attempt_at TEXT"
+            ),
+            "email_last_attempt_at": (
+                "ALTER TABLE consultation_requests ADD COLUMN email_last_attempt_at TEXT"
+            ),
         }
         for column, statement in migrations.items():
             if column not in columns:
@@ -408,6 +437,12 @@ def init_db() -> None:
             """
             CREATE INDEX IF NOT EXISTS idx_consultation_requests_hubspot_queue
             ON consultation_requests(hubspot_status, hubspot_next_attempt_at, hubspot_last_attempt_at)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_consultation_requests_email_queue
+            ON consultation_requests(email_status, email_next_attempt_at, email_last_attempt_at)
             """
         )
         conn.execute(
@@ -1000,10 +1035,101 @@ def mark_email_status(request_id: int, status: str, error: str | None = None) ->
         conn.execute(
             """
             UPDATE consultation_requests
-            SET email_status = ?, email_error = ?, emailed_at = ?
+            SET email_status = ?, email_error = ?, emailed_at = ?,
+                email_next_attempt_at = CASE WHEN ? = 'sent' THEN NULL ELSE email_next_attempt_at END
             WHERE id = ?
             """,
-            (status, clean(error, 2000) if error else None, utc_now() if status == "sent" else None, request_id),
+            (
+                status,
+                clean(error, 2000) if error else None,
+                utc_now() if status == "sent" else None,
+                status,
+                request_id,
+            ),
+        )
+
+
+def email_delivery_configured() -> bool:
+    return GMAIL_API_SEND_ENABLED or bool(os.environ.get("SMTP_HOST"))
+
+
+def queue_email_delivery(request_id: int) -> None:
+    if AUDIT_FIXTURES_ENABLED:
+        mark_email_status(request_id, "audit_fixture", "Delivery disabled by local audit fixture")
+        return
+    if not email_delivery_configured():
+        mark_email_status(request_id, "not_configured", "Email delivery is not configured")
+        return
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET email_status = 'queued', email_error = NULL, email_next_attempt_at = ?
+            WHERE id = ? AND email_status != 'sent'
+            """,
+            (utc_now(), request_id),
+        )
+    EMAIL_DELIVERY_WAKE.set()
+
+
+def claim_next_email_delivery(request_id: int | None = None) -> dict[str, object] | None:
+    init_db()
+    now = utc_now_datetime()
+    now_text = now.isoformat(timespec="seconds")
+    stale_before = (now - timedelta(seconds=EMAIL_DELIVERY_STALE_SECONDS)).isoformat(timespec="seconds")
+    request_filter = "AND id = ?" if request_id is not None else ""
+    parameters: list[object] = [EMAIL_DELIVERY_MAX_ATTEMPTS, stale_before, now_text]
+    if request_id is not None:
+        parameters.append(request_id)
+    with sqlite3.connect(DATABASE_PATH, timeout=10) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(
+            f"""
+            SELECT * FROM consultation_requests
+            WHERE COALESCE(email_attempt_count, 0) < ?
+              AND (
+                email_status IN ('queued', 'retry', 'failed')
+                OR (email_status = 'sending' AND (email_last_attempt_at IS NULL OR email_last_attempt_at <= ?))
+              )
+              AND (email_status = 'sending' OR email_next_attempt_at IS NULL OR email_next_attempt_at <= ?)
+              {request_filter}
+            ORDER BY created_at, id
+            LIMIT 1
+            """,
+            parameters,
+        ).fetchone()
+        if not row:
+            return None
+        attempt_count = int(row["email_attempt_count"] or 0) + 1
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET email_status = 'sending', email_attempt_count = ?, email_last_attempt_at = ?,
+                email_next_attempt_at = NULL, email_error = NULL
+            WHERE id = ?
+            """,
+            (attempt_count, now_text, row["id"]),
+        )
+        claimed = dict(row)
+        claimed["email_attempt_count"] = attempt_count
+        return claimed
+
+
+def schedule_email_retry(request_id: int, attempt_count: int, error: str) -> None:
+    terminal = attempt_count >= EMAIL_DELIVERY_MAX_ATTEMPTS
+    next_attempt_at = None
+    if not terminal:
+        delay = min(EMAIL_DELIVERY_RETRY_BASE_SECONDS * (2 ** max(attempt_count - 1, 0)), 3600)
+        next_attempt_at = (utc_now_datetime() + timedelta(seconds=delay)).isoformat(timespec="seconds")
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        conn.execute(
+            """
+            UPDATE consultation_requests
+            SET email_status = ?, email_error = ?, email_next_attempt_at = ?
+            WHERE id = ?
+            """,
+            ("failed" if terminal else "retry", clean(error, 2000), next_attempt_at, request_id),
         )
 
 
@@ -1037,7 +1163,7 @@ def mark_hubspot_status(
         )
 
 
-def queue_hubspot_sync(request_id: int) -> None:
+def queue_hubspot_sync(request_id: int, *, force: bool = False) -> None:
     """Persist a HubSpot job without making a network request."""
     if AUDIT_FIXTURES_ENABLED:
         mark_hubspot_status(request_id, "audit_fixture", error="Sync disabled by local audit fixture")
@@ -1048,7 +1174,18 @@ def queue_hubspot_sync(request_id: int) -> None:
 
     now = utc_now()
     with sqlite3.connect(DATABASE_PATH) as conn:
-        conn.execute(
+        if force:
+            conn.execute(
+                """
+                UPDATE consultation_requests
+                SET hubspot_status = 'queued', hubspot_error = NULL, hubspot_next_attempt_at = ?,
+                    hubspot_attempt_count = 0
+                WHERE id = ?
+                """,
+                (now, request_id),
+            )
+        else:
+            conn.execute(
             """
             UPDATE consultation_requests
             SET hubspot_status = 'queued', hubspot_error = NULL, hubspot_next_attempt_at = ?
@@ -1057,7 +1194,7 @@ def queue_hubspot_sync(request_id: int) -> None:
               AND COALESCE(hubspot_attempt_count, 0) < ?
             """,
             (now, request_id, HUBSPOT_SYNC_MAX_ATTEMPTS),
-        )
+            )
     HUBSPOT_SYNC_WAKE.set()
 
 
@@ -1214,6 +1351,19 @@ def find_hubspot_deal(deal_name: str) -> str:
     return str(matches[0].get("id") or "") if matches else ""
 
 
+def hubspot_stage_for_request(request_id: int) -> str:
+    with sqlite3.connect(DATABASE_PATH) as conn:
+        confirmed = conn.execute(
+            """
+            SELECT 1 FROM consultation_bookings
+            WHERE request_id = ? AND status = 'confirmed'
+            LIMIT 1
+            """,
+            (request_id,),
+        ).fetchone()
+    return HUBSPOT_DISCOVERY_SCHEDULED_STAGE if confirmed else HUBSPOT_NEW_INQUIRY_STAGE
+
+
 def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
     request_id = int(claimed["id"])
     attempt_count = int(claimed.get("hubspot_attempt_count") or 1)
@@ -1259,10 +1409,13 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
                 str(claimed.get("message") or ""),
             )
         )
+        desired_stage = hubspot_stage_for_request(request_id)
         deal_id = str(claimed.get("hubspot_deal_id") or "")
+        deal_was_existing = bool(deal_id)
         if not deal_id:
             deal_name = hubspot_deal_name(request_id, claimed)
             deal_id = find_hubspot_deal(deal_name)
+            deal_was_existing = bool(deal_id)
         if not deal_id:
             trace_id = hashlib.sha256(f"{PUBLIC_BASE_URL}:hubspot-deal:{request_id}".encode("utf-8")).hexdigest()
             deal = hubspot_request(
@@ -1272,7 +1425,7 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
                     "properties": {
                         "dealname": hubspot_deal_name(request_id, claimed),
                         "pipeline": HUBSPOT_PIPELINE,
-                        "dealstage": HUBSPOT_NEW_INQUIRY_STAGE,
+                        "dealstage": desired_stage,
                         "description": inquiry_details,
                     },
                     "associations": [
@@ -1291,6 +1444,11 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
             deal_id = str(deal.get("id") or "")
         if not deal_id:
             raise RuntimeError("HubSpot did not return a deal ID")
+        if deal_was_existing:
+            hubspot_request(
+                "/crm/objects/2026-03/deals/batch/update",
+                {"inputs": [{"id": deal_id, "properties": {"dealstage": desired_stage}}]},
+            )
         save_hubspot_ids(request_id, deal_id=deal_id)
         mark_hubspot_status(request_id, "synced", contact_id=contact_id, deal_id=deal_id)
     except Exception as exc:  # pragma: no cover - depends on the live HubSpot API.
@@ -1359,6 +1517,10 @@ def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str,
     )
     message["To"] = CONSULTATION_TO
     message["Reply-To"] = fields["email"]
+    # The delivery queue is intentionally at-least-once. A stable Message-ID
+    # lets Gmail and downstream mail clients recognize a replay after a worker
+    # crash between provider acceptance and the SQLite status update.
+    message["Message-ID"] = f"<audo-consultation-{request_id}@getaudo.com>"
 
     body = f"""A new Audo discovery request was received.
 
@@ -1408,25 +1570,15 @@ def send_gmail_api_message(message: EmailMessage, retry_auth: bool = True) -> No
         raise RuntimeError("Gmail API is temporarily unavailable.") from exc
 
 
-def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> None:
-    if AUDIT_FIXTURES_ENABLED:
-        mark_email_status(request_id, "audit_fixture", "Delivery disabled by local audit fixture")
-        return
+def deliver_email_message(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> None:
     message = build_email(request_id, fields, request_meta)
     if GMAIL_API_SEND_ENABLED:
-        try:
-            send_gmail_api_message(message)
-            mark_email_status(request_id, "sent")
-        except Exception as exc:  # pragma: no cover - depends on the live Google API.
-            mark_email_status(request_id, "failed", str(exc))
-            print(f"discovery request {request_id} stored; email failed: {exc}", file=sys.stderr)
+        send_gmail_api_message(message)
         return
 
     smtp_host = os.environ.get("SMTP_HOST")
     if not smtp_host:
-        mark_email_status(request_id, "not_configured", "Email delivery is not configured")
-        print(f"discovery request {request_id} stored; email not configured", file=sys.stderr)
-        return
+        raise RuntimeError("Email delivery is not configured")
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     smtp_user = os.environ.get("SMTP_USER")
     smtp_pass = os.environ.get("SMTP_PASS")
@@ -1434,23 +1586,99 @@ def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, 
     use_ssl = smtp_secure == "ssl" or smtp_port == 465
     use_starttls = os.environ.get("SMTP_STARTTLS", "true").lower() not in {"0", "false", "no"}
 
+    if use_ssl:
+        with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as smtp:
+            if smtp_user and smtp_pass:
+                smtp.login(smtp_user, smtp_pass)
+            smtp.send_message(message)
+    else:
+        with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as smtp:
+            if use_starttls:
+                smtp.starttls()
+            if smtp_user and smtp_pass:
+                smtp.login(smtp_user, smtp_pass)
+            smtp.send_message(message)
+
+
+def sync_claimed_email_delivery(claimed: dict[str, object]) -> None:
+    request_id = int(claimed["id"])
+    attempt_count = int(claimed.get("email_attempt_count") or 1)
+    fields = {
+        key: str(claimed.get(key) or "")
+        for key in (
+            "name",
+            "company_name",
+            "website",
+            "promo_code",
+            "email",
+            "phone",
+            "service",
+            "timeline",
+            "preferred_times",
+            "message",
+            "source",
+            "interest_context",
+        )
+    }
+    request_meta = {
+        "user_agent": str(claimed.get("user_agent") or ""),
+        "referrer": str(claimed.get("referrer") or ""),
+        "ip_address": str(claimed.get("ip_address") or ""),
+    }
     try:
-        if use_ssl:
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as smtp:
-                if smtp_user and smtp_pass:
-                    smtp.login(smtp_user, smtp_pass)
-                smtp.send_message(message)
-        else:
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as smtp:
-                if use_starttls:
-                    smtp.starttls()
-                if smtp_user and smtp_pass:
-                    smtp.login(smtp_user, smtp_pass)
-                smtp.send_message(message)
+        deliver_email_message(request_id, fields, request_meta)
         mark_email_status(request_id, "sent")
-    except Exception as exc:  # pragma: no cover - depends on live SMTP.
-        mark_email_status(request_id, "failed", str(exc))
-        print(f"discovery request {request_id} stored; email failed: {exc}", file=sys.stderr)
+    except Exception as exc:  # pragma: no cover - depends on live email provider.
+        schedule_email_retry(request_id, attempt_count, str(exc))
+        print(f"discovery request {request_id} stored; email delivery failed: {exc}", file=sys.stderr)
+
+
+def send_email(request_id: int, fields: dict[str, str], request_meta: dict[str, str]) -> None:
+    """Queue and immediately attempt owner email; the worker retries provider failures."""
+    queue_email_delivery(request_id)
+    claimed = claim_next_email_delivery(request_id)
+    if claimed:
+        sync_claimed_email_delivery(claimed)
+
+
+def reconcile_email_deliveries(limit: int | None = None) -> int:
+    if AUDIT_FIXTURES_ENABLED or not email_delivery_configured():
+        return 0
+    processed = 0
+    for _ in range(limit or EMAIL_DELIVERY_BATCH_SIZE):
+        claimed = claim_next_email_delivery()
+        if not claimed:
+            break
+        sync_claimed_email_delivery(claimed)
+        processed += 1
+    return processed
+
+
+def email_delivery_worker() -> None:
+    while True:
+        try:
+            processed = reconcile_email_deliveries()
+        except Exception as exc:  # pragma: no cover - defensive worker guard.
+            processed = 0
+            print(f"Email delivery worker error: {exc}", file=sys.stderr)
+        if processed >= EMAIL_DELIVERY_BATCH_SIZE:
+            continue
+        EMAIL_DELIVERY_WAKE.wait(timeout=EMAIL_DELIVERY_POLL_SECONDS)
+        EMAIL_DELIVERY_WAKE.clear()
+
+
+def start_email_delivery_worker() -> threading.Thread:
+    global EMAIL_DELIVERY_THREAD
+    with EMAIL_DELIVERY_THREAD_LOCK:
+        if EMAIL_DELIVERY_THREAD and EMAIL_DELIVERY_THREAD.is_alive():
+            return EMAIL_DELIVERY_THREAD
+        EMAIL_DELIVERY_THREAD = threading.Thread(
+            target=email_delivery_worker,
+            name="audo-email-delivery",
+            daemon=True,
+        )
+        EMAIL_DELIVERY_THREAD.start()
+        return EMAIL_DELIVERY_THREAD
 
 
 def verify_recaptcha(fields: dict[str, str], request_meta: dict[str, str]) -> dict[str, object]:
@@ -1808,6 +2036,7 @@ class AudoHandler(BaseHTTPRequestHandler):
             event_id = deterministic_event_id(request_id, start)
             event = create_calendar_event(consultation, start, end, event_id)
             confirmed = finalize_booking(int(booking["id"]), event)
+            queue_hubspot_sync(request_id, force=True)
             self.send_json(
                 HTTPStatus.CREATED,
                 {"ok": True, "already_booked": False, "booking": booking_json(confirmed)},
@@ -3849,9 +4078,43 @@ class AudoHandler(BaseHTTPRequestHandler):
         print(f"{self.address_string()} - {format % args}", file=sys.stderr)
 
 
+def client_provisioning_worker() -> None:
+    from client_provisioning import ProvisioningConfig, build_provisioner
+
+    provisioner = build_provisioner(ProvisioningConfig.from_env())
+    while True:
+        try:
+            summary = provisioner.run_once()
+            print(json.dumps({"worker": "client_provisioning", "status": "ok", **summary}, sort_keys=True))
+        except Exception as exc:  # pragma: no cover - depends on external providers.
+            print(
+                json.dumps({"worker": "client_provisioning", "status": "error", "error": str(exc)}),
+                file=sys.stderr,
+            )
+        time_module.sleep(CLIENT_PROVISIONING_POLL_SECONDS)
+
+
+def start_client_provisioning_worker() -> threading.Thread | None:
+    global CLIENT_PROVISIONING_THREAD
+    if not CLIENT_PROVISIONING_ENABLED:
+        return None
+    with CLIENT_PROVISIONING_THREAD_LOCK:
+        if CLIENT_PROVISIONING_THREAD and CLIENT_PROVISIONING_THREAD.is_alive():
+            return CLIENT_PROVISIONING_THREAD
+        CLIENT_PROVISIONING_THREAD = threading.Thread(
+            target=client_provisioning_worker,
+            name="audo-client-provisioning",
+            daemon=True,
+        )
+        CLIENT_PROVISIONING_THREAD.start()
+        return CLIENT_PROVISIONING_THREAD
+
+
 def main() -> None:
     init_db()
     start_hubspot_sync_worker()
+    start_email_delivery_worker()
+    start_client_provisioning_worker()
     port = int(os.environ.get("PORT", "80"))
     server = ThreadingHTTPServer(("0.0.0.0", port), AudoHandler)
     print(json.dumps({"status": "listening", "port": port, "database": str(DATABASE_PATH)}))

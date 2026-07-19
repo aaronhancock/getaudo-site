@@ -14,6 +14,7 @@ ENV PORT=80 \
     PUBLIC_BASE_URL=https://getaudo.com
 
 COPY server.py /app/server.py
+COPY client_provisioning.py /app/client_provisioning.py
 COPY services.py /app/services.py
 COPY site_catalog.py /app/site_catalog.py
 COPY index.html /app/index.html
@@ -23,6 +24,10 @@ COPY favicon.ico /app/favicon.ico
 COPY robots.txt /app/robots.txt
 COPY site.webmanifest /app/site.webmanifest
 COPY assets /app/assets
+COPY scripts/reconcile_closed_won.py /app/scripts/reconcile_closed_won.py
+COPY scripts/backup_audo_data.py /app/scripts/backup_audo_data.py
+COPY scripts/verify_audo_backup.py /app/scripts/verify_audo_backup.py
+COPY scripts/check_audo_operations.py /app/scripts/check_audo_operations.py
 
 VOLUME ["/data/audo"]
 

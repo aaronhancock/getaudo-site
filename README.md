@@ -80,6 +80,7 @@ HubSpot service key in the deployment environment (never in source control):
 HUBSPOT_SERVICE_KEY=<supported-hubspot-service-key>
 HUBSPOT_PIPELINE=default
 HUBSPOT_NEW_INQUIRY_STAGE=appointmentscheduled
+HUBSPOT_DISCOVERY_SCHEDULED_STAGE=qualifiedtobuy
 HUBSPOT_SYNC_MAX_ATTEMPTS=6
 HUBSPOT_SYNC_RETRY_BASE_SECONDS=30
 HUBSPOT_SYNC_STALE_SECONDS=300
@@ -95,6 +96,16 @@ the configured attempt limit. Each deal name includes the website request ID;
 the worker searches that exact name before creating a deal so retrying a request
 does not create duplicate deals. Queue state and HubSpot IDs remain in the same
 persistent SQLite database as the original request.
+
+When a booking is confirmed, the same durable worker requeues the request and
+moves its existing deal to **Discovery Scheduled**. Owner email delivery uses a
+separate persistent retry queue with bounded exponential backoff. It is
+at-least-once delivery and reuses a stable Message-ID on retries.
+
+Closed Won client workspace provisioning is implemented as an independently
+gated reconciliation worker. Keep `CLIENT_PROVISIONING_ENABLED=false` until the
+Drive and Notion destinations, activation cutoff, and one end-to-end test deal
+have been verified. See `docs/client-provisioning.md`.
 
 With JavaScript available, the request form now transitions directly into a
 branded second scheduling step. The server reads busy periods from Google

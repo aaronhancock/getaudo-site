@@ -1581,6 +1581,46 @@ EXPLORER_COMMONNESS_ORDER = {
 }
 
 
+EXPLORER_AI_SCENE_COPY = {
+    "The team does not know where AI fits": {
+        "scene_before_label": "A job that takes too long",
+        "scene_before": "Work we repeat every week",
+        "scene_after_label": "A simple place to start",
+        "scene_after": "Try AI on this one job",
+    },
+    "There are too many AI tools to choose from": {
+        "scene_before_label": "A fair comparison",
+        "scene_before": "Give each tool the same real job",
+        "scene_after_label": "The decision",
+        "scene_after": "Keep the one that actually saves time",
+    },
+    "The team needs safer rules for AI and client data": {
+        "scene_before_label": "Before sharing anything",
+        "scene_before": "Is this information private?",
+        "scene_after_label": "A rule everyone understands",
+        "scene_after": "Keep private information out of AI tools",
+    },
+    "Support replies need to be faster without getting sloppy": {
+        "scene_before_label": "A common customer question",
+        "scene_before": "Can you help me with this?",
+        "scene_after_label": "Before anything is sent",
+        "scene_after": "A draft is ready for the team to check",
+    },
+    "Procedures are hard for the team to find": {
+        "scene_before_label": "The question",
+        "scene_before": "Where is the latest instruction?",
+        "scene_after_label": "The answer",
+        "scene_after": "Found in the current company guide",
+    },
+    "Website visitors need quick answers": {
+        "scene_before_label": "A visitor asks",
+        "scene_before": "What time do you close?",
+        "scene_after_label": "A trusted answer",
+        "scene_after": "Answered using information you approved",
+    },
+}
+
+
 def _explorer_detail(
     problem_heading: str,
     goal_heading: str,
@@ -2071,8 +2111,7 @@ def service_cards() -> list[dict[str, object]]:
         detail = EXPLORER_DETAIL_COPY.get(source_title)
         if not detail:
             raise ValueError(f"Explorer detail copy not found: {source_title}")
-        cards.append(
-            {
+        card = {
                 "title": title,
                 "source_title": service.title,
                 "category": service.category,
@@ -2085,7 +2124,12 @@ def service_cards() -> list[dict[str, object]]:
                 **detail,
                 "faq_answers": EXPLORER_FAQ_ANSWERS[source_title],
             }
-        )
+        if group == "ai":
+            scene_copy = EXPLORER_AI_SCENE_COPY.get(source_title)
+            if not scene_copy:
+                raise ValueError(f"AI scene copy not found: {source_title}")
+            card.update(scene_copy)
+        cards.append(card)
     group_order = {group: index for index, group in enumerate(EXPLORER_COMMONNESS_ORDER)}
     commonness = {
         (group, title): index

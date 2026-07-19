@@ -2478,6 +2478,16 @@
       font-weight: 720;
     }
 
+    .explorer-ai-note span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--explorer-accent);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .explorer-ai-note:first-of-type {
       top: 18px;
       left: 2px;
@@ -4111,7 +4121,7 @@
             <p class="services-kicker">Real situations</p>
             <h3>Choose the one that sounds familiar.</h3>
           </div>
-          <a class="all-problems-link" href="/sitemap#website-and-app-care">View all 30 problem pages</a>
+          <a class="all-problems-link" href="/sitemap#website-and-app-care">Browse all examples</a>
         </div>
 
         <div class="problem-explorer" data-service-explorer data-services-endpoint="/assets/services.json?v=20260710-owner-copy">
@@ -4155,7 +4165,7 @@
                 <li><a href="/services/choose-ai-tools-for-your-business">I do not know which AI tools are worth using</a></li>
                 <li><a href="/services/decide-what-to-build-first">I do not know what to fix or build first</a></li>
               </ul>
-              <a class="button" href="/sitemap">View all 30 problem pages</a>
+              <a class="button" href="/sitemap">Browse all examples</a>
             </div>
           </noscript>
         </div>
@@ -4167,7 +4177,7 @@
           </div>
           <div class="services-next-actions">
             <a class="button primary" href="#discovery">Book free discovery</a>
-            <a class="button" href="/sitemap">View all 30 problem pages</a>
+            <a class="button" href="/sitemap">Browse all examples</a>
           </div>
         </div>
       </div>
@@ -4803,9 +4813,9 @@
         ].join(""),
         ai: [
           '<div class="explorer-scene">',
-          '  <div class="explorer-ai-note">Use our policies and keep the answer short.</div>',
+          '  <div class="explorer-ai-note"><span>Start here</span>Choose one real job that takes too long.</div>',
           '  <div class="explorer-ai-orb">✦</div>',
-          '  <div class="explorer-ai-note">Ready for a person to review.</div>',
+          '  <div class="explorer-ai-note"><span>Next</span>Try AI on that job and see if it helps.</div>',
           '</div>'
         ].join(""),
         decisions: [
@@ -4918,7 +4928,32 @@
       function renderSpotlight(service, animate) {
         selectedService = service;
         updateTheme(service.group);
-        visual.innerHTML = scenes[service.group] || scenes.website;
+        if (service.group === "ai" && service.scene_before && service.scene_after) {
+          visual.innerHTML = "";
+          var aiScene = document.createElement("div");
+          var before = document.createElement("div");
+          var beforeLabel = document.createElement("span");
+          var orb = document.createElement("div");
+          var after = document.createElement("div");
+          var afterLabel = document.createElement("span");
+          aiScene.className = "explorer-scene";
+          before.className = "explorer-ai-note";
+          beforeLabel.textContent = service.scene_before_label;
+          before.appendChild(beforeLabel);
+          before.appendChild(document.createTextNode(service.scene_before));
+          orb.className = "explorer-ai-orb";
+          orb.textContent = "✦";
+          after.className = "explorer-ai-note";
+          afterLabel.textContent = service.scene_after_label;
+          after.appendChild(afterLabel);
+          after.appendChild(document.createTextNode(service.scene_after));
+          aiScene.appendChild(before);
+          aiScene.appendChild(orb);
+          aiScene.appendChild(after);
+          visual.appendChild(aiScene);
+        } else {
+          visual.innerHTML = scenes[service.group] || scenes.website;
+        }
         groupLabel.textContent = service.group_label;
         title.textContent = service.title;
         summary.textContent = service.summary || "";

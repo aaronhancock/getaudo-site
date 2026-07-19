@@ -154,7 +154,7 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn("Browse a few common starting points", homepage)
         self.assertIn("My website form is not working", homepage)
         self.assertIn("We copy the same information between tools", homepage)
-        self.assertIn("View all 30 problem pages", homepage)
+        self.assertIn("Browse all examples", homepage)
 
     def test_legacy_public_routes_use_permanent_redirects(self) -> None:
         server_source = (ROOT / "server.py").read_text()

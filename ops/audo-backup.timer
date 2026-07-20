@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Audo operational data backup
+
+[Timer]
+OnCalendar=*-*-* 02:15:00 America/Chicago
+Persistent=true
+RandomizedDelaySec=10m
+Unit=audo-backup.service
+
+[Install]
+WantedBy=timers.target

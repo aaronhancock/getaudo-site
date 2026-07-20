@@ -1,0 +1,8 @@
+[Unit]
+Description=Audo operational data backup and verification
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/audo-backup.sh

@@ -13,19 +13,34 @@ data volume or backups.
 
 ## Daily backup
 
-Run inside the live application container:
+Production has a host-level `audo-backup.timer` scheduled for 2:15 AM Central
+with a randomized delay of up to ten minutes. It runs
+`/usr/local/sbin/audo-backup.sh`, which discovers the current Coolify container,
+creates and verifies the in-container backup, then copies the verified snapshot
+to `/data/backups/audo/<UTC timestamp>/` on the host.
+
+The same reviewed units are versioned in `ops/`. To run the job manually:
+
+```bash
+systemctl start audo-backup.service
+systemctl status audo-backup.service
+systemctl list-timers audo-backup.timer
+```
+
+The underlying command inside the live application container is:
 
 ```bash
 python /app/scripts/backup_audo_data.py --retention 14
 ```
 
-Backups are stored in `/data/audo/backups/<UTC timestamp>/`. The default keeps
-14 successful snapshots. A failed run never replaces a completed snapshot.
+Backups are stored in `/data/audo/backups/<UTC timestamp>/`. The container keeps
+14 successful snapshots; the second same-host copy keeps 30 days. A failed run
+never replaces a completed snapshot.
 
-This same-volume snapshot protects against accidental database damage, but it
-does **not** protect against loss of the Docker volume or host. Do not describe
-the control as off-site or encrypted until a separately owned destination and
-restore test are in place.
+The second host path protects against a container or volume mistake, but both
+copies remain on the same host and disk. They do **not** protect against host
+loss, theft, or disk failure. Do not describe the control as off-site or
+encrypted until a separately owned destination and restore test are in place.
 
 ## Verify and perform a restore drill
 

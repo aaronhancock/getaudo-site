@@ -418,6 +418,9 @@
     }
 
     function submitLead() {
+      if (window.AUDO_ATTRIBUTION && window.AUDO_ATTRIBUTION.applyToForm) {
+        window.AUDO_ATTRIBUTION.applyToForm(form);
+      }
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = "Sending your note…";

@@ -36,7 +36,41 @@ class OperationsHealthTests(unittest.TestCase):
             self.assertEqual(report["consultations"]["email"], {"sent": 2})
             self.assertEqual(report["consultations"]["hubspot"], {"failed": 1, "synced": 1})
             self.assertEqual(report["consultations"]["bookings"], {"confirmed": 1, "failed": 1})
+            self.assertEqual(
+                report["consultations"]["attribution"],
+                {"available": False, "total": 0, "first_touch": 0, "latest_touch": 0},
+            )
             self.assertEqual(operations.terminal_failures(report), 2)
+
+    def test_reports_attribution_completeness_without_exposing_values(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            database = Path(temp_dir) / "consultations.sqlite3"
+            with sqlite3.connect(database) as connection:
+                connection.execute(
+                    """
+                    CREATE TABLE consultation_requests (
+                        email_status TEXT,
+                        hubspot_status TEXT,
+                        first_touch_json TEXT,
+                        latest_touch_json TEXT
+                    )
+                    """
+                )
+                connection.execute("CREATE TABLE consultation_bookings (status TEXT)")
+                connection.executemany(
+                    "INSERT INTO consultation_requests VALUES (?, ?, ?, ?)",
+                    [
+                        ("sent", "synced", '{"utm_source":"linkedin"}', '{"utm_source":"linkedin"}'),
+                        ("sent", "synced", None, None),
+                    ],
+                )
+
+            report = operations.consultation_health(database)
+
+        self.assertEqual(
+            report["attribution"],
+            {"available": True, "total": 2, "first_touch": 1, "latest_touch": 1},
+        )
 
     def test_missing_expected_databases_require_attention(self):
         with tempfile.TemporaryDirectory() as temp_dir:

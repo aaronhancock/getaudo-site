@@ -109,6 +109,24 @@ HUBSPOT_SYNC_RETRY_BASE_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_RETRY_
 HUBSPOT_SYNC_STALE_SECONDS = max(30, int(os.environ.get("HUBSPOT_SYNC_STALE_SECONDS", "300")))
 HUBSPOT_SYNC_POLL_SECONDS = max(1, int(os.environ.get("HUBSPOT_SYNC_POLL_SECONDS", "30")))
 HUBSPOT_SYNC_BATCH_SIZE = max(1, min(int(os.environ.get("HUBSPOT_SYNC_BATCH_SIZE", "10")), 100))
+HUBSPOT_ATTRIBUTION_PROPERTIES = {
+    "first_source": "audo_first_source",
+    "first_landing_url": "audo_first_landing_url",
+    "first_referring_url": "audo_first_referring_url",
+    "first_utm_source": "audo_first_utm_source",
+    "first_utm_medium": "audo_first_utm_medium",
+    "first_utm_campaign": "audo_first_utm_campaign",
+    "first_utm_content": "audo_first_utm_content",
+    "first_campaign_code": "audo_first_campaign_code",
+    "latest_source": "audo_latest_source",
+    "latest_landing_url": "audo_latest_landing_url",
+    "latest_referring_url": "audo_latest_referring_url",
+    "latest_utm_source": "audo_latest_utm_source",
+    "latest_utm_medium": "audo_latest_utm_medium",
+    "latest_utm_campaign": "audo_latest_utm_campaign",
+    "latest_utm_content": "audo_latest_utm_content",
+    "latest_campaign_code": "audo_latest_campaign_code",
+}
 EMAIL_DELIVERY_MAX_ATTEMPTS = max(1, int(os.environ.get("EMAIL_DELIVERY_MAX_ATTEMPTS", "6")))
 EMAIL_DELIVERY_RETRY_BASE_SECONDS = max(1, int(os.environ.get("EMAIL_DELIVERY_RETRY_BASE_SECONDS", "30")))
 EMAIL_DELIVERY_STALE_SECONDS = max(30, int(os.environ.get("EMAIL_DELIVERY_STALE_SECONDS", "300")))
@@ -378,6 +396,8 @@ def init_db() -> None:
                 interest_context TEXT,
                 user_agent TEXT,
                 referrer TEXT,
+                first_touch_json TEXT,
+                latest_touch_json TEXT,
                 ip_address TEXT,
                 recaptcha_score REAL,
                 recaptcha_action TEXT,
@@ -398,6 +418,8 @@ def init_db() -> None:
             "recaptcha_score": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_score REAL",
             "recaptcha_action": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_action TEXT",
             "recaptcha_hostname": "ALTER TABLE consultation_requests ADD COLUMN recaptcha_hostname TEXT",
+            "first_touch_json": "ALTER TABLE consultation_requests ADD COLUMN first_touch_json TEXT",
+            "latest_touch_json": "ALTER TABLE consultation_requests ADD COLUMN latest_touch_json TEXT",
             "booking_token_hash": "ALTER TABLE consultation_requests ADD COLUMN booking_token_hash TEXT",
             "booking_token_expires_at": "ALTER TABLE consultation_requests ADD COLUMN booking_token_expires_at TEXT",
             "hubspot_contact_id": "ALTER TABLE consultation_requests ADD COLUMN hubspot_contact_id TEXT",
@@ -489,6 +511,142 @@ def init_db() -> None:
 def clean(value: str | None, max_length: int) -> str:
     value = (value or "").replace("\x00", "").strip()
     return value[:max_length]
+
+
+ATTRIBUTION_CAMPAIGN_KEYS = (
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "audo_campaign",
+)
+
+
+def normalize_attribution_url(value: object, *, origin_only: bool = False) -> str:
+    candidate = clean(str(value or ""), 2000)
+    if not candidate or any(character in candidate for character in "\r\n\t"):
+        return ""
+    try:
+        parsed = urlparse(candidate)
+        port = parsed.port
+    except ValueError:
+        return ""
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+        return ""
+    if parsed.username or parsed.password:
+        return ""
+    hostname = parsed.hostname.lower()
+    if ":" in hostname and not hostname.startswith("["):
+        hostname = f"[{hostname}]"
+    default_port = (parsed.scheme == "https" and port == 443) or (
+        parsed.scheme == "http" and port == 80
+    )
+    netloc = hostname if not port or default_port else f"{hostname}:{port}"
+    path = "/" if origin_only else (parsed.path or "/")
+    return clean(f"{parsed.scheme}://{netloc}{path}", 500)
+
+
+def normalize_landing_url(value: object) -> str:
+    normalized = normalize_attribution_url(value)
+    if not normalized:
+        return ""
+    candidate = urlparse(normalized)
+    public = urlparse(PUBLIC_BASE_URL)
+    candidate_port = candidate.port or (443 if candidate.scheme == "https" else 80)
+    public_port = public.port or (443 if public.scheme == "https" else 80)
+    if (
+        candidate.scheme != public.scheme
+        or candidate.hostname != public.hostname
+        or candidate_port != public_port
+    ):
+        return ""
+    return normalized
+
+
+def normalize_attribution(raw: object) -> dict[str, str]:
+    if isinstance(raw, str):
+        try:
+            raw = json.loads(raw)
+        except (TypeError, json.JSONDecodeError):
+            return {}
+    if not isinstance(raw, dict):
+        return {}
+
+    normalized: dict[str, str] = {}
+    captured_at = clean(str(raw.get("captured_at") or ""), 40)
+    if captured_at:
+        try:
+            parse_iso_datetime(captured_at)
+        except (TypeError, ValueError):
+            captured_at = ""
+    if captured_at:
+        normalized["captured_at"] = captured_at
+
+    landing_url = normalize_landing_url(raw.get("landing_url"))
+    if landing_url:
+        normalized["landing_url"] = landing_url
+    referring_url = normalize_attribution_url(raw.get("referring_url"), origin_only=True)
+    if referring_url:
+        normalized["referring_url"] = referring_url
+
+    for key in ATTRIBUTION_CAMPAIGN_KEYS:
+        value = clean(str(raw.get(key) or ""), 160)
+        value = re.sub(r"[\x00-\x1f\x7f]+", " ", value).strip()
+        if value:
+            normalized[key] = value
+    return normalized
+
+
+def normalized_attribution_json(raw: object) -> str | None:
+    normalized = normalize_attribution(raw)
+    return json.dumps(normalized, separators=(",", ":"), sort_keys=True) if normalized else None
+
+
+def initial_request_attribution(request_target: str, referrer: str = "") -> dict[str, str]:
+    """Build a privacy-minimized first touch for direct, non-JavaScript submissions."""
+    parsed_target = urlparse(request_target)
+    raw: dict[str, str] = {
+        "captured_at": utc_now(),
+        "landing_url": f"{PUBLIC_BASE_URL}{parsed_target.path or '/'}",
+    }
+    query = parse_qs(parsed_target.query, keep_blank_values=False)
+    for key in ATTRIBUTION_CAMPAIGN_KEYS:
+        values = query.get(key) or []
+        if values:
+            raw[key] = values[0]
+
+    normalized_referrer = normalize_attribution_url(referrer, origin_only=True)
+    if normalized_referrer:
+        public = urlparse(PUBLIC_BASE_URL)
+        referring = urlparse(normalized_referrer)
+        if (referring.scheme, referring.hostname, referring.port) != (
+            public.scheme,
+            public.hostname,
+            public.port,
+        ):
+            raw["referring_url"] = normalized_referrer
+    return normalize_attribution(raw)
+
+
+def attribution_from_row(row: dict[str, object], touch: str) -> dict[str, str]:
+    return normalize_attribution(row.get(f"{touch}_touch_json"))
+
+
+def attribution_lines(label: str, attribution: dict[str, str]) -> list[str]:
+    if not attribution:
+        return [f"{label}: Direct / unavailable"]
+    values = [
+        f"{label} landing: {attribution.get('landing_url') or 'Unavailable'}",
+        f"{label} referrer: {attribution.get('referring_url') or 'Direct / unavailable'}",
+    ]
+    campaign = ", ".join(
+        f"{key}={attribution[key]}"
+        for key in ATTRIBUTION_CAMPAIGN_KEYS
+        if attribution.get(key)
+    )
+    if campaign:
+        values.append(f"{label} campaign: {campaign}")
+    return values
 
 
 class GoogleCalendarError(RuntimeError):
@@ -979,6 +1137,8 @@ def fail_booking(booking_id: int, error: str) -> None:
 
 def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
     init_db()
+    first_touch_json = normalized_attribution_json(fields.get("first_touch"))
+    latest_touch_json = normalized_attribution_json(fields.get("latest_touch"))
     if AUDIT_FIXTURES_ENABLED:
         hubspot_status = "audit_fixture"
         hubspot_error = "Sync disabled by local audit fixture"
@@ -997,10 +1157,11 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
             INSERT INTO consultation_requests (
                 created_at, name, company_name, website, promo_code, email, phone, service,
                 timeline, preferred_times, message, source, interest_context,
-                user_agent, referrer, ip_address, recaptcha_score, recaptcha_action, recaptcha_hostname,
+                user_agent, referrer, first_touch_json, latest_touch_json,
+                ip_address, recaptcha_score, recaptcha_action, recaptcha_hostname,
                 email_status, hubspot_status, hubspot_error, hubspot_next_attempt_at
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)
             """,
             (
                 utc_now(),
@@ -1017,7 +1178,9 @@ def store_request(fields: dict[str, str], request_meta: dict[str, str]) -> int:
                 fields.get("source"),
                 fields.get("interest_context"),
                 request_meta.get("user_agent"),
-                request_meta.get("referrer"),
+                normalize_attribution_url(request_meta.get("referrer"), origin_only=True),
+                first_touch_json,
+                latest_touch_json,
                 request_meta.get("ip_address"),
                 fields.get("recaptcha_score"),
                 fields.get("recaptcha_action"),
@@ -1323,11 +1486,65 @@ def split_contact_name(name: str) -> tuple[str, str]:
     return (parts[0], parts[1] if len(parts) > 1 else "")
 
 
+def find_hubspot_contact(email: str) -> str:
+    result = hubspot_request(
+        "/crm/objects/2026-03/contacts/search",
+        {
+            "filterGroups": [
+                {
+                    "filters": [
+                        {"propertyName": "email", "operator": "EQ", "value": email},
+                    ]
+                }
+            ],
+            "limit": 1,
+            "properties": ["email"],
+        },
+    )
+    matches = result.get("results") or []
+    return str(matches[0].get("id") or "") if matches else ""
+
+
 def hubspot_deal_name(request_id: int, fields: dict[str, object]) -> str:
     company_or_name = str(fields.get("company_name") or fields["name"])
     service = str(fields.get("service") or "Discovery inquiry")
     suffix = f" · Website request #{request_id}"
     return f"{clean(f'{company_or_name} — {service}', 250 - len(suffix))}{suffix}"
+
+
+def attribution_source(attribution: dict[str, str]) -> str:
+    if attribution.get("utm_source"):
+        return attribution["utm_source"]
+    if attribution.get("audo_campaign"):
+        return f"audo:{attribution['audo_campaign']}"
+    referring_url = attribution.get("referring_url")
+    if referring_url:
+        return urlparse(referring_url).hostname or "referral"
+    return "direct"
+
+
+def hubspot_attribution_properties(claimed: dict[str, object]) -> dict[str, str]:
+    properties: dict[str, str] = {}
+    value_keys = {
+        "landing_url": "landing_url",
+        "referring_url": "referring_url",
+        "utm_source": "utm_source",
+        "utm_medium": "utm_medium",
+        "utm_campaign": "utm_campaign",
+        "utm_content": "utm_content",
+        "campaign_code": "audo_campaign",
+    }
+    for touch in ("first", "latest"):
+        attribution = attribution_from_row(claimed, touch)
+        source_property = HUBSPOT_ATTRIBUTION_PROPERTIES.get(f"{touch}_source")
+        if source_property:
+            properties[source_property] = attribution_source(attribution)
+        for property_suffix, attribution_key in value_keys.items():
+            value = attribution.get(attribution_key)
+            property_name = HUBSPOT_ATTRIBUTION_PROPERTIES.get(f"{touch}_{property_suffix}")
+            if value and property_name:
+                properties[property_name] = value
+    return properties
 
 
 def find_hubspot_deal(deal_name: str) -> str:
@@ -1375,27 +1592,53 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
             "phone": claimed.get("phone", ""),
             "company": claimed.get("company_name", ""),
             "website": claimed.get("website", ""),
-            "lifecyclestage": "lead",
-            "hs_lead_status": "NEW",
         }
-        contact = hubspot_request(
-            "/crm/objects/2026-03/contacts/batch/upsert",
-            {
-                "inputs": [
-                    {
-                        "id": claimed["email"],
-                        "idProperty": "email",
-                        "properties": {key: value for key, value in contact_properties.items() if value},
-                    }
-                ]
-            },
-        )
-        contact_results = contact.get("results") or []
-        if not contact_results or not contact_results[0].get("id"):
-            raise RuntimeError("HubSpot did not return a contact ID")
-        contact_id = str(contact_results[0]["id"])
+        contact_id = str(claimed.get("hubspot_contact_id") or "")
+        if not contact_id:
+            contact_id = find_hubspot_contact(str(claimed["email"]))
+        if contact_id:
+            hubspot_request(
+                "/crm/objects/2026-03/contacts/batch/update",
+                {
+                    "inputs": [
+                        {
+                            "id": contact_id,
+                            "properties": {
+                                key: value for key, value in contact_properties.items() if value
+                            },
+                        }
+                    ]
+                },
+            )
+        else:
+            contact = hubspot_request(
+                "/crm/objects/2026-03/contacts/batch/upsert",
+                {
+                    "inputs": [
+                        {
+                            "id": claimed["email"],
+                            "idProperty": "email",
+                            "properties": {
+                                **{
+                                    key: value
+                                    for key, value in contact_properties.items()
+                                    if value
+                                },
+                                "lifecyclestage": "lead",
+                                "hs_lead_status": "NEW",
+                            },
+                        }
+                    ]
+                },
+            )
+            contact_results = contact.get("results") or []
+            if not contact_results or not contact_results[0].get("id"):
+                raise RuntimeError("HubSpot did not return a contact ID")
+            contact_id = str(contact_results[0]["id"])
         save_hubspot_ids(request_id, contact_id=contact_id)
 
+        first_touch = attribution_from_row(claimed, "first")
+        latest_touch = attribution_from_row(claimed, "latest")
         inquiry_details = "\n".join(
             line
             for line in (
@@ -1405,10 +1648,13 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
                 f"Phone: {claimed.get('phone') or 'Not provided'}",
                 f"Website: {claimed.get('website') or 'Not provided'}",
                 f"Interested in: {claimed.get('interest_context') or claimed.get('service') or 'General discovery'}",
+                *attribution_lines("First touch", first_touch),
+                *attribution_lines("Latest touch", latest_touch),
                 "",
                 str(claimed.get("message") or ""),
             )
         )
+        attribution_properties = hubspot_attribution_properties(claimed)
         desired_stage = hubspot_stage_for_request(request_id)
         deal_id = str(claimed.get("hubspot_deal_id") or "")
         deal_was_existing = bool(deal_id)
@@ -1427,6 +1673,7 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
                         "pipeline": HUBSPOT_PIPELINE,
                         "dealstage": desired_stage,
                         "description": inquiry_details,
+                        **attribution_properties,
                     },
                     "associations": [
                         {
@@ -1447,7 +1694,18 @@ def sync_claimed_hubspot_request(claimed: dict[str, object]) -> None:
         if deal_was_existing:
             hubspot_request(
                 "/crm/objects/2026-03/deals/batch/update",
-                {"inputs": [{"id": deal_id, "properties": {"dealstage": desired_stage}}]},
+                {
+                    "inputs": [
+                        {
+                            "id": deal_id,
+                            "properties": {
+                                "dealstage": desired_stage,
+                                "description": inquiry_details,
+                                **attribution_properties,
+                            },
+                        }
+                    ]
+                },
             )
         save_hubspot_ids(request_id, deal_id=deal_id)
         mark_hubspot_status(request_id, "synced", contact_id=contact_id, deal_id=deal_id)
@@ -1522,6 +1780,11 @@ def build_email(request_id: int, fields: dict[str, str], request_meta: dict[str,
     # crash between provider acceptance and the SQLite status update.
     message["Message-ID"] = f"<audo-consultation-{request_id}@getaudo.com>"
 
+    first_touch = normalize_attribution(fields.get("first_touch_json") or fields.get("first_touch"))
+    latest_touch = normalize_attribution(fields.get("latest_touch_json") or fields.get("latest_touch"))
+    attribution_summary = "\n".join(
+        attribution_lines("First touch", first_touch) + attribution_lines("Latest touch", latest_touch)
+    )
     body = f"""A new Audo discovery request was received.
 
 Request ID: {request_id}
@@ -1535,6 +1798,9 @@ Interested in: {fields.get("interest_context") or "General discovery"}
 Email: {fields["email"]}
 Phone: {fields.get("phone") or "Not provided"}
 Scheduling: {fields.get("timeline") or "Choose from Google Calendar after submission"}
+
+Acquisition:
+{attribution_summary}
 
 Help needed: {fields["service"]}
 
@@ -1618,6 +1884,8 @@ def sync_claimed_email_delivery(claimed: dict[str, object]) -> None:
             "message",
             "source",
             "interest_context",
+            "first_touch_json",
+            "latest_touch_json",
         )
     }
     request_meta = {
@@ -1908,6 +2176,8 @@ class AudoHandler(BaseHTTPRequestHandler):
                 "message": clean(fields.get("message"), 5000),
                 "source": clean(fields.get("source"), 140),
                 "interest_context": clean(fields.get("interest_context"), 260),
+                "first_touch": clean(fields.get("first_touch"), 4000),
+                "latest_touch": clean(fields.get("latest_touch"), 4000),
                 "recaptcha_score": recaptcha.get("score"),
                 "recaptcha_action": recaptcha.get("action"),
                 "recaptcha_hostname": recaptcha.get("hostname"),
@@ -2743,6 +3013,7 @@ class AudoHandler(BaseHTTPRequestHandler):
       </div>
     </div>
   </footer>
+  <script src="/assets/attribution.js?v=20260725-attribution1" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")
@@ -2761,6 +3032,16 @@ class AudoHandler(BaseHTTPRequestHandler):
             return
 
         h = lambda value: html.escape(str(value), quote=True)
+        initial_attribution = h(
+            json.dumps(
+                initial_request_attribution(
+                    self.path,
+                    self.headers.get("Referer") or "",
+                ),
+                separators=(",", ":"),
+                sort_keys=True,
+            )
+        )
         explorer_card = next(
             (card for card in service_cards() if card["source_title"] == service.title),
             None,
@@ -3527,6 +3808,8 @@ class AudoHandler(BaseHTTPRequestHandler):
           <input type="hidden" name="timeline" value="Schedule after request">
           <input type="hidden" name="source" value="getaudo.com service page">
           <input type="hidden" name="interest_context" value="{h(form_context)}">
+          <input type="hidden" name="first_touch" value="{initial_attribution}">
+          <input type="hidden" name="latest_touch" value="{initial_attribution}">
           <input type="hidden" name="recaptcha_token" value="">
           <p id="service-form-privacy" class="form-privacy">I’ll use what you share only to prepare for and follow up about your request. If you don’t pick a time, I usually reply within one business day. <a href="/privacy#information">How I handle your information</a></p>
           <button class="button primary" type="submit">Continue to scheduling</button>
@@ -3600,7 +3883,8 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
   </section>
   {recaptcha_js}
-  <script src="/assets/booking.js?v=20260716-audit1" defer></script>
+  <script src="/assets/attribution.js?v=20260725-attribution1" defer></script>
+  <script src="/assets/booking.js?v=20260725-attribution1" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")
@@ -3938,6 +4222,7 @@ class AudoHandler(BaseHTTPRequestHandler):
     </div>
     <p class="contact">Still stuck? Email <a href="mailto:aaron@getaudo.com">aaron@getaudo.com</a>.</p>
   </section></div></main>
+  <script src="/assets/attribution.js?v=20260725-attribution1" defer></script>
 </body>
 </html>"""
         encoded = body.encode("utf-8")
@@ -3951,6 +4236,15 @@ class AudoHandler(BaseHTTPRequestHandler):
 
     def serve_index(self, send_body: bool = True) -> None:
         data = (BASE_DIR / "index.html").read_text(encoding="utf-8")
+        initial_attribution = json.dumps(
+            initial_request_attribution(
+                self.path,
+                self.headers.get("Referer") or "",
+            ),
+            separators=(",", ":"),
+            sort_keys=True,
+        )
+        data = data.replace("__INITIAL_ATTRIBUTION__", html.escape(initial_attribution, quote=True))
         data = data.replace("__RECAPTCHA_SITE_KEY__", json.dumps(RECAPTCHA_SITE_KEY))
         data = data.replace(
             "__GOOGLE_CALENDAR_BOOKING_URL__",

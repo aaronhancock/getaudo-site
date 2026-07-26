@@ -28,6 +28,7 @@ COPY scripts/reconcile_closed_won.py /app/scripts/reconcile_closed_won.py
 COPY scripts/backup_audo_data.py /app/scripts/backup_audo_data.py
 COPY scripts/verify_audo_backup.py /app/scripts/verify_audo_backup.py
 COPY scripts/check_audo_operations.py /app/scripts/check_audo_operations.py
+COPY scripts/setup_hubspot_attribution.py /app/scripts/setup_hubspot_attribution.py
 
 VOLUME ["/data/audo"]
 

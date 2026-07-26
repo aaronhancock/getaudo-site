@@ -25,15 +25,46 @@ def grouped_counts(connection: sqlite3.Connection, table: str, column: str) -> d
     return {str(status): int(count) for status, count in rows}
 
 
+def attribution_counts(connection: sqlite3.Connection) -> dict[str, int | bool]:
+    if not table_exists(connection, "consultation_requests"):
+        return {"available": False, "total": 0, "first_touch": 0, "latest_touch": 0}
+    columns = {
+        row[1] for row in connection.execute("PRAGMA table_info(consultation_requests)")
+    }
+    if not {"first_touch_json", "latest_touch_json"}.issubset(columns):
+        return {"available": False, "total": 0, "first_touch": 0, "latest_touch": 0}
+    total, first_touch, latest_touch = connection.execute(
+        """
+        SELECT COUNT(*),
+               SUM(CASE WHEN first_touch_json IS NOT NULL AND first_touch_json != '' THEN 1 ELSE 0 END),
+               SUM(CASE WHEN latest_touch_json IS NOT NULL AND latest_touch_json != '' THEN 1 ELSE 0 END)
+        FROM consultation_requests
+        """
+    ).fetchone()
+    return {
+        "available": True,
+        "total": int(total or 0),
+        "first_touch": int(first_touch or 0),
+        "latest_touch": int(latest_touch or 0),
+    }
+
+
 def consultation_health(database_path: Path) -> dict[str, object]:
     if not database_path.exists():
-        return {"present": False, "email": {}, "hubspot": {}, "bookings": {}}
+        return {
+            "present": False,
+            "email": {},
+            "hubspot": {},
+            "bookings": {},
+            "attribution": {"available": False, "total": 0, "first_touch": 0, "latest_touch": 0},
+        }
     with sqlite3.connect(f"file:{database_path}?mode=ro", uri=True) as connection:
         return {
             "present": True,
             "email": grouped_counts(connection, "consultation_requests", "email_status"),
             "hubspot": grouped_counts(connection, "consultation_requests", "hubspot_status"),
             "bookings": grouped_counts(connection, "consultation_bookings", "status"),
+            "attribution": attribution_counts(connection),
         }
 
 

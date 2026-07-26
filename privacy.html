@@ -615,7 +615,7 @@
           </ul>
 
           <h3>Information collected automatically</h3>
-          <p>The site and its infrastructure may collect technical information such as your IP address, browser and device information, referring page, pages requested, timestamps, and security or delivery logs. When a discovery form is submitted, Audo also records the user agent, referrer, and IP address associated with the request.</p>
+          <p>The site and its infrastructure may collect technical information such as your IP address, browser and device information, referring page, pages requested, timestamps, and security or delivery logs. When a discovery form is submitted, Audo also records the user agent, a privacy-minimized referring address, the first and latest Audo landing pages in the current tab, and supported campaign labels such as source, medium, campaign, content, or an Audo campaign code. URL fragments, arbitrary query parameters, and advertising click identifiers are not retained for this purpose.</p>
           <p>Google reCAPTCHA may return risk and verification information such as a score, action, and hostname to help determine whether a request is legitimate.</p>
         </section>
 
@@ -651,7 +651,8 @@
 
         <section class="policy-section" id="cookies" aria-labelledby="cookies-title">
           <h2 id="cookies-title">Cookies, browser storage, and analytics</h2>
-          <p>The site stores your cookie choice in your browser under <code>audo_cookie_choice</code>. This is necessary to remember whether you accepted analytics or selected necessary-only operation. During the two-step discovery and scheduling flow, the site also temporarily uses session storage to keep a limited scheduling token if the page is refreshed. That temporary value stays in the current browser tab and is removed after booking or when the tab session ends.</p>
+          <p>The site stores your cookie choice in your browser under <code>audo_cookie_choice</code>. This is necessary to remember whether you accepted analytics or selected necessary-only operation. In the current browser tab, temporary session storage also keeps the first and latest Audo landing context and supported campaign labels so a discovery request can be attributed after you move between Audo pages. The temporary attribution context is limited to the page origin/path, a privacy-minimized external referrer, and allowlisted campaign values; it is not used for advertising or authorization. The two-step scheduling flow separately keeps a limited scheduling token if the page is refreshed. Session values end when the tab session ends, and the scheduling token is removed after booking.</p>
+          <p>If you submit the discovery form, the normalized attribution attached to that request becomes part of Audo's server-side inquiry record and may be copied to the related HubSpot deal so Audo can understand which outreach or page led to the conversation. If you do not submit the form, the temporary attribution context is not sent to Audo by this feature.</p>
           <ul>
             <li><strong>Necessary only:</strong> Audo does not intentionally load Google Analytics. Site delivery, security, and reCAPTCHA may still process technical information when required to provide the site or protect a submitted form.</li>
             <li><strong>Allow analytics:</strong> Google Analytics is allowed to load and may use cookies or similar technologies to measure visits and interactions.</li>
@@ -869,5 +870,6 @@
       }
     }());
   </script>
+  <script src="/assets/attribution.js?v=20260725-attribution1" defer></script>
 </body>
 </html>

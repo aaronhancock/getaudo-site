@@ -63,6 +63,35 @@ class HomepageExperienceTests(unittest.TestCase):
         self.assertIn('scheduler.setAttribute("aria-busy", "true")', booking_js)
         self.assertIn('<h4 tabindex="-1">', booking_js)
 
+    def test_discovery_forms_load_privacy_minimized_attribution_before_booking(self) -> None:
+        homepage = (ROOT / "index.html").read_text()
+        server_source = (ROOT / "server.py").read_text()
+        privacy = (ROOT / "privacy.html").read_text()
+        thank_you = (ROOT / "thank-you.html").read_text()
+        booking_js = (ROOT / "assets" / "booking.js").read_text()
+        attribution_js = (ROOT / "assets" / "attribution.js").read_text()
+
+        for source in (homepage, server_source):
+            attribution_position = source.index("/assets/attribution.js?v=20260725-attribution1")
+            booking_position = source.index("/assets/booking.js?v=20260725-attribution1")
+            self.assertLess(attribution_position, booking_position)
+        self.assertIn("window.AUDO_ATTRIBUTION.applyToForm(form)", booking_js)
+        self.assertIn('"audo_attribution_context_v1"', attribution_js)
+        self.assertIn('"utm_source"', attribution_js)
+        self.assertNotIn('"gclid"', attribution_js)
+        self.assertIn("privacy-minimized referring address", privacy)
+        self.assertIn("If you submit the discovery form", privacy)
+        self.assertIn("/assets/attribution.js?v=20260725-attribution1", privacy)
+        self.assertIn("/assets/attribution.js?v=20260725-attribution1", thank_you)
+        self.assertGreaterEqual(
+            server_source.count("/assets/attribution.js?v=20260725-attribution1"),
+            3,
+        )
+        self.assertIn('name="first_touch" value="__INITIAL_ATTRIBUTION__"', homepage)
+        self.assertIn('name="latest_touch" value="__INITIAL_ATTRIBUTION__"', homepage)
+        self.assertIn('name="first_touch" value="{initial_attribution}"', server_source)
+        self.assertIn('name="latest_touch" value="{initial_attribution}"', server_source)
+
     def test_form_validation_identifies_and_focuses_the_field(self) -> None:
         booking_js = (ROOT / "assets" / "booking.js").read_text()
         booking_css = (ROOT / "assets" / "booking.css").read_text()

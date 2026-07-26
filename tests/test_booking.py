@@ -2,6 +2,7 @@ import tempfile
 import unittest
 import sqlite3
 import inspect
+import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
@@ -20,7 +21,15 @@ class BookingTests(unittest.TestCase):
         server.DATABASE_PATH = self.original_database_path
         self.temp_dir.cleanup()
 
-    def make_lead(self, *, name="Jamie Rivera", email="jamie@example.com"):
+    def make_lead(
+        self,
+        *,
+        name="Jamie Rivera",
+        email="jamie@example.com",
+        first_touch=None,
+        latest_touch=None,
+        request_meta=None,
+    ):
         payload = {
             "name": name,
             "company_name": "Rivera Hardware",
@@ -34,13 +43,151 @@ class BookingTests(unittest.TestCase):
             "message": "Our inventory workflow needs attention.",
             "source": "test",
             "interest_context": "test lead",
+            "first_touch": json.dumps(first_touch) if first_touch is not None else "",
+            "latest_touch": json.dumps(latest_touch) if latest_touch is not None else "",
             "recaptcha_score": None,
             "recaptcha_action": None,
             "recaptcha_hostname": None,
         }
-        request_id = server.store_request(payload, {})
+        request_id = server.store_request(payload, request_meta or {})
         token = server.issue_booking_token(request_id)
         return request_id, token
+
+    def test_attribution_is_normalized_and_persisted_without_sensitive_url_parts(self):
+        first = {
+            "captured_at": "2026-07-25T15:00:00.000Z",
+            "landing_url": "https://getaudo.com/services/fix-a-broken-contact-form?email=private@example.com#form",
+            "referring_url": "https://www.linkedin.com/feed/?tracking=secret#item",
+            "utm_source": "linkedin",
+            "utm_medium": "direct_outreach",
+            "utm_campaign": "lead_flow_pilot",
+            "utm_content": "observed_form_issue",
+            "utm_term": "must be discarded",
+            "gclid": "must-be-discarded",
+        }
+        request_id, _ = self.make_lead(first_touch=first, latest_touch=first)
+
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            first_raw, latest_raw = conn.execute(
+                "SELECT first_touch_json, latest_touch_json FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()
+        persisted = json.loads(first_raw)
+        self.assertEqual(
+            persisted["landing_url"],
+            "https://getaudo.com/services/fix-a-broken-contact-form",
+        )
+        self.assertEqual(persisted["referring_url"], "https://www.linkedin.com/")
+        self.assertEqual(persisted["utm_source"], "linkedin")
+        self.assertNotIn("utm_term", persisted)
+        self.assertNotIn("gclid", persisted)
+        self.assertEqual(json.loads(latest_raw), persisted)
+
+    def test_http_referrer_metadata_is_reduced_to_origin(self):
+        request_id, _ = self.make_lead(
+            request_meta={
+                "referrer": "https://external.example/reset/private-token?secret=x#account"
+            }
+        )
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            referrer = conn.execute(
+                "SELECT referrer FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()[0]
+        self.assertEqual(referrer, "https://external.example/")
+
+    def test_initial_request_attribution_supports_direct_no_javascript_submission(self):
+        with mock.patch.object(server, "PUBLIC_BASE_URL", "https://getaudo.com"):
+            attribution = server.initial_request_attribution(
+                "/services/fix-a-broken-contact-form"
+                "?utm_source=linkedin&utm_campaign=lead-flow&email=private@example.com",
+                "https://www.linkedin.com/feed/?tracking=secret",
+            )
+
+        self.assertEqual(
+            attribution["landing_url"],
+            "https://getaudo.com/services/fix-a-broken-contact-form",
+        )
+        self.assertEqual(attribution["referring_url"], "https://www.linkedin.com/")
+        self.assertEqual(attribution["utm_source"], "linkedin")
+        self.assertEqual(attribution["utm_campaign"], "lead-flow")
+        self.assertNotIn("email", attribution)
+
+    def test_initial_request_attribution_ignores_internal_referrer(self):
+        with mock.patch.object(server, "PUBLIC_BASE_URL", "https://getaudo.com"):
+            attribution = server.initial_request_attribution(
+                "/?audo_campaign=warm-intro",
+                "https://getaudo.com/privacy?private=value",
+            )
+
+        self.assertEqual(attribution["audo_campaign"], "warm-intro")
+        self.assertNotIn("referring_url", attribution)
+
+    def test_malformed_or_unsafe_attribution_does_not_reject_the_lead(self):
+        payload = {
+            "landing_url": "javascript:alert(1)",
+            "referring_url": "https://user:password@example.com/private?token=secret",
+            "utm_source": "line one\nline two",
+        }
+        request_id, _ = self.make_lead(first_touch=payload)
+        second_request, _ = self.make_lead(
+            name="Morgan Lee",
+            email="morgan@example.com",
+        )
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            first_raw = conn.execute(
+                "SELECT first_touch_json FROM consultation_requests WHERE id = ?",
+                (request_id,),
+            ).fetchone()[0]
+            conn.execute(
+                "UPDATE consultation_requests SET first_touch_json = NULL, latest_touch_json = NULL WHERE id = ?",
+                (second_request,),
+            )
+        persisted = json.loads(first_raw)
+        self.assertNotIn("landing_url", persisted)
+        self.assertNotIn("referring_url", persisted)
+        self.assertEqual(persisted["utm_source"], "line one line two")
+
+        self.assertIsNone(server.normalized_attribution_json("{not-json"))
+        self.assertIsNone(server.normalized_attribution_json(["not", "an", "object"]))
+
+        forged = {
+            "landing_url": "https://evil.example/copied-form",
+            "referring_url": "https://partner.example/private/path?token=secret",
+        }
+        forged_request, _ = self.make_lead(
+            name="Taylor Morgan",
+            email="taylor@example.com",
+            first_touch=forged,
+        )
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            forged_raw = conn.execute(
+                "SELECT first_touch_json FROM consultation_requests WHERE id = ?",
+                (forged_request,),
+            ).fetchone()[0]
+        persisted_forged = json.loads(forged_raw)
+        self.assertNotIn("landing_url", persisted_forged)
+        self.assertEqual(persisted_forged["referring_url"], "https://partner.example/")
+
+    def test_attribution_migration_is_additive_idempotent_and_preserves_existing_rows(self):
+        request_id, _ = self.make_lead()
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            conn.execute("ALTER TABLE consultation_requests DROP COLUMN first_touch_json")
+            conn.execute("ALTER TABLE consultation_requests DROP COLUMN latest_touch_json")
+
+        server.init_db()
+        server.init_db()
+
+        with sqlite3.connect(server.DATABASE_PATH) as conn:
+            columns = {
+                row[1] for row in conn.execute("PRAGMA table_info(consultation_requests)")
+            }
+            email = conn.execute(
+                "SELECT email FROM consultation_requests WHERE id = ?", (request_id,)
+            ).fetchone()[0]
+        self.assertIn("first_touch_json", columns)
+        self.assertIn("latest_touch_json", columns)
+        self.assertEqual(email, "jamie@example.com")
 
     def test_candidate_slots_follow_hours_notice_cadence_and_sunday_block(self):
         now = datetime(2026, 7, 9, 12, 0, tzinfo=timezone.utc)
@@ -186,7 +333,25 @@ class BookingTests(unittest.TestCase):
         self.assertEqual(message["Message-ID"], "<audo-consultation-42@getaudo.com>")
 
     def test_hubspot_sync_upserts_contact_and_creates_associated_new_inquiry(self):
-        request_id, _ = self.make_lead()
+        first_touch = {
+            "captured_at": "2026-07-25T15:00:00.000Z",
+            "landing_url": "https://getaudo.com/services/fix-a-broken-contact-form",
+            "referring_url": "https://www.linkedin.com/",
+            "utm_source": "linkedin",
+            "utm_medium": "direct_outreach",
+            "utm_campaign": "lead_flow_pilot",
+            "utm_content": "observed_form_issue",
+        }
+        latest_touch = {
+            **first_touch,
+            "captured_at": "2026-07-25T15:05:00.000Z",
+            "landing_url": "https://getaudo.com/",
+            "audo_campaign": "warm_followup",
+        }
+        request_id, _ = self.make_lead(
+            first_touch=first_touch,
+            latest_touch=latest_touch,
+        )
         payload = {
             "name": "Jamie Rivera",
             "company_name": "Rivera Hardware",
@@ -201,9 +366,11 @@ class BookingTests(unittest.TestCase):
 
         def fake_request(endpoint, body):
             calls.append((endpoint, body))
-            if endpoint.endswith("/batch/upsert"):
+            if endpoint.endswith("/contacts/search"):
+                return {"results": []}
+            if endpoint.endswith("/contacts/batch/upsert"):
                 return {"results": [{"id": "contact-123"}]}
-            if endpoint.endswith("/search"):
+            if endpoint.endswith("/deals/search"):
                 return {"results": []}
             return {"id": "deal-456"}
 
@@ -212,11 +379,26 @@ class BookingTests(unittest.TestCase):
         ):
             server.sync_hubspot(request_id, payload)
 
-        self.assertEqual(calls[0][1]["inputs"][0]["id"], "jamie@example.com")
-        self.assertEqual(calls[2][1]["properties"]["dealstage"], "appointmentscheduled")
-        self.assertEqual(calls[2][1]["associations"][0]["to"]["id"], "contact-123")
-        self.assertIn("Website request #", calls[2][1]["properties"]["dealname"])
-        self.assertIn("Our inventory workflow needs attention.", calls[2][1]["properties"]["description"])
+        upsert = next(
+            body for endpoint, body in calls if endpoint.endswith("/contacts/batch/upsert")
+        )
+        deal_create = next(
+            body for endpoint, body in calls if endpoint.endswith("/deals")
+        )
+        self.assertEqual(upsert["inputs"][0]["id"], "jamie@example.com")
+        self.assertEqual(upsert["inputs"][0]["properties"]["lifecyclestage"], "lead")
+        self.assertEqual(upsert["inputs"][0]["properties"]["hs_lead_status"], "NEW")
+        self.assertEqual(deal_create["properties"]["dealstage"], "appointmentscheduled")
+        self.assertEqual(deal_create["associations"][0]["to"]["id"], "contact-123")
+        self.assertIn("Website request #", deal_create["properties"]["dealname"])
+        self.assertIn("Our inventory workflow needs attention.", deal_create["properties"]["description"])
+        self.assertIn("First touch referrer: https://www.linkedin.com/", deal_create["properties"]["description"])
+        self.assertEqual(deal_create["properties"]["audo_first_source"], "linkedin")
+        self.assertEqual(
+            deal_create["properties"]["audo_first_landing_url"],
+            "https://getaudo.com/services/fix-a-broken-contact-form",
+        )
+        self.assertEqual(deal_create["properties"]["audo_latest_campaign_code"], "warm_followup")
         with sqlite3.connect(server.DATABASE_PATH) as conn:
             row = conn.execute(
                 "SELECT hubspot_status, hubspot_contact_id, hubspot_deal_id FROM consultation_requests WHERE id = ?",
@@ -224,8 +406,43 @@ class BookingTests(unittest.TestCase):
             ).fetchone()
         self.assertEqual(row, ("synced", "contact-123", "deal-456"))
 
-    def test_confirmed_booking_advances_existing_deal_to_discovery_scheduled(self):
+    def test_hubspot_existing_contact_preserves_lifecycle_and_lead_status(self):
         request_id, _ = self.make_lead()
+        calls = []
+
+        def fake_request(endpoint, body):
+            calls.append((endpoint, body))
+            if endpoint.endswith("/contacts/search"):
+                return {"results": [{"id": "existing-contact"}]}
+            if endpoint.endswith("/contacts/batch/update"):
+                return {"status": "COMPLETE"}
+            if endpoint.endswith("/deals/search"):
+                return {"results": []}
+            if endpoint.endswith("/deals"):
+                return {"id": "deal-456"}
+            self.fail(f"Unexpected HubSpot endpoint: {endpoint}")
+
+        with mock.patch.object(server, "HUBSPOT_SERVICE_KEY", "test-key"), mock.patch.object(
+            server, "hubspot_request", side_effect=fake_request
+        ):
+            server.sync_hubspot(request_id)
+
+        update = next(
+            body for endpoint, body in calls if endpoint.endswith("/contacts/batch/update")
+        )
+        properties = update["inputs"][0]["properties"]
+        self.assertNotIn("lifecyclestage", properties)
+        self.assertNotIn("hs_lead_status", properties)
+
+    def test_confirmed_booking_advances_existing_deal_to_discovery_scheduled(self):
+        request_id, _ = self.make_lead(
+            first_touch={
+                "landing_url": "https://getaudo.com/services/fix-a-broken-contact-form",
+                "referring_url": "https://www.google.com/",
+                "utm_source": "google",
+                "utm_campaign": "lead_flow",
+            }
+        )
         start, end = server.candidate_slots()[0]
         booking, _ = server.reserve_booking(request_id, start, end)
         server.finalize_booking(
@@ -256,6 +473,8 @@ class BookingTests(unittest.TestCase):
         update = next(body for endpoint, body in calls if endpoint.endswith("/deals/batch/update"))
         self.assertEqual(update["inputs"][0]["id"], "deal-456")
         self.assertEqual(update["inputs"][0]["properties"]["dealstage"], "qualifiedtobuy")
+        self.assertEqual(update["inputs"][0]["properties"]["audo_first_source"], "google")
+        self.assertIn("First touch landing:", update["inputs"][0]["properties"]["description"])
         with sqlite3.connect(server.DATABASE_PATH) as conn:
             status = conn.execute(
                 "SELECT hubspot_status FROM consultation_requests WHERE id = ?", (request_id,)
@@ -311,15 +530,26 @@ class BookingTests(unittest.TestCase):
         self.assertTrue(row[1])
 
     def test_hubspot_retry_finds_the_created_deal_instead_of_creating_a_duplicate(self):
-        request_id, _ = self.make_lead()
+        request_id, _ = self.make_lead(
+            first_touch={
+                "landing_url": "https://getaudo.com/services/fix-a-broken-contact-form",
+                "referring_url": "https://partner.example/resources",
+                "utm_source": "partner",
+                "utm_campaign": "lead_flow",
+            }
+        )
         external_deal = {"id": ""}
         create_count = 0
         stage_updates = []
 
         def fake_request(endpoint, body):
             nonlocal create_count
+            if endpoint.endswith("/contacts/search"):
+                return {"results": []}
             if endpoint.endswith("/contacts/batch/upsert"):
                 return {"results": [{"id": "contact-123"}]}
+            if endpoint.endswith("/contacts/batch/update"):
+                return {"status": "COMPLETE"}
             if endpoint.endswith("/deals/search"):
                 return {"results": [{"id": external_deal["id"]}]} if external_deal["id"] else {"results": []}
             if endpoint.endswith("/deals"):
@@ -355,6 +585,11 @@ class BookingTests(unittest.TestCase):
         self.assertEqual(create_count, 1)
         self.assertEqual(stage_updates[0]["inputs"][0]["id"], "deal-created-before-timeout")
         self.assertEqual(stage_updates[0]["inputs"][0]["properties"]["dealstage"], "qualifiedtobuy")
+        self.assertEqual(stage_updates[0]["inputs"][0]["properties"]["audo_first_source"], "partner")
+        self.assertEqual(
+            stage_updates[0]["inputs"][0]["properties"]["audo_first_referring_url"],
+            "https://partner.example/",
+        )
         with sqlite3.connect(server.DATABASE_PATH) as conn:
             row = conn.execute(
                 """

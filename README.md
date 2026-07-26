@@ -102,6 +102,46 @@ moves its existing deal to **Discovery Scheduled**. Owner email delivery uses a
 separate persistent retry queue with bounded exponential backoff. It is
 at-least-once delivery and reuses a stable Message-ID on retries.
 
+### Discovery attribution
+
+The browser records privacy-minimized first- and latest-touch context for the
+current tab in `sessionStorage`. It captures the Audo landing origin/path, an
+external referring origin, and only these campaign values:
+
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `audo_campaign`
+
+Fragments, arbitrary query parameters, `utm_term`, and advertising click IDs are
+not retained. The server validates the untrusted browser values, strips URL
+queries and credentials, saves normalized JSON with the inquiry, includes a
+readable summary in the owner email and deal description, and writes reportable
+values to custom HubSpot **deal** properties. Contact-level analytics properties
+are not changed.
+
+Before deploying attribution-enabled sync, create or verify the custom deal
+properties with:
+
+```bash
+HUBSPOT_SERVICE_KEY=<supported-hubspot-service-key> \
+python3 scripts/setup_hubspot_attribution.py --apply
+
+HUBSPOT_SERVICE_KEY=<supported-hubspot-service-key> \
+python3 scripts/setup_hubspot_attribution.py
+```
+
+The setup is explicit rather than a runtime side effect. Deploying the new
+HubSpot payload before the properties exist will leave the local request safe
+but cause its HubSpot job to retry and eventually require operator attention.
+
+Example tagged link:
+
+```text
+https://getaudo.com/services/fix-a-broken-contact-form?utm_source=linkedin&utm_medium=direct_outreach&utm_campaign=lead_flow_pilot&utm_content=observed_form_issue
+```
+
 Closed Won client workspace provisioning is implemented as an independently
 gated reconciliation worker. Keep `CLIENT_PROVISIONING_ENABLED=false` until the
 Drive and Notion destinations, activation cutoff, and one end-to-end test deal
@@ -181,6 +221,13 @@ Google before storing or emailing the request.
 - `/services.md` and `/services/<slug>.md` provide agent-friendly service content tied to canonical HTML pages.
 - `/app` and `/app.html` redirect to `/`; the old portal/product direction is
   no longer part of the public site.
+
+## Tests
+
+```bash
+python3 -m unittest discover -s tests
+node --test tests/test_attribution.js
+```
 
 ## Reusable Website Audit
 
